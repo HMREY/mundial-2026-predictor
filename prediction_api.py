@@ -753,14 +753,49 @@ class PredictionEngine:
             campo('btts_no_prob', 'No', pct(1 - btts)),
         ]})
 
-        # --- 6 y 7. Goleadores y multigoleadores ---------------------------- #
+        # Volumen de remates por equipo (calibración StatsBomb): se calcula
+        # aquí para que goleadores, rematadores y la Sección 8 compartan la
+        # MISMA fuente y los top-4 por jugador sumen dentro del total.
+        spx = float(self.calibracion.get('shots_on_por_xg', 3.1))
+        tpo = float(self.calibracion.get('shots_total_por_on', 2.6))
+        sot_h, sot_a = lam_h * spx, lam_a * spx
+        shots_h, shots_a = sot_h * tpo, sot_a * tpo
+
+        # --- 6, 7 y 7b. Goleadores, multigoleadores y rematadores ----------- #
         p_algun_gol = 1 - float(M[0, 0])
-        campos_gol, campos_multi = [], []
+        campos_gol, campos_multi, campos_remates = [], [], []
         for equipo, nombre_eq, lam_eq, prefijo in [(home, n_l, lam_h, 'h'), (away, n_v, lam_a, 'a')]:
             jugadores = self._jugadores_clave(equipo, top_n=5)
             xgf = max(self.stats_equipo(equipo)['XGF_MA5'], 0.5)
             factor = float(np.clip(lam_eq / xgf, 0.6, 1.8))
             p_equipo_primero = (lam_eq / max(lam_h + lam_a, 1e-6)) * p_algun_gol
+
+            # Top 4 rematadores: cuota del volumen del equipo proporcional a su
+            # xG individual, con tope del 85 % del total del equipo (el resto
+            # queda para el resto de la alineación) y límites físicos por
+            # jugador (≤5.5 remates, ≤3.0 a puerta).
+            shots_eq = shots_h if prefijo == 'h' else shots_a
+            sot_eq = sot_h if prefijo == 'h' else sot_a
+            top4 = jugadores[:4]
+            cuotas = [j['goles_esperados'] / xgf for j in top4]
+            suma_cuotas = sum(cuotas)
+            if suma_cuotas > 0.85:
+                cuotas = [c * 0.85 / suma_cuotas for c in cuotas]
+            for i, (j, cuota_j) in enumerate(zip(top4, cuotas), start=1):
+                rem_i = float(min(5.5, shots_eq * cuota_j))
+                sot_i = float(min(3.0, sot_eq * cuota_j, rem_i))
+                base = f'shooter_{prefijo}{i}'
+                campos_remates.extend([
+                    campo(f'{base}_shots', f'{j["nombre"]} ({nombre_eq}) — Remates esperados',
+                          round(rem_i, 2), 'media'),
+                    campo(f'{base}_shots_prob', f'{j["nombre"]} ({nombre_eq}) — Prob. de rematar (≥1)',
+                          pct(1 - np.exp(-rem_i))),
+                    campo(f'{base}_sot', f'{j["nombre"]} ({nombre_eq}) — Remates a puerta esperados',
+                          round(sot_i, 2), 'media'),
+                    campo(f'{base}_sot_prob', f'{j["nombre"]} ({nombre_eq}) — Prob. de rematar a puerta (≥1)',
+                          pct(1 - np.exp(-sot_i))),
+                ])
+
             for i, j in enumerate(jugadores, start=1):
                 lam_i = max(0.01, j['goles_esperados'] * factor)
                 cuota = lam_i / max(lam_eq, 1e-6)
@@ -781,12 +816,11 @@ class PredictionEngine:
                     ])
         secciones.append({'titulo': '6. Goleadores (cualquier momento)', 'campos': campos_gol})
         secciones.append({'titulo': '7. Multigoleadores', 'campos': campos_multi})
+        secciones.append({'titulo': '7b. Remates por Jugador (Top 4 de cada equipo)',
+                          'campos': campos_remates})
 
         # --- 8. Estadísticas de juego ---------------------------------------- #
-        spx = float(self.calibracion.get('shots_on_por_xg', 3.1))
-        tpo = float(self.calibracion.get('shots_total_por_on', 2.6))
-        sot_h, sot_a = lam_h * spx, lam_a * spx
-        shots_h, shots_a = sot_h * tpo, sot_a * tpo
+        # (spx/tpo/sot/shots calculados arriba, compartidos con la sección 7b)
         # Tarjetas: modelo arbitral (perfil del árbitro × histórico de los equipos)
         tarjetas = pred['cards']
         penaltis = pred['penalties']

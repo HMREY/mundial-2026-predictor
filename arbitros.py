@@ -32,11 +32,17 @@ MEDIA_AMA_P90 = 3.8
 MEDIA_ROJ_P90 = 0.12
 MEDIA_PEN_P90 = 0.22
 
-# Factores del modelo v2 de tarjetas
-DESVIACION_EQUIPO_COEF = 0.05     # +5 % por cada amarilla MA5 por encima de 2.0
-FACTOR_BLOQUE_ALTO = 1.08         # presión alta => más fricción y amarillas
-FACTOR_ELIMINATORIA = 1.15        # tensión de vida o muerte
-FACTOR_GRUPOS = 1.05              # torneo mundialista, fase de grupos
+# Factores del modelo v3 de tarjetas (recalibrado 2026-07-03, ver
+# INFORME_MEJORA_TARJETAS.md): el ancla es el p90 REAL del árbitro y los
+# modificadores de equipo/estilo REPARTEN el total en vez de inflarlo.
+DESVIACION_EQUIPO_COEF = 0.05     # ±5 % por cada amarilla MA5 respecto a 2.0
+FACTOR_BLOQUE_ALTO = 1.08         # presión alta => más fricción (relativo)
+FACTOR_ELIMINATORIA = 1.10        # único recargo de fase (tensión de KO)
+FACTOR_GRUPOS = 1.00              # el p90 ya está medido en torneos: sin recargo
+# En Mundiales los árbitros muestran ~8 % menos tarjetas que su media general
+# (directriz FIFA de fluidez; Mundial 2022: 3.61 tarjetas/partido reales vs
+# medias individuales 3.8-4.5 de esos mismos árbitros en 2022-2025).
+FACTOR_MUNDIAL = 0.92
 
 # Perfil que se usa cuando el usuario no elige árbitro
 ARBITRO_PROMEDIO = {
@@ -142,39 +148,62 @@ def modelo_tarjetas(perfil: Dict, base_amarillas_local: float, base_rojas_local:
                     estilo_local: str = 'bloque_bajo', estilo_visit: str = 'bloque_bajo',
                     fase: str = 'grupos') -> Dict:
     """
-    Modelo v2 con interacción árbitro-equipo (ver docstring del módulo).
-    El ancla es el p90 REAL del árbitro; la desviación MA5 del equipo, su
-    estilo, la fase del torneo y el sesgo local modulan el reparto.
+    Modelo v3 ANCLADO al árbitro (recalibración 2026-07-03).
+
+    Auditoría contra agregados reales de torneos (Mundial 2022: 3.61
+    tarjetas/partido; 2018: 3.48; Euro 2024: ~3.2): el modelo v2 sobrestimaba
+    +18 % porque los factores de fase/estilo se APILABAN sobre el p90 del
+    árbitro, que ya está medido en torneos competitivos. En v3:
+
+      total esperado = AMA_P90_árbitro × FACTOR_MUNDIAL × factor_fase
+                       × media(mod_local, mod_visitante)
+
+    donde mod_equipo = (1 ± desviación MA5) × (bloque alto) es un modificador
+    RELATIVO centrado en 1: reparte el total entre equipos y solo lo mueve
+    levemente si ambos son indisciplinados. El sesgo local del árbitro
+    reasigna tarjetas del local al visitante sin alterar el total.
     """
     factor_fase = FACTOR_ELIMINATORIA if fase == 'eliminatoria' else FACTOR_GRUPOS
     desvio = perfil['sesgo_local'] - 0.50  # sesgo 55 % => local ×0.90, visit ×1.10
 
-    def amarillas_equipo(base_ma5: float, estilo: str, es_local: bool) -> float:
-        ama = (perfil['ama_p90'] / 2.0) * (1 + DESVIACION_EQUIPO_COEF * (base_ma5 - 2.0))
+    def modificador(base_ma5: float, estilo: str) -> float:
+        m = 1 + DESVIACION_EQUIPO_COEF * (base_ma5 - 2.0)
         if estilo == 'bloque_alto':
-            ama *= FACTOR_BLOQUE_ALTO
-        ama *= factor_fase
-        ama *= (1 - 2 * desvio) if es_local else (1 + 2 * desvio)
-        return max(0.2, float(ama))
+            m *= FACTOR_BLOQUE_ALTO
+        return max(0.4, float(m))
 
-    ama_h = amarillas_equipo(base_amarillas_local, estilo_local, True)
-    ama_a = amarillas_equipo(base_amarillas_visit, estilo_visit, False)
+    mod_h = modificador(base_amarillas_local, estilo_local)
+    mod_a = modificador(base_amarillas_visit, estilo_visit)
 
-    # Rojas: ancla arbitral repartida por la indisciplina relativa de los
-    # equipos, con el mismo ajuste de fase y sesgo.
+    # Ancla: el total del partido ES el p90 real del árbitro (± modificadores).
+    # Tope de coherencia: nunca superar el p90 observado del árbitro en más
+    # de un 15 % (validación de la Fase 5.9 del protocolo de mejora).
+    total_amar = perfil['ama_p90'] * FACTOR_MUNDIAL * factor_fase * ((mod_h + mod_a) / 2)
+    total_amar = min(total_amar, perfil['ama_p90'] * 1.15)
+    peso_h = (mod_h * (1 - 2 * desvio))
+    peso_a = (mod_a * (1 + 2 * desvio))
+    ama_h = total_amar * peso_h / (peso_h + peso_a)
+    ama_a = total_amar * peso_a / (peso_h + peso_a)
+
+    # Rojas: mezcla 50/50 del perfil del árbitro y la indisciplina de los
+    # equipos (escalada por la severidad relativa del árbitro), con el mismo
+    # descuento mundialista; el reparto sigue la agresividad y el sesgo.
     factor_roj = perfil['roj_p90'] / MEDIA_ROJ_P90
     agresividad_total = max(base_rojas_local + base_rojas_visit, 1e-6)
-    roj_equipos = (base_rojas_local + base_rojas_visit)
-    roj_total = (0.5 * perfil['roj_p90'] + 0.5 * roj_equipos * factor_roj) * factor_fase
-    roj_h = roj_total * (base_rojas_local / agresividad_total) * (1 - 2 * desvio)
-    roj_a = roj_total * (base_rojas_visit / agresividad_total) * (1 + 2 * desvio)
+    roj_total = (0.5 * perfil['roj_p90'] +
+                 0.5 * (base_rojas_local + base_rojas_visit) * factor_roj) * FACTOR_MUNDIAL * factor_fase
+    peso_rh = (base_rojas_local / agresividad_total) * (1 - 2 * desvio)
+    peso_ra = (base_rojas_visit / agresividad_total) * (1 + 2 * desvio)
+    suma_pesos = max(peso_rh + peso_ra, 1e-6)
+    roj_h = roj_total * peso_rh / suma_pesos
+    roj_a = roj_total * peso_ra / suma_pesos
 
     return {
-        'amarillas_local': round(ama_h, 2),
-        'amarillas_visitante': round(ama_a, 2),
+        'amarillas_local': round(float(ama_h), 2),
+        'amarillas_visitante': round(float(ama_a), 2),
         'rojas_local': round(float(roj_h), 3),
         'rojas_visitante': round(float(roj_a), 3),
-        'total_tarjetas': round(ama_h + ama_a + float(roj_h) + float(roj_a), 2),
+        'total_tarjetas': round(float(ama_h + ama_a + roj_h + roj_a), 2),
         'factor_arbitro': round(perfil['ama_p90'] / MEDIA_AMA_P90, 3),
         'fase': fase,
     }

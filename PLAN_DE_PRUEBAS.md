@@ -47,6 +47,23 @@ Verificación adicional en `backtesting.ipynb`: curvas de calibración por clase
 (guardadas en `modelos/curvas_calibracion.png`), matriz de confusión, precisión
 por trimestre y precisión por nivel de confianza (debe crecer monotónicamente).
 
+### Pruebas del modelo de tarjetas v3 y rematadores (mejora 2026-07-03)
+
+Origen: `INFORME_MEJORA_TARJETAS.md` — sobrestimación del +18 % corregida.
+
+1. **Nivel calibrado**: con equipos medios, la media de tarjetas en grupos es
+   3.78 (banda real 3.5-3.8; antes 4.30). Promedio FIFA → 3.67 ≈ Mundial 2022
+   real (3.61). Orden por severidad del árbitro preservado.
+2. **Tope de coherencia**: ningún total supera el p90 del árbitro +15 %.
+3. **Sesgo local**: reparte tarjetas (local ×0.9 / visitante ×1.1 con sesgo
+   55 %) sin alterar el total del partido.
+4. **Top-4 rematadores** (sección 7b): por jugador, remates ≤5.5, a puerta
+   ≤ min(3.0, remates); el top-4 suma ≤85 % del volumen del equipo (consistente
+   con la Sección 8, misma fuente spx/tpo de StatsBomb).
+5. **1X2 intacto bit a bit**: EGY vs AUS produce probabilidades idénticas antes
+   y después de la mejora; sin retrain, el benchmark walk-forward (59.5 % /
+   0.908) permanece vigente — variación 0.0 pp (umbral ±0.3 pp).
+
 ### Pruebas de estabilidad del relleno calibrado (auditoría 2026-07-03)
 
 Origen: auditoría EGY vs AUS (`INFORME_DIAGNOSTICO.md`) — la predicción cambiaba
