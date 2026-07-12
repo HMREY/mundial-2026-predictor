@@ -47,8 +47,7 @@ from sklearn.metrics import accuracy_score, log_loss
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 
-from gtda.homology import VietorisRipsPersistence
-from gtda.diagrams import PersistenceEntropy
+import ripser
 
 import feature_engineering as fe
 from config import HISTORICO_FILE
@@ -65,6 +64,18 @@ COMPONENTES_PCA = 8
 N_PARTIDOS_AUMENTO = 1000
 
 
+def _entropia_diagrama(dgm: np.ndarray) -> float:
+    finite = dgm[np.isfinite(dgm[:, 1])]
+    if len(finite) == 0:
+        return 0.0
+    lifetimes = finite[:, 1] - finite[:, 0]
+    total = lifetimes.sum()
+    if total == 0:
+        return 0.0
+    p = lifetimes / total
+    return float(-np.sum(p * np.log(p + 1e-10)))
+
+
 def entropias_de_nubes(nubes: np.ndarray, etiqueta: str) -> np.ndarray:
     """Diagramas Vietoris-Rips H0/H1 por lote -> entropías (n, 2)."""
     n, n_puntos, n_dims = nubes.shape
@@ -73,9 +84,11 @@ def entropias_de_nubes(nubes: np.ndarray, etiqueta: str) -> np.ndarray:
         planos = nubes.reshape(-1, n_dims)
         pca = PCA(n_components=COMPONENTES_PCA, random_state=42)
         nubes = pca.fit_transform(planos).reshape(n, n_puntos, COMPONENTES_PCA)
-    vr = VietorisRipsPersistence(homology_dimensions=[0, 1], n_jobs=-1)
-    diagramas = vr.fit_transform(nubes)
-    return PersistenceEntropy(nan_fill_value=0.0).fit_transform(diagramas)
+    resultados = []
+    for nube in nubes:
+        result = ripser.ripser(nube, maxdim=1)
+        resultados.append([_entropia_diagrama(dgm) for dgm in result['dgms']])
+    return np.array(resultados)
 
 
 def calcular_features_topologicas(ds: dict) -> np.ndarray:

@@ -23,8 +23,7 @@ import joblib
 import numpy as np
 import pandas as pd
 
-from gtda.homology import VietorisRipsPersistence
-from gtda.diagrams import PersistenceEntropy
+import ripser
 
 import altitud
 import arbitros
@@ -204,9 +203,21 @@ class PredictionEngine:
         }
 
     def _entropias(self, nube: np.ndarray) -> np.ndarray:
-        vr = VietorisRipsPersistence(homology_dimensions=[0, 1], n_jobs=-1)
-        diag = vr.fit_transform(nube[np.newaxis, :, :])
-        return PersistenceEntropy(nan_fill_value=0.0).fit_transform(diag)[0]
+        result = ripser.ripser(nube, maxdim=1)
+        entropias = []
+        for dgm in result['dgms']:
+            finite = dgm[np.isfinite(dgm[:, 1])]
+            if len(finite) == 0:
+                entropias.append(0.0)
+                continue
+            lifetimes = finite[:, 1] - finite[:, 0]
+            total = lifetimes.sum()
+            if total == 0:
+                entropias.append(0.0)
+            else:
+                p = lifetimes / total
+                entropias.append(float(-np.sum(p * np.log(p + 1e-10))))
+        return np.array(entropias)
 
     def _features_topo(self, home: str, away: str, s_l: Dict, s_v: Dict,
                        ctx: Dict) -> np.ndarray:
