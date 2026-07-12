@@ -1,17 +1,26 @@
-pandas>=2.0
-numpy>=1.24
-scikit-learn>=1.3
+# VERSIONES EXACTAS de las librerías que participan en los .joblib pickleados.
+# Los modelos se entrenan en local con estas versiones: producción DEBE usar
+# las mismas o los pickles se corrompen silenciosamente (v14: sklearn 1.7 en
+# el cloud degeneró el 1X2 a 40-20-40 y rompió los regresores Poisson con
+# __pyx_unpickle_CyHalfPoissonLoss). Si actualizas alguna de estas, reentrena
+# TODOS los modelos (Mundial + 8 ligas) antes de hacer push.
+numpy==1.26.4
+scipy==1.17.1
+scikit-learn==1.3.2
+joblib==1.5.3
+xgboost==3.3.0
+lightgbm==4.6.0
+ripser==0.6.15
+pandas==3.0.3
+
+# Resto de dependencias (no participan en pickles)
 cloudscraper>=1.2
 beautifulsoup4>=4.12
 lxml>=4.9
 streamlit>=1.32
 plotly>=5.18
-ripser
-joblib>=1.3
 fastapi>=0.110
 uvicorn>=0.29
 kagglehub>=0.3
 requests>=2.31
-xgboost>=2.0
-lightgbm>=4.3
 matplotlib>=3.8
