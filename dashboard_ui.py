@@ -22,6 +22,7 @@ from prediction_api import PredictionEngine, NOMBRES_PAIS, plantilla_a_markdown
 from arbitros import ARBITROS
 from altitud import ESTADIOS_MUNDIAL, nivel_aclimatacion
 
+# 1. PRIMER COMANDO DE STREAMLIT (OBLIGATORIO)
 st.set_page_config(
     page_title="¿Quién gana? — Mundial 2026",
     page_icon="🏆",
@@ -30,6 +31,39 @@ st.set_page_config(
 )
 
 # v14: login con contraseña RETIRADO a petición del usuario — la app es pública.
+
+# CSS para ocultar el branding/pie de Streamlit (aporte del repo de despliegue)
+limpiar_interfaz_v2 = """
+    <style>
+        /* 1. Apuntar al identificador oficial moderno de Streamlit */
+        [data-testid="stViewerBadge"] {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* 2. Por si acaso usan clases antiguas o variantes */
+        div[class*="viewerBadge"], .viewerBadge_container {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        /* 3. Bloquear cualquier enlace oculto a su dominio */
+        a[href^="https://share.streamlit.io"] {
+            display: none !important;
+        }
+
+        /* 4. Mantener oculta la barra superior y el pie de página */
+        footer, [data-testid="stHeader"] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+    </style>
+"""
+st.markdown(limpiar_interfaz_v2, unsafe_allow_html=True)
 
 COLORES = {'local': '#2ecc71', 'empate': '#95a5a6', 'visitante': '#3498db'}
 
