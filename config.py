@@ -84,7 +84,10 @@ LEAGUES = {
         # v18/M2 (walk-forward +1.7pp / -0.028): cuotas de CIERRE de MEX.csv
         # (AvgC*, 100% de cobertura — el parser v12 leía las de apertura,
         # inexistentes). En vivo: Betexplorer días de partido o media del train.
-        'features_extra': ['cuotas'],
+        # v19 (walk-forward +1.0pp adicional, 51.7%/1.011): + features MX
+        # (altitud/distancia/liguilla/apertura) + beta calibration.
+        'features_extra': ['cuotas', 'mx'],
+        'calibracion': 'beta',
     },
     'premier': {
         # Premier se mantiene en 3 temporadas: el experimento de 5 temporadas

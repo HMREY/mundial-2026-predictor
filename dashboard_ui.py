@@ -144,6 +144,12 @@ def render_cuotas_reales(pl: dict):
                 icono = '⚪ Sin valor'
             else:
                 icono = '🔴 Mercado sobrevalora'
+            # v19: stake recomendado por ¼ Kelly (solo con EV > 0)
+            from bankroll_manager import calcular_stake
+            bankroll = float(st.session_state.get('bankroll', 0) or 0)
+            k = calcular_stake(prob, cuota, bankroll)
+            stake_txt = (f"{k['stake']:.2f} u ({k['pct']*100:.1f} %)"
+                         if k['stake'] > 0 else '—')
             filas.append({
                 'Mercado': c['etiqueta'],
                 'Prob. modelo': f"{prob*100:.1f} %",
@@ -151,14 +157,16 @@ def render_cuotas_reales(pl: dict):
                 'Americana': _cuota_americana(cuota),
                 'EV': f"{ev:+.1f} %",
                 'Valor': icono,
+                'Stake ¼ Kelly': stake_txt,
             })
     if filas:
         st.dataframe(pd.DataFrame(filas), use_container_width=True, hide_index=True)
+        from bankroll_manager import AVISO_JUEGO_RESPONSABLE
         st.caption(
             "**EV** = (cuota real × probabilidad del modelo − 1) × 100. "
             "🟢 EV > +5 % · 🟡 0 a +5 % · ⚪ ≈ 0 · 🔴 negativo. "
-            "El EV positivo solo es señal de valor si confías en la "
-            "calibración del modelo — no es asesoramiento financiero."
+            "**Stake ¼ Kelly** = fracción del bankroll sugerida (tope 5 %) "
+            "solo cuando hay valor. " + AVISO_JUEGO_RESPONSABLE
         )
     else:
         st.caption("Sin mercados con cuota real emparejable en este partido.")
@@ -221,6 +229,15 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
                       help="Solo accionable con cuotas reales de mercado.")
             m4.metric("Riesgo del partido",
                       {'bajo': '🟢 Bajo', 'medio': '🟡 Medio', 'alto': '🔴 Alto'}[r['riesgo_partido']])
+            # v19: stake por ¼ Kelly cuando el parlay tiene EV real positivo
+            if r['cuotas_reales'] and r['ev_parlay'] > 0:
+                from bankroll_manager import calcular_stake, AVISO_JUEGO_RESPONSABLE
+                k = calcular_stake(r['prob_conjunta'], r['cuota_combinada'],
+                                   float(st.session_state.get('bankroll', 0) or 0))
+                if k['stake'] > 0:
+                    st.info(f"💵 Stake recomendado (¼ Kelly): **{k['stake']:.2f} "
+                            f"unidades** ({k['pct']*100:.1f} % del bankroll). "
+                            + AVISO_JUEGO_RESPONSABLE)
             st.caption(r['nota'])
             texto = "\n".join(
                 f"{i}. [{s['mercado']}] {s['apuesta']} @ {s['cuota']} (p={s['prob']*100:.0f}%)"
@@ -372,6 +389,14 @@ st.sidebar.caption(
     "💡 **EV** (valor esperado): ganancia media por unidad apostada si "
     "repitieras la apuesta muchas veces. EV positivo = el modelo cree que "
     "la cuota paga de más. **Cuota justa** = 1/probabilidad, sin margen de casa.")
+
+# v19: gestión de banca (¼ Kelly sobre mercados con EV > 0 y cuota real)
+BANKROLL = st.sidebar.number_input(
+    "💵 Mi bankroll (unidades)", min_value=0.0, max_value=1_000_000.0,
+    value=1000.0, step=100.0, key='bankroll',
+    help="Tu banca total para apostar. Con cuotas reales y EV positivo, la "
+         "app sugiere el stake por ¼ de Kelly (tope 5 % del bankroll por "
+         "apuesta). Solo informativo.")
 
 _clave_comp = COMPETENCIAS[competencia_sel]
 if _clave_comp != 'mundial':

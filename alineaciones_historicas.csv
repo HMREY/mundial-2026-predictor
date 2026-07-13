@@ -1,0 +1,204 @@
+event_id,liga,fecha,partido,equipo,lado,jugador,posicion,titular
+760510,mundial,2026-07-09,Morocco at France,France,home,Mike Maignan,G,True
+760510,mundial,2026-07-09,Morocco at France,France,home,William Saliba,CD-L,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Dayot Upamecano,CD-R,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Lucas Digne,LB,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Jules Koundé,RB,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Michael Olise,AM,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Adrien Rabiot,LM,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Manu Koné,RM,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Kylian Mbappé,F,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Désiré Doué,AM-L,True
+760510,mundial,2026-07-09,Morocco at France,France,home,Ousmane Dembélé,AM-R,True
+760510,mundial,2026-07-09,Morocco at France,France,home,N'Golo Kanté,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Ibrahima Konaté,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Robin Risser,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Rayan Cherki,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Theo Hernández,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Lucas Hernández,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Bradley Barcola,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Marcus Thuram,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Brice Samba,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Maxence Lacroix,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Maghnes Akliouche,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Aurélien Tchouaméni,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Warren Zaïre-Emery,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Jean-Philippe Mateta,SUB,False
+760510,mundial,2026-07-09,Morocco at France,France,home,Malo Gusto,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Yassine Bounou,G,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Noussair Mazraoui,CD-L,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Issa Diop,CD-R,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Anass Salah-Eddine,LB,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Achraf Hakimi,RB,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Azzedine Ounahi,AM,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Neil El Aynaoui,LM,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Ayyoub Bouaddi,RM,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Bilal El Khannouss,F,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Chemsdine Talbi,AM-L,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Brahim Díaz,AM-R,True
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Ahmed Reda Tagnaouti,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Youssef Belammari,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Samir El Mourabet,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Redouane Halhal,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Gessime Yassine,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Marwane Saadane,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Ismael Saibari,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Sofyan Amrabat,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Chadi Riad,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Soufiane Rahimi,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Amine Sbaï,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Munir El Kajoui,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Ayoube Amaimouni,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Zakaria El Ouahdi,SUB,False
+760510,mundial,2026-07-09,Morocco at France,Morocco,away,Ayoub El Kaabi,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Unai Simón,G,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Aymeric Laporte,CD-L,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Pau Cubarsí,CD-R,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Marc Cucurella,LB,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Pedro Porro,RB,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Dani Olmo,AM,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Fabián Ruiz,LM,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Rodri,RM,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Mikel Oyarzabal,F,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Álex Baena,AM-L,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Lamine Yamal,AM-R,True
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Nico Williams,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Yéremy Pino,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Alejandro Grimaldo,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Víctor Muñoz,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Mikel Merino,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Joan García,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Eric García,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Borja Iglesias,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Gavi,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,David Raya,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Marc Pubill,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Pedri,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Martín Zubimendi,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Ferran Torres,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Spain,home,Marcos Llorente,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Thibaut Courtois,G,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Brandon Mechele,CD-L,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Nathan Ngoy,CD-R,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Maxim De Cuyper,LB,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Timothy Castagne,RB,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Kevin De Bruyne,AM,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Nicolas Raskin,LM,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Hans Vanaken,RM,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Charles De Ketelaere,F,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Jérémy Doku,AM-L,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Leandro Trossard,AM-R,True
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Alexis Saelemaekers,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Koni De Winter,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Joaquin Seys,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Diego Moreira,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Senne Lammens,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Dodi Lukébakio,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Arthur Theate,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Matias Fernandez-Pardo,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Thomas Meunier,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Axel Witsel,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Mike Penders,SUB,False
+760511,mundial,2026-07-10,Belgium at Spain,Belgium,away,Romelu Lukaku,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Ørjan Nyland,G,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Torbjørn Heggem,CD-L,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Kristoffer Ajer,CD-R,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,David Møller Wolfe,LB,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Julian Ryerson,RB,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Sander Berge,CM,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Patrick Berg,LM,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Martin Ødegaard,RM,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Erling Haaland,F,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Andreas Schjelderup,LF,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Alexander Sørloth,RF,True
+760512,mundial,2026-07-11,England at Norway,Norway,home,Thelo Aasgaard,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Jens Petter Hauge,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Fredrik Aursnes,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Antonio Nusa,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Henrik Falchener,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Jørgen Strand Larsen,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Sondre Langas,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Leo Østigard,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Oscar Bobb,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Kristian Thorstvedt,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Morten Thorsby,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Marcus Holmgren Pedersen,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Sander Tangvik,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Egil Selvik,SUB,False
+760512,mundial,2026-07-11,England at Norway,Norway,home,Fredrik André Bjørkan,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Jordan Pickford,G,True
+760512,mundial,2026-07-11,England at Norway,England,away,Marc Guéhi,CD-L,True
+760512,mundial,2026-07-11,England at Norway,England,away,John Stones,CD-R,True
+760512,mundial,2026-07-11,England at Norway,England,away,Nico O'Reilly,LB,True
+760512,mundial,2026-07-11,England at Norway,England,away,Ezri Konsa,RB,True
+760512,mundial,2026-07-11,England at Norway,England,away,Jude Bellingham,AM,True
+760512,mundial,2026-07-11,England at Norway,England,away,Elliot Anderson,LM,True
+760512,mundial,2026-07-11,England at Norway,England,away,Declan Rice,RM,True
+760512,mundial,2026-07-11,England at Norway,England,away,Harry Kane,F,True
+760512,mundial,2026-07-11,England at Norway,England,away,Anthony Gordon,AM-L,True
+760512,mundial,2026-07-11,England at Norway,England,away,Noni Madueke,AM-R,True
+760512,mundial,2026-07-11,England at Norway,England,away,Dean Henderson,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Marcus Rashford,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Morgan Rogers,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Eberechi Eze,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Ollie Watkins,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Dan Burn,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,James Trafford,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Trevoh Chalobah,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Ivan Toney,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Djed Spence,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Jordan Henderson,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Kobbie Mainoo,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Bukayo Saka,SUB,False
+760512,mundial,2026-07-11,England at Norway,England,away,Reece James,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Nicolás Otamendi,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Giuliano Simeone,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Exequiel Palacios,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Lautaro Martínez,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Nico Paz,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Facundo Medina,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Nico González,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Gerónimo Rulli,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Thiago Almada,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Juan Musso,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Valentín Barco,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Marcos Senesi,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,José Manuel López,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Giovani Lo Celso,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Gonzalo Montiel,,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Emiliano Martínez,G,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Lisandro Martínez,CD-L,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Cristian Romero,CD-R,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Leandro Paredes,SW,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Nicolás Tagliafico,LB,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Nahuel Molina,RB,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Enzo Fernández,CM,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Alexis Mac Allister,LM,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Rodrigo De Paul,RM,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Julián Álvarez,CF-L,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Argentina,home,Lionel Messi,CF-R,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Gregor Kobel,G,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Manuel Akanji,CD-L,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Nico Elvedi,CD-R,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Ricardo Rodríguez,LB,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Denis Zakaria,RB,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Fabian Rieder,AM,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Granit Xhaka,LM,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Remo Freuler,RM,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Breel Embolo,F,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Dan Ndoye,AM-L,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Djibril Sow,AM-R,True
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Ardon Jashari,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Marvin Keller,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Noah Okafor,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Michel Aebischer,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Yvon Mvogo,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Miro Muheim,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Aurèle Amenda,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Rubén Vargas,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Eray Cömert,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Silvan Widmer,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Luca Jaquez,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Christian Fassnacht,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Cedric Itten,SUB,False
+760513,mundial,2026-07-12,Switzerland at Argentina,Switzerland,away,Zeki Amdouni,SUB,False

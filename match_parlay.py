@@ -173,6 +173,22 @@ def _cuotas_reales_del_partido(pl: Dict) -> Dict[str, float]:
                 reales['over25_prob'] = reales['over25'] = float(o['odd_over25'])
             if o.get('odd_under25'):
                 reales['under25_prob'] = float(o['odd_under25'])
+            # v19: hándicap asiático — solo cuando la línea es exactamente
+            # ±0.5 (los campos de la plantilla son de esa línea)
+            linea = o.get('ah_linea')
+            if linea is not None and o.get('odd_ah_home') and o.get('odd_ah_away'):
+                try:
+                    linea = float(linea)
+                except (TypeError, ValueError):
+                    linea = None
+                if linea == -0.5:      # local −0.5 / visitante +0.5
+                    reales['home_minus05_prob'] = float(o['odd_ah_home'])
+                    reales['away_plus05_prob'] = float(o['odd_ah_away'])
+                    reales['ah_away_mas05'] = float(o['odd_ah_away'])
+                elif linea == 0.5:     # local +0.5 / visitante −0.5
+                    reales['home_plus05_prob'] = float(o['odd_ah_home'])
+                    reales['ah_home_mas05'] = float(o['odd_ah_home'])
+                    reales['away_minus05_prob'] = float(o['odd_ah_away'])
             return reales
     return {}
 

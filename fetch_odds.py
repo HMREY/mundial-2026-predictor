@@ -122,6 +122,10 @@ def descargar_cuotas_fixtures() -> pd.DataFrame:
             'odd_away': pd.to_numeric(df['B365A'], errors='coerce'),
             'odd_over25': pd.to_numeric(df.get('B365>2.5'), errors='coerce'),
             'odd_under25': pd.to_numeric(df.get('B365<2.5'), errors='coerce'),
+            # v19: hándicap asiático (línea + cuotas B365 de ambos lados)
+            'ah_linea': pd.to_numeric(df.get('AHh'), errors='coerce'),
+            'odd_ah_home': pd.to_numeric(df.get('B365AHH'), errors='coerce'),
+            'odd_ah_away': pd.to_numeric(df.get('B365AHA'), errors='coerce'),
             'liga': df['Div'].map(DIV_A_LIGA),
         }).dropna(subset=['odd_home', 'odd_draw', 'odd_away'])
         # solo eventos futuros o de hoy: fixtures.csv puede arrastrar filas viejas

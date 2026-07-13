@@ -69,6 +69,12 @@ def actualizar_ratings():
         tm.valores_liga(clave)
 
 
+def recolectar_alineaciones():
+    """v19: modo SOMBRA — acumula alineaciones (ESPN) sin tocar predicciones."""
+    import lineup_collector
+    lineup_collector.recolectar()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Actualiza toda la plataforma con fuentes gratuitas.')
     parser.add_argument('--solo-mundial', action='store_true')
@@ -83,6 +89,7 @@ if __name__ == '__main__':
     if not args.solo_mundial:
         resultados['Clubes'] = paso('LIGAS DE CLUBES (football-data)', actualizar_clubes)
     resultados['Cuotas'] = paso('CUOTAS (fixtures.csv / Betexplorer / Odds API)', actualizar_cuotas)
+    resultados['Alineaciones'] = paso('ALINEACIONES (ESPN, modo sombra)', recolectar_alineaciones)
     if not args.solo_clubes:
         resultados['Mercado'] = paso('INTELIGENCIA DE MERCADO (Polymarket)', actualizar_mercado)
     if args.ratings:

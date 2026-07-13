@@ -1,0 +1,43 @@
+{
+  "liga_mx": {
+    "v18_actual (cuotas+iso)": {
+      "acc": 0.507,
+      "logloss": 1.0099,
+      "ventanas": 6
+    },
+    "cuotas+beta": {
+      "acc": 0.5133,
+      "logloss": 1.0172,
+      "ventanas": 6
+    },
+    "cuotas+MX+beta": {
+      "acc": 0.5175,
+      "logloss": 1.0114,
+      "ventanas": 6
+    },
+    "cuotas+MX+extras+beta": {
+      "acc": 0.5083,
+      "logloss": 1.0116,
+      "ventanas": 6
+    },
+    "poisson+cuotas+beta": {
+      "acc": 0.5021,
+      "logloss": 1.0305,
+      "ventanas": 6
+    }
+  },
+  "serie_a": {
+    "poisson_beta": {
+      "acc": 0.4899,
+      "logloss": 1.0126,
+      "ventanas": 2
+    }
+  },
+  "bundesliga": {
+    "poisson_beta": {
+      "acc": 0.4554,
+      "logloss": 1.054,
+      "ventanas": 4
+    }
+  }
+}

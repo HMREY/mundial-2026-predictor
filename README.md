@@ -1,5 +1,27 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v19 — Banca, alineaciones sombra y Liga MX reforzada (ver [VALIDACION_v19.md](VALIDACION_v19.md))
+
+- **Liga MX**: cuotas + features mexicanas (altitud, distancia de viaje,
+  liguilla, apertura/clausura) + beta calibration — walk-forward
+  50.7→51.7 % (+1.0 pp); modelo desplegado 52.4 % / 0.998. El mercado
+  (53.5 %) sigue arriba y así se reporta.
+- **Gestión de banca** ([bankroll_manager.py](bankroll_manager.py)):
+  bankroll configurable en la barra lateral y stake por **¼ de Kelly** (tope
+  5 %) en la tabla de EV y en el parlay con cuotas reales. Solo informativo,
+  con aviso de juego responsable.
+- **Hándicap asiático ±0.5** con cuota real y EV en la plantilla (línea y
+  cuotas B365 de fixtures.csv — sin scraping). BTTS pospuesto: sin fuente
+  gratuita legal.
+- **Alineaciones confirmadas en modo sombra**
+  ([lineup_collector.py](lineup_collector.py)): el JSON de ESPN publica el
+  once titular de las 8 ligas + Mundial; se acumulan a diario en
+  `alineaciones_historicas.csv` sin tocar las predicciones, para evaluar su
+  impacto al cierre de la temporada 2026-27. Verificado con 4 partidos
+  reales del Mundial.
+- **Poisson puro para 1X2**: evaluado en Serie A, Bundesliga y Liga MX —
+  inferior al ensemble calibrado en las tres; descartado con evidencia.
+
 ## Novedades v18 — Serie A recuperada, Liga MX con cuotas y EV en la UI (ver [VALIDACION_v18.md](VALIDACION_v18.md))
 
 - **Serie A**: la ganancia de las cuotas de cierre (+4.4 pp que v17 rechazó

@@ -115,6 +115,54 @@ class ModeloBetaCalibrado:
 COLS_CUOTAS = ['PROB_IMP_H', 'PROB_IMP_D', 'PROB_IMP_A', 'OVERROUND']
 COLS_EXTRAS = ['H2H_GD3', 'DIFF_DESCANSO', 'DIFF_RACHA_V', 'DIFF_SIN_PERDER',
                'DIFF_PPG', 'DIFF_POSICION']
+COLS_MX = ['ALT_SEDE', 'DIFF_ALT_HABITUAL', 'DIST_VIAJE', 'LIGUILLA', 'APERTURA']
+
+# v19: geografía Liga MX — (altitud msnm, lat, lon) de la sede habitual
+GEO_MX = {
+    'Toluca': (2660, 19.29, -99.67), 'Pachuca': (2432, 20.10, -98.75),
+    'Club America': (2240, 19.30, -99.15), 'America': (2240, 19.30, -99.15),
+    'Cruz Azul': (2240, 19.30, -99.15), 'U.N.A.M.- Pumas': (2240, 19.31, -99.19),
+    'Pumas UNAM': (2240, 19.31, -99.19), 'Puebla': (2135, 19.08, -98.16),
+    'Necaxa': (1888, 21.89, -102.31), 'Queretaro': (1820, 20.55, -100.44),
+    'Leon': (1815, 21.11, -101.66), 'Atl. San Luis': (1860, 22.15, -100.98),
+    'Guadalajara Chivas': (1566, 20.68, -103.46), 'Guadalajara': (1566, 20.68, -103.46),
+    'Atlas': (1566, 20.70, -103.34), 'Club Tijuana': (20, 32.50, -116.99),
+    'Tijuana': (20, 32.50, -116.99), 'Mazatlan FC': (10, 23.26, -106.40),
+    'Mazatlan': (10, 23.26, -106.40), 'Monterrey': (540, 25.67, -100.24),
+    'Tigres UANL': (540, 25.72, -100.31), 'Tigres': (540, 25.72, -100.31),
+    'Santos Laguna': (1120, 25.58, -103.42), 'FC Juarez': (1140, 31.72, -106.42),
+    'Juarez': (1140, 31.72, -106.42), 'Veracruz': (10, 19.15, -96.11),
+    'Lobos BUAP': (2135, 19.02, -98.24), 'Morelia': (1920, 19.71, -101.17),
+    'Atlante': (1600, 21.16, -86.85),
+}
+
+
+def _haversine_km(lat1, lon1, lat2, lon2) -> float:
+    p1, p2 = np.radians(lat1), np.radians(lat2)
+    dp, dl = np.radians(lat2 - lat1), np.radians(lon2 - lon1)
+    a = np.sin(dp / 2) ** 2 + np.cos(p1) * np.cos(p2) * np.sin(dl / 2) ** 2
+    return float(2 * 6371.0 * np.arcsin(np.sqrt(a)))
+
+
+def _fila_mx(home: str, away: str, fecha) -> dict:
+    """Features específicas de Liga MX para un partido (v19, walk-forward
+    +1.0 pp junto con cuotas y beta calibration)."""
+    gh = GEO_MX.get(home, (1200, 23.0, -102.0))
+    ga = GEO_MX.get(away, (1200, 23.0, -102.0))
+    mes, dia = fecha.month, fecha.day
+    return {
+        'ALT_SEDE': gh[0] / 2700.0,
+        'DIFF_ALT_HABITUAL': (gh[0] - ga[0]) / 2700.0,
+        'DIST_VIAJE': _haversine_km(gh[1], gh[2], ga[1], ga[2]) / 2500.0,
+        'LIGUILLA': 1.0 if (mes == 5 or mes == 12 or (mes == 11 and dia >= 20)) else 0.0,
+        'APERTURA': 1.0 if mes >= 7 else 0.0,
+    }
+
+
+def features_mx(df: pd.DataFrame) -> pd.DataFrame:
+    filas = [{'MATCH_ID': f.MATCH_ID, **_fila_mx(f.home_team, f.away_team, f.date)}
+             for f in df.itertuples(index=False)]
+    return pd.DataFrame(filas).set_index('MATCH_ID')
 
 
 def columnas_extra(clave: str) -> list:
@@ -125,6 +173,8 @@ def columnas_extra(clave: str) -> list:
         cols += COLS_EXTRAS
     if 'cuotas' in grupos:
         cols += COLS_CUOTAS
+    if 'mx' in grupos:
+        cols += COLS_MX
     return cols
 
 
@@ -355,6 +405,8 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
     medias_cuotas = {}
     if cols_extra:
         extras_df, estado_extra = features_extra_liga(df)
+        if 'mx' in LEAGUES[clave].get('features_extra', []):
+            extras_df = extras_df.join(features_mx(df))
         ids = [m[3] for m in ds['meta']]
         ext = extras_df.reindex(ids).reset_index(drop=True)
         X_df = X_df.reset_index(drop=True).copy()
@@ -554,6 +606,9 @@ class ClubEngine:
         medias = self.metadata.get('medias_cuotas', {})
         for c in COLS_CUOTAS:
             valores[c] = reales.get(c, medias.get(c, 0.0))
+        # features MX (v19): geografía + calendario, computables al vuelo
+        if any(c in cols for c in COLS_MX):
+            valores.update(_fila_mx(home, away, hoy))
         return np.array([[valores[c] for c in cols]])
 
     def predecir(self, home: str, away: str) -> Dict:
