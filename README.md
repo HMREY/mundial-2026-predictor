@@ -1,5 +1,29 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v15 — Parlay por partido en todas las competiciones
+
+**🎯 Parlay de ESTE partido** ([match_parlay.py](match_parlay.py)): en la vista
+de cualquier partido (Mundial y las 8 ligas de clubes) hay un asistente que
+combina mercados DEL MISMO encuentro:
+
+- **Número de apuestas**: slider de 4 a 8 (por defecto 6).
+- **Perfil de riesgo**: 🛡️ Conservador (prob ≥65 % por selección) ·
+  ⚖️ Medio (≥55 %) · 🚀 Agresivo (≥50 %). Si no hay suficientes mercados,
+  relaja el umbral solo lo necesario y lo avisa.
+- **Reglas de compatibilidad**: nunca combina opciones excluyentes (1X2,
+  over/under de la misma línea, BTTS vs 0-0…), elimina apuestas equivalentes
+  (hándicap ±0.5 = 1X2/doble oportunidad) y aplica **haircut de correlación
+  0.95** por cada pareja de la misma familia (resultado/goles/córners/tarjetas).
+- **Cuotas reales** de `odds_actuales.json` cuando existen (fixtures.csv /
+  Betexplorer): el parlay maximiza EV; sin ellas usa cuotas justas y avisa
+  "EV teórico — no accionable".
+- **Riesgo de mercado**: si el partido está 🔴 en `risk_flags.json`, el
+  asistente lo excluye por defecto (desactivable).
+- Exportación en texto plano + bloque copiable. El parlay multi-partido del
+  fixture del Mundial sigue disponible e intacto.
+- Tests: [test_match_parlay.py](test_match_parlay.py) (unitarios, ambos
+  motores) + AppTest de integración en Mundial y Serie A.
+
 **Cualquier persona pregunta "¿quién gana?" para CUALQUIER par de las 48
 selecciones y obtiene una respuesta clara — y además la Plantilla General de
 Análisis Estadístico completa (9 secciones, ~85 campos: 1X2, doble oportunidad,

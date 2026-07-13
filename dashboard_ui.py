@@ -105,6 +105,71 @@ def plantilla_club_cacheada(clave: str, home: str, away: str) -> dict:
     return cargar_motor_liga(clave).plantilla_club(home, away)
 
 
+# ===========================================================================
+# ASISTENTE DE PARLAY POR PARTIDO (v15): agnóstico de competición
+# ===========================================================================
+def render_parlay_partido(motor, home: str, away: str, key: str):
+    """Sección interactiva de parlay para EL partido en pantalla."""
+    with st.expander(f"🎯 Parlay de ESTE partido — {home} vs {away}"):
+        c1, c2 = st.columns(2)
+        with c1:
+            n_sel = st.slider("Número de apuestas", 4, 8, 6, key=f"mp_n_{key}",
+                              help="Cuántas selecciones del MISMO partido combinar.")
+        with c2:
+            perfil_sel = st.radio(
+                "Perfil de riesgo",
+                ['🛡️ Conservador', '⚖️ Medio', '🚀 Agresivo'],
+                index=1, key=f"mp_perfil_{key}", horizontal=True,
+                help="Conservador: prob ≥65 % por selección · Medio: ≥55 % · Agresivo: ≥50 %.")
+        excluir = st.checkbox("Excluir si el partido tiene riesgo de mercado 🔴",
+                              value=True, key=f"mp_riesgo_{key}")
+        if st.button("🎯 Proponer parlay para este partido", key=f"mp_btn_{key}",
+                     type="primary"):
+            from match_parlay import construir_parlay_partido
+            perfil = ('conservador' if 'Conservador' in perfil_sel else
+                      'agresivo' if 'Agresivo' in perfil_sel else 'medio')
+            with st.spinner("🧮 Combinando los mercados del partido..."):
+                r = construir_parlay_partido(motor, home, away,
+                                             num_selecciones=n_sel, perfil=perfil,
+                                             excluir_alto_riesgo=excluir)
+            if 'error' in r:
+                st.warning(r['error'])
+                return
+            for aviso in r['avisos']:
+                st.warning(aviso)
+            st.success(
+                f"**Este parlay tiene un {r['prob_conjunta']*100:.0f} % de probabilidad "
+                f"de ganar**, cuota combinada {r['cuota_combinada']:.2f}"
+                + (f", EV {r['ev_parlay']:+.2f} unidades." if r['cuotas_reales']
+                   else " (cuotas justas del modelo).")
+            )
+            st.dataframe(pd.DataFrame([{
+                'Mercado': s['mercado'], 'Apuesta': s['apuesta'],
+                'Prob.': f"{s['prob']*100:.1f} %", 'Cuota': s['cuota'],
+                'Fuente': s['cuota_fuente'], 'EV': s['ev'],
+            } for s in r['selecciones']]), use_container_width=True, hide_index=True)
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("Cuota combinada", f"{r['cuota_combinada']:.2f}",
+                      help="Producto de las cuotas: lo que pagaría 1 unidad si aciertas todo.")
+            m2.metric("Prob. conjunta", f"{r['prob_conjunta']*100:.1f} %",
+                      help=f"Producto de probabilidades con haircut de correlación 0.95 "
+                           f"aplicado a {r['n_parejas_correlacionadas']} pareja(s).")
+            m3.metric("EV del parlay", f"{r['ev_parlay']:+.3f}",
+                      help="Solo accionable con cuotas reales de mercado.")
+            m4.metric("Riesgo del partido",
+                      {'bajo': '🟢 Bajo', 'medio': '🟡 Medio', 'alto': '🔴 Alto'}[r['riesgo_partido']])
+            st.caption(r['nota'])
+            texto = "\n".join(
+                f"{i}. [{s['mercado']}] {s['apuesta']} @ {s['cuota']} (p={s['prob']*100:.0f}%)"
+                for i, s in enumerate(r['selecciones'], 1)
+            ) + (f"\nCuota combinada: {r['cuota_combinada']} · "
+                 f"Prob: {r['prob_conjunta']*100:.1f}% · EV: {r['ev_parlay']:+.3f}")
+            st.code(texto, language=None)
+            st.download_button("📥 Descargar parlay (.txt)", data=texto.encode('utf-8'),
+                               file_name=f"parlay_{home}_vs_{away}.txt".replace(' ', '_'),
+                               mime="text/plain", key=f"mp_dl_{key}")
+
+
 def render_liga_club(clave: str, nombre_liga: str):
     from config import LEAGUES
     if not LEAGUES[clave].get('disponible'):
@@ -205,6 +270,11 @@ def render_liga_club(clave: str, nombre_liga: str):
 
     for obs in pl['observaciones']:
         st.markdown(f"- {obs}")
+
+    # v15: parlay del partido en pantalla
+    st.divider()
+    render_parlay_partido(motor, home, away, key=clave)
+
     from prediction_api import plantilla_a_markdown
     st.download_button("⬇️ Descargar plantilla (Markdown)",
                        data=plantilla_a_markdown(pl).encode('utf-8'),
@@ -568,9 +638,12 @@ with tab_rapida:
             else:
                 st.info(f"{emoji} {nombre_eq}: sin goleadores registrados en los últimos 24 meses.")
 
-    # ---- 🎯 Asistente de Parlay guiado (v12; v14/M11: niveles de riesgo) ------
+    # ---- 🎯 Parlay del partido en pantalla (v15) ------------------------------
     st.divider()
-    with st.expander("🎯 Asistente de Parlay — 3 pasos", expanded=not ES_PRO):
+    render_parlay_partido(MOTOR, home, away, key='mundial')
+
+    # ---- 🎯 Asistente de Parlay del FIXTURE (v12; v14/M11: niveles de riesgo) --
+    with st.expander("🎯 Asistente de Parlay del fixture — 3 pasos", expanded=False):
         st.markdown("**Paso 1 — Elige tu perfil de riesgo:**")
         NIVELES = {
             '🛡️ Conservador — pocas selecciones muy probables': (4, 0.65),
