@@ -78,8 +78,84 @@ def cuotas_mundial_hoy() -> pd.DataFrame:
         return pd.DataFrame()
 
 
+def _normalizar_club(nombre: str) -> str:
+    import re
+    import unicodedata
+    s = unicodedata.normalize('NFKD', str(nombre))
+    s = ''.join(c for c in s if not unicodedata.combining(c)).lower().strip()
+    s = re.sub(r'[^\w\s]', ' ', s)
+    return re.sub(r'\s+', ' ', s).strip()
+
+
+def cuotas_clubes_hoy(claves=('liga_mx', 'premier', 'laliga', 'serie_a',
+                              'bundesliga', 'ligue_1', 'eredivisie',
+                              'primeira')) -> pd.DataFrame:
+    """Cuotas 1X2 de HOY para partidos de nuestras ligas de clubes (v18/M2).
+
+    La página diaria de Betexplorer lista todos los partidos del día con
+    cuotas; se emparejan los equipos contra team_stats_{liga}.json (fuzzy,
+    cutoff alto para evitar falsos positivos). Es la única fuente gratuita de
+    cuotas EN VIVO para Liga MX (fixtures.csv no la cubre). 1 petición.
+    """
+    import difflib
+    import json as _json
+    import os as _os
+
+    indices = {}
+    for clave in claves:
+        ruta = f'team_stats_{clave}.json'
+        if not _os.path.exists(ruta):
+            continue
+        with open(ruta, encoding='utf-8') as f:
+            equipos = list(_json.load(f).get('equipos', {}).keys())
+        indices[clave] = {_normalizar_club(e): e for e in equipos}
+
+    def emparejar(nombre):
+        norm = _normalizar_club(nombre)
+        for indice in indices.values():
+            if norm in indice:
+                return indice[norm]
+            cerca = difflib.get_close_matches(norm, indice.keys(), n=1, cutoff=0.85)
+            if cerca:
+                return indice[cerca[0]]
+        return None
+
+    try:
+        from bs4 import BeautifulSoup
+        r = requests.get(URL, headers={'User-Agent': UA}, timeout=25)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, 'lxml')
+        filas: List[Dict] = []
+        hoy = pd.Timestamp.today().normalize()
+        for cont in soup.select('li.table-main__tournamentLiContent'):
+            equipos_el = cont.select_one('.table-main__participants')
+            odds = [b.get('data-odd') for b in cont.select('button[data-odd]')]
+            if equipos_el is None or len(odds) < 3:
+                continue
+            texto = equipos_el.get_text(' ', strip=True)
+            if ' - ' not in texto:
+                continue
+            nombre_h, nombre_a = [p.strip() for p in texto.split(' - ', 1)]
+            home, away = emparejar(nombre_h), emparejar(nombre_a)
+            if not home or not away:
+                continue
+            filas.append({
+                'MATCH_ID': f"{hoy.strftime('%Y%m%d')}_{home.replace(' ', '-')}_{away.replace(' ', '-')}",
+                'odd_home': float(odds[0]), 'odd_draw': float(odds[1]),
+                'odd_away': float(odds[2]),
+            })
+        logger.info(f"Betexplorer: {len(filas)} partidos de clubes hoy con cuotas.")
+        return pd.DataFrame(filas)
+    except Exception as e:
+        logger.warning(f"Betexplorer clubes no disponible ({e}).")
+        return pd.DataFrame()
+
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     df = cuotas_mundial_hoy()
     if not df.empty:
         print(df.to_string())
+    df2 = cuotas_clubes_hoy()
+    if not df2.empty:
+        print(df2.to_string())

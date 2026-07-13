@@ -106,6 +106,65 @@ def plantilla_club_cacheada(clave: str, home: str, away: str) -> dict:
 
 
 # ===========================================================================
+# CUOTAS REALES + EV EN LA PLANTILLA (v18/M3)
+# ===========================================================================
+def _cuota_americana(decimal: float) -> str:
+    if decimal >= 2.0:
+        return f"+{(decimal - 1) * 100:.0f}"
+    return f"-{100 / (decimal - 1):.0f}"
+
+
+def render_cuotas_reales(pl: dict):
+    """Tabla de mercados con cuota REAL vigente y su EV según el modelo."""
+    from match_parlay import _cuotas_reales_del_partido
+    reales = _cuotas_reales_del_partido(pl)
+    st.markdown("#### 💰 Cuotas reales y valor (EV)")
+    if not reales:
+        st.caption(
+            "Cuotas reales: **N/D** por ahora — sin cuotas vigentes para este "
+            "partido en `odds_actuales.json`. En temporada llegan a diario de "
+            "fixtures.csv (clubes) y Betexplorer (Mundial, días de partido)."
+        )
+        return
+    filas = []
+    for seccion in pl.get('secciones', []):
+        for c in seccion.get('campos', []):
+            if c.get('tipo') != 'pct' or c['id'] not in reales:
+                continue
+            prob = float(c['valor']) / 100.0
+            cuota = float(reales[c['id']])
+            if not (0 < prob < 1) or cuota <= 1:
+                continue
+            ev = (cuota * prob - 1) * 100
+            if ev > 5:
+                icono = '🟢 Valor positivo'
+            elif ev > 0:
+                icono = '🟡 Ligeramente positivo'
+            elif ev > -2:
+                icono = '⚪ Sin valor'
+            else:
+                icono = '🔴 Mercado sobrevalora'
+            filas.append({
+                'Mercado': c['etiqueta'],
+                'Prob. modelo': f"{prob*100:.1f} %",
+                'Cuota real': cuota,
+                'Americana': _cuota_americana(cuota),
+                'EV': f"{ev:+.1f} %",
+                'Valor': icono,
+            })
+    if filas:
+        st.dataframe(pd.DataFrame(filas), use_container_width=True, hide_index=True)
+        st.caption(
+            "**EV** = (cuota real × probabilidad del modelo − 1) × 100. "
+            "🟢 EV > +5 % · 🟡 0 a +5 % · ⚪ ≈ 0 · 🔴 negativo. "
+            "El EV positivo solo es señal de valor si confías en la "
+            "calibración del modelo — no es asesoramiento financiero."
+        )
+    else:
+        st.caption("Sin mercados con cuota real emparejable en este partido.")
+
+
+# ===========================================================================
 # ASISTENTE DE PARLAY POR PARTIDO (v15): agnóstico de competición
 # ===========================================================================
 def render_parlay_partido(motor, home: str, away: str, key: str):
@@ -274,6 +333,9 @@ def render_liga_club(clave: str, nombre_liga: str):
 
     for obs in pl['observaciones']:
         st.markdown(f"- {obs}")
+
+    # v18/M3: cuotas reales vigentes + EV por mercado
+    render_cuotas_reales(pl)
 
     # v15: parlay del partido en pantalla
     st.divider()
@@ -843,6 +905,9 @@ with tab_plantilla:
         "quieras y pulsa **Validar mis estimaciones** para compararlas con el modelo "
         "y detectar dónde habría valor frente a cuotas de mercado."
     )
+
+    # v18/M3: cuotas reales vigentes + EV por mercado
+    render_cuotas_reales(pl)
 
     etiqueta_arb = (arbitro or 'promedio').replace(' ', '-') + f"_{fase}_{(estadio or 'auto').replace(' ', '-')}"
     prefijo_clave = f"pl_{home}_{away}_{etiqueta_arb}_"

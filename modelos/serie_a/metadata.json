@@ -3,11 +3,21 @@
   "n_train": 876,
   "n_validacion": 219,
   "fecha_corte": "2025-12-27",
-  "precision_validacion": 0.5434,
+  "precision_validacion": 0.5479,
   "precision_linea_base_elo": 0.5342,
   "precision_mercado_cuotas": 0.5708,
-  "log_loss_validacion": 1.0169,
+  "log_loss_validacion": 0.9815,
   "n_equipos": 25,
-  "features_extra_cols": [],
-  "medias_cuotas": {}
+  "features_extra_cols": [
+    "PROB_IMP_H",
+    "PROB_IMP_D",
+    "PROB_IMP_A",
+    "OVERROUND"
+  ],
+  "medias_cuotas": {
+    "PROB_IMP_H": 0.425,
+    "PROB_IMP_D": 0.262,
+    "PROB_IMP_A": 0.313,
+    "OVERROUND": 0.0547
+  }
 }

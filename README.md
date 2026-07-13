@@ -1,5 +1,22 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v18 — Serie A recuperada, Liga MX con cuotas y EV en la UI (ver [VALIDACION_v18.md](VALIDACION_v18.md))
+
+- **Serie A**: la ganancia de las cuotas de cierre (+4.4 pp que v17 rechazó
+  por log-loss) se recuperó con **beta calibration**
+  (`ModeloBetaCalibrado`): walk-forward 49.0→52.2 % con log-loss 1.047→0.998.
+- **Liga MX**: `MEX.csv` siempre tuvo cuotas de CIERRE (`AvgC*`, 100 % de
+  cobertura) — el parser leía las de apertura, inexistentes. Con el fix:
+  cuotas como features (walk-forward +1.7 pp / −0.028) y primera línea base
+  de mercado para MX (53.5 %). En vivo, las cuotas del día llegan de la
+  página diaria de Betexplorer (`cuotas_clubes_hoy`, única fuente gratuita
+  MX).
+- **EV en la plantilla**: nueva sección "💰 Cuotas reales y valor" en el
+  Mundial y las 8 ligas — cuota real (decimal y americana), EV % e indicador
+  🟢/🟡/⚪/🔴 por mercado, con N/D honesto cuando no hay cuotas vigentes.
+- Alineaciones confirmadas: pospuesta otra vez con evidencia (sin histórico
+  gratuito backtesteable; xG/90 por jugador no computable con Kaggle).
+
 ## Novedades v17 — Ligas de clubes más precisas (ver [VALIDACION_v17.md](VALIDACION_v17.md))
 
 - **Ciclo de experimentos por liga** ([run_league_experiments.py](run_league_experiments.py)):

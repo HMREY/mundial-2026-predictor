@@ -59,6 +59,56 @@ def _entropias_ripser(nube) -> np.ndarray:
     return np.array(ents)
 
 
+class ModeloBetaCalibrado:
+    """Ensemble XGB+RF+LGBM SIN isotónica + beta calibration one-vs-rest
+    (Kull et al. 2017), calibrada con el último 20 % del train (cronológico).
+
+    v18/M1: adoptada para Serie A — el modelo con cuotas de cierre pasaba de
+    49.0 %/1.047 a 53.4 %/1.062 (log-loss fuera de regla); con beta
+    calibration queda en 52.2 %/0.998 en walk-forward (VALIDACION_v18.md).
+    """
+
+    def __init__(self):
+        from train_tda_model import construir_ensemble
+        self.ensemble = construir_ensemble().estimator   # VotingClassifier crudo
+        self.calibradores = []
+        self.classes_ = np.array([0, 1, 2])
+
+    def fit(self, X, y):
+        from sklearn.linear_model import LogisticRegression
+        X, y = np.asarray(X), np.asarray(y)
+        n_cal = max(int(len(X) * 0.2), 150)
+        self.ensemble.fit(X[:-n_cal], y[:-n_cal])
+        self.classes_ = self.ensemble.classes_
+        p_cal = self.ensemble.predict_proba(X[-n_cal:])
+        y_cal = y[-n_cal:]
+        eps = 1e-6
+        self.calibradores = []
+        for k_idx, k in enumerate(self.classes_):
+            Xc = np.column_stack([
+                np.log(np.clip(p_cal[:, k_idx], eps, 1 - eps)),
+                -np.log(np.clip(1 - p_cal[:, k_idx], eps, 1 - eps))])
+            lr = LogisticRegression(max_iter=1000)
+            lr.fit(Xc, (y_cal == k).astype(int))
+            self.calibradores.append(lr)
+        return self
+
+    def predict_proba(self, X):
+        eps = 1e-6
+        p = self.ensemble.predict_proba(np.asarray(X))
+        out = np.zeros_like(p)
+        for k_idx, lr in enumerate(self.calibradores):
+            Xt = np.column_stack([
+                np.log(np.clip(p[:, k_idx], eps, 1 - eps)),
+                -np.log(np.clip(1 - p[:, k_idx], eps, 1 - eps))])
+            out[:, k_idx] = lr.predict_proba(Xt)[:, 1]
+        out /= out.sum(axis=1, keepdims=True)
+        return out
+
+    def predict(self, X):
+        return self.classes_[self.predict_proba(X).argmax(axis=1)]
+
+
 # ---------------------------------------------------------------------------
 # Features extra v17 (adoptadas por liga tras walk-forward — VALIDACION_v17)
 # ---------------------------------------------------------------------------
@@ -194,15 +244,23 @@ def descargar_liga(clave: str) -> pd.DataFrame:
             'odd_draw': pd.to_numeric(crudo.get('B365D'), errors='coerce'),
             'odd_away': pd.to_numeric(crudo.get('B365A'), errors='coerce'),
         })
-    else:  # 'new': solo goles + cuotas
+    else:  # 'new': goles + cuotas de CIERRE (v18: AvgC* tiene 100 % de
+        # cobertura en MEX.csv; AvgH/PH de apertura no existen en este formato)
+        def _odds(*cols):
+            serie = None
+            for c in cols:
+                s = pd.to_numeric(crudo.get(c), errors='coerce') \
+                    if c in crudo.columns else None
+                serie = s if serie is None else serie.fillna(s)
+            return serie
         df = pd.DataFrame({
             'date': pd.to_datetime(crudo['Date'], dayfirst=True, errors='coerce'),
             'home_team': crudo['Home'], 'away_team': crudo['Away'],
             'home_goals': pd.to_numeric(crudo['HG'], errors='coerce'),
             'away_goals': pd.to_numeric(crudo['AG'], errors='coerce'),
-            'odd_home': pd.to_numeric(crudo.get('AvgH', crudo.get('PH')), errors='coerce'),
-            'odd_draw': pd.to_numeric(crudo.get('AvgD', crudo.get('PD')), errors='coerce'),
-            'odd_away': pd.to_numeric(crudo.get('AvgA', crudo.get('PA')), errors='coerce'),
+            'odd_home': _odds('AvgCH', 'PSCH', 'B365CH', 'AvgH', 'PH'),
+            'odd_draw': _odds('AvgCD', 'PSCD', 'B365CD', 'AvgD', 'PD'),
+            'odd_away': _odds('AvgCA', 'PSCA', 'B365CA', 'AvgA', 'PA'),
         })
         # Liga MX: ventana configurable de temporadas (v13: 8 años)
         anios = cfg.get('anios_ventana', 4)
@@ -320,7 +378,15 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
     X_tr = np.hstack([X_tr_n, topo[m_tr]])
     X_va = np.hstack([X_va_n, topo[m_va]])
 
-    modelo = construir_ensemble()
+    # v18: calibración configurable por liga (Serie A usa beta calibration).
+    # La clase se toma del módulo IMPORTADO para que el pickle guarde
+    # 'league_engine.ModeloBetaCalibrado' aunque este archivo corra como
+    # __main__ (si no, ClubEngine no podría deserializarlo).
+    if LEAGUES[clave].get('calibracion') == 'beta':
+        import league_engine as _le
+        modelo = _le.ModeloBetaCalibrado()
+    else:
+        modelo = construir_ensemble()
     modelo.fit(X_tr, y[m_tr])
     proba = modelo.predict_proba(X_va)
     acc = accuracy_score(y[m_va], proba.argmax(axis=1))

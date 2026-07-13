@@ -1,0 +1,22 @@
+{
+  "baseline": {
+    "acc": 0.4905,
+    "logloss": 1.0382,
+    "ventanas": 6
+  },
+  "cuotas": {
+    "acc": 0.507,
+    "logloss": 1.0099,
+    "ventanas": 6
+  },
+  "mx_especiales": {
+    "acc": 0.491,
+    "logloss": 1.0305,
+    "ventanas": 6
+  },
+  "cuotas_mx": {
+    "acc": 0.5203,
+    "logloss": 1.0334,
+    "ventanas": 6
+  }
+}

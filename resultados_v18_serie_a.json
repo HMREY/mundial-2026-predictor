@@ -1,0 +1,27 @@
+{
+  "baseline": {
+    "acc": 0.4899,
+    "logloss": 1.047,
+    "ventanas": 2
+  },
+  "cuotas": {
+    "acc": 0.5341,
+    "logloss": 1.0615,
+    "ventanas": 2
+  },
+  "beta_cal": {
+    "acc": 0.5221,
+    "logloss": 0.9979,
+    "ventanas": 2
+  },
+  "blend_meta": {
+    "acc": 0.526,
+    "logloss": 1.0118,
+    "ventanas": 2
+  },
+  "overround": {
+    "acc": 0.4899,
+    "logloss": 1.0493,
+    "ventanas": 2
+  }
+}

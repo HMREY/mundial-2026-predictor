@@ -145,6 +145,15 @@ def actualizar_odds():
             nuevas = cuotas_mundial_hoy()
         except Exception as e:
             logger.warning(f"Betexplorer no disponible: {e}")
+    # Clubes en vivo (v18/M2): Betexplorer también lista Liga MX y europa;
+    # complementa a fixtures.csv (única vía gratuita de cuotas MX del día)
+    try:
+        from betexplorer_scraper import cuotas_clubes_hoy
+        clubes_hoy = cuotas_clubes_hoy()
+        if not clubes_hoy.empty:
+            fixtures = pd.concat([fixtures, clubes_hoy], ignore_index=True)
+    except Exception as e:
+        logger.warning(f"Betexplorer clubes no disponible: {e}")
 
     if not nuevas.empty:
         if os.path.exists(ODDS_FILE):

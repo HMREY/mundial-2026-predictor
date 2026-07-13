@@ -81,6 +81,10 @@ LEAGUES = {
         'nombre': 'Liga MX', 'pais': 'México', 'formato': 'new',
         'urls': [f'{FD_BASE}/new/MEX.csv'], 'anios_ventana': 8,
         'disponible': True,
+        # v18/M2 (walk-forward +1.7pp / -0.028): cuotas de CIERRE de MEX.csv
+        # (AvgC*, 100% de cobertura — el parser v12 leía las de apertura,
+        # inexistentes). En vivo: Betexplorer días de partido o media del train.
+        'features_extra': ['cuotas'],
     },
     'premier': {
         # Premier se mantiene en 3 temporadas: el experimento de 5 temporadas
@@ -105,6 +109,10 @@ LEAGUES = {
         # 3 temporadas: margen sobre ELO +0.9pp vs +0.0pp con 5 (v14)
         'urls': [f'{FD_BASE}/mmz4281/{s}/I1.csv' for s in ('2324', '2425', '2526')],
         'disponible': True,
+        # v18/M1 (walk-forward +3.2pp / -0.049): cuotas de cierre + beta
+        # calibration (la isotónica degradaba el log-loss con cuotas)
+        'features_extra': ['cuotas'],
+        'calibracion': 'beta',
     },
     'bundesliga': {
         'nombre': 'Bundesliga', 'pais': 'Alemania', 'formato': 'main',
