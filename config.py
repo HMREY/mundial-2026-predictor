@@ -86,8 +86,20 @@ LEAGUES = {
         # inexistentes). En vivo: Betexplorer días de partido o media del train.
         # v19 (walk-forward +1.0pp adicional, 51.7%/1.011): + features MX
         # (altitud/distancia/liguilla/apertura) + beta calibration.
-        'features_extra': ['cuotas', 'mx'],
+        # v24 (walk-forward 50.46→50.84, +0.38pp): + índice compuesto IMT
+        'features_extra': ['cuotas', 'mx', 'imt_c'],
         'calibracion': 'beta',
+    },
+    'mls': {
+        # v24: MLS con USA.csv de football-data (formato 'new', igual que
+        # MEX.csv: goles + cuotas de CIERRE AvgC*/PSC*/B365C* con cobertura
+        # total). Fuente verificada 2026-07-16 — 6,000+ partidos desde 2012.
+        # FBref/Playwright del master prompt innecesario: esta fuente es
+        # estable y accesible desde Streamlit Cloud.
+        'nombre': 'MLS', 'pais': 'Estados Unidos/Canadá', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/USA.csv'], 'anios_ventana': 8,
+        'disponible': True,
+        'features_extra': ['cuotas'],
     },
     'premier': {
         # Premier se mantiene en 3 temporadas: el experimento de 5 temporadas
@@ -104,7 +116,8 @@ LEAGUES = {
                  for s in ('2122', '2223', '2324', '2425', '2526')],
         'disponible': True,
         # v17 (walk-forward +1.5pp / -0.055): cuotas de cierre como features
-        'features_extra': ['cuotas'],
+        # v24 (walk-forward 53.09→53.33, ll 1.0328→0.9908): + componentes IMT
+        'features_extra': ['cuotas', 'imt'],
     },
     # v14: grandes ligas europeas (mismo formato 'main' con stats + cuotas B365)
     'serie_a': {
@@ -123,7 +136,8 @@ LEAGUES = {
                  for s in ('2122', '2223', '2324', '2425', '2526')],
         'disponible': True,
         # v17 (walk-forward +0.5pp / +0.003): H2H + descanso + rachas + tabla
-        'features_extra': ['extras'],
+        # v24 (walk-forward 49.55→49.81, ll 1.0247→1.0213): + índice IMT
+        'features_extra': ['extras', 'imt_c'],
     },
     'ligue_1': {
         'nombre': 'Ligue 1', 'pais': 'Francia', 'formato': 'main',
@@ -139,7 +153,8 @@ LEAGUES = {
                  for s in ('2122', '2223', '2324', '2425', '2526')],
         'disponible': True,
         # v17 (walk-forward +0.4pp / -0.023): cuotas de cierre como features
-        'features_extra': ['cuotas'],
+        # v24 (walk-forward 52.21→52.82, +0.61pp): + índice compuesto IMT
+        'features_extra': ['cuotas', 'imt_c'],
     },
     'primeira': {
         'nombre': 'Primeira Liga', 'pais': 'Portugal', 'formato': 'main',
@@ -148,6 +163,8 @@ LEAGUES = {
                  for s in ('1617', '1718', '1819', '1920', '2021',
                            '2122', '2223', '2324', '2425', '2526')],
         'disponible': True,
+        # v24 (walk-forward 56.52→57.16, +0.64pp): componentes IMT
+        'features_extra': ['imt'],
     },
     'champions': {
         # v21: activada con API-Football (plan Free). LIMITACIÓN honesta del

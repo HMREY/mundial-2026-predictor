@@ -54,6 +54,18 @@ def _dataset_liga(clave: str):
         extras_df, _ = league_engine.features_extra_liga(df)
         if 'mx' in LEAGUES[clave].get('features_extra', []):
             extras_df = extras_df.join(league_engine.features_mx(df))
+        grupos = LEAGUES[clave].get('features_extra', [])
+        if 'imt' in grupos or 'imt_c' in grupos:                # v24
+            import momentum_tactico as _mt
+            imt_df, _ = _mt.features_imt(df)
+            if 'imt_c' in grupos:
+                # coeficientes con datos ANTERIORES a la primera ventana
+                # (quantile 0.60) — todo train de toda ventana los contiene
+                fechas_df = df['date']
+                coef = _mt.optimizar_coeficientes(
+                    df, imt_df, hasta_fecha=fechas_df.quantile(0.60))['coef']
+                imt_df = imt_df.join(_mt.indice_compuesto(imt_df, coef))
+            extras_df = extras_df.join(imt_df)
         ids = [m[3] for m in ds['meta']]
         ext = extras_df.reindex(ids).reset_index(drop=True)
         for c in cols_extra:

@@ -74,24 +74,35 @@ class MetaEnsemble:
         self.lr = LogisticRegression(max_iter=2000, C=1.0)
 
     @staticmethod
-    def _z(p_base: np.ndarray, mkt: np.ndarray) -> np.ndarray:
-        return np.column_stack([
+    def _z(p_base: np.ndarray, mkt: np.ndarray,
+           extra: Optional[np.ndarray] = None) -> np.ndarray:
+        z = np.column_stack([
             np.log(np.clip(p_base, EPS, 1.0)),
             np.log(np.clip(mkt[:, :3], EPS, 1.0)),
             mkt[:, 3:4],
         ])
+        # v24 (estrategia E): features adicionales del meta (p. ej. las
+        # componentes IMT como diffs local−visitante), ya normalizadas.
+        if extra is not None:
+            z = np.column_stack([z, extra])
+        return z
 
     def fit(self, y: np.ndarray, p_base: np.ndarray, mkt: np.ndarray,
-            asimetrico: bool = True):
+            asimetrico: bool = True, extra: Optional[np.ndarray] = None):
         """asimetrico=False → stacking clásico (ablación científica: aísla
         cuánto aporta la pérdida asimétrica frente a la mera combinación)."""
         w = pesos_asimetricos(y, p_base, mkt[:, :3]) if asimetrico else None
-        self.lr.fit(self._z(p_base, mkt), y, sample_weight=w)
+        self.n_extra = 0 if extra is None else int(extra.shape[1])
+        self.lr.fit(self._z(p_base, mkt, extra), y, sample_weight=w)
         return self
 
-    def predict_proba(self, p_base: np.ndarray, mkt: np.ndarray) -> np.ndarray:
+    def predict_proba(self, p_base: np.ndarray, mkt: np.ndarray,
+                      extra: Optional[np.ndarray] = None) -> np.ndarray:
+        # pickles v23 no tienen n_extra: se asume 0 (retro-compatible)
+        if getattr(self, 'n_extra', 0) and extra is None:
+            raise ValueError('este MetaEnsemble se entrenó con features extra')
         p = np.zeros((len(p_base), 3))
-        proba = self.lr.predict_proba(self._z(p_base, mkt))
+        proba = self.lr.predict_proba(self._z(p_base, mkt, extra))
         for k_idx, k in enumerate(self.lr.classes_):
             p[:, int(k)] = proba[:, k_idx]
         return p / p.sum(axis=1, keepdims=True)

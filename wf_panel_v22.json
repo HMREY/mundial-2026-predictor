@@ -4,55 +4,55 @@
       {
         "ventana": "2023-04-01 → 2023-10-01",
         "n": 148,
-        "precision": 0.5203,
-        "log_loss": 1.0853,
+        "precision": 0.5,
+        "log_loss": 1.0831,
         "precision_mercado": 0.4932
       },
       {
         "ventana": "2023-10-01 → 2024-04-01",
         "n": 199,
-        "precision": 0.5226,
-        "log_loss": 1.0024,
+        "precision": 0.5276,
+        "log_loss": 0.9982,
         "precision_mercado": 0.5427
       },
       {
         "ventana": "2024-04-01 → 2024-10-01",
         "n": 148,
-        "precision": 0.4865,
-        "log_loss": 1.0362,
+        "precision": 0.5,
+        "log_loss": 1.0316,
         "precision_mercado": 0.5203
       },
       {
         "ventana": "2024-10-01 → 2025-04-01",
         "n": 195,
-        "precision": 0.5128,
-        "log_loss": 0.994,
+        "precision": 0.5231,
+        "log_loss": 0.9976,
         "precision_mercado": 0.5333
       },
       {
         "ventana": "2025-04-01 → 2025-10-01",
         "n": 152,
-        "precision": 0.5197,
-        "log_loss": 0.9894,
+        "precision": 0.5395,
+        "log_loss": 0.9959,
         "precision_mercado": 0.5461
       },
       {
         "ventana": "2025-10-01 → 2026-04-01",
         "n": 177,
-        "precision": 0.5367,
-        "log_loss": 0.9831,
+        "precision": 0.548,
+        "log_loss": 0.9777,
         "precision_mercado": 0.5311
       },
       {
         "ventana": "2026-04-01 → 2026-10-01",
         "n": 60,
-        "precision": 0.4333,
-        "log_loss": 1.0774,
+        "precision": 0.45,
+        "log_loss": 1.0805,
         "precision_mercado": 0.4833
       }
     ],
-    "precision_media": 0.5046,
-    "log_loss_medio": 1.024,
+    "precision_media": 0.5126,
+    "log_loss_medio": 1.0235,
     "precision_mercado_media": 0.5214
   },
   "premier": {
@@ -88,34 +88,34 @@
       {
         "ventana": "2024-08-01 → 2025-02-01",
         "n": 208,
-        "precision": 0.5048,
-        "log_loss": 1.1725,
+        "precision": 0.5144,
+        "log_loss": 1.013,
         "precision_mercado": 0.5192
       },
       {
         "ventana": "2025-02-01 → 2025-08-01",
         "n": 169,
-        "precision": 0.5799,
-        "log_loss": 0.9743,
+        "precision": 0.568,
+        "log_loss": 0.9608,
         "precision_mercado": 0.5799
       },
       {
         "ventana": "2025-08-01 → 2026-02-01",
         "n": 211,
         "precision": 0.545,
-        "log_loss": 0.9764,
+        "log_loss": 0.9702,
         "precision_mercado": 0.564
       },
       {
         "ventana": "2026-02-01 → 2026-08-01",
         "n": 166,
-        "precision": 0.494,
-        "log_loss": 1.0078,
+        "precision": 0.506,
+        "log_loss": 1.019,
         "precision_mercado": 0.5301
       }
     ],
-    "precision_media": 0.5309,
-    "log_loss_medio": 1.0328,
+    "precision_media": 0.5333,
+    "log_loss_medio": 0.9908,
     "precision_mercado_media": 0.5483
   },
   "serie_a": {
@@ -151,34 +151,34 @@
       {
         "ventana": "2024-08-01 → 2025-02-01",
         "n": 166,
-        "precision": 0.5602,
-        "log_loss": 0.9833,
+        "precision": 0.5361,
+        "log_loss": 0.9773,
         "precision_mercado": 0.5843
       },
       {
         "ventana": "2025-02-01 → 2025-08-01",
         "n": 134,
         "precision": 0.3507,
-        "log_loss": 1.1415,
+        "log_loss": 1.1223,
         "precision_mercado": 0.4179
       },
       {
         "ventana": "2025-08-01 → 2026-02-01",
         "n": 174,
-        "precision": 0.5287,
-        "log_loss": 1.0063,
+        "precision": 0.5402,
+        "log_loss": 1.0027,
         "precision_mercado": 0.5632
       },
       {
         "ventana": "2026-02-01 → 2026-08-01",
         "n": 129,
-        "precision": 0.5426,
-        "log_loss": 0.9678,
+        "precision": 0.5271,
+        "log_loss": 0.9881,
         "precision_mercado": 0.5349
       }
     ],
-    "precision_media": 0.4955,
-    "log_loss_medio": 1.0247,
+    "precision_media": 0.4885,
+    "log_loss_medio": 1.0226,
     "precision_mercado_media": 0.5251
   },
   "ligue_1": {
@@ -228,34 +228,34 @@
       {
         "ventana": "2024-08-01 → 2025-02-01",
         "n": 175,
-        "precision": 0.5486,
-        "log_loss": 0.9458,
+        "precision": 0.5314,
+        "log_loss": 0.9376,
         "precision_mercado": 0.56
       },
       {
         "ventana": "2025-02-01 → 2025-08-01",
         "n": 128,
-        "precision": 0.5234,
-        "log_loss": 0.9977,
+        "precision": 0.5156,
+        "log_loss": 1.002,
         "precision_mercado": 0.5156
       },
       {
         "ventana": "2025-08-01 → 2026-02-01",
         "n": 179,
-        "precision": 0.5084,
-        "log_loss": 1.1686,
+        "precision": 0.5307,
+        "log_loss": 1.1713,
         "precision_mercado": 0.5196
       },
       {
         "ventana": "2026-02-01 → 2026-08-01",
         "n": 124,
-        "precision": 0.5081,
-        "log_loss": 1.0095,
+        "precision": 0.4919,
+        "log_loss": 1.0248,
         "precision_mercado": 0.5565
       }
     ],
-    "precision_media": 0.5221,
-    "log_loss_medio": 1.0304,
+    "precision_media": 0.5174,
+    "log_loss_medio": 1.0339,
     "precision_mercado_media": 0.5379
   },
   "primeira": {
@@ -263,62 +263,111 @@
       {
         "ventana": "2022-08-01 → 2023-02-01",
         "n": 157,
-        "precision": 0.5605,
-        "log_loss": 0.9362,
+        "precision": 0.586,
+        "log_loss": 0.9349,
         "precision_mercado": 0.586
       },
       {
         "ventana": "2023-02-01 → 2023-08-01",
         "n": 146,
-        "precision": 0.6781,
-        "log_loss": 0.8188,
+        "precision": 0.6644,
+        "log_loss": 0.8222,
         "precision_mercado": 0.6759
       },
       {
         "ventana": "2023-08-01 → 2024-02-01",
         "n": 168,
-        "precision": 0.5833,
-        "log_loss": 0.9401,
+        "precision": 0.5655,
+        "log_loss": 0.9405,
         "precision_mercado": 0.5833
       },
       {
         "ventana": "2024-02-01 → 2024-08-01",
         "n": 135,
-        "precision": 0.5407,
-        "log_loss": 1.2127,
+        "precision": 0.5481,
+        "log_loss": 1.1941,
         "precision_mercado": 0.5704
       },
       {
         "ventana": "2024-08-01 → 2025-02-01",
         "n": 169,
-        "precision": 0.5148,
-        "log_loss": 0.9926,
+        "precision": 0.5325,
+        "log_loss": 0.9757,
         "precision_mercado": 0.5503
       },
       {
         "ventana": "2025-02-01 → 2025-08-01",
         "n": 134,
-        "precision": 0.5224,
-        "log_loss": 0.9435,
+        "precision": 0.5448,
+        "log_loss": 0.9465,
         "precision_mercado": 0.5672
       },
       {
         "ventana": "2025-08-01 → 2026-02-01",
         "n": 172,
-        "precision": 0.5872,
-        "log_loss": 0.938,
+        "precision": 0.6047,
+        "log_loss": 0.9307,
         "precision_mercado": 0.6047
       },
       {
         "ventana": "2026-02-01 → 2026-08-01",
         "n": 131,
-        "precision": 0.5344,
-        "log_loss": 0.977,
+        "precision": 0.5267,
+        "log_loss": 0.9796,
         "precision_mercado": 0.5115
       }
     ],
-    "precision_media": 0.5652,
-    "log_loss_medio": 0.9699,
+    "precision_media": 0.5716,
+    "log_loss_medio": 0.9655,
     "precision_mercado_media": 0.5812
+  },
+  "mls": {
+    "ventanas": [
+      {
+        "ventana": "2023-07-01 → 2024-01-01",
+        "n": 242,
+        "precision": 0.4793,
+        "log_loss": 1.033,
+        "precision_mercado": 0.4876
+      },
+      {
+        "ventana": "2024-01-01 → 2024-07-01",
+        "n": 293,
+        "precision": 0.4334,
+        "log_loss": 1.0596,
+        "precision_mercado": 0.4505
+      },
+      {
+        "ventana": "2024-07-01 → 2025-01-01",
+        "n": 229,
+        "precision": 0.4672,
+        "log_loss": 1.0332,
+        "precision_mercado": 0.4716
+      },
+      {
+        "ventana": "2025-01-01 → 2025-07-01",
+        "n": 288,
+        "precision": 0.4479,
+        "log_loss": 1.0406,
+        "precision_mercado": 0.4896
+      },
+      {
+        "ventana": "2025-07-01 → 2026-01-01",
+        "n": 249,
+        "precision": 0.4699,
+        "log_loss": 1.0444,
+        "precision_mercado": 0.51
+      },
+      {
+        "ventana": "2026-01-01 → 2026-07-01",
+        "n": 218,
+        "precision": 0.5229,
+        "log_loss": 1.0238,
+        "precision_mercado": 0.5092
+      }
+    ],
+    "precision_media": 0.4701,
+    "log_loss_medio": 1.0391,
+    "precision_mercado_media": 0.4864
   }
 }

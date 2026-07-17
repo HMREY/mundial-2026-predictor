@@ -593,12 +593,14 @@ def render_liga_club(clave: str, nombre_liga: str):
 
 
 COMPETENCIAS = {'🌎 Mundial 2026': 'mundial', '🇲🇽 Liga MX': 'liga_mx',
+                '🇺🇸 MLS': 'mls',
                 '🏴 Premier League': 'premier', '🇪🇸 LaLiga': 'laliga',
                 '🇮🇹 Serie A': 'serie_a', '🇩🇪 Bundesliga': 'bundesliga',
                 '🇫🇷 Ligue 1': 'ligue_1', '🇳🇱 Eredivisie': 'eredivisie',
                 '🇵🇹 Primeira Liga': 'primeira',
                 '🇪🇺 Champions League': 'champions'}
-NOMBRES_LIGAS = {'liga_mx': 'Liga MX', 'premier': 'Premier League',
+NOMBRES_LIGAS = {'liga_mx': 'Liga MX', 'mls': 'MLS',
+                 'premier': 'Premier League',
                  'laliga': 'LaLiga', 'serie_a': 'Serie A',
                  'bundesliga': 'Bundesliga', 'ligue_1': 'Ligue 1',
                  'eredivisie': 'Eredivisie', 'primeira': 'Primeira Liga',

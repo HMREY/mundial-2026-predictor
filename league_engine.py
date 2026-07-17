@@ -31,6 +31,7 @@ import pandas as pd
 import requests
 
 import feature_engineering as fe
+import momentum_tactico as mt
 import statsbomb_calibration
 from config import LEAGUES
 from correlated_synthetic_generator import CorrelatedSyntheticGenerator
@@ -175,6 +176,10 @@ def columnas_extra(clave: str) -> list:
         cols += COLS_CUOTAS
     if 'mx' in grupos:
         cols += COLS_MX
+    if 'imt' in grupos:
+        cols += mt.COLS_IMT
+    if 'imt_c' in grupos:          # v24: variante de índice compuesto
+        cols += mt.COLS_IMT_C
     return cols
 
 
@@ -560,11 +565,25 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
     # v17: features extra adoptadas por liga tras walk-forward (VALIDACION_v17)
     cols_extra = columnas_extra(clave)
     estado_extra = None
+    estado_imt = None
+    imt_coef = None
     medias_cuotas = {}
     if cols_extra:
+        grupos = LEAGUES[clave].get('features_extra', [])
         extras_df, estado_extra = features_extra_liga(df)
-        if 'mx' in LEAGUES[clave].get('features_extra', []):
+        if 'mx' in grupos:
             extras_df = extras_df.join(features_mx(df))
+        # v24: Índice de Momentum Táctico (walk-forward por liga en
+        # run_wf_imt_v24.py; solo las ligas donde superó la regla de oro
+        # llevan 'imt' — componentes — o 'imt_c' — índice compuesto con
+        # α,β,γ,δ ajustados en train-only — en features_extra)
+        if 'imt' in grupos or 'imt_c' in grupos:
+            imt_df, estado_imt = mt.features_imt(df)
+            if 'imt_c' in grupos:
+                imt_coef = mt.optimizar_coeficientes(
+                    df, imt_df, hasta_fecha=fechas.quantile(0.80))['coef']
+                imt_df = imt_df.join(mt.indice_compuesto(imt_df, imt_coef))
+            extras_df = extras_df.join(imt_df)
         ids = [m[3] for m in ds['meta']]
         ext = extras_df.reindex(ids).reset_index(drop=True)
         X_df = X_df.reset_index(drop=True).copy()
@@ -757,7 +776,9 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
         json.dump({'generado': pd.Timestamp.today().strftime('%Y-%m-%d'),
                    'ultima_fecha_historico': str(df['date'].max().date()),
                    'equipos': equipos, 'h2h': h2h,
-                   'estado_extra': estado_extra}, f, ensure_ascii=False)
+                   'estado_extra': estado_extra,
+                   'estado_imt': estado_imt,
+                   'imt_coef': imt_coef}, f, ensure_ascii=False)
 
     metadata = {
         'liga': LEAGUES[clave]['nombre'],
@@ -772,6 +793,9 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
         'medias_cuotas': medias_cuotas,
         'roi_sim': roi_sim,
         'mesm': mesm_info,
+        # v24: α,β,γ,δ del índice lineal IMT (train-only, interpretabilidad)
+        'imt': (mt.optimizar_coeficientes(df, imt_df, hasta_fecha=corte)
+                if estado_imt is not None else None),
     }
     with open(os.path.join(carpeta, 'metadata.json'), 'w', encoding='utf-8') as f:
         json.dump(metadata, f, ensure_ascii=False, indent=2)
@@ -814,6 +838,8 @@ class ClubEngine:
             self.stats = ts['equipos']
             self.h2h = ts.get('h2h', {})
             self.estado_extra = ts.get('estado_extra')
+            self.estado_imt = ts.get('estado_imt')   # v24 (IMT)
+            self.imt_coef = ts.get('imt_coef')       # v24 (índice compuesto)
             self.fecha_estado = ts.get('ultima_fecha_historico', '?')
             with open('calibracion_statsbomb.json', 'r', encoding='utf-8') as f:
                 self.calibracion = json.load(f)
@@ -878,6 +904,12 @@ class ClubEngine:
         # features MX (v19): geografía + calendario, computables al vuelo
         if any(c in cols for c in COLS_MX):
             valores.update(_fila_mx(home, away, hoy))
+        # IMT (v24): componentes o índice compuesto desde el estado guardado
+        if any(c in cols for c in mt.COLS_IMT + mt.COLS_IMT_C):
+            v_imt = mt.vector_imt(self.estado_imt, home, away, hoy)
+            valores.update(v_imt)
+            if 'IMT_DIFF' in cols:
+                valores['IMT_DIFF'] = mt.valor_compuesto(v_imt, self.imt_coef or {})
         return np.array([[valores[c] for c in cols]])
 
     def predecir(self, home: str, away: str) -> Dict:
@@ -921,6 +953,23 @@ class ClubEngine:
         M, marcador, p_marc = self._pe._monte_carlo(lam_h, lam_a, probs)
         timeline = self._pe._linea_de_tiempo(lam_h, lam_a)
         ganador_idx = int(np.argmax(probs))
+        # v24: insight de momentum en lenguaje llano (solo si el IMT está
+        # adoptado en esta liga y hay estado suficiente)
+        insights_imt = []
+        cols_liga = self.metadata.get('features_extra_cols', [])
+        if self.estado_imt and any(c.startswith('IMT') for c in cols_liga):
+            v_imt = mt.vector_imt(self.estado_imt, home, away)
+            d_m, d_f = v_imt['IMT_M_DIFF'], v_imt['IMT_FAT_DIFF']
+            if abs(d_m) >= 0.15:
+                mejor = home if d_m > 0 else away
+                insights_imt.append(
+                    f"📈 Momentum: {mejor} llega en mejor racha reciente "
+                    f"(índice táctico {abs(d_m):+.2f} a su favor).")
+            if abs(d_f) >= 0.25:
+                fresco = home if d_f > 0 else away
+                insights_imt.append(
+                    f"🔋 Calendario: {fresco} llega más descansado "
+                    f"(menos partidos en los últimos 14 días).")
         return {
             'match': f'{home} vs {away}', 'liga': LEAGUES[self.clave]['nombre'],
             'estado_al': self.fecha_estado,
@@ -939,7 +988,8 @@ class ClubEngine:
             'insights': [
                 f"Nivel dinámico: {home} {s_l['ELO']:.0f} vs {away} {s_v['ELO']:.0f}.",
                 f"Forma (últimos 5): {home} {s_l['FORMA_MA5']:.2f} · {away} {s_v['FORMA_MA5']:.2f}.",
-            ] + (["🧠 Probabilidades del meta-ensemble MESM: el modelo se combina "
+            ] + insights_imt
+              + (["🧠 Probabilidades del meta-ensemble MESM: el modelo se combina "
                   "con las cuotas vigentes del partido (objetivo asimétrico "
                   "validado en walk-forward)."] if mesm_aplicado else []),
             'model': {'accuracy_backtest': self.metadata['precision_validacion'],

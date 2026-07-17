@@ -1,5 +1,32 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v24 — FotMob, MLS y el Índice de Momentum Táctico (ver [VALIDACION_v24.md](VALIDACION_v24.md))
+
+- **📈 Índice de Momentum Táctico (IMT)** ([momentum_tactico.py](momentum_tactico.py)):
+  IMT = α·M + β·ΔxG + γ·F + δ·P — momentum exponencial de resultados,
+  tendencia de xG, fatiga por congestión y subidón/bajón tras resultados
+  extremos, en pase cronológico SIN fuga. A/B de tres variantes en
+  walk-forward por liga: **adoptado en 5 de 10 ligas** (Liga MX +0.4 pp,
+  Eredivisie +0.6, Primeira +0.6, LaLiga ll −0.042, Bundesliga +0.3);
+  descartado con evidencia en Premier/Serie A/Ligue 1/MLS/Champions.
+- **🏆 Liga MX cruza el objetivo: 55.4 % vs mercado 53.5 %** (IMT compuesto
+  + MESM revalidado). Primeira también bate al mercado (56.2 % vs 56.1 %).
+- **🇺🇸 MLS operativa** (fuente estable USA.csv de football-data con cuotas
+  de cierre, 6,000+ partidos): 47.2 % de modelo puro y **50.0 % con MESM**
+  (mercado 50.1) — empata al mercado desde el día uno.
+- **🔎 FotMob desbloqueado** ([fotmob_scraper.py](fotmob_scraper.py)): su API
+  está blindada (header firmado x-mas), pero el JSON `__NEXT_DATA__` de cada
+  página expone xG real, remates por JUGADOR con xG por tiro, defensivas
+  (entradas/intercepciones/despejes), ratings y clima. Caché incremental
+  commiteable + paso en el pipeline; las features llegarán cuando la
+  cobertura permita validarlas (protocolo clima v23).
+- **❌ Soccer24 inviable, documentado** ([soccer24_scraper.py](soccer24_scraper.py)):
+  el endpoint `/api/matches/{id}/statistics` del plan NO existe (404); sus
+  feeds reales exigen firma `x-fsign` generada en cliente. FotMob cubre lo
+  que se esperaba de él.
+- **🧪 Estrategia E (IMT dentro del meta MESM): descartada en TODAS las
+  ligas** — donde el momentum es señal, ya entró por el modelo base.
+
 ## Novedades v23 — Anulación táctica, meta-ensemble de mercado y móvil (ver [VALIDACION_v23.md](VALIDACION_v23.md))
 
 - **⚡ Modelo de Anulación Táctica (MAT)** ([anulacion_tactica.py](anulacion_tactica.py)):

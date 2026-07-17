@@ -1,0 +1,968 @@
+{
+  "liga_mx": {
+    "liga": "liga_mx",
+    "ventanas": [
+      {
+        "ventana": "2023-05-01 → 2023-11-01",
+        "n": 145,
+        "acc_base": 0.5034,
+        "acc_mesm_d": 0.531,
+        "acc_mesm_e": 0.5241,
+        "acc_mercado": 0.531,
+        "ll_base": 1.0493,
+        "ll_mesm_d": 1.0535,
+        "ll_mesm_e": 1.0628,
+        "roi_mesm_d": {
+          "n_apuestas": 46,
+          "aciertos": 21,
+          "roi_pct": -18.63
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 50,
+          "aciertos": 22,
+          "roi_pct": -22.54
+        }
+      },
+      {
+        "ventana": "2023-11-01 → 2024-05-01",
+        "n": 198,
+        "acc_base": 0.5202,
+        "acc_mesm_d": 0.5152,
+        "acc_mesm_e": 0.5051,
+        "acc_mercado": 0.5152,
+        "ll_base": 1.0291,
+        "ll_mesm_d": 0.9863,
+        "ll_mesm_e": 0.9914,
+        "roi_mesm_d": {
+          "n_apuestas": 99,
+          "aciertos": 53,
+          "roi_pct": -4.04
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 99,
+          "aciertos": 53,
+          "roi_pct": -3.79
+        }
+      },
+      {
+        "ventana": "2024-05-01 → 2024-11-01",
+        "n": 144,
+        "acc_base": 0.4722,
+        "acc_mesm_d": 0.5208,
+        "acc_mesm_e": 0.5,
+        "acc_mercado": 0.5139,
+        "ll_base": 1.0232,
+        "ll_mesm_d": 0.9876,
+        "ll_mesm_e": 1.0031,
+        "roi_mesm_d": {
+          "n_apuestas": 52,
+          "aciertos": 29,
+          "roi_pct": -6.48
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 46,
+          "aciertos": 28,
+          "roi_pct": 5.59
+        }
+      },
+      {
+        "ventana": "2024-11-01 → 2025-05-01",
+        "n": 198,
+        "acc_base": 0.5101,
+        "acc_mesm_d": 0.5657,
+        "acc_mesm_e": 0.5505,
+        "acc_mercado": 0.5354,
+        "ll_base": 1.0036,
+        "ll_mesm_d": 0.9694,
+        "ll_mesm_e": 0.9665,
+        "roi_mesm_d": {
+          "n_apuestas": 55,
+          "aciertos": 31,
+          "roi_pct": -4.87
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 71,
+          "aciertos": 43,
+          "roi_pct": 3.76
+        }
+      },
+      {
+        "ventana": "2025-05-01 → 2025-11-01",
+        "n": 150,
+        "acc_base": 0.5267,
+        "acc_mesm_d": 0.5533,
+        "acc_mesm_e": 0.56,
+        "acc_mercado": 0.54,
+        "ll_base": 1.0,
+        "ll_mesm_d": 0.9442,
+        "ll_mesm_e": 0.9399,
+        "roi_mesm_d": {
+          "n_apuestas": 82,
+          "aciertos": 49,
+          "roi_pct": 0.85
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 82,
+          "aciertos": 51,
+          "roi_pct": 3.95
+        }
+      },
+      {
+        "ventana": "2025-11-01 → 2026-05-01",
+        "n": 187,
+        "acc_base": 0.5241,
+        "acc_mesm_d": 0.5027,
+        "acc_mesm_e": 0.5134,
+        "acc_mercado": 0.5348,
+        "ll_base": 1.002,
+        "ll_mesm_d": 1.0158,
+        "ll_mesm_e": 1.0083,
+        "roi_mesm_d": {
+          "n_apuestas": 109,
+          "aciertos": 63,
+          "roi_pct": -5.45
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 109,
+          "aciertos": 60,
+          "roi_pct": -9.06
+        }
+      }
+    ],
+    "acc_base": 0.5095,
+    "acc_mercado": 0.5284,
+    "acc_mesm_d": 0.5315,
+    "acc_mesm_e": 0.5255,
+    "ll_base": 1.0179,
+    "ll_mesm_d": 0.9928,
+    "ll_mesm_e": 0.9953,
+    "golden_d": true,
+    "golden_e": true
+  },
+  "mls": {
+    "liga": "mls",
+    "ventanas": [
+      {
+        "ventana": "2023-08-01 → 2024-02-01",
+        "n": 185,
+        "acc_base": 0.4757,
+        "acc_mesm_d": 0.4486,
+        "acc_mesm_e": 0.4432,
+        "acc_mercado": 0.4757,
+        "ll_base": 1.0375,
+        "ll_mesm_d": 1.0086,
+        "ll_mesm_e": 1.0258,
+        "roi_mesm_d": {
+          "n_apuestas": 36,
+          "aciertos": 23,
+          "roi_pct": 4.44
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 61,
+          "aciertos": 32,
+          "roi_pct": -11.41
+        }
+      },
+      {
+        "ventana": "2024-02-01 → 2024-08-01",
+        "n": 361,
+        "acc_base": 0.446,
+        "acc_mesm_d": 0.4765,
+        "acc_mesm_e": 0.4598,
+        "acc_mercado": 0.4709,
+        "ll_base": 1.0449,
+        "ll_mesm_d": 1.0332,
+        "ll_mesm_e": 1.0369,
+        "roi_mesm_d": {
+          "n_apuestas": 117,
+          "aciertos": 73,
+          "roi_pct": 0.81
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 118,
+          "aciertos": 74,
+          "roi_pct": 5.19
+        }
+      },
+      {
+        "ventana": "2024-08-01 → 2025-02-01",
+        "n": 161,
+        "acc_base": 0.4472,
+        "acc_mesm_d": 0.4907,
+        "acc_mesm_e": 0.5155,
+        "acc_mercado": 0.4348,
+        "ll_base": 1.0588,
+        "ll_mesm_d": 1.0462,
+        "ll_mesm_e": 1.0478,
+        "roi_mesm_d": {
+          "n_apuestas": 41,
+          "aciertos": 23,
+          "roi_pct": -8.07
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 48,
+          "aciertos": 27,
+          "roi_pct": -1.67
+        }
+      },
+      {
+        "ventana": "2025-02-01 → 2025-08-01",
+        "n": 361,
+        "acc_base": 0.4377,
+        "acc_mesm_d": 0.4903,
+        "acc_mesm_e": 0.4931,
+        "acc_mercado": 0.4931,
+        "ll_base": 1.0495,
+        "ll_mesm_d": 1.0236,
+        "ll_mesm_e": 1.0179,
+        "roi_mesm_d": {
+          "n_apuestas": 108,
+          "aciertos": 59,
+          "roi_pct": 10.46
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 109,
+          "aciertos": 62,
+          "roi_pct": 16.49
+        }
+      },
+      {
+        "ventana": "2025-08-01 → 2026-02-01",
+        "n": 176,
+        "acc_base": 0.4602,
+        "acc_mesm_d": 0.5057,
+        "acc_mesm_e": 0.4943,
+        "acc_mercado": 0.5114,
+        "ll_base": 1.0471,
+        "ll_mesm_d": 1.0382,
+        "ll_mesm_e": 1.036,
+        "roi_mesm_d": {
+          "n_apuestas": 66,
+          "aciertos": 35,
+          "roi_pct": 0.52
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 69,
+          "aciertos": 36,
+          "roi_pct": 2.72
+        }
+      },
+      {
+        "ventana": "2026-02-01 → 2026-08-01",
+        "n": 218,
+        "acc_base": 0.4908,
+        "acc_mesm_d": 0.5046,
+        "acc_mesm_e": 0.4679,
+        "acc_mercado": 0.5092,
+        "ll_base": 1.0299,
+        "ll_mesm_d": 1.0362,
+        "ll_mesm_e": 1.0516,
+        "roi_mesm_d": {
+          "n_apuestas": 75,
+          "aciertos": 39,
+          "roi_pct": -2.75
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 81,
+          "aciertos": 42,
+          "roi_pct": -1.49
+        }
+      }
+    ],
+    "acc_base": 0.4596,
+    "acc_mercado": 0.4825,
+    "acc_mesm_d": 0.4861,
+    "acc_mesm_e": 0.479,
+    "ll_base": 1.0446,
+    "ll_mesm_d": 1.031,
+    "ll_mesm_e": 1.036,
+    "golden_d": true,
+    "golden_e": true
+  },
+  "premier": {
+    "liga": "premier",
+    "ventanas": [
+      {
+        "ventana": "2025-05-01 → 2025-11-01",
+        "n": 125,
+        "acc_base": 0.456,
+        "acc_mesm_d": 0.528,
+        "acc_mesm_e": 0.504,
+        "acc_mercado": 0.512,
+        "ll_base": 1.0366,
+        "ll_mesm_d": 1.0121,
+        "ll_mesm_e": 1.0285,
+        "roi_mesm_d": {
+          "n_apuestas": 56,
+          "aciertos": 29,
+          "roi_pct": -6.45
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 56,
+          "aciertos": 30,
+          "roi_pct": -1.96
+        }
+      },
+      {
+        "ventana": "2025-11-01 → 2026-05-01",
+        "n": 249,
+        "acc_base": 0.4699,
+        "acc_mesm_d": 0.498,
+        "acc_mesm_e": 0.4779,
+        "acc_mercado": 0.498,
+        "ll_base": 1.0424,
+        "ll_mesm_d": 1.0575,
+        "ll_mesm_e": 1.0613,
+        "roi_mesm_d": {
+          "n_apuestas": 113,
+          "aciertos": 55,
+          "roi_pct": -17.65
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 118,
+          "aciertos": 61,
+          "roi_pct": -9.63
+        }
+      }
+    ],
+    "acc_base": 0.4629,
+    "acc_mercado": 0.505,
+    "acc_mesm_d": 0.513,
+    "acc_mesm_e": 0.4909,
+    "ll_base": 1.0395,
+    "ll_mesm_d": 1.0348,
+    "ll_mesm_e": 1.0449,
+    "golden_d": true,
+    "golden_e": true
+  },
+  "laliga": {
+    "liga": "laliga",
+    "ventanas": [
+      {
+        "ventana": "2024-09-01 → 2025-03-01",
+        "n": 217,
+        "acc_base": 0.53,
+        "acc_mesm_d": 0.5346,
+        "acc_mesm_e": 0.53,
+        "acc_mercado": 0.53,
+        "ll_base": 1.0033,
+        "ll_mesm_d": 0.9877,
+        "ll_mesm_e": 0.9994,
+        "roi_mesm_d": {
+          "n_apuestas": 95,
+          "aciertos": 61,
+          "roi_pct": 9.69
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 121,
+          "aciertos": 71,
+          "roi_pct": 3.31
+        }
+      },
+      {
+        "ventana": "2025-03-01 → 2025-09-01",
+        "n": 157,
+        "acc_base": 0.5732,
+        "acc_mesm_d": 0.5732,
+        "acc_mesm_e": 0.586,
+        "acc_mercado": 0.5669,
+        "ll_base": 0.9725,
+        "ll_mesm_d": 0.9758,
+        "ll_mesm_e": 0.9842,
+        "roi_mesm_d": {
+          "n_apuestas": 62,
+          "aciertos": 41,
+          "roi_pct": 2.92
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 63,
+          "aciertos": 44,
+          "roi_pct": 10.32
+        }
+      },
+      {
+        "ventana": "2025-09-01 → 2026-03-01",
+        "n": 223,
+        "acc_base": 0.5471,
+        "acc_mesm_d": 0.5291,
+        "acc_mesm_e": 0.5202,
+        "acc_mercado": 0.5695,
+        "ll_base": 1.1141,
+        "ll_mesm_d": 0.9407,
+        "ll_mesm_e": 0.9441,
+        "roi_mesm_d": {
+          "n_apuestas": 77,
+          "aciertos": 54,
+          "roi_pct": 6.09
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 86,
+          "aciertos": 56,
+          "roi_pct": 0.47
+        }
+      },
+      {
+        "ventana": "2026-03-01 → 2026-09-01",
+        "n": 126,
+        "acc_base": 0.4921,
+        "acc_mesm_d": 0.4683,
+        "acc_mesm_e": 0.4683,
+        "acc_mercado": 0.5238,
+        "ll_base": 1.0285,
+        "ll_mesm_d": 1.0149,
+        "ll_mesm_e": 1.0133,
+        "roi_mesm_d": {
+          "n_apuestas": 42,
+          "aciertos": 25,
+          "roi_pct": -4.36
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 37,
+          "aciertos": 23,
+          "roi_pct": 1.3
+        }
+      }
+    ],
+    "acc_base": 0.5356,
+    "acc_mercado": 0.5475,
+    "acc_mesm_d": 0.5263,
+    "acc_mesm_e": 0.5261,
+    "ll_base": 1.0296,
+    "ll_mesm_d": 0.9798,
+    "ll_mesm_e": 0.9853,
+    "golden_d": false,
+    "golden_e": false
+  },
+  "serie_a": {
+    "liga": "serie_a",
+    "ventanas": [
+      {
+        "ventana": "2025-05-01 → 2025-11-01",
+        "n": 124,
+        "acc_base": 0.5,
+        "acc_mesm_d": 0.5161,
+        "acc_mesm_e": 0.5161,
+        "acc_mercado": 0.5484,
+        "ll_base": 0.9862,
+        "ll_mesm_d": 0.9842,
+        "ll_mesm_e": 0.9908,
+        "roi_mesm_d": {
+          "n_apuestas": 43,
+          "aciertos": 28,
+          "roi_pct": -0.7
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 44,
+          "aciertos": 28,
+          "roi_pct": 0.82
+        }
+      },
+      {
+        "ventana": "2025-11-01 → 2026-05-01",
+        "n": 250,
+        "acc_base": 0.556,
+        "acc_mesm_d": 0.544,
+        "acc_mesm_e": 0.552,
+        "acc_mercado": 0.552,
+        "ll_base": 0.9951,
+        "ll_mesm_d": 0.9767,
+        "ll_mesm_e": 0.9813,
+        "roi_mesm_d": {
+          "n_apuestas": 102,
+          "aciertos": 64,
+          "roi_pct": 3.75
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 104,
+          "aciertos": 63,
+          "roi_pct": 2.8
+        }
+      }
+    ],
+    "acc_base": 0.528,
+    "acc_mercado": 0.5502,
+    "acc_mesm_d": 0.5301,
+    "acc_mesm_e": 0.5341,
+    "ll_base": 0.9907,
+    "ll_mesm_d": 0.9805,
+    "ll_mesm_e": 0.986,
+    "golden_d": true,
+    "golden_e": true
+  },
+  "bundesliga": {
+    "liga": "bundesliga",
+    "ventanas": [
+      {
+        "ventana": "2024-09-01 → 2025-03-01",
+        "n": 190,
+        "acc_base": 0.5421,
+        "acc_mesm_d": 0.5211,
+        "acc_mesm_e": 0.5263,
+        "acc_mercado": 0.5632,
+        "ll_base": 0.9814,
+        "ll_mesm_d": 0.9965,
+        "ll_mesm_e": 1.0124,
+        "roi_mesm_d": {
+          "n_apuestas": 48,
+          "aciertos": 28,
+          "roi_pct": -13.25
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 53,
+          "aciertos": 31,
+          "roi_pct": -12.49
+        }
+      },
+      {
+        "ventana": "2025-03-01 → 2025-09-01",
+        "n": 114,
+        "acc_base": 0.3772,
+        "acc_mesm_d": 0.4298,
+        "acc_mesm_e": 0.4386,
+        "acc_mercado": 0.4386,
+        "ll_base": 1.1784,
+        "ll_mesm_d": 1.1044,
+        "ll_mesm_e": 1.1251,
+        "roi_mesm_d": {
+          "n_apuestas": 41,
+          "aciertos": 26,
+          "roi_pct": 13.32
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 46,
+          "aciertos": 27,
+          "roi_pct": 5.11
+        }
+      },
+      {
+        "ventana": "2025-09-01 → 2026-03-01",
+        "n": 193,
+        "acc_base": 0.544,
+        "acc_mesm_d": 0.5337,
+        "acc_mesm_e": 0.5233,
+        "acc_mercado": 0.5803,
+        "ll_base": 1.0079,
+        "ll_mesm_d": 0.9768,
+        "ll_mesm_e": 0.9722,
+        "roi_mesm_d": {
+          "n_apuestas": 70,
+          "aciertos": 37,
+          "roi_pct": 8.57
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 68,
+          "aciertos": 35,
+          "roi_pct": 7.21
+        }
+      },
+      {
+        "ventana": "2026-03-01 → 2026-09-01",
+        "n": 94,
+        "acc_base": 0.4787,
+        "acc_mesm_d": 0.4787,
+        "acc_mesm_e": 0.4468,
+        "acc_mercado": 0.4894,
+        "ll_base": 1.0062,
+        "ll_mesm_d": 0.9968,
+        "ll_mesm_e": 1.0218,
+        "roi_mesm_d": {
+          "n_apuestas": 30,
+          "aciertos": 16,
+          "roi_pct": -3.9
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 35,
+          "aciertos": 20,
+          "roi_pct": 0.94
+        }
+      }
+    ],
+    "acc_base": 0.4855,
+    "acc_mercado": 0.5179,
+    "acc_mesm_d": 0.4908,
+    "acc_mesm_e": 0.4838,
+    "ll_base": 1.0435,
+    "ll_mesm_d": 1.0186,
+    "ll_mesm_e": 1.0329,
+    "golden_d": true,
+    "golden_e": false
+  },
+  "ligue_1": {
+    "liga": "ligue_1",
+    "ventanas": [
+      {
+        "ventana": "2024-05-01 → 2024-11-01",
+        "n": 108,
+        "acc_base": 0.5741,
+        "acc_mesm_d": 0.5463,
+        "acc_mesm_e": 0.5278,
+        "acc_mercado": 0.5463,
+        "ll_base": 0.9881,
+        "ll_mesm_d": 0.9743,
+        "ll_mesm_e": 1.0011,
+        "roi_mesm_d": {
+          "n_apuestas": 27,
+          "aciertos": 18,
+          "roi_pct": 29.78
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 39,
+          "aciertos": 23,
+          "roi_pct": 16.41
+        }
+      },
+      {
+        "ventana": "2024-11-01 → 2025-05-01",
+        "n": 198,
+        "acc_base": 0.5808,
+        "acc_mesm_d": 0.5354,
+        "acc_mesm_e": 0.5354,
+        "acc_mercado": 0.5455,
+        "ll_base": 1.1366,
+        "ll_mesm_d": 1.0443,
+        "ll_mesm_e": 1.0536,
+        "roi_mesm_d": {
+          "n_apuestas": 87,
+          "aciertos": 46,
+          "roi_pct": -3.06
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 98,
+          "aciertos": 53,
+          "roi_pct": 0.82
+        }
+      },
+      {
+        "ventana": "2025-05-01 → 2025-11-01",
+        "n": 114,
+        "acc_base": 0.5,
+        "acc_mesm_d": 0.5263,
+        "acc_mesm_e": 0.5175,
+        "acc_mercado": 0.5088,
+        "ll_base": 1.01,
+        "ll_mesm_d": 0.9624,
+        "ll_mesm_e": 0.986,
+        "roi_mesm_d": {
+          "n_apuestas": 51,
+          "aciertos": 31,
+          "roi_pct": -6.67
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 51,
+          "aciertos": 29,
+          "roi_pct": -9.41
+        }
+      },
+      {
+        "ventana": "2025-11-01 → 2026-05-01",
+        "n": 187,
+        "acc_base": 0.5027,
+        "acc_mesm_d": 0.5348,
+        "acc_mesm_e": 0.5241,
+        "acc_mercado": 0.5561,
+        "ll_base": 0.998,
+        "ll_mesm_d": 0.9864,
+        "ll_mesm_e": 0.9866,
+        "roi_mesm_d": {
+          "n_apuestas": 94,
+          "aciertos": 56,
+          "roi_pct": -2.74
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 82,
+          "aciertos": 46,
+          "roi_pct": -5.99
+        }
+      }
+    ],
+    "acc_base": 0.5394,
+    "acc_mercado": 0.5392,
+    "acc_mesm_d": 0.5357,
+    "acc_mesm_e": 0.5262,
+    "ll_base": 1.0332,
+    "ll_mesm_d": 0.9919,
+    "ll_mesm_e": 1.0068,
+    "golden_d": false,
+    "golden_e": false
+  },
+  "eredivisie": {
+    "liga": "eredivisie",
+    "ventanas": [
+      {
+        "ventana": "2024-09-01 → 2025-03-01",
+        "n": 178,
+        "acc_base": 0.5169,
+        "acc_mesm_d": 0.5225,
+        "acc_mesm_e": 0.4944,
+        "acc_mercado": 0.5449,
+        "ll_base": 0.9579,
+        "ll_mesm_d": 0.9734,
+        "ll_mesm_e": 1.0011,
+        "roi_mesm_d": {
+          "n_apuestas": 45,
+          "aciertos": 29,
+          "roi_pct": 0.71
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 42,
+          "aciertos": 24,
+          "roi_pct": -11.05
+        }
+      },
+      {
+        "ventana": "2025-03-01 → 2025-09-01",
+        "n": 129,
+        "acc_base": 0.5504,
+        "acc_mesm_d": 0.5426,
+        "acc_mesm_e": 0.5504,
+        "acc_mercado": 0.5504,
+        "ll_base": 1.2151,
+        "ll_mesm_d": 0.9805,
+        "ll_mesm_e": 0.9866,
+        "roi_mesm_d": {
+          "n_apuestas": 24,
+          "aciertos": 15,
+          "roi_pct": -0.54
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 37,
+          "aciertos": 25,
+          "roi_pct": 21.7
+        }
+      },
+      {
+        "ventana": "2025-09-01 → 2026-03-01",
+        "n": 186,
+        "acc_base": 0.4892,
+        "acc_mesm_d": 0.5269,
+        "acc_mesm_e": 0.4892,
+        "acc_mercado": 0.5161,
+        "ll_base": 1.0477,
+        "ll_mesm_d": 1.0077,
+        "ll_mesm_e": 1.0262,
+        "roi_mesm_d": {
+          "n_apuestas": 34,
+          "aciertos": 18,
+          "roi_pct": -9.26
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 51,
+          "aciertos": 22,
+          "roi_pct": -20.76
+        }
+      },
+      {
+        "ventana": "2026-03-01 → 2026-09-01",
+        "n": 86,
+        "acc_base": 0.4884,
+        "acc_mesm_d": 0.5465,
+        "acc_mesm_e": 0.5116,
+        "acc_mercado": 0.5465,
+        "ll_base": 1.0224,
+        "ll_mesm_d": 0.9481,
+        "ll_mesm_e": 0.9525,
+        "roi_mesm_d": {
+          "n_apuestas": 8,
+          "aciertos": 5,
+          "roi_pct": 6.75
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 14,
+          "aciertos": 8,
+          "roi_pct": 10.71
+        }
+      }
+    ],
+    "acc_base": 0.5112,
+    "acc_mercado": 0.5395,
+    "acc_mesm_d": 0.5346,
+    "acc_mesm_e": 0.5114,
+    "ll_base": 1.0608,
+    "ll_mesm_d": 0.9774,
+    "ll_mesm_e": 0.9916,
+    "golden_d": true,
+    "golden_e": true
+  },
+  "primeira": {
+    "liga": "primeira",
+    "ventanas": [
+      {
+        "ventana": "2022-09-01 → 2023-03-01",
+        "n": 162,
+        "acc_base": 0.6111,
+        "acc_mesm_d": 0.6049,
+        "acc_mesm_e": 0.5556,
+        "acc_mercado": 0.6235,
+        "ll_base": 0.902,
+        "ll_mesm_d": 0.9011,
+        "ll_mesm_e": 0.9088,
+        "roi_mesm_d": {
+          "n_apuestas": 50,
+          "aciertos": 40,
+          "roi_pct": 7.66
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 50,
+          "aciertos": 39,
+          "roi_pct": 4.66
+        }
+      },
+      {
+        "ventana": "2023-03-01 → 2023-09-01",
+        "n": 130,
+        "acc_base": 0.6462,
+        "acc_mesm_d": 0.6615,
+        "acc_mesm_e": 0.6308,
+        "acc_mercado": 0.6692,
+        "ll_base": 0.8412,
+        "ll_mesm_d": 0.813,
+        "ll_mesm_e": 0.8247,
+        "roi_mesm_d": {
+          "n_apuestas": 52,
+          "aciertos": 44,
+          "roi_pct": 12.42
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 54,
+          "aciertos": 43,
+          "roi_pct": 9.8
+        }
+      },
+      {
+        "ventana": "2023-09-01 → 2024-03-01",
+        "n": 180,
+        "acc_base": 0.5167,
+        "acc_mesm_d": 0.5556,
+        "acc_mesm_e": 0.55,
+        "acc_mercado": 0.5667,
+        "ll_base": 0.9838,
+        "ll_mesm_d": 0.9387,
+        "ll_mesm_e": 0.9439,
+        "roi_mesm_d": {
+          "n_apuestas": 104,
+          "aciertos": 69,
+          "roi_pct": 0.1
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 99,
+          "aciertos": 68,
+          "roi_pct": 4.17
+        }
+      },
+      {
+        "ventana": "2024-03-01 → 2024-09-01",
+        "n": 129,
+        "acc_base": 0.5504,
+        "acc_mesm_d": 0.5891,
+        "acc_mesm_e": 0.6047,
+        "acc_mercado": 0.6047,
+        "ll_base": 0.9263,
+        "ll_mesm_d": 0.8767,
+        "ll_mesm_e": 0.8765,
+        "roi_mesm_d": {
+          "n_apuestas": 82,
+          "aciertos": 59,
+          "roi_pct": 9.99
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 80,
+          "aciertos": 56,
+          "roi_pct": 6.26
+        }
+      },
+      {
+        "ventana": "2024-09-01 → 2025-03-01",
+        "n": 175,
+        "acc_base": 0.5314,
+        "acc_mesm_d": 0.5429,
+        "acc_mesm_e": 0.5257,
+        "acc_mercado": 0.52,
+        "ll_base": 1.0043,
+        "ll_mesm_d": 1.012,
+        "ll_mesm_e": 1.0303,
+        "roi_mesm_d": {
+          "n_apuestas": 103,
+          "aciertos": 58,
+          "roi_pct": -17.61
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 105,
+          "aciertos": 59,
+          "roi_pct": -14.84
+        }
+      },
+      {
+        "ventana": "2025-03-01 → 2025-09-01",
+        "n": 130,
+        "acc_base": 0.5154,
+        "acc_mesm_d": 0.5769,
+        "acc_mesm_e": 0.5846,
+        "acc_mercado": 0.5769,
+        "ll_base": 0.9598,
+        "ll_mesm_d": 0.8801,
+        "ll_mesm_e": 0.8897,
+        "roi_mesm_d": {
+          "n_apuestas": 71,
+          "aciertos": 50,
+          "roi_pct": 8.04
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 72,
+          "aciertos": 48,
+          "roi_pct": 2.94
+        }
+      },
+      {
+        "ventana": "2025-09-01 → 2026-03-01",
+        "n": 178,
+        "acc_base": 0.5955,
+        "acc_mesm_d": 0.618,
+        "acc_mesm_e": 0.6236,
+        "acc_mercado": 0.6067,
+        "ll_base": 0.9247,
+        "ll_mesm_d": 0.8547,
+        "ll_mesm_e": 0.8528,
+        "roi_mesm_d": {
+          "n_apuestas": 74,
+          "aciertos": 57,
+          "roi_pct": 4.8
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 78,
+          "aciertos": 57,
+          "roi_pct": 4.79
+        }
+      },
+      {
+        "ventana": "2026-03-01 → 2026-09-01",
+        "n": 94,
+        "acc_base": 0.4894,
+        "acc_mesm_d": 0.5,
+        "acc_mesm_e": 0.4787,
+        "acc_mercado": 0.4894,
+        "ll_base": 1.0856,
+        "ll_mesm_d": 1.0072,
+        "ll_mesm_e": 1.0136,
+        "roi_mesm_d": {
+          "n_apuestas": 45,
+          "aciertos": 25,
+          "roi_pct": -19.73
+        },
+        "roi_mesm_e": {
+          "n_apuestas": 42,
+          "aciertos": 20,
+          "roi_pct": -29.31
+        }
+      }
+    ],
+    "acc_base": 0.557,
+    "acc_mercado": 0.5821,
+    "acc_mesm_d": 0.5811,
+    "acc_mesm_e": 0.5692,
+    "ll_base": 0.9535,
+    "ll_mesm_d": 0.9104,
+    "ll_mesm_e": 0.9175,
+    "golden_d": true,
+    "golden_e": true
+  }
+}

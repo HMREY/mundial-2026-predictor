@@ -3,24 +3,103 @@
   "n_train": 2397,
   "n_validacion": 603,
   "fecha_corte": "2024-08-11",
-  "precision_validacion": 0.5373,
+  "precision_validacion": 0.5423,
   "precision_linea_base_elo": 0.5307,
   "precision_mercado_cuotas": 0.5605,
-  "log_loss_validacion": 0.9714,
+  "log_loss_validacion": 0.9604,
   "n_equipos": 29,
-  "features_extra_cols": [],
+  "features_extra_cols": [
+    "IMT_M_DIFF",
+    "IMT_DXG_DIFF",
+    "IMT_FAT_DIFF",
+    "IMT_PSI_DIFF"
+  ],
   "medias_cuotas": {},
   "roi_sim": {
-    "n_apuestas": 347,
-    "roi_pct": -7.35,
-    "aciertos": 190
+    "n_apuestas": 344,
+    "roi_pct": -3.91,
+    "aciertos": 191
   },
   "mesm": {
     "n_val_con_cuotas": 603,
-    "acc_prod": 0.5373,
-    "acc_mesm": 0.5605,
-    "ll_prod": 0.9714,
-    "ll_mesm": 0.936,
+    "acc_prod": 0.5423,
+    "acc_mesm": 0.5622,
+    "ll_prod": 0.9604,
+    "ll_mesm": 0.9417,
     "adoptado": true
+  },
+  "imt": {
+    "coef": {
+      "alpha": 1.9212,
+      "beta": -0.2632,
+      "gamma": 0.0882,
+      "delta": 0.491
+    },
+    "intercepto": 0.3456,
+    "correlacion": 0.3588,
+    "n": 2452
+  },
+  "walk_forward": {
+    "ventanas": [
+      {
+        "ventana": "2022-08-01 → 2023-02-01",
+        "n": 157,
+        "precision": 0.586,
+        "log_loss": 0.9349,
+        "precision_mercado": 0.586
+      },
+      {
+        "ventana": "2023-02-01 → 2023-08-01",
+        "n": 146,
+        "precision": 0.6644,
+        "log_loss": 0.8222,
+        "precision_mercado": 0.6759
+      },
+      {
+        "ventana": "2023-08-01 → 2024-02-01",
+        "n": 168,
+        "precision": 0.5655,
+        "log_loss": 0.9405,
+        "precision_mercado": 0.5833
+      },
+      {
+        "ventana": "2024-02-01 → 2024-08-01",
+        "n": 135,
+        "precision": 0.5481,
+        "log_loss": 1.1941,
+        "precision_mercado": 0.5704
+      },
+      {
+        "ventana": "2024-08-01 → 2025-02-01",
+        "n": 169,
+        "precision": 0.5325,
+        "log_loss": 0.9757,
+        "precision_mercado": 0.5503
+      },
+      {
+        "ventana": "2025-02-01 → 2025-08-01",
+        "n": 134,
+        "precision": 0.5448,
+        "log_loss": 0.9465,
+        "precision_mercado": 0.5672
+      },
+      {
+        "ventana": "2025-08-01 → 2026-02-01",
+        "n": 172,
+        "precision": 0.6047,
+        "log_loss": 0.9307,
+        "precision_mercado": 0.6047
+      },
+      {
+        "ventana": "2026-02-01 → 2026-08-01",
+        "n": 131,
+        "precision": 0.5267,
+        "log_loss": 0.9796,
+        "precision_mercado": 0.5115
+      }
+    ],
+    "precision_media": 0.5716,
+    "log_loss_medio": 0.9655,
+    "precision_mercado_media": 0.5812
   }
 }

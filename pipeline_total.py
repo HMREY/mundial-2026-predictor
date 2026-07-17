@@ -86,6 +86,15 @@ def backfill_estadisticas():
     backfill_stats.backfill(max_requests=40)
 
 
+def backfill_fotmob():
+    """v24: estadísticas REALES por partido desde FotMob (xG, remates por
+    jugador, defensivas, ratings) — incremental con caché commiteada; la
+    cobertura crece en cada corrida hasta permitir features validables."""
+    import fotmob_scraper
+    for clave in ('mls', 'liga_mx', 'eredivisie', 'bundesliga'):
+        fotmob_scraper.backfill_liga(clave, max_partidos=15)
+
+
 def actualizar_clima():
     """v23: clima de los partidos nuevos (Open-Meteo, gratuito). Incremental:
     solo pide lo que falta en clima_cache.json."""
@@ -112,6 +121,7 @@ if __name__ == '__main__':
     resultados['Cuotas'] = paso('CUOTAS (fixtures.csv / Betexplorer / Odds API)', actualizar_cuotas)
     resultados['Alineaciones'] = paso('ALINEACIONES (ESPN, modo sombra)', recolectar_alineaciones)
     resultados['Backfill stats'] = paso('BACKFILL ESTADÍSTICAS (API-Football)', backfill_estadisticas)
+    resultados['FotMob'] = paso('FOTMOB (stats reales incrementales, v24)', backfill_fotmob)
     resultados['Clima'] = paso('CLIMA (Open-Meteo incremental)', actualizar_clima)
     if not args.solo_clubes:
         resultados['Mercado'] = paso('INTELIGENCIA DE MERCADO (Polymarket)', actualizar_mercado)
