@@ -1,0 +1,788 @@
+match_id,fecha,equipo,jugador,titular,rating
+1000014499,2026-07-17,Necaxa,Luis Jiménez,True,6.9
+1000014499,2026-07-17,Necaxa,Raúl Martínez,True,6.9
+1000014499,2026-07-17,Necaxa,Alexis Peña,True,7.4
+1000014499,2026-07-17,Necaxa,Agustín Oliveros,True,6.4
+1000014499,2026-07-17,Necaxa,Ricardo Monreal,True,7.6
+1000014499,2026-07-17,Necaxa,Danny Leyva,True,7.5
+1000014499,2026-07-17,Necaxa,Lorenzo Faravelli,True,6.7
+1000014499,2026-07-17,Necaxa,Carlos Vargas,True,7.2
+1000014499,2026-07-17,Necaxa,Juan Torres,True,6.5
+1000014499,2026-07-17,Necaxa,Javier Ruiz,True,7.2
+1000014499,2026-07-17,Necaxa,Julián Carranza,True,8.9
+1000014499,2026-07-17,Necaxa,Emilio Rodríguez,False,6.8
+1000014499,2026-07-17,Necaxa,Francisco Méndez,False,6.7
+1000014499,2026-07-17,Necaxa,Rogelio Cortéz,False,6.8
+1000014499,2026-07-17,Atlante,Óscar Jiménez,True,7.1
+1000014499,2026-07-17,Atlante,Nico Carrera,True,6.8
+1000014499,2026-07-17,Atlante,Eduardo Tercero,True,6.5
+1000014499,2026-07-17,Atlante,Gustavo Sánchez,True,7.2
+1000014499,2026-07-17,Atlante,Walter Portales,True,7.1
+1000014499,2026-07-17,Atlante,Armando Escobar,True,6.3
+1000014499,2026-07-17,Atlante,Eugenio Pizzuto,True,7.9
+1000014499,2026-07-17,Atlante,Martín Fernández,True,6.0
+1000014499,2026-07-17,Atlante,Luis Calzadilla,True,8.0
+1000014499,2026-07-17,Atlante,Luis Puente,True,6.6
+1000014499,2026-07-17,Atlante,Jhojan Julio,True,6.2
+1000014499,2026-07-17,Atlante,Walter Clar,False,6.1
+1000014499,2026-07-17,Atlante,Daniel González,False,5.7
+1000014499,2026-07-17,Atlante,Leonardo Mejía,False,5.9
+1000014500,2026-07-17,Tijuana,Antonio Rodríguez,True,7.7
+1000014500,2026-07-17,Tijuana,Rafael Fernández,True,7.3
+1000014500,2026-07-17,Tijuana,Jackson Porozo,True,7.8
+1000014500,2026-07-17,Tijuana,Alejandro Gómez,True,7.3
+1000014500,2026-07-17,Tijuana,Pablo Ortíz,True,6.8
+1000014500,2026-07-17,Tijuana,Iván Tona,True,7.8
+1000014500,2026-07-17,Tijuana,Ramiro Árciga,True,8.2
+1000014500,2026-07-17,Tijuana,Ignacio Rivero,True,6.0
+1000014500,2026-07-17,Tijuana,Yael Padilla,True,7.3
+1000014500,2026-07-17,Tijuana,Adonis Preciado,True,7.8
+1000014500,2026-07-17,Tijuana,Diego Abreu,True,6.4
+1000014500,2026-07-17,Tijuana,Ángel Zapata,False,6.6
+1000014500,2026-07-17,Tijuana,Mourad El Ghezouani,False,8.5
+1000014500,2026-07-17,Tijuana,Alan Vega,False,6.5
+1000014500,2026-07-17,Tijuana,Aldahir Pérez,False,6.9
+1000014500,2026-07-17,Tijuana,Frank Boya,False,6.3
+1000014500,2026-07-17,Tigres,Nahuel Guzmán,True,4.6
+1000014500,2026-07-17,Tigres,Jesús Garza,True,6.3
+1000014500,2026-07-17,Tigres,Joaquim,True,7.5
+1000014500,2026-07-17,Tigres,Rômulo,True,6.4
+1000014500,2026-07-17,Tigres,Vladimir Loroña,True,6.2
+1000014500,2026-07-17,Tigres,Fernando Gorriarán,True,6.4
+1000014500,2026-07-17,Tigres,César Araújo,True,6.8
+1000014500,2026-07-17,Tigres,Diego Lainez,True,5.8
+1000014500,2026-07-17,Tigres,Juan Brunetta,True,6.5
+1000014500,2026-07-17,Tigres,Ozziel Herrera,True,7.8
+1000014500,2026-07-17,Tigres,Rodrigo Aguirre,True,4.7
+1000014500,2026-07-17,Tigres,Fernando Ordóñez,False,5.7
+5070991,2026-02-21,St. Louis City,Roman Bürki,True,6.5
+5070991,2026-02-21,St. Louis City,Jaziel Orozco,True,7.0
+5070991,2026-02-21,St. Louis City,Timo Baumgartl,True,6.7
+5070991,2026-02-21,St. Louis City,Dante Polvara,True,7.2
+5070991,2026-02-21,St. Louis City,Conrad Wallem,True,7.4
+5070991,2026-02-21,St. Louis City,Daniel Edelman,True,7.6
+5070991,2026-02-21,St. Louis City,Christopher Durkin,True,7.3
+5070991,2026-02-21,St. Louis City,Rafael Santos,True,7.1
+5070991,2026-02-21,St. Louis City,Sang-Bin Jeong,True,6.3
+5070991,2026-02-21,St. Louis City,Marcel Hartel,True,8.8
+5070991,2026-02-21,St. Louis City,Simon Becher,True,8.1
+5070991,2026-02-21,St. Louis City,Brendan McSorley,False,6.4
+5070991,2026-02-21,Charlotte FC,Kristijan Kahlina,True,8.3
+5070991,2026-02-21,Charlotte FC,Nathan Byrne,True,6.7
+5070991,2026-02-21,Charlotte FC,Andrew Privett,True,7.3
+5070991,2026-02-21,Charlotte FC,Tim Ream,True,6.8
+5070991,2026-02-21,Charlotte FC,Harry Toffolo,True,7.0
+5070991,2026-02-21,Charlotte FC,Luca de la Torre,True,6.6
+5070991,2026-02-21,Charlotte FC,Ashley Westwood,True,7.2
+5070991,2026-02-21,Charlotte FC,Liel Abada,True,6.9
+5070991,2026-02-21,Charlotte FC,Pep Biel,True,7.3
+5070991,2026-02-21,Charlotte FC,Wilfried Zaha,True,7.9
+5070991,2026-02-21,Charlotte FC,Idan Toklomati,True,6.4
+5070991,2026-02-21,Charlotte FC,David Schnegg,False,6.3
+5070991,2026-02-21,Charlotte FC,Djibril Diani,False,6.1
+5070991,2026-02-21,Charlotte FC,Kerwin Vargas,False,6.4
+5071188,2026-05-17,Houston Dynamo FC,Jonathan Bond,True,8.0
+5071188,2026-05-17,Houston Dynamo FC,Antônio Carlos,True,7.8
+5071188,2026-05-17,Houston Dynamo FC,Artur,True,8.3
+5071188,2026-05-17,Houston Dynamo FC,Agustin Resch,True,7.5
+5071188,2026-05-17,Houston Dynamo FC,Felipe Andrade,True,7.5
+5071188,2026-05-17,Houston Dynamo FC,Jack McGlynn,True,7.5
+5071188,2026-05-17,Houston Dynamo FC,Diadie Samassékou,True,6.3
+5071188,2026-05-17,Houston Dynamo FC,Lawrence Ennali,True,7.2
+5071188,2026-05-17,Houston Dynamo FC,Mateusz Bogusz,True,7.0
+5071188,2026-05-17,Houston Dynamo FC,Guilherme Augusto,True,8.4
+5071188,2026-05-17,Houston Dynamo FC,Ezequiel Ponce,True,7.6
+5071188,2026-05-17,Houston Dynamo FC,Agustín Bouzat,False,6.3
+5071188,2026-05-17,Vancouver Whitecaps,Yohei Takaoka,True,6.1
+5071188,2026-05-17,Vancouver Whitecaps,Édier Ocampo,True,7.2
+5071188,2026-05-17,Vancouver Whitecaps,Tristan Blackmon,True,6.5
+5071188,2026-05-17,Vancouver Whitecaps,Mathías Laborda,True,7.0
+5071188,2026-05-17,Vancouver Whitecaps,Tate Johnson,True,6.9
+5071188,2026-05-17,Vancouver Whitecaps,Sebastian Berhalter,True,7.5
+5071188,2026-05-17,Vancouver Whitecaps,Oliver Larraz,True,6.0
+5071188,2026-05-17,Vancouver Whitecaps,Jeevan Badwal,True,6.7
+5071188,2026-05-17,Vancouver Whitecaps,Thomas Müller,True,6.0
+5071188,2026-05-17,Vancouver Whitecaps,Kenji Cabrera,True,6.2
+5071188,2026-05-17,Vancouver Whitecaps,Brian White,True,6.1
+5071188,2026-05-17,Vancouver Whitecaps,Andrés Cubas,False,6.6
+5071188,2026-05-17,Vancouver Whitecaps,Isaac Boehmer,False,6.3
+5071188,2026-05-17,Vancouver Whitecaps,Mihail Gherasimencov,False,6.3
+5071188,2026-05-17,Vancouver Whitecaps,Ranko Veselinovic,False,6.2
+5071188,2026-05-17,Vancouver Whitecaps,Aziel Jackson,False,6.2
+5071189,2026-05-17,Inter Miami CF,Dayne St. Clair,True,8.0
+5071189,2026-05-17,Inter Miami CF,Ian Fray,True,7.0
+5071189,2026-05-17,Inter Miami CF,Gonzalo Luján,True,7.3
+5071189,2026-05-17,Inter Miami CF,Micael,True,7.3
+5071189,2026-05-17,Inter Miami CF,Sergio Reguilón,True,7.1
+5071189,2026-05-17,Inter Miami CF,Rodrigo De Paul,True,8.0
+5071189,2026-05-17,Inter Miami CF,Yannick Bright,True,7.5
+5071189,2026-05-17,Inter Miami CF,Telasco Segovia,True,7.8
+5071189,2026-05-17,Inter Miami CF,Lionel Messi,True,8.9
+5071189,2026-05-17,Inter Miami CF,Germán Berterame,True,7.8
+5071189,2026-05-17,Inter Miami CF,Luis Suárez,True,7.0
+5071189,2026-05-17,Inter Miami CF,Facundo Mura,False,6.4
+5071189,2026-05-17,Inter Miami CF,Dániel Pintér,False,6.6
+5071189,2026-05-17,Portland Timbers,James Pantemis,True,7.5
+5071189,2026-05-17,Portland Timbers,Brandon Bye,True,6.3
+5071189,2026-05-17,Portland Timbers,Finn Surman,True,6.2
+5071189,2026-05-17,Portland Timbers,Kamal Miller,True,6.4
+5071189,2026-05-17,Portland Timbers,Jimer Fory,True,6.6
+5071189,2026-05-17,Portland Timbers,Cole Bassett,True,7.1
+5071189,2026-05-17,Portland Timbers,Diego Chará,True,6.1
+5071189,2026-05-17,Portland Timbers,Kristoffer Velde,True,6.6
+5071189,2026-05-17,Portland Timbers,David Da Costa,True,6.6
+5071189,2026-05-17,Portland Timbers,Antony,True,6.3
+5071189,2026-05-17,Portland Timbers,Kevin Kelsy,True,6.7
+5071189,2026-05-17,Portland Timbers,Joao Ortiz,False,6.6
+5071189,2026-05-17,Portland Timbers,Ian Smith,False,6.4
+5071189,2026-05-17,Portland Timbers,Alexander Aravena,False,6.2
+5071190,2026-05-17,Real Salt Lake,Rafael Cabral,True,6.9
+5071190,2026-05-17,Real Salt Lake,DeAndre Yedlin,True,7.4
+5071190,2026-05-17,Real Salt Lake,Justen Glad,True,7.3
+5071190,2026-05-17,Real Salt Lake,Lukas Engel,True,6.4
+5071190,2026-05-17,Real Salt Lake,Zach Booth,True,6.9
+5071190,2026-05-17,Real Salt Lake,Juan Sanabria,True,8.5
+5071190,2026-05-17,Real Salt Lake,Aiden Hezarkhani,True,6.7
+5071190,2026-05-17,Real Salt Lake,Stijn Spierings,True,7.2
+5071190,2026-05-17,Real Salt Lake,Noel Caliskan,True,7.5
+5071190,2026-05-17,Real Salt Lake,Zavier Gozo,True,8.3
+5071190,2026-05-17,Real Salt Lake,Sergi Solans,True,8.2
+5071190,2026-05-17,Real Salt Lake,Sam Junqua,False,6.5
+5071190,2026-05-17,Real Salt Lake,Dominik Marczuk,False,6.4
+5071190,2026-05-17,Real Salt Lake,Morgan Guilavogui,False,6.4
+5071190,2026-05-17,Real Salt Lake,Griffin Dillon,False,6.3
+5071190,2026-05-17,Colorado Rapids,Nicholas Hansen,True,7.8
+5071190,2026-05-17,Colorado Rapids,Kosi Thompson,True,5.4
+5071190,2026-05-17,Colorado Rapids,Lucas Herrington,True,6.6
+5071190,2026-05-17,Colorado Rapids,Miguel Navarro,True,6.9
+5071190,2026-05-17,Colorado Rapids,Jackson Travis,True,5.1
+5071190,2026-05-17,Colorado Rapids,Wayne Frederick,True,7.2
+5071190,2026-05-17,Colorado Rapids,Hamzat Ojediran,True,6.5
+5071190,2026-05-17,Colorado Rapids,Connor Ronan,True,6.9
+5071190,2026-05-17,Colorado Rapids,Paxten Aaronson,True,7.1
+5071190,2026-05-17,Colorado Rapids,Rafael Navarro,True,5.7
+5071190,2026-05-17,Colorado Rapids,Georgi Minoungou,True,6.7
+5071190,2026-05-17,Colorado Rapids,Rob Holding,False,7.1
+5071190,2026-05-17,Colorado Rapids,Joshua Atencio,False,5.9
+5071190,2026-05-17,Colorado Rapids,Reggie Cannon,False,6.0
+5071190,2026-05-17,Colorado Rapids,Darren Yapi,False,6.2
+5071191,2026-05-17,San Diego FC,Duran Ferree,True,6.1
+5071191,2026-05-17,San Diego FC,Luca Bombino,True,7.2
+5071191,2026-05-17,San Diego FC,Christopher McVey,True,6.7
+5071191,2026-05-17,San Diego FC,Manu Duah,True,6.3
+5071191,2026-05-17,San Diego FC,Kieran Sargeant,True,7.0
+5071191,2026-05-17,San Diego FC,Onni Valakari,True,7.3
+5071191,2026-05-17,San Diego FC,Aníbal Godoy,True,6.7
+5071191,2026-05-17,San Diego FC,David Vazquez,True,6.0
+5071191,2026-05-17,San Diego FC,Anders Dreyer,True,7.9
+5071191,2026-05-17,San Diego FC,Marcus Ingvartsen,True,8.8
+5071191,2026-05-17,San Diego FC,Amahl Pellegrino,True,7.4
+5071191,2026-05-17,San Diego FC,Oscar Verhoeven,False,6.7
+5071191,2026-05-17,San Diego FC,Pedro Soma,False,7.3
+5071191,2026-05-17,San Diego FC,Alex Mighten,False,5.7
+5071191,2026-05-17,San Diego FC,Alejandro Alvarado,False,6.2
+5071191,2026-05-17,FC Cincinnati,Roman Celentano,True,6.1
+5071191,2026-05-17,FC Cincinnati,Nick Hagglund,True,5.8
+5071191,2026-05-17,FC Cincinnati,Matt Miazga,True,6.0
+5071191,2026-05-17,FC Cincinnati,Miles Robinson,True,6.0
+5071191,2026-05-17,FC Cincinnati,Pavel Bucha,True,7.0
+5071191,2026-05-17,FC Cincinnati,Samuel Gidi,True,6.8
+5071191,2026-05-17,FC Cincinnati,Brian Anunga,True,7.1
+5071191,2026-05-17,FC Cincinnati,Kenji Mboma Dem,True,7.7
+5071191,2026-05-17,FC Cincinnati,Evander Ferreira,True,8.9
+5071191,2026-05-17,FC Cincinnati,Gerardo Valenzuela,True,6.0
+5071191,2026-05-17,FC Cincinnati,Kévin Denkey,True,6.6
+5071191,2026-05-17,FC Cincinnati,Kyle Smith,False,6.5
+5071191,2026-05-17,FC Cincinnati,Tom Barlow,False,8.4
+5071191,2026-05-17,FC Cincinnati,Bryan Ramírez,False,6.5
+5071191,2026-05-17,FC Cincinnati,Obinna Nwobodo,False,6.2
+5071192,2026-05-17,San Jose Earthquakes,Daniel,True,7.4
+5071192,2026-05-17,San Jose Earthquakes,Benji Kikanovic,True,5.9
+5071192,2026-05-17,San Jose Earthquakes,Daniel Munie,True,5.5
+5071192,2026-05-17,San Jose Earthquakes,Reid Roberts,True,7.2
+5071192,2026-05-17,San Jose Earthquakes,Jack Jasinski,True,6.1
+5071192,2026-05-17,San Jose Earthquakes,Ian Harkes,True,7.3
+5071192,2026-05-17,San Jose Earthquakes,Ronaldo Vieira,True,6.1
+5071192,2026-05-17,San Jose Earthquakes,Ousseni Bouda,True,7.4
+5071192,2026-05-17,San Jose Earthquakes,Beau Leroux,True,7.3
+5071192,2026-05-17,San Jose Earthquakes,Jamar Ricketts,True,6.9
+5071192,2026-05-17,San Jose Earthquakes,Preston Judd,True,6.7
+5071192,2026-05-17,San Jose Earthquakes,Nick Fernandez,False,6.0
+5071192,2026-05-17,San Jose Earthquakes,Paul Marie,False,6.3
+5071192,2026-05-17,San Jose Earthquakes,Jack Skahan,False,5.9
+5071192,2026-05-17,FC Dallas,Jonathan Sirois,True,8.0
+5071192,2026-05-17,FC Dallas,Herman Johansson,True,7.3
+5071192,2026-05-17,FC Dallas,Shaq Moore,True,6.9
+5071192,2026-05-17,FC Dallas,Osaze Urhoghide,True,6.7
+5071192,2026-05-17,FC Dallas,Nolan Norris,True,6.8
+5071192,2026-05-17,FC Dallas,Joaquín Valiente,True,6.6
+5071192,2026-05-17,FC Dallas,Kaick Ferreira,True,7.7
+5071192,2026-05-17,FC Dallas,Ramiro,True,7.0
+5071192,2026-05-17,FC Dallas,Santiago Moreno,True,7.0
+5071192,2026-05-17,FC Dallas,Petar Musa,True,7.4
+5071192,2026-05-17,FC Dallas,Patrickson Delgado,True,8.5
+5071192,2026-05-17,FC Dallas,Logan Farrington,False,6.1
+5071192,2026-05-17,FC Dallas,Christian Cappis,False,6.5
+5071192,2026-05-17,FC Dallas,Ran Binyamin,False,6.7
+5071193,2026-05-17,Seattle Sounders FC,Andrew Thomas,True,6.1
+5071193,2026-05-17,Seattle Sounders FC,Peter Kingston,True,5.9
+5071193,2026-05-17,Seattle Sounders FC,Antino Lopez,True,6.8
+5071193,2026-05-17,Seattle Sounders FC,Jackson Ragen,True,6.1
+5071193,2026-05-17,Seattle Sounders FC,Nouhou Tolo,True,7.5
+5071193,2026-05-17,Seattle Sounders FC,Hassani Dotson,True,6.3
+5071193,2026-05-17,Seattle Sounders FC,Snyder Brunell,True,6.7
+5071193,2026-05-17,Seattle Sounders FC,Jordan Morris,True,6.8
+5071193,2026-05-17,Seattle Sounders FC,Jesús Ferreira,True,6.9
+5071193,2026-05-17,Seattle Sounders FC,Paul Arriola,True,6.0
+5071193,2026-05-17,Seattle Sounders FC,Danny Musovski,True,6.0
+5071193,2026-05-17,Seattle Sounders FC,Albert Rusnák,False,6.6
+5071193,2026-05-17,Seattle Sounders FC,Kalani Rienzi,False,6.4
+5071193,2026-05-17,Seattle Sounders FC,Cristian Roldan,False,6.7
+5071193,2026-05-17,Seattle Sounders FC,Osaze De Rosario,False,6.6
+5071193,2026-05-17,Seattle Sounders FC,Paul Rothrock,False,6.2
+5071193,2026-05-17,Seattle Sounders FC,Sebastian Gomez,False,6.1
+5071193,2026-05-17,LA Galaxy,James Marcinkowski,True,8.9
+5071193,2026-05-17,LA Galaxy,Miki Yamane,True,7.0
+5071193,2026-05-17,LA Galaxy,Jakob Glesnes,True,8.1
+5071193,2026-05-17,LA Galaxy,Justin Haak,True,7.2
+5071193,2026-05-17,LA Galaxy,John Nelson,True,7.4
+5071193,2026-05-17,LA Galaxy,Edwin Cerrillo,True,7.8
+5071193,2026-05-17,LA Galaxy,Erik Thommy,True,7.0
+5071193,2026-05-17,LA Galaxy,Elijah Wynder,True,7.4
+5071193,2026-05-17,LA Galaxy,Gabriel Pec,True,8.9
+5071193,2026-05-17,LA Galaxy,Marco Reus,True,7.9
+5071193,2026-05-17,LA Galaxy,Joseph Paintsil,True,6.0
+5071193,2026-05-17,LA Galaxy,Mauricio Cuevas,False,6.2
+5071193,2026-05-17,LA Galaxy,Lucas Sanabria,False,6.7
+5071193,2026-05-17,LA Galaxy,Harbor Miller,False,6.6
+5071194,2026-05-18,Nashville SC,Brian Schwake,True,8.0
+5071194,2026-05-18,Nashville SC,Reed Baker-Whiting,True,7.1
+5071194,2026-05-18,Nashville SC,Jeisson Palacios,True,6.6
+5071194,2026-05-18,Nashville SC,Maxwell Woledzi,True,7.1
+5071194,2026-05-18,Nashville SC,Daniel Lovitz,True,6.6
+5071194,2026-05-18,Nashville SC,Matthew Corcoran,True,7.1
+5071194,2026-05-18,Nashville SC,Bryan Acosta,True,7.5
+5071194,2026-05-18,Nashville SC,Ahmed Qasem,True,6.4
+5071194,2026-05-18,Nashville SC,Cristian Espinoza,True,7.2
+5071194,2026-05-18,Nashville SC,Hany Mukhtar,True,9.7
+5071194,2026-05-18,Nashville SC,Warren Madrigal,True,7.8
+5071194,2026-05-18,Nashville SC,Alex Muyl,False,6.5
+5071194,2026-05-18,Los Angeles FC,Thomas Hasal,True,4.9
+5071194,2026-05-18,Los Angeles FC,Ryan Hollingshead,True,7.4
+5071194,2026-05-18,Los Angeles FC,Ryan Porteous,True,5.8
+5071194,2026-05-18,Los Angeles FC,Nkosi Tafari,True,5.8
+5071194,2026-05-18,Los Angeles FC,Eddie Segura,True,5.5
+5071194,2026-05-18,Los Angeles FC,Mathieu Choinière,True,6.5
+5071194,2026-05-18,Los Angeles FC,Stephen Eustaquio,True,7.2
+5071194,2026-05-18,Los Angeles FC,Timothy Tillman,True,7.1
+5071194,2026-05-18,Los Angeles FC,David Martínez,True,7.5
+5071194,2026-05-18,Los Angeles FC,Heung-Min Son,True,8.3
+5071194,2026-05-18,Los Angeles FC,Denis Bouanga,True,8.6
+5071194,2026-05-18,Los Angeles FC,Marco Delgado,False,5.8
+5071194,2026-05-18,Los Angeles FC,Tyler Boyd,False,6.3
+5071195,2026-05-23,Charlotte FC,Kristijan Kahlina,True,8.5
+5071195,2026-05-23,Charlotte FC,Will Cleary,True,7.8
+5071195,2026-05-23,Charlotte FC,Morrison Agyemang,True,6.7
+5071195,2026-05-23,Charlotte FC,Tim Ream,True,7.0
+5071195,2026-05-23,Charlotte FC,David Schnegg,True,6.1
+5071195,2026-05-23,Charlotte FC,Ashley Westwood,True,7.3
+5071195,2026-05-23,Charlotte FC,Djibril Diani,True,7.2
+5071195,2026-05-23,Charlotte FC,Kerwin Vargas,True,7.2
+5071195,2026-05-23,Charlotte FC,Pep Biel,True,6.7
+5071195,2026-05-23,Charlotte FC,Wilfried Zaha,True,7.6
+5071195,2026-05-23,Charlotte FC,Idan Toklomati,True,7.9
+5071195,2026-05-23,Charlotte FC,Andrew Privett,False,6.3
+5071195,2026-05-23,Charlotte FC,Brandt Bronico,False,6.4
+5071195,2026-05-23,New England Revolution,Matt Turner,True,7.6
+5071195,2026-05-23,New England Revolution,Brayan Ceballos,True,6.9
+5071195,2026-05-23,New England Revolution,Ethan Kohler,True,6.5
+5071195,2026-05-23,New England Revolution,Mamadou Fofana,True,6.7
+5071195,2026-05-23,New England Revolution,Will Sands,True,6.6
+5071195,2026-05-23,New England Revolution,Matt Polster,True,6.9
+5071195,2026-05-23,New England Revolution,Alhassan Yusuf,True,6.8
+5071195,2026-05-23,New England Revolution,Peyton Miller,True,7.2
+5071195,2026-05-23,New England Revolution,Carles Gil,True,7.5
+5071195,2026-05-23,New England Revolution,Diego Fagúndez,True,6.4
+5071195,2026-05-23,New England Revolution,Dor Turgeman,True,6.3
+5071195,2026-05-23,New England Revolution,Griffin Yow,False,6.2
+5071195,2026-05-23,New England Revolution,Eric Klein,False,6.0
+5071195,2026-05-23,New England Revolution,Marcos Zambrano,False,5.9
+5071196,2026-05-23,FC Cincinnati,Roman Celentano,True,7.8
+5071196,2026-05-23,FC Cincinnati,Samuel Gidi,True,6.9
+5071196,2026-05-23,FC Cincinnati,Matt Miazga,True,7.8
+5071196,2026-05-23,FC Cincinnati,Kyle Smith,True,6.2
+5071196,2026-05-23,FC Cincinnati,Pavel Bucha,True,8.5
+5071196,2026-05-23,FC Cincinnati,Gerardo Valenzuela,True,6.6
+5071196,2026-05-23,FC Cincinnati,Obinna Nwobodo,True,6.8
+5071196,2026-05-23,FC Cincinnati,Bryan Ramírez,True,7.7
+5071196,2026-05-23,FC Cincinnati,Kenji Mboma Dem,True,9.1
+5071196,2026-05-23,FC Cincinnati,Evander Ferreira,True,9.9
+5071196,2026-05-23,FC Cincinnati,Kévin Denkey,True,8.3
+5071196,2026-05-23,FC Cincinnati,Brian Anunga,False,6.1
+5071196,2026-05-23,Orlando City,Maxime Crépeau,True,5.1
+5071196,2026-05-23,Orlando City,David Brekalo,True,4.5
+5071196,2026-05-23,Orlando City,Robin Jansson,True,4.5
+5071196,2026-05-23,Orlando City,Adrián Marin,True,5.2
+5071196,2026-05-23,Orlando City,Griffin Dorsey,True,6.8
+5071196,2026-05-23,Orlando City,Braian Ojeda,True,6.7
+5071196,2026-05-23,Orlando City,Eduard Atuesta,True,8.2
+5071196,2026-05-23,Orlando City,Iván Angulo,True,6.9
+5071196,2026-05-23,Orlando City,Justin Ellis,True,6.3
+5071196,2026-05-23,Orlando City,Tiago Carvalho,True,7.0
+5071196,2026-05-23,Orlando City,Martín Ojeda,True,8.7
+5071196,2026-05-23,Orlando City,Tyrese Spicer,False,6.6
+5071196,2026-05-23,Orlando City,Marco Pasalic,False,6.2
+5071196,2026-05-23,Orlando City,Wilder Cartagena,False,6.3
+5071196,2026-05-23,Orlando City,Duncan McGuire,False,6.1
+5071197,2026-05-23,DC United,Sean Johnson,True,6.0
+5071197,2026-05-23,DC United,Silvan Hefti,True,6.3
+5071197,2026-05-23,DC United,Lucas Bartlett,True,7.5
+5071197,2026-05-23,DC United,Kye Rowles,True,6.3
+5071197,2026-05-23,DC United,Keisuke Kurokawa,True,7.3
+5071197,2026-05-23,DC United,Jared Stroud,True,7.8
+5071197,2026-05-23,DC United,Matti Peltola,True,6.9
+5071197,2026-05-23,DC United,Brandon Servania,True,6.3
+5071197,2026-05-23,DC United,Peglow,True,7.1
+5071197,2026-05-23,DC United,Louis Munteanu,True,7.5
+5071197,2026-05-23,DC United,Tai Baribo,True,7.1
+5071197,2026-05-23,DC United,Nikola Markovic,False,6.5
+5071197,2026-05-23,DC United,Jackson Hopkins,False,6.2
+5071197,2026-05-23,DC United,Conner Antley,False,6.5
+5071197,2026-05-23,CF Montreal,Thomas Gillier,True,6.5
+5071197,2026-05-23,CF Montreal,Dawid Bugaj,True,5.8
+5071197,2026-05-23,CF Montreal,Efraín Morales,True,6.5
+5071197,2026-05-23,CF Montreal,Brayan Vera,True,6.8
+5071197,2026-05-23,CF Montreal,Luca Petrasso,True,6.5
+5071197,2026-05-23,CF Montreal,Olger Escobar,True,6.4
+5071197,2026-05-23,CF Montreal,Victor Loturi,True,7.7
+5071197,2026-05-23,CF Montreal,Matthew Longstaff,True,7.0
+5071197,2026-05-23,CF Montreal,Wiki Carmona,True,8.1
+5071197,2026-05-23,CF Montreal,Prince Osei Owusu,True,9.7
+5071197,2026-05-23,CF Montreal,Noah Streit,True,6.8
+5071197,2026-05-23,CF Montreal,Dagur Thórhallsson,False,6.7
+5071197,2026-05-23,CF Montreal,Daniel Ríos,False,6.1
+5071197,2026-05-23,CF Montreal,Gennadiy Synchuk,False,7.2
+5071198,2026-05-23,St. Louis City,Benjamin Lundt,True,7.9
+5071198,2026-05-23,St. Louis City,Dante Polvara,True,6.4
+5071198,2026-05-23,St. Louis City,Timo Baumgartl,True,7.5
+5071198,2026-05-23,St. Louis City,Fallou Fall,True,8.8
+5071198,2026-05-23,St. Louis City,Tomas Totland,True,7.5
+5071198,2026-05-23,St. Louis City,Christopher Durkin,True,7.8
+5071198,2026-05-23,St. Louis City,Daniel Edelman,True,7.9
+5071198,2026-05-23,St. Louis City,Rafael Santos,True,7.5
+5071198,2026-05-23,St. Louis City,Eduard Löwen,True,7.9
+5071198,2026-05-23,St. Louis City,Simon Becher,True,7.4
+5071198,2026-05-23,St. Louis City,Marcel Hartel,True,7.7
+5071198,2026-05-23,St. Louis City,Lukas MacNaughton,False,6.7
+5071198,2026-05-23,Austin FC,Brad Stuver,True,5.6
+5071198,2026-05-23,Austin FC,Mikkel Desler,True,6.1
+5071198,2026-05-23,Austin FC,Oleksandr Svatok,True,5.9
+5071198,2026-05-23,Austin FC,Jon Bell,True,5.8
+5071198,2026-05-23,Austin FC,Guilherme Biro,True,5.5
+5071198,2026-05-23,Austin FC,Facundo Torres,True,7.2
+5071198,2026-05-23,Austin FC,Daniel Pereira,True,5.7
+5071198,2026-05-23,Austin FC,Joseph Rosales,True,6.0
+5071198,2026-05-23,Austin FC,Jon Gallagher,True,6.4
+5071198,2026-05-23,Austin FC,Owen Wolff,True,6.3
+5071198,2026-05-23,Austin FC,Christian Ramirez,True,6.0
+5071198,2026-05-23,Austin FC,Brandon Vázquez,False,5.7
+5071198,2026-05-23,Austin FC,Jayden Nelson,False,6.3
+5071198,2026-05-23,Austin FC,Zan Kolmanic,False,6.1
+5071198,2026-05-23,Austin FC,Nicolás Dubersarsky,False,6.1
+5071198,2026-05-23,Austin FC,CJ Fodrey,False,6.1
+5071199,2026-05-24,Chicago Fire FC,Chris Brady,True,6.9
+5071199,2026-05-24,Chicago Fire FC,Jonathan Dean,True,7.0
+5071199,2026-05-24,Chicago Fire FC,Jack Elliott,True,6.9
+5071199,2026-05-24,Chicago Fire FC,Mbekezeli Mbokazi,True,6.9
+5071199,2026-05-24,Chicago Fire FC,Andrew Gutman,True,8.2
+5071199,2026-05-24,Chicago Fire FC,Philip Zinckernagel,True,7.8
+5071199,2026-05-24,Chicago Fire FC,Anton Salétros,True,7.1
+5071199,2026-05-24,Chicago Fire FC,Mauricio Pineda,True,5.7
+5071199,2026-05-24,Chicago Fire FC,Maren Haile-Selassie,True,7.3
+5071199,2026-05-24,Chicago Fire FC,Hugo Cuypers,True,6.7
+5071199,2026-05-24,Chicago Fire FC,Robin Lod,True,8.0
+5071199,2026-05-24,Chicago Fire FC,Djé D'Avilla,False,6.8
+5071199,2026-05-24,Chicago Fire FC,Joel Waterman,False,6.6
+5071199,2026-05-24,Chicago Fire FC,Puso Dithejane,False,6.2
+5071199,2026-05-24,Toronto FC,Luka Gavran,True,7.1
+5071199,2026-05-24,Toronto FC,Jackson Gilman,True,6.1
+5071199,2026-05-24,Toronto FC,Walker Zimmerman,True,6.6
+5071199,2026-05-24,Toronto FC,Nicksoen Gomis,True,6.3
+5071199,2026-05-24,Toronto FC,Kobe Franklin,True,6.5
+5071199,2026-05-24,Toronto FC,Alonso Coello,True,8.8
+5071199,2026-05-24,Toronto FC,Jonathan Osorio,True,5.9
+5071199,2026-05-24,Toronto FC,Malik Henry,True,6.6
+5071199,2026-05-24,Toronto FC,Dániel Sallói,True,6.4
+5071199,2026-05-24,Toronto FC,Derrick Etienne,True,6.3
+5071199,2026-05-24,Toronto FC,Joshua Sargent,True,8.0
+5071199,2026-05-24,Toronto FC,Zane Monlouis,False,6.3
+5071199,2026-05-24,Toronto FC,Emilio Aristizábal,False,5.9
+5071199,2026-05-24,Toronto FC,Theodor Corbeanu,False,5.9
+5071200,2026-05-24,Colorado Rapids,Nicholas Hansen,True,6.3
+5071200,2026-05-24,Colorado Rapids,Reggie Cannon,True,7.2
+5071200,2026-05-24,Colorado Rapids,Rob Holding,True,7.2
+5071200,2026-05-24,Colorado Rapids,Lucas Herrington,True,7.2
+5071200,2026-05-24,Colorado Rapids,Jackson Travis,True,6.7
+5071200,2026-05-24,Colorado Rapids,Wayne Frederick,True,5.5
+5071200,2026-05-24,Colorado Rapids,Joshua Atencio,True,7.2
+5071200,2026-05-24,Colorado Rapids,Georgi Minoungou,True,7.1
+5071200,2026-05-24,Colorado Rapids,Paxten Aaronson,True,8.0
+5071200,2026-05-24,Colorado Rapids,Darren Yapi,True,6.9
+5071200,2026-05-24,Colorado Rapids,Rafael Navarro,True,7.1
+5071200,2026-05-24,Colorado Rapids,Miguel Navarro,False,6.8
+5071200,2026-05-24,Colorado Rapids,Connor Ronan,False,6.8
+5071200,2026-05-24,Colorado Rapids,Alexis Manyoma,False,5.8
+5071200,2026-05-24,Colorado Rapids,Dante Sealy,False,6.2
+5071200,2026-05-24,FC Dallas,Jonathan Sirois,True,7.1
+5071200,2026-05-24,FC Dallas,Herman Johansson,True,6.9
+5071200,2026-05-24,FC Dallas,Sebastien Ibeagha,True,7.1
+5071200,2026-05-24,FC Dallas,Shaq Moore,True,6.6
+5071200,2026-05-24,FC Dallas,Ran Binyamin,True,7.5
+5071200,2026-05-24,FC Dallas,Joaquín Valiente,True,7.1
+5071200,2026-05-24,FC Dallas,Kaick Ferreira,True,7.2
+5071200,2026-05-24,FC Dallas,Ramiro,True,6.8
+5071200,2026-05-24,FC Dallas,Santiago Moreno,True,7.5
+5071200,2026-05-24,FC Dallas,Patrickson Delgado,True,6.3
+5071200,2026-05-24,FC Dallas,Logan Farrington,True,7.9
+5071200,2026-05-24,FC Dallas,Nolan Norris,False,6.3
+5071200,2026-05-24,FC Dallas,Christian Cappis,False,6.3
+5071200,2026-05-24,FC Dallas,Sam Sarver,False,6.3
+5071201,2026-05-24,Sporting Kansas City,Stefan Cleveland,True,5.8
+5071201,2026-05-24,Sporting Kansas City,Jacob Davis,True,6.0
+5071201,2026-05-24,Sporting Kansas City,Ian James,True,6.1
+5071201,2026-05-24,Sporting Kansas City,Wyatt Meyer,True,6.6
+5071201,2026-05-24,Sporting Kansas City,Jayden Reid,True,7.3
+5071201,2026-05-24,Sporting Kansas City,Capita,True,7.0
+5071201,2026-05-24,Sporting Kansas City,Zorhan Bassong,True,6.5
+5071201,2026-05-24,Sporting Kansas City,Lasse Berg Johnsen,True,7.7
+5071201,2026-05-24,Sporting Kansas City,Calvin Harris,True,7.2
+5071201,2026-05-24,Sporting Kansas City,Taylor Calheira,True,7.0
+5071201,2026-05-24,Sporting Kansas City,Dejan Joveljic,True,6.7
+5071201,2026-05-24,Sporting Kansas City,Justin Reynolds,False,6.8
+5071201,2026-05-24,Sporting Kansas City,Manu García,False,7.4
+5071201,2026-05-24,Sporting Kansas City,Stephen Afrifa,False,6.4
+5071201,2026-05-24,Red Bull New York,Ethan Horvath,True,8.2
+5071201,2026-05-24,Red Bull New York,Jahkeele Marshall-Rutty,True,7.3
+5071201,2026-05-24,Red Bull New York,Justin Che,True,7.7
+5071201,2026-05-24,Red Bull New York,Dylan Nealis,True,7.0
+5071201,2026-05-24,Red Bull New York,Omar Valencia,True,7.1
+5071201,2026-05-24,Red Bull New York,Ronald Donkor,True,6.6
+5071201,2026-05-24,Red Bull New York,Adri Mehmeti,True,7.5
+5071201,2026-05-24,Red Bull New York,Gustav Berggren,True,7.4
+5071201,2026-05-24,Red Bull New York,Cade Cowell,True,6.0
+5071201,2026-05-24,Red Bull New York,Julian Hall,True,7.8
+5071201,2026-05-24,Red Bull New York,Jorge Ruvalcaba,True,9.0
+5071201,2026-05-24,Red Bull New York,Rafael Mosquera,False,7.0
+5071201,2026-05-24,Red Bull New York,Nehuén Benedetti,False,6.1
+5071201,2026-05-24,Red Bull New York,Roald Mitchell,False,6.3
+5071201,2026-05-24,Red Bull New York,Cameron Harper,False,6.5
+5071201,2026-05-24,Red Bull New York,Julián Bazán,False,5.9
+5071202,2026-05-24,LA Galaxy,James Marcinkowski,True,6.7
+5071202,2026-05-24,LA Galaxy,Miki Yamane,True,8.2
+5071202,2026-05-24,LA Galaxy,Jakob Glesnes,True,7.5
+5071202,2026-05-24,LA Galaxy,Justin Haak,True,7.8
+5071202,2026-05-24,LA Galaxy,John Nelson,True,6.7
+5071202,2026-05-24,LA Galaxy,Elijah Wynder,True,6.6
+5071202,2026-05-24,LA Galaxy,Edwin Cerrillo,True,8.0
+5071202,2026-05-24,LA Galaxy,Gabriel Pec,True,6.5
+5071202,2026-05-24,LA Galaxy,Erik Thommy,True,6.3
+5071202,2026-05-24,LA Galaxy,Joseph Paintsil,True,7.5
+5071202,2026-05-24,LA Galaxy,Marco Reus,True,7.0
+5071202,2026-05-24,LA Galaxy,Lucas Sanabria,False,6.8
+5071202,2026-05-24,LA Galaxy,Matheus Nascimento,False,6.3
+5071202,2026-05-24,LA Galaxy,Mauricio Cuevas,False,6.6
+5071202,2026-05-24,LA Galaxy,Harbor Miller,False,6.3
+5071202,2026-05-24,Houston Dynamo FC,Jonathan Bond,True,7.9
+5071202,2026-05-24,Houston Dynamo FC,Felipe Andrade,True,7.1
+5071202,2026-05-24,Houston Dynamo FC,Antônio Carlos,True,6.8
+5071202,2026-05-24,Houston Dynamo FC,Agustin Resch,True,6.1
+5071202,2026-05-24,Houston Dynamo FC,Lawrence Ennali,True,6.4
+5071202,2026-05-24,Houston Dynamo FC,Artur,True,6.3
+5071202,2026-05-24,Houston Dynamo FC,Mateusz Bogusz,True,7.3
+5071202,2026-05-24,Houston Dynamo FC,Jack McGlynn,True,8.1
+5071202,2026-05-24,Houston Dynamo FC,Héctor Herrera,True,6.4
+5071202,2026-05-24,Houston Dynamo FC,Guilherme Augusto,True,8.2
+5071202,2026-05-24,Houston Dynamo FC,Ondrej Lingr,True,6.4
+5071202,2026-05-24,Houston Dynamo FC,Ezequiel Ponce,False,5.9
+5071202,2026-05-24,Houston Dynamo FC,Agustín Bouzat,False,6.0
+5071202,2026-05-24,Houston Dynamo FC,Diadie Samassékou,False,6.3
+5071203,2026-05-23,Minnesota United,Drake Callender,True,6.0
+5071203,2026-05-23,Minnesota United,Kyle Duncan,True,6.5
+5071203,2026-05-23,Minnesota United,Jefferson Díaz,True,7.1
+5071203,2026-05-23,Minnesota United,Michael Boxall,True,6.9
+5071203,2026-05-23,Minnesota United,Morris Duggan,True,7.7
+5071203,2026-05-23,Minnesota United,Joaquín Pereyra,True,7.4
+5071203,2026-05-23,Minnesota United,Nectarios Triantis,True,6.3
+5071203,2026-05-23,Minnesota United,Owen Gene,True,6.9
+5071203,2026-05-23,Minnesota United,Anthony Markanich,True,6.8
+5071203,2026-05-23,Minnesota United,Mamadou Dieng,True,6.6
+5071203,2026-05-23,Minnesota United,Tomás Chancalay,True,7.1
+5071203,2026-05-23,Minnesota United,Bongokuhle Hlongwane,False,6.2
+5071203,2026-05-23,Minnesota United,Wil Trapp,False,5.9
+5071203,2026-05-23,Minnesota United,Mauricio González,False,7.7
+5071203,2026-05-23,Real Salt Lake,Rafael Cabral,True,6.1
+5071203,2026-05-23,Real Salt Lake,DeAndre Yedlin,True,6.6
+5071203,2026-05-23,Real Salt Lake,Justen Glad,True,7.4
+5071203,2026-05-23,Real Salt Lake,Lukas Engel,True,7.7
+5071203,2026-05-23,Real Salt Lake,Zach Booth,True,7.8
+5071203,2026-05-23,Real Salt Lake,Juan Sanabria,True,6.9
+5071203,2026-05-23,Real Salt Lake,Zavier Gozo,True,7.6
+5071203,2026-05-23,Real Salt Lake,Noel Caliskan,True,7.2
+5071203,2026-05-23,Real Salt Lake,Stijn Spierings,True,7.7
+5071203,2026-05-23,Real Salt Lake,Aiden Hezarkhani,True,5.9
+5071203,2026-05-23,Real Salt Lake,Sergi Solans,True,6.6
+5071203,2026-05-23,Real Salt Lake,Lineker Rodrigues dos Santos,False,5.9
+5071203,2026-05-23,Real Salt Lake,Philip Quinton,False,6.3
+5071203,2026-05-23,Real Salt Lake,Victor Olatunji,False,6.4
+5071204,2026-05-24,Nashville SC,Brian Schwake,True,7.8
+5071204,2026-05-24,Nashville SC,Reed Baker-Whiting,True,7.1
+5071204,2026-05-24,Nashville SC,Jeisson Palacios,True,8.2
+5071204,2026-05-24,Nashville SC,Maxwell Woledzi,True,8.1
+5071204,2026-05-24,Nashville SC,Daniel Lovitz,True,6.7
+5071204,2026-05-24,Nashville SC,Matthew Corcoran,True,7.9
+5071204,2026-05-24,Nashville SC,Bryan Acosta,True,7.9
+5071204,2026-05-24,Nashville SC,Ahmed Qasem,True,6.3
+5071204,2026-05-24,Nashville SC,Cristian Espinoza,True,7.9
+5071204,2026-05-24,Nashville SC,Hany Mukhtar,True,7.4
+5071204,2026-05-24,Nashville SC,Warren Madrigal,True,6.3
+5071204,2026-05-24,Nashville SC,Sam Surridge,False,6.2
+5071204,2026-05-24,Nashville SC,Alex Muyl,False,6.2
+5071204,2026-05-24,Nashville SC,Charles-Emile Brunet,False,6.2
+5071204,2026-05-24,New York City FC,Matt Freese,True,5.1
+5071204,2026-05-24,New York City FC,Tayvon Gray,True,6.7
+5071204,2026-05-24,New York City FC,Thiago Martins,True,6.5
+5071204,2026-05-24,New York City FC,Raul,True,6.6
+5071204,2026-05-24,New York City FC,Nico Cavallo,True,5.6
+5071204,2026-05-24,New York City FC,Andrés Perea,True,6.0
+5071204,2026-05-24,New York City FC,Kai Trewin,True,5.9
+5071204,2026-05-24,New York City FC,Agustín Ojeda,True,6.7
+5071204,2026-05-24,New York City FC,Arnau Farnós,True,6.4
+5071204,2026-05-24,New York City FC,Malachi Jones,True,7.5
+5071204,2026-05-24,New York City FC,Nicolás Fernández,True,7.3
+5071204,2026-05-24,New York City FC,Jonathan Shore,False,6.6
+5071204,2026-05-24,New York City FC,Hannes Wolf,False,6.1
+5071204,2026-05-24,New York City FC,Máximo Carrizo,False,6.1
+5071205,2026-05-24,Portland Timbers,James Pantemis,True,6.0
+5071205,2026-05-24,Portland Timbers,Brandon Bye,True,6.0
+5071205,2026-05-24,Portland Timbers,Finn Surman,True,6.1
+5071205,2026-05-24,Portland Timbers,Kamal Miller,True,6.2
+5071205,2026-05-24,Portland Timbers,Jimer Fory,True,7.3
+5071205,2026-05-24,Portland Timbers,Joao Ortiz,True,6.4
+5071205,2026-05-24,Portland Timbers,Cole Bassett,True,5.7
+5071205,2026-05-24,Portland Timbers,Kristoffer Velde,True,6.8
+5071205,2026-05-24,Portland Timbers,David Da Costa,True,6.9
+5071205,2026-05-24,Portland Timbers,Antony,True,8.1
+5071205,2026-05-24,Portland Timbers,Kevin Kelsy,True,7.0
+5071205,2026-05-24,Portland Timbers,Ian Smith,False,7.3
+5071205,2026-05-24,Portland Timbers,Juan Mosquera,False,6.5
+5071205,2026-05-24,Portland Timbers,Alexander Aravena,False,6.1
+5071205,2026-05-24,San Jose Earthquakes,Daniel,True,7.8
+5071205,2026-05-24,San Jose Earthquakes,Benji Kikanovic,True,5.8
+5071205,2026-05-24,San Jose Earthquakes,Daniel Munie,True,7.8
+5071205,2026-05-24,San Jose Earthquakes,Reid Roberts,True,7.2
+5071205,2026-05-24,San Jose Earthquakes,Jamar Ricketts,True,6.9
+5071205,2026-05-24,San Jose Earthquakes,Ronaldo Vieira,True,7.2
+5071205,2026-05-24,San Jose Earthquakes,Beau Leroux,True,7.9
+5071205,2026-05-24,San Jose Earthquakes,Ousseni Bouda,True,6.1
+5071205,2026-05-24,San Jose Earthquakes,Nick Fernandez,True,7.7
+5071205,2026-05-24,San Jose Earthquakes,Jack Skahan,True,8.2
+5071205,2026-05-24,San Jose Earthquakes,Preston Judd,True,8.6
+5071205,2026-05-24,San Jose Earthquakes,Jack Jasinski,False,6.4
+5071205,2026-05-24,San Jose Earthquakes,Ian Harkes,False,6.2
+5071205,2026-05-24,San Jose Earthquakes,Darius Johnson,False,6.5
+5071205,2026-05-24,San Jose Earthquakes,Paul Marie,False,6.4
+5071206,2026-05-24,San Diego FC,Carlos Dos Santos,True,6.5
+5071206,2026-05-24,San Diego FC,Oscar Verhoeven,True,4.7
+5071206,2026-05-24,San Diego FC,Christopher McVey,True,5.6
+5071206,2026-05-24,San Diego FC,Manu Duah,True,6.2
+5071206,2026-05-24,San Diego FC,Kieran Sargeant,True,5.9
+5071206,2026-05-24,San Diego FC,Onni Valakari,True,7.0
+5071206,2026-05-24,San Diego FC,Pedro Soma,True,5.4
+5071206,2026-05-24,San Diego FC,David Vazquez,True,7.6
+5071206,2026-05-24,San Diego FC,Anders Dreyer,True,8.0
+5071206,2026-05-24,San Diego FC,Marcus Ingvartsen,True,6.0
+5071206,2026-05-24,San Diego FC,Amahl Pellegrino,True,6.7
+5071206,2026-05-24,San Diego FC,Luca Bombino,False,5.1
+5071206,2026-05-24,San Diego FC,Alejandro Alvarado,False,7.1
+5071206,2026-05-24,San Diego FC,Anisse Saidi,False,6.3
+5071206,2026-05-24,San Diego FC,Ian Pilcher,False,6.1
+5071206,2026-05-24,Vancouver Whitecaps,Isaac Boehmer,True,4.5
+5071206,2026-05-24,Vancouver Whitecaps,Édier Ocampo,True,6.8
+5071206,2026-05-24,Vancouver Whitecaps,Tristan Blackmon,True,6.9
+5071206,2026-05-24,Vancouver Whitecaps,Mathías Laborda,True,6.9
+5071206,2026-05-24,Vancouver Whitecaps,Tate Johnson,True,6.5
+5071206,2026-05-24,Vancouver Whitecaps,Sebastian Berhalter,True,7.2
+5071206,2026-05-24,Vancouver Whitecaps,Jeevan Badwal,True,8.1
+5071206,2026-05-24,Vancouver Whitecaps,Kenji Cabrera,True,7.2
+5071206,2026-05-24,Vancouver Whitecaps,Thomas Müller,True,8.1
+5071206,2026-05-24,Vancouver Whitecaps,Aziel Jackson,True,7.2
+5071206,2026-05-24,Vancouver Whitecaps,Brian White,True,9.5
+5071206,2026-05-24,Vancouver Whitecaps,Bruno Caicedo,False,7.4
+5071206,2026-05-24,Vancouver Whitecaps,Ralph Priso-Mbongue,False,7.8
+5071207,2026-05-24,Columbus Crew,Patrick Schulte,True,7.8
+5071207,2026-05-24,Columbus Crew,Mohamed Farsi,True,8.6
+5071207,2026-05-24,Columbus Crew,Steven Moreira,True,7.1
+5071207,2026-05-24,Columbus Crew,Rudy Camacho,True,7.1
+5071207,2026-05-24,Columbus Crew,Sean Zawadzki,True,7.3
+5071207,2026-05-24,Columbus Crew,Taha Habroune,True,7.3
+5071207,2026-05-24,Columbus Crew,André Gomes,True,7.3
+5071207,2026-05-24,Columbus Crew,Sékou Bangoura,True,7.9
+5071207,2026-05-24,Columbus Crew,Max Arfsten,True,7.2
+5071207,2026-05-24,Columbus Crew,Diego Rossi,True,8.3
+5071207,2026-05-24,Columbus Crew,Dániel Gazdag,True,7.4
+5071207,2026-05-24,Columbus Crew,Evgen Cheberko,False,6.2
+5071207,2026-05-24,Columbus Crew,Dylan Chambost,False,6.2
+5071207,2026-05-24,Columbus Crew,Hugo Picard,False,6.7
+5071207,2026-05-24,Columbus Crew,Andrés Herrera,False,6.0
+5071207,2026-05-24,Atlanta United,Lucas Hoyos,True,6.0
+5071207,2026-05-24,Atlanta United,Tomás Jacob,True,6.8
+5071207,2026-05-24,Atlanta United,Enea Mihaj,True,6.1
+5071207,2026-05-24,Atlanta United,Juan Berrocal,True,6.5
+5071207,2026-05-24,Atlanta United,Elías Báez,True,6.2
+5071207,2026-05-24,Atlanta United,Cooper Sanchez,True,6.3
+5071207,2026-05-24,Atlanta United,Tristan Muyumba,True,6.8
+5071207,2026-05-24,Atlanta United,Luke Brennan,True,6.1
+5071207,2026-05-24,Atlanta United,Saba Lobjanidze,True,6.6
+5071207,2026-05-24,Atlanta United,Aleksey Miranchuk,True,6.7
+5071207,2026-05-24,Atlanta United,Ajani Fortune,True,6.9
+5071207,2026-05-24,Atlanta United,Miguel Almirón,False,6.2
+5071207,2026-05-24,Atlanta United,Sérgio Santos,False,6.6
+5071208,2026-05-24,Inter Miami CF,Dayne St. Clair,True,7.4
+5071208,2026-05-24,Inter Miami CF,Ian Fray,True,7.9
+5071208,2026-05-24,Inter Miami CF,Gonzalo Luján,True,7.1
+5071208,2026-05-24,Inter Miami CF,Micael,True,6.9
+5071208,2026-05-24,Inter Miami CF,Sergio Reguilón,True,6.2
+5071208,2026-05-24,Inter Miami CF,Rodrigo De Paul,True,8.2
+5071208,2026-05-24,Inter Miami CF,Yannick Bright,True,7.9
+5071208,2026-05-24,Inter Miami CF,Telasco Segovia,True,6.6
+5071208,2026-05-24,Inter Miami CF,Lionel Messi,True,8.9
+5071208,2026-05-24,Inter Miami CF,Germán Berterame,True,9.3
+5071208,2026-05-24,Inter Miami CF,Luis Suárez,True,9.7
+5071208,2026-05-24,Inter Miami CF,David Ayala,False,6.3
+5071208,2026-05-24,Inter Miami CF,Facundo Mura,False,6.0
+5071208,2026-05-24,Inter Miami CF,Mateo Silvetti,False,7.3
+5071208,2026-05-24,Philadelphia Union,Andre Blake,True,5.3
+5071208,2026-05-24,Philadelphia Union,Francis Westfield,True,6.0
+5071208,2026-05-24,Philadelphia Union,Geiner Martínez,True,4.9
+5071208,2026-05-24,Philadelphia Union,Nathan Harriel,True,4.8
+5071208,2026-05-24,Philadelphia Union,Ben Bender,True,4.3
+5071208,2026-05-24,Philadelphia Union,Cavan Sullivan,True,5.8
+5071208,2026-05-24,Philadelphia Union,Jovan Lukic,True,6.8
+5071208,2026-05-24,Philadelphia Union,Danley Jean Jacques,True,6.8
+5071208,2026-05-24,Philadelphia Union,Augustín Anello,True,6.5
+5071208,2026-05-24,Philadelphia Union,Milan Iloski,True,9.8
+5071208,2026-05-24,Philadelphia Union,Bruno Damiani,True,7.6
+5071208,2026-05-24,Philadelphia Union,Ezekiel Alladoh,False,5.8
+5071208,2026-05-24,Philadelphia Union,Alejandro Bedoya,False,6.5
+5071208,2026-05-24,Philadelphia Union,Jeremy Rafanello,False,6.1
+5071209,2026-05-25,Los Angeles FC,Thomas Hasal,True,8.2
+5071209,2026-05-25,Los Angeles FC,Ryan Hollingshead,True,7.5
+5071209,2026-05-25,Los Angeles FC,Ryan Porteous,True,7.7
+5071209,2026-05-25,Los Angeles FC,Aaron Long,True,7.6
+5071209,2026-05-25,Los Angeles FC,Eddie Segura,True,7.2
+5071209,2026-05-25,Los Angeles FC,Marco Delgado,True,7.7
+5071209,2026-05-25,Los Angeles FC,Mathieu Choinière,True,7.4
+5071209,2026-05-25,Los Angeles FC,Timothy Tillman,True,8.8
+5071209,2026-05-25,Los Angeles FC,David Martínez,True,7.1
+5071209,2026-05-25,Los Angeles FC,Heung-Min Son,True,6.8
+5071209,2026-05-25,Los Angeles FC,Denis Bouanga,True,7.4
+5071209,2026-05-25,Los Angeles FC,Tyler Boyd,False,6.7
+5071209,2026-05-25,Los Angeles FC,Stephen Eustaquio,False,6.1
+5071209,2026-05-25,Seattle Sounders FC,Andrew Thomas,True,7.1
+5071209,2026-05-25,Seattle Sounders FC,Kalani Rienzi,True,6.9
+5071209,2026-05-25,Seattle Sounders FC,Kee-Hee Kim,True,6.5
+5071209,2026-05-25,Seattle Sounders FC,Jackson Ragen,True,7.3
+5071209,2026-05-25,Seattle Sounders FC,Nouhou Tolo,True,7.4
+5071209,2026-05-25,Seattle Sounders FC,Cristian Roldan,True,6.9
+5071209,2026-05-25,Seattle Sounders FC,Hassani Dotson,True,6.1
+5071209,2026-05-25,Seattle Sounders FC,Jesús Ferreira,True,6.9
+5071209,2026-05-25,Seattle Sounders FC,Albert Rusnák,True,6.8
+5071209,2026-05-25,Seattle Sounders FC,Paul Rothrock,True,6.4
+5071209,2026-05-25,Seattle Sounders FC,Jordan Morris,True,6.7
+5071209,2026-05-25,Seattle Sounders FC,Antino Lopez,False,6.5
+5071209,2026-05-25,Seattle Sounders FC,Snyder Brunell,False,5.9
+5071209,2026-05-25,Seattle Sounders FC,Danny Musovski,False,6.3
+5071210,2026-07-16,CF Montreal,Thomas Gillier,True,6.7
+5071210,2026-07-16,CF Montreal,Dawid Bugaj,True,7.3
+5071210,2026-07-16,CF Montreal,Jalen Neal,True,7.3
+5071210,2026-07-16,CF Montreal,Brayan Vera,True,7.2
+5071210,2026-07-16,CF Montreal,Luca Petrasso,True,7.4
+5071210,2026-07-16,CF Montreal,Matthew Longstaff,True,7.3
+5071210,2026-07-16,CF Montreal,Samuel Piette,True,6.9
+5071210,2026-07-16,CF Montreal,Victor Loturi,True,5.9
+5071210,2026-07-16,CF Montreal,Noah Streit,True,6.8
+5071210,2026-07-16,CF Montreal,Daniel Ríos,True,6.3
+5071210,2026-07-16,CF Montreal,Gennadiy Synchuk,True,7.3
+5071210,2026-07-16,CF Montreal,Daniel Pereira,False,6.1
+5071210,2026-07-16,CF Montreal,Fabian Herbers,False,6.3
+5071210,2026-07-16,CF Montreal,Owen Graham-Roache,False,6.0
+5071210,2026-07-16,Toronto FC,Luka Gavran,True,8.1
+5071210,2026-07-16,Toronto FC,Jackson Gilman,True,7.3
+5071210,2026-07-16,Toronto FC,Walker Zimmerman,True,7.6
+5071210,2026-07-16,Toronto FC,Zane Monlouis,True,6.9
+5071210,2026-07-16,Toronto FC,Richie Laryea,True,6.8
+5071210,2026-07-16,Toronto FC,Kobe Franklin,True,7.1
+5071210,2026-07-16,Toronto FC,Theodor Corbeanu,True,6.2
+5071210,2026-07-16,Toronto FC,Alonso Coello,True,7.5
+5071210,2026-07-16,Toronto FC,Dániel Sallói,True,6.5
+5071210,2026-07-16,Toronto FC,Joshua Sargent,True,6.7
+5071210,2026-07-16,Toronto FC,Derrick Etienne,True,6.1
+5071210,2026-07-16,Toronto FC,Jules-Anthony Vilsaint,False,6.3
+5071210,2026-07-16,Toronto FC,Malik Henry,False,5.9
+5071210,2026-07-16,Toronto FC,Djordje Mihailovic,False,6.2
+5071212,2026-07-17,Seattle Sounders FC,Andrew Thomas,True,4.5
+5071212,2026-07-17,Seattle Sounders FC,Kalani Rienzi,True,5.1
+5071212,2026-07-17,Seattle Sounders FC,Antino Lopez,True,5.3
+5071212,2026-07-17,Seattle Sounders FC,Jackson Ragen,True,4.9
+5071212,2026-07-17,Seattle Sounders FC,Nouhou Tolo,True,5.1
+5071212,2026-07-17,Seattle Sounders FC,Hassani Dotson,True,6.7
+5071212,2026-07-17,Seattle Sounders FC,Snyder Brunell,True,4.7
+5071212,2026-07-17,Seattle Sounders FC,Jesús Ferreira,True,6.3
+5071212,2026-07-17,Seattle Sounders FC,Albert Rusnák,True,7.1
+5071212,2026-07-17,Seattle Sounders FC,Paul Rothrock,True,6.5
+5071212,2026-07-17,Seattle Sounders FC,Jordan Morris,True,5.7
+5071212,2026-07-17,Seattle Sounders FC,Danny Musovski,False,6.5
+5071212,2026-07-17,Seattle Sounders FC,Peter Kingston,False,6.7
+5071212,2026-07-17,Seattle Sounders FC,Osaze De Rosario,False,6.4
+5071212,2026-07-17,Seattle Sounders FC,Paul Arriola,False,6.1
+5071212,2026-07-17,Portland Timbers,James Pantemis,True,7.9
+5071212,2026-07-17,Portland Timbers,Brandon Bye,True,7.8
+5071212,2026-07-17,Portland Timbers,Finn Surman,True,7.1
+5071212,2026-07-17,Portland Timbers,Kamal Miller,True,8.5
+5071212,2026-07-17,Portland Timbers,Jimer Fory,True,7.9
+5071212,2026-07-17,Portland Timbers,David Da Costa,True,8.9
+5071212,2026-07-17,Portland Timbers,Diego Chará,True,7.4
+5071212,2026-07-17,Portland Timbers,Cole Bassett,True,8.1
+5071212,2026-07-17,Portland Timbers,Antony,True,8.2
+5071212,2026-07-17,Portland Timbers,Kevin Kelsy,True,9.2
+5071212,2026-07-17,Portland Timbers,Ariel Lassiter,True,7.3
+5071212,2026-07-17,Portland Timbers,José Caicedo,False,6.3
+5071212,2026-07-17,Portland Timbers,Alexander Aravena,False,7.7
+5071213,2026-07-17,St. Louis City,Benjamin Lundt,True,4.9
+5071213,2026-07-17,St. Louis City,Lukas MacNaughton,True,7.6
+5071213,2026-07-17,St. Louis City,Timo Baumgartl,True,7.0
+5071213,2026-07-17,St. Louis City,Dante Polvara,True,7.0
+5071213,2026-07-17,St. Louis City,Conrad Wallem,True,5.8
+5071213,2026-07-17,St. Louis City,Daniel Edelman,True,7.5
+5071213,2026-07-17,St. Louis City,Eduard Löwen,True,7.6
+5071213,2026-07-17,St. Louis City,Tomas Totland,True,6.9
+5071213,2026-07-17,St. Louis City,Sang-Bin Jeong,True,8.1
+5071213,2026-07-17,St. Louis City,Simon Becher,True,7.7
+5071213,2026-07-17,St. Louis City,Marcel Hartel,True,8.5
+5071213,2026-07-17,St. Louis City,Rafael Santos,False,6.3
+5071213,2026-07-17,St. Louis City,Miguel Perez,False,6.0
+5071213,2026-07-17,Sporting Kansas City,Stefan Cleveland,True,5.8
+5071213,2026-07-17,Sporting Kansas City,Ian James,True,5.8
+5071213,2026-07-17,Sporting Kansas City,Jansen Miller,True,5.6
+5071213,2026-07-17,Sporting Kansas City,Or Blorian,True,6.3
+5071213,2026-07-17,Sporting Kansas City,Jayden Reid,True,6.3
+5071213,2026-07-17,Sporting Kansas City,Capita,True,7.4
+5071213,2026-07-17,Sporting Kansas City,Lasse Berg Johnsen,True,6.5
+5071213,2026-07-17,Sporting Kansas City,Zorhan Bassong,True,6.6
+5071213,2026-07-17,Sporting Kansas City,Calvin Harris,True,6.9
+5071213,2026-07-17,Sporting Kansas City,Dejan Joveljic,True,7.1
+5071213,2026-07-17,Sporting Kansas City,Manu García,True,7.8
+5071213,2026-07-17,Sporting Kansas City,Emir Karic,False,6.9
+5071213,2026-07-17,Sporting Kansas City,Jacob Davis,False,6.6
+5071213,2026-07-17,Sporting Kansas City,Ethan Bartlow,False,5.9
+5071213,2026-07-17,Sporting Kansas City,Kwaku Agyabeng,False,6.5
