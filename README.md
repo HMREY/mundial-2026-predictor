@@ -1,5 +1,22 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v31 — Apuestas del Día universales (ver [VALIDACION_v31.md](VALIDACION_v31.md))
+
+- **🌐 Cobertura universal**: el barrido recorre ahora **todas** las
+  competiciones (11 de fútbol + MLB + NBA + tenis ATP) instanciando cada
+  motor. Barrido real: 7 picks en 3 deportes simultáneos.
+- **🎯 Doble capa**: **Capa 1** (cuota real + EV + stake Kelly) y **Capa 2**
+  (alta confianza sin cuota en vivo → cuota mínima sugerida, sin stake).
+- **🎾 Cuotas de tenis vía Betexplorer** con fuzzy matching de nombres
+  (9/10 emparejados). Los no enlazados se reportan, nunca se descartan en
+  silencio. *(Ojo: las URLs `matches-today` no existen — la ruta real es
+  `/next/tennis/`; verificado.)*
+- **🧹 Sin deprecaciones**: 34 `use_container_width` → `width`.
+- **❌ Decaimiento inter-temporada descartado** con evidencia (peor incluso
+  al inicio de temporada, que era la hipótesis).
+- Bugs corregidos: serialización Arrow del panel de rendimiento y tarjetas
+  defensivas para picks sin cuota.
+
 ## Novedades v30 — Tres deportes nuevos, CDI y fix crítico (ver [VALIDACION_v30.md](VALIDACION_v30.md))
 
 - **🔧 Fix crítico de exportación**: el `AttributeError` al exportar las

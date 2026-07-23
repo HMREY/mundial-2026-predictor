@@ -241,13 +241,148 @@ def apuestas_del_dia(max_partidos: int = 40) -> Dict:
     return _ULTIMO_RESULTADO
 
 
+# ---------------------------------------------------------------------------
+# v31 (§1/§5): bucle dinámico universal + doble capa
+#   Capa 1 «EVC Platino»: hay CUOTA REAL y pasa los filtros de élite.
+#   Capa 2 «Alta Confianza»: SIN cuota real y confianza > 75 % → se sugiere
+#   la cuota mínima (1/prob). Sin stake (no hay EV real).
+# ---------------------------------------------------------------------------
+CONF_CAPA2 = 0.75
+UMBRAL_CONF = {'MLB': 0.58, 'Tenis': 0.65, 'NBA': 0.70}
+
+
+def _picks_mlb() -> Dict[str, List[Dict]]:
+    """MLB: cuotas en vivo de The Odds API (capa 1) + alta confianza (capa 2)."""
+    try:
+        from engines.mlb_engine import MLBEngine
+        eng = MLBEngine().cargar_modelo()
+        if not eng.listo:
+            return {'capa1': [], 'capa2': []}
+        r = eng.apuestas_dia(min_prob=UMBRAL_CONF['MLB'])
+        capa1 = [{**p, 'liga': 'MLB', 'mercado': 'Moneyline',
+                  'valor': p.get('valor', '🟡')} for p in r.get('picks', [])]
+        return {'capa1': capa1, 'capa2': []}
+    except Exception as e:
+        logger.warning(f"[alpha] MLB omitido: {type(e).__name__}: {e}")
+        return {'capa1': [], 'capa2': []}
+
+
+def _picks_tenis() -> Dict[str, List[Dict]]:
+    """Tenis: cuotas de Betexplorer (ATP) + fuzzy de nombres (§4.2)."""
+    salida = {'capa1': [], 'capa2': [], 'no_enlazados': []}
+    try:
+        import betexplorer_scraper as bx
+        from engines.tennis_engine import TennisEngine
+        eng = TennisEngine().cargar_modelo()
+        if not eng.listo:
+            return salida
+        partidos = bx.cuotas_tenis_hoy()
+        for m in partidos:
+            j1 = bx.emparejar_jugador(m['home'], eng.jugadores)
+            j2 = bx.emparejar_jugador(m['away'], eng.jugadores)
+            if not (j1 and j2):
+                salida['no_enlazados'].append(f"{m['home']} vs {m['away']}")
+                continue
+            pred = eng.predecir(j1, j2)
+            if 'error' in pred:
+                continue
+            for lado, nombre, prob, cuota in (
+                    ('home', m['home'], pred['prob_home'], m['odd_home']),
+                    ('away', m['away'], pred['prob_away'], m['odd_away'])):
+                ev = round(cuota * prob - 1, 4)
+                base = {'deporte': 'Tenis', 'liga': 'ATP',
+                        'partido': f"{m['home']} vs {m['away']}",
+                        'fecha': str(pd.Timestamp.today().date()),
+                        'mercado': 'Ganador', 'apuesta': f'Gana {nombre}',
+                        'prob': round(prob, 3),
+                        'cuota_justa': round(1 / max(prob, 1e-6), 2)}
+                if prob > UMBRAL_CONF['Tenis'] and ev > MIN_EV and cuota > MIN_CUOTA:
+                    salida['capa1'].append({**base, 'cuota': round(cuota, 2),
+                                            'ev': ev,
+                                            'valor': '🟢' if ev > 0.05 else '🟡'})
+                elif prob > CONF_CAPA2:
+                    salida['capa2'].append({**base, 'cuota': None, 'ev': None,
+                                            'valor': '🎯'})
+    except Exception as e:
+        logger.warning(f"[alpha] tenis omitido: {type(e).__name__}: {e}")
+    return salida
+
+
+def _picks_nba() -> Dict[str, List[Dict]]:
+    """NBA: sin cuotas en julio (fuera de temporada) → capa 2 si hay partidos."""
+    salida = {'capa1': [], 'capa2': []}
+    try:
+        import betexplorer_scraper as bx
+        partidos = bx.cuotas_baloncesto_hoy()
+        if not partidos:
+            return salida
+        from engines.nba_engine import NBAEngine
+        eng = NBAEngine().cargar_modelo()
+        if not eng.listo:
+            return salida
+        for m in partidos:
+            pred = eng.predecir(m['home'], m['away'])
+            if 'error' in pred:
+                continue
+            for nombre, prob, cuota in ((m['home'], pred['prob_home'], m['odd_home']),
+                                        (m['away'], pred['prob_away'], m['odd_away'])):
+                ev = round(cuota * prob - 1, 4)
+                base = {'deporte': 'NBA', 'liga': 'NBA',
+                        'partido': f"{m['home']} vs {m['away']}",
+                        'fecha': str(pd.Timestamp.today().date()),
+                        'mercado': 'Moneyline', 'apuesta': f'Gana {nombre}',
+                        'prob': round(prob, 3),
+                        'cuota_justa': round(1 / max(prob, 1e-6), 2)}
+                if prob > UMBRAL_CONF['NBA'] and ev > MIN_EV and cuota > MIN_CUOTA:
+                    salida['capa1'].append({**base, 'cuota': round(cuota, 2),
+                                            'ev': ev, 'valor': '🟢'})
+                elif prob > CONF_CAPA2:
+                    salida['capa2'].append({**base, 'cuota': None, 'ev': None,
+                                            'valor': '🎯'})
+    except Exception as e:
+        logger.warning(f"[alpha] NBA omitido: {type(e).__name__}: {e}")
+    return salida
+
+
+def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
+    """Barrido de TODAS las competiciones activas (11 de fútbol + MLB, NBA,
+    tenis) con clasificación en dos capas (§1.2, §5.1)."""
+    r = apuestas_del_dia(max_partidos=max_partidos)
+    capa1 = list(r.get('elite') or [])
+    for p in capa1:
+        p.setdefault('deporte', 'Fútbol')
+    capa2, no_enlazados = [], []
+    for fn in (_picks_mlb, _picks_tenis, _picks_nba):
+        try:
+            sub = fn()
+        except Exception as e:
+            logger.warning(f"[alpha] {fn.__name__}: {e}")
+            continue
+        capa1 += sub.get('capa1', [])
+        capa2 += sub.get('capa2', [])
+        no_enlazados += sub.get('no_enlazados', [])
+    capa1.sort(key=lambda t: (-int(t.get('platino', False)), -(t.get('ev') or 0)))
+    capa2.sort(key=lambda t: -(t.get('prob') or 0))
+    deportes = sorted({p.get('deporte', 'Fútbol') for p in capa1 + capa2})
+    r.update({'capa1': capa1, 'capa2': capa2, 'no_enlazados': no_enlazados,
+              'deportes_cubiertos': deportes,
+              'elite': capa1,          # compatibilidad con UI/exportación
+              })
+    global _ULTIMO_RESULTADO
+    _ULTIMO_RESULTADO = r
+    logger.info(f"[alpha] universal: capa1={len(capa1)} capa2={len(capa2)} "
+                f"deportes={deportes} no_enlazados={len(no_enlazados)}")
+    return r
+
+
 def exportar_txt(r: Optional[Dict] = None) -> str:
     """Apuestas del día como texto plano (v30 §1: arg opcional — si es None
     usa el último barrido; robusto ante cualquier forma de los picks)."""
     r = r if r is not None else _ULTIMO_RESULTADO
     lineas = [f"APUESTAS DEL DÍA — {r.get('actualizado', '?')}",
               f"(cobertura: {r.get('cobertura_ligas', {})})", ""]
-    for grupo, titulo in (('elite', '⭐ ÉLITE / EVC'),
+    for grupo, titulo in (('elite', '💎 CAPA 1 — EVC PLATINO / ÉLITE (cuota real)'),
+                          ('capa2', '🎯 CAPA 2 — ALTA CONFIANZA (sin cuota real)'),
                           ('candidatos', 'CANDIDATOS')):
         picks = r.get(grupo) or []
         if not picks:
@@ -255,13 +390,17 @@ def exportar_txt(r: Optional[Dict] = None) -> str:
         lineas.append(f"== {titulo} ==")
         for t in picks:
             estrella = '⭐' if t.get('platino') else ('💎' if t.get('evc') else '')
-            ev = t.get('ev', 0) or 0
+            ev = t.get('ev') or 0
             prob = t.get('prob', 0) or 0
+            cuota = t.get('cuota')
+            precio = (f"@ {cuota} (justa {t.get('cuota_justa','?')}) · "
+                      f"EV {ev*100:+.1f}%" if cuota else
+                      f"SIN cuota real · cuota mínima sugerida "
+                      f"{t.get('cuota_justa','?')}")
             lineas.append(
-                f"{estrella} {t.get('partido','?')} ({t.get('liga','?')}, "
-                f"{t.get('fecha','')}) — {t.get('apuesta','?')} @ "
-                f"{t.get('cuota','?')} (justa {t.get('cuota_justa','?')}) · "
-                f"EV {ev*100:+.1f}% · prob {prob*100:.0f}%"
+                f"{estrella} [{t.get('deporte','Fútbol')}] {t.get('partido','?')} "
+                f"({t.get('liga','?')}, {t.get('fecha','')}) — "
+                f"{t.get('apuesta','?')} {precio} · prob {prob*100:.0f}%"
                 + (f" · stake {t['stake_txt']}" if t.get('stake_txt') else ''))
         lineas.append("")
     lineas.append("Juego responsable. Cuotas justas = 1/probabilidad.")
@@ -274,15 +413,16 @@ def exportar_csv(r: Optional[Dict] = None) -> str:
     r = r if r is not None else _ULTIMO_RESULTADO
     buf = io.StringIO()
     w = csv.writer(buf)
-    w.writerow(['grupo', 'partido', 'liga', 'fecha', 'mercado', 'apuesta',
-                'cuota', 'cuota_justa', 'ev_pct', 'prob_pct', 'stake',
-                'evc', 'platino'])
-    for grupo in ('elite', 'candidatos'):
+    w.writerow(['capa', 'deporte', 'partido', 'liga', 'fecha', 'mercado',
+                'apuesta', 'cuota', 'cuota_justa', 'ev_pct', 'prob_pct',
+                'stake', 'evc', 'platino'])
+    for grupo, capa in (('elite', 'capa1_evc'), ('capa2', 'capa2_confianza'),
+                        ('candidatos', 'candidatos')):
         for t in r.get(grupo) or []:
-            w.writerow([grupo, t.get('partido', ''), t.get('liga', ''),
-                        t.get('fecha', ''), t.get('mercado', ''),
+            w.writerow([capa, t.get('deporte', 'Fútbol'), t.get('partido', ''),
+                        t.get('liga', ''), t.get('fecha', ''), t.get('mercado', ''),
                         t.get('apuesta', ''), t.get('cuota', ''),
-                        t.get('cuota_justa', ''), round((t.get('ev', 0) or 0)*100, 1),
+                        t.get('cuota_justa', ''), round((t.get('ev') or 0)*100, 1),
                         round((t.get('prob', 0) or 0)*100, 0), t.get('stake_txt', ''),
                         t.get('evc', False), t.get('platino', False)])
     return buf.getvalue()

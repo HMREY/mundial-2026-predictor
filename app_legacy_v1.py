@@ -914,7 +914,7 @@ def main():
                     historico, fila_local, fila_visit,
                     seleccion_local, seleccion_visitante,
                 ),
-                use_container_width=True,
+                width='stretch',
             )
             # Distancia euclidiana en el subespacio (xG, remates, goles)
             v_l = np.array([fila_local["XG_FAVOR_MA5"],
@@ -932,7 +932,7 @@ def main():
             st.subheader("🔬 Diagrama de Persistencia (Birth-Death)")
             st.plotly_chart(
                 grafico_diagrama_persistencia(diagrama),
-                use_container_width=True,
+                width='stretch',
             )
             st.info(
                 "Los puntos H0 lejos de la diagonal indican bloques competitivos "
@@ -950,10 +950,10 @@ def main():
                               if c in jugadores_local.columns]
             with col_a1:
                 st.markdown(f"**🏠 {seleccion_local}**")
-                st.dataframe(jugadores_local[columnas_vista], use_container_width=True, height=300)
+                st.dataframe(jugadores_local[columnas_vista], width='stretch', height=300)
             with col_a2:
                 st.markdown(f"**✈️ {seleccion_visitante}**")
-                st.dataframe(jugadores_visit[columnas_vista], use_container_width=True, height=300)
+                st.dataframe(jugadores_visit[columnas_vista], width='stretch', height=300)
 
     # =======================================================================
     # PESTAÑA 2 (BLOQUE 6): BACKTESTING Y VALIDACIÓN HISTÓRICA
@@ -1089,7 +1089,7 @@ def main():
                     grafico_espacio_fases_3d(
                         historico, bt_fila_l, bt_fila_v, codigo_local, codigo_visit
                     ),
-                    use_container_width=True,
+                    width='stretch',
                 )
                 v_l = np.array([bt_fila_l["XG_FAVOR_MA5"],
                                 bt_fila_l["REMATES_ARCO_FAVOR_MA5"],
@@ -1107,7 +1107,7 @@ def main():
                 st.subheader("🔬 Diagrama de Persistencia del Backtest")
                 st.plotly_chart(
                     grafico_diagrama_persistencia(bt_diagrama),
-                    use_container_width=True,
+                    width='stretch',
                 )
                 col_be1, col_be2 = st.columns(2)
                 col_be1.metric("Entropía H0", f"{bt_entropias[0]:.4f}")

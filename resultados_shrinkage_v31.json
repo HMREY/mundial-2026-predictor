@@ -1,0 +1,13 @@
+{
+  "sin": {
+    "acc": 0.5498,
+    "ll": 0.6874,
+    "acc_inicio_temporada": 0.567
+  },
+  "con": {
+    "acc": 0.5466,
+    "ll": 0.6867,
+    "acc_inicio_temporada": 0.5626
+  },
+  "adoptar": false
+}

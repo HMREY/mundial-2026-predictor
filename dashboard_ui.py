@@ -172,7 +172,7 @@ def render_cuotas_reales(pl: dict):
                 'Stake ¼ Kelly': stake_txt,
             })
     if filas:
-        st.dataframe(pd.DataFrame(filas), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame(filas), width='stretch', hide_index=True)
         from bankroll_manager import AVISO_JUEGO_RESPONSABLE
         st.caption(
             "**EV** = (cuota real × probabilidad del modelo − 1) × 100. "
@@ -215,7 +215,10 @@ def render_rendimiento(key: str):
                 'Mercado': (f"{md['precision_mercado_cuotas']*100:.1f} %"
                             if md.get('precision_mercado_cuotas') else 'N/D'),
                 'Apuestas': r['n_apuestas'] if r else 0,
-                'Aciertos': r['aciertos'] if r else '—',
+                # v31: string siempre — mezclar int y '—' rompía la
+                # serialización Arrow del dataframe ("Conversion failed
+                # for column Aciertos")
+                'Aciertos': str(r['aciertos']) if r else '—',
                 'ROI': f"{r['roi_pct']:+.1f} %" if r else 'N/D',
             })
             grafico.append({'liga': nombre,
@@ -223,7 +226,7 @@ def render_rendimiento(key: str):
                             'ELO': (md.get('precision_linea_base_elo') or 0) * 100,
                             'Mercado': (md.get('precision_mercado_cuotas') or 0) * 100})
         if filas:
-            st.dataframe(pd.DataFrame(filas), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(filas), width='stretch', hide_index=True)
             # v22: comparativa visual modelo vs líneas base
             gdf = pd.DataFrame(grafico)
             fig_cmp = go.Figure()
@@ -236,7 +239,7 @@ def render_rendimiento(key: str):
                                   yaxis_title='Precisión 1X2 (%)',
                                   yaxis_range=[40, 62],
                                   legend=dict(orientation='h', y=1.12))
-            st.plotly_chart(fig_cmp, use_container_width=True)
+            st.plotly_chart(fig_cmp, width='stretch')
             st.caption("El mercado (cuotas de cierre) solo existe donde hay cuotas "
                        "reales; batirlo de forma sostenida es la vara más alta.")
 
@@ -267,7 +270,7 @@ def render_rendimiento(key: str):
                 fig_wf.update_layout(height=280, margin=dict(l=0, r=0, t=10, b=0),
                                      yaxis_title='Precisión (%)',
                                      legend=dict(orientation='h', y=1.15))
-                st.plotly_chart(fig_wf, use_container_width=True)
+                st.plotly_chart(fig_wf, width='stretch')
                 st.caption("Cada punto es una ventana de validación de 6 meses "
                            "(entrenamiento expansivo, sin fuga). La variación "
                            "entre ventanas es la incertidumbre real del modelo.")
@@ -306,7 +309,7 @@ def render_rendimiento(key: str):
                                        mode='lines', fill='tozeroy'))
             fig.update_layout(height=260, margin=dict(l=0, r=0, t=10, b=0),
                               yaxis_title='Bankroll')
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
             delta = banca - banca0
             st.metric("Bankroll final", f"{banca:,.2f}",
                       delta=f"{delta:+,.2f} ({delta/banca0*100:+.1f} %)")
@@ -364,7 +367,7 @@ def render_h2h_club(clave: str, home: str, away: str, key: str):
                 'Fecha': c['fecha'], 'Competición': c['competicion'],
                 'Partido': f"{c['local']} {c['goles_local']}-{c['goles_visitante']} "
                            f"{c['visitante']}",
-            } for c in cruces]), use_container_width=True, hide_index=True)
+            } for c in cruces]), width='stretch', hide_index=True)
 
 
 def render_h2h_mundial(home: str, away: str):
@@ -387,7 +390,7 @@ def render_h2h_mundial(home: str, away: str):
             'Fecha': str(r['date'])[:10], 'Competición': r['tournament'],
             'Partido': f"{r['home_team']} {r['home_goals']:.0f}-{r['away_goals']:.0f} "
                        f"{r['away_team']}",
-        } for _, r in par.iterrows()]), use_container_width=True, hide_index=True)
+        } for _, r in par.iterrows()]), width='stretch', hide_index=True)
 
 
 # ===========================================================================
@@ -428,7 +431,7 @@ def render_comparador(motor, equipos: list, key: str):
                     'Marcador probable': pr['most_likely_score'],
                     'Goles esperados': f"{pr['total_goals_expected']:.2f}",
                 })
-            st.dataframe(pd.DataFrame(filas), use_container_width=True,
+            st.dataframe(pd.DataFrame(filas), width='stretch',
                          hide_index=True)
             confs = [p['prediction']['confidence'] for p in preds]
             mas = 'A' if confs[0] >= confs[1] else 'B'
@@ -504,7 +507,7 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
                 'Mercado': s['mercado'], 'Apuesta': s['apuesta'],
                 'Prob.': f"{s['prob']*100:.1f} %", 'Cuota': s['cuota'],
                 'Fuente': s['cuota_fuente'], 'EV': s['ev'],
-            } for s in r['selecciones']]), use_container_width=True, hide_index=True)
+            } for s in r['selecciones']]), width='stretch', hide_index=True)
             # v20: por qué estas categorías encajan con ESTE partido
             if r.get('explicacion'):
                 st.markdown("**🧭 Composición del parlay** — " +
@@ -601,7 +604,7 @@ def render_liga_club(clave: str, nombre_liga: str):
             text=[f"{p['probabilities'][k]*100:.0f} %" for k in ('home', 'draw', 'away')],
             textposition='outside'))
         fig_b.update_layout(yaxis_range=[0, 100], height=320, margin=dict(l=0, r=0, t=10, b=0))
-        st.plotly_chart(fig_b, use_container_width=True)
+        st.plotly_chart(fig_b, width='stretch')
     with col_g2:
         matriz = np.array(pred['score_matrix'])
         fig_h = go.Figure(go.Heatmap(
@@ -610,7 +613,7 @@ def render_liga_club(clave: str, nombre_liga: str):
             colorbar=dict(title='%')))
         fig_h.update_layout(xaxis_title=f"Goles {away}", yaxis_title=f"Goles {home}",
                             height=320, margin=dict(l=0, r=0, t=10, b=0))
-        st.plotly_chart(fig_h, use_container_width=True)
+        st.plotly_chart(fig_h, width='stretch')
 
     # ---- Plantilla extendida de clubes (editable, mismo formato) ----------
     st.markdown(f"## 📋 Plantilla de análisis — {pl['partido']}")
@@ -643,7 +646,7 @@ def render_liga_club(clave: str, nombre_liga: str):
                                       'Modelo': round(float(c['valor']), 1),
                                       'Diferencia': round(vu - float(c['valor']), 1)})
         if hallazgos:
-            st.dataframe(pd.DataFrame(hallazgos), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(hallazgos), width='stretch', hide_index=True)
         else:
             st.success("Tus valores coinciden con el modelo.")
 
@@ -753,13 +756,14 @@ BANKROLL = st.sidebar.number_input(
 def render_alpha_finder():
     """v26 (§4.1-§4.2): Apuestas del Día + simulador Montecarlo de bankroll."""
     st.header("💎 Apuestas del Día")
-    st.caption("Barrido de TODAS las ligas con cuotas vigentes (próximas 48 h). "
-               "Élite = prob. del modelo >70 %, EV >+3 % y cuota >1.50.")
+    st.caption("Barrido UNIVERSAL (v31): 10 ligas de fútbol + Mundial, ⚾ MLB, "
+               "🏀 NBA y 🎾 tenis ATP. **Capa 1** = cuota real con EV; "
+               "**Capa 2** = alta confianza sin cuota en vivo.")
 
-    @st.cache_data(ttl=1800, show_spinner="🔍 Buscando valor en todas las ligas…")
+    @st.cache_data(ttl=1800, show_spinner="🔍 Buscando valor en todos los deportes…")
     def _buscar():
         import alpha_finder
-        return alpha_finder.apuestas_del_dia()
+        return alpha_finder.apuestas_del_dia_universal()
 
     r = _buscar()
     if r.get('actualizado'):
@@ -782,10 +786,10 @@ def render_alpha_finder():
             cexp1, cexp2 = st.columns(2)
             cexp1.download_button("📋 Exportar (texto)", txt,
                                   file_name=f"apuestas_{fecha_exp}.txt",
-                                  use_container_width=True)
+                                  width='stretch')
             cexp2.download_button("📊 Exportar (CSV)", csv,
                                   file_name=f"apuestas_{fecha_exp}.csv",
-                                  mime='text/csv', use_container_width=True)
+                                  mime='text/csv', width='stretch')
         except Exception as e:
             st.caption(f"⚠️ Exportación no disponible ahora ({type(e).__name__}).")
 
@@ -797,13 +801,25 @@ def render_alpha_finder():
         for t in lista:
             pref = ('⭐ ' if t.get('platino') else '') \
                 + ('⚡ ' if t.get('shadow') else '')
+            # v31: las tarjetas sirven a las DOS capas — con cuota real
+            # (EV) o sin ella (cuota mínima sugerida). Todo defensivo.
+            cuota = t.get('cuota')
+            if cuota:
+                precio = (f"{t.get('valor','')} Cuota **{cuota}** "
+                          f"(justa {t.get('cuota_justa','?')})  \n"
+                          f"EV **{(t.get('ev') or 0)*100:+.1f} %** · "
+                          f"prob {(t.get('prob') or 0)*100:.0f} %")
+            else:
+                precio = (f"🎯 Sin cuota en vivo  \n"
+                          f"Cuota mínima sugerida **{t.get('cuota_justa','?')}** · "
+                          f"prob {(t.get('prob') or 0)*100:.0f} %")
             with st.container(border=True):
                 c1, c2, c3 = st.columns([3, 2, 2])
-                c1.markdown(f"**{pref}{t['partido']}**  \n{t['liga']} · {t['fecha']}")
-                c2.markdown(f"**{t['apuesta']}**  \n{t['mercado']}")
-                c3.markdown(f"{t['valor']} Cuota **{t['cuota']}** "
-                            f"(justa {t['cuota_justa']})  \n"
-                            f"EV **{t['ev']*100:+.1f} %** · prob {t['prob']*100:.0f} %"
+                c1.markdown(f"**{pref}{t.get('partido','?')}**  \n"
+                            f"{t.get('deporte','Fútbol')} · {t.get('liga','')} · "
+                            f"{t.get('fecha','')}")
+                c2.markdown(f"**{t.get('apuesta','?')}**  \n{t.get('mercado','')}")
+                c3.markdown(precio
                             + (f"  \n💼 Stake: **{t['stake_txt']}**"
                                if t.get('stake_txt') else '')
                             + (f"  \n{t['nota']}" if t.get('nota') else ''))
@@ -832,8 +848,30 @@ def render_alpha_finder():
     if not ES_PRO:
         st.caption(tq.tooltip('evc'))
     _tarjetas([t for t in elite if not t.get('evc')], "⭐ Picks de élite")
+
+    # v31 (§5): CAPA 2 — alta confianza SIN cuota real (modo analítico)
+    capa2 = r.get('capa2') or []
+    if capa2:
+        st.divider()
+        st.subheader("🎯 Capa 2 — Predicciones de Alta Confianza"
+                     if ES_PRO else "🎯 Apuestas sugeridas (sin cuota confirmada)")
+        st.warning("Sin cuotas en vivo para estos partidos: compara "
+                   "manualmente con tu casa. Solo apuesta si te ofrecen MÁS "
+                   "que la cuota mínima sugerida. No se calcula stake.")
+        _tarjetas(capa2, "")
+    if r.get('no_enlazados'):
+        with st.expander(f"ℹ️ {len(r['no_enlazados'])} partidos no evaluados "
+                         "(nombre no enlazado con el modelo)"):
+            st.caption("No se descartan en silencio: el nombre de la casa no "
+                       "cruzó con el catálogo del modelo (jugador nuevo o "
+                       "grafía distinta).")
+            st.write(r['no_enlazados'])
+
     _tarjetas(r.get('candidatos'), "Candidatos con EV positivo"
               if ES_PRO else "Otras oportunidades con Ventaja Matemática 📈")
+    if r.get('deportes_cubiertos'):
+        st.caption(f"🌐 Deportes cubiertos hoy: "
+                   f"{', '.join(r['deportes_cubiertos'])}.")
     from bankroll_manager import AVISO_JUEGO_RESPONSABLE
     st.caption(AVISO_JUEGO_RESPONSABLE)
 
@@ -854,7 +892,7 @@ def render_alpha_finder():
                 st.info(ra['aviso'])
             if ra['oportunidades']:
                 st.dataframe(pd.DataFrame(ra['oportunidades']),
-                             use_container_width=True, hide_index=True)
+                             width='stretch', hide_index=True)
 
     # ---- 📈 Simulador Montecarlo (v26 §4.1) -------------------------------
     st.divider()
@@ -887,7 +925,7 @@ def render_alpha_finder():
                                  line=dict(width=3), mode='lines'))
         fig.update_layout(height=380, margin=dict(l=10, r=10, t=30, b=10),
                           xaxis_title='Apuesta nº', yaxis_title='Bankroll')
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         m1, m2, m3 = st.columns(3)
         m1.metric("Bankroll final mediano", f"{res['final_mediano']:,.0f}")
         m2.metric("Rango 5-95 %", f"{res['final_p5']:,.0f} – {res['final_p95']:,.0f}")
@@ -966,7 +1004,7 @@ def render_mlb():
             st.dataframe(pd.DataFrame([{'Mercado': c['etiqueta'],
                                         'Prob.': f"{c['valor']:.0f} %"}
                                        for c in pl['campos']]),
-                         use_container_width=True, hide_index=True)
+                         width='stretch', hide_index=True)
     with tab2:
         st.caption("Cuotas en vivo de The Odds API (baseball_mlb, EE. UU.). "
                    "Filtros: prob >58 %, EV >+3 %, cuota >1.50.")
@@ -1084,7 +1122,7 @@ if not MOTOR.listo:
 # ---- Transparencia: procedencia y FRESCURA de los datos ---------------------
 col_banner, col_boton = st.columns([5, 1])
 with col_boton:
-    if st.button("🔄 Actualizar datos ahora", use_container_width=True,
+    if st.button("🔄 Actualizar datos ahora", width='stretch',
                  help="Ejecuta el pipeline completo (Kaggle + árbitros + estado de equipos). Tarda ~1 minuto."):
         import subprocess, sys as _sys
         with st.spinner("⏬ Descargando resultados y recalculando el estado de las 49 selecciones..."):
@@ -1292,7 +1330,7 @@ with tab_rapida:
         ))
         fig_barras.update_layout(yaxis_title="%", yaxis_range=[0, 100],
                                  margin=dict(l=0, r=0, t=10, b=0), height=340)
-        st.plotly_chart(fig_barras, use_container_width=True)
+        st.plotly_chart(fig_barras, width='stretch')
 
     with col_g2:
         st.subheader("🎯 Marcadores exactos (calor)")
@@ -1311,7 +1349,7 @@ with tab_rapida:
             yaxis_title=f"Goles de {nombre_local}",
             margin=dict(l=0, r=0, t=10, b=0), height=340,
         )
-        st.plotly_chart(fig_heat, use_container_width=True)
+        st.plotly_chart(fig_heat, width='stretch')
 
     with col_g3:
         st.subheader("⏱️ Probabilidad de gol por minuto")
@@ -1335,7 +1373,7 @@ with tab_rapida:
             legend=dict(orientation='h', y=1.12),
             margin=dict(l=0, r=0, t=10, b=0), height=340,
         )
-        st.plotly_chart(fig_tl, use_container_width=True)
+        st.plotly_chart(fig_tl, width='stretch')
 
     st.divider()
     st.subheader("🧠 Lo que dicen los números (en cristiano)")
@@ -1406,9 +1444,9 @@ with tab_rapida:
             emoji = '🏠' if lado == 'home' else '✈️'
             if jugadores_lado:
                 st.plotly_chart(radar_jugadores(jugadores_lado, f"{emoji} {nombre_eq}"),
-                                use_container_width=True)
+                                width='stretch')
                 st.dataframe(tabla_rematadores(jugadores_lado),
-                             use_container_width=True, hide_index=True)
+                             width='stretch', hide_index=True)
             else:
                 st.info(f"{emoji} {nombre_eq}: sin goleadores registrados en los últimos 24 meses.")
 
@@ -1471,7 +1509,7 @@ with tab_rapida:
                     'Prob.': f"{s['prob']*100:.1f} %", 'Cuota': s['cuota'],
                     'Fuente': s['cuota_fuente'], 'EV': s['ev'],
                     'Riesgo': {'bajo': '🟢', 'medio': '🟡', 'alto': '🔴'}[s.get('riesgo', 'bajo')],
-                } for s in parlay['selecciones']]), use_container_width=True, hide_index=True)
+                } for s in parlay['selecciones']]), width='stretch', hide_index=True)
                 c1, c2, c3, c4 = st.columns(4)
                 c1.metric("Cuota combinada", f"{parlay['cuota_combinada']:.2f}",
                           help="Producto de todas las cuotas: lo que pagaría 1 unidad si aciertas todo.")
@@ -1562,7 +1600,7 @@ with tab_rapida:
                     'Al arco': j['remates_al_arco'],
                     'Prob. de marcar': f"{j['prob_marcar']*100:.0f} %",
                 } for j in respuesta['jugadores'][:5]]),
-                    use_container_width=True, hide_index=True)
+                    width='stretch', hide_index=True)
             else:
                 st.info(f"{respuesta['equipo_nombre']}: sin goleadores registrados recientemente.")
 
@@ -1696,7 +1734,7 @@ with tab_plantilla:
             c1.metric("Campos modificados", editados)
             c2.metric("Diferencia media", f"{np.mean(difs):.1f}")
             c3.metric("Mayor discrepancia", f"{max(difs):.1f}")
-            st.dataframe(pd.DataFrame(hallazgos), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(hallazgos), width='stretch', hide_index=True)
             for h in hallazgos:
                 if 'Lectura' in h and abs(h['Diferencia']) >= 3:
                     st.info(f"💡 **{h['Campo']}** — {h['Lectura']}")
@@ -1716,14 +1754,14 @@ with tab_plantilla:
             "⬇️ Descargar plantilla (valores del modelo)",
             data=plantilla_a_markdown(pl).encode('utf-8'),
             file_name=f"plantilla_{home}_vs_{away}_modelo.md",
-            mime="text/markdown", use_container_width=True,
+            mime="text/markdown", width='stretch',
         )
     with col_d2:
         st.download_button(
             "⬇️ Descargar plantilla (con mis ediciones)",
             data=plantilla_a_markdown(pl, valores_usuario).encode('utf-8'),
             file_name=f"plantilla_{home}_vs_{away}_usuario.md",
-            mime="text/markdown", use_container_width=True,
+            mime="text/markdown", width='stretch',
         )
 
 st.divider()
