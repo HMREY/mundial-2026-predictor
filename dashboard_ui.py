@@ -940,6 +940,28 @@ def render_alpha_finder():
                        f"{sim['prob_ruina_20d']*100:.0f} % · capital mediano a "
                        f"30 días {sim['capital_mediano_30d']:,.0f}.")
 
+    # v34 (§6): Valor en Vivo — SIN consumir API (solo snapshots guardados)
+    with st.expander("📡 Valor en Vivo (sin gastar API)"):
+        st.caption("Evolución del EV a partir de los snapshots de cuotas ya "
+                   "capturados para el RLM. No hace ni una petición nueva.")
+
+        @st.cache_data(ttl=1800, show_spinner="Leyendo snapshots…")
+        def _vivo():
+            import valor_en_vivo
+            return valor_en_vivo.valor_en_vivo()
+
+        rv = _vivo()
+        if rv.get('aviso'):
+            st.info(rv['aviso'])
+        if rv.get('filas'):
+            st.caption(f"{rv.get('n_partidos', 0)} partidos con snapshots · "
+                       "⚠️ recuerda: los EV por encima de +15 % son la zona "
+                       "que el backtest v32 marcó como poco fiable.")
+            st.dataframe(pd.DataFrame(rv['filas'])[
+                ['partido', 'liga', 'mercado', 'cuota_inicial', 'cuota_actual',
+                 'ev_pct', 'tendencia', 'snapshots']],
+                width='stretch', hide_index=True)
+
     # v32 (§6): rendimiento REAL de lo recomendado
     with st.expander("📊 Rendimiento real de las Apuestas del Día"):
         import rendimiento_real as rreal

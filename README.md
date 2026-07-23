@@ -1,5 +1,23 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v34 — Cobertura universal (ver [VALIDACION_v34.md](VALIDACION_v34.md))
+
+- **📈 Cobertura ×4.4: de 11 a 48 partidos evaluados** al día, en 10 ligas y
+  3 deportes, con **0 partidos sin mapear**. Tres palancas: 5 ligas de verano
+  nuevas (Noruega, Suecia, Finlandia, Rumanía, Irlanda), horizonte 48→72 h y
+  `name_mapper.py` (alias + normalización + fuzzy con registro de fallos).
+- **🔍 Hallazgo mayor**: sobre 480 días reales, **el filtro de EV extremo de
+  la v32 convierte un −94.8 % de ROI en −8.1 %** (87 pp). La validación más
+  fuerte que ha tenido una decisión del proyecto.
+- **❌ Markowitz descartado**: concentra peso en los picks peor calibrados;
+  volatilidad 4× la de Kelly y ruina total incluso con filtro.
+- **📡 Valor en Vivo**: evolución del EV y tendencia de la línea leyendo solo
+  los snapshots ya guardados — **cero peticiones a la API**.
+- **🏀 NBA se activará sola** en octubre (ventana de temporada integrada), y
+  el presupuesto de la API se adapta al saldo mensual.
+- ⚠️ *Nota honesta*: ninguna variante histórica da ROI positivo todavía; el
+  panel de Rendimiento Real es el que dará el veredicto con los picks nuevos.
+
 ## Novedades v33 — Verano, resiliencia y bot (ver [VALIDACION_v33.md](VALIDACION_v33.md))
 
 - **🇧🇷 Brasileirão y 🇦🇷 Primera argentina** añadidas para cubrir el parón

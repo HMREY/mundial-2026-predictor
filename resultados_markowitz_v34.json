@@ -1,0 +1,30 @@
+{
+  "n_dias": 480,
+  "n_dias_multipick": 372,
+  "kelly_simultaneo": {
+    "roi_total_pct": -94.78,
+    "drawdown_max_pct": 95.59,
+    "volatilidad_diaria_pct": 4.171,
+    "dias": 480
+  },
+  "markowitz": {
+    "roi_total_pct": -100.0,
+    "drawdown_max_pct": 100.0,
+    "volatilidad_diaria_pct": 15.954,
+    "dias": 480
+  },
+  "kelly_con_filtro_ev_v32": {
+    "roi_total_pct": -8.1,
+    "drawdown_max_pct": 34.65,
+    "volatilidad_diaria_pct": 1.931,
+    "dias": 417
+  },
+  "markowitz_con_filtro_ev_v32": {
+    "roi_total_pct": -99.99,
+    "drawdown_max_pct": 100.0,
+    "volatilidad_diaria_pct": 15.163,
+    "dias": 417
+  },
+  "reduccion_drawdown_pp": -4.41,
+  "adoptar": false
+}

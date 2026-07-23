@@ -36,7 +36,10 @@ _ULTIMO_RESULTADO: Dict = {}
 MIN_PROB = 0.70
 MIN_EV = 0.03
 MIN_CUOTA = 1.50
-HORIZONTE_HORAS = 48
+# v34 (prioridad: cobertura): 72 h en vez de 48. Las casas ya publican
+# cuotas con 3 días de antelación y el barrido pasaba de 178 partidos con
+# cuotas a solo 23 evaluados por el recorte temporal.
+HORIZONTE_HORAS = 72
 
 
 def _mapa_equipo_liga() -> Dict[str, str]:
@@ -53,18 +56,16 @@ def _mapa_equipo_liga() -> Dict[str, str]:
 
 
 def _liga_fuzzy(home: str, away: str, mapa: Dict[str, str]):
-    """v29 (§1.2): respaldo fuzzy nombre→liga (Betexplorer/API usan grafías
-    que no siempre coinciden exacto con team_stats — la causa del bug "solo
-    salía MLS": los partidos de Liga MX se descartaban en silencio)."""
-    from difflib import SequenceMatcher
+    """v34 (§4): resolución de liga vía name_mapper CENTRALIZADO (alias
+    manuales + normalización + fuzzy), con registro de los fallos para
+    poder llevarlos a cero. Antes cada módulo tenía su propio fuzzy y los
+    partidos se perdían en silencio."""
+    import name_mapper
     for equipo in (home, away):
-        mejor, ratio = None, 0.0
-        for nombre, liga in mapa.items():
-            s = SequenceMatcher(None, equipo.lower(), nombre.lower()).ratio()
-            if s > ratio:
-                mejor, ratio = liga, s
-        if ratio >= 0.82:
-            return mejor
+        encontrado = name_mapper.mapear(equipo, mapa.keys(),
+                                        contexto='equipo→liga')
+        if encontrado:
+            return mapa[encontrado]
     return None
 
 
@@ -227,7 +228,24 @@ def apuestas_del_dia(max_partidos: int = 40) -> Dict:
                             and t['partido'] in partidos_arb)
 
     orden = lambda t: (-int(t.get('platino', False)), -int(t['shadow']), -t['ev'])
+    # v34 (§1): auditoría de cobertura — log detallado y aviso si una liga
+    # activa se queda a cero partidos evaluados.
+    try:
+        import name_mapper
+        n_fallos = name_mapper.volcar_fallos()
+        if n_fallos:
+            logger.warning(f"[alpha] {n_fallos} nombres sin mapear volcados a "
+                           "nombres_sin_mapear.json (añade alias para llegar a 0)")
+    except Exception:
+        pass
+    from config import LEAGUES as _LG
+    activas = [c for c, cfg in _LG.items() if cfg.get('disponible')]
+    vacias = [c for c in activas if cobertura.get(c, 0) == 0]
     logger.info(f"[alpha] cobertura por liga: {cobertura} · sin liga: {sin_liga}")
+    if vacias:
+        logger.warning(f"[alpha] ligas SIN partidos evaluados hoy "
+                       f"({len(vacias)}/{len(activas)}): {vacias} — puede ser "
+                       "parón de temporada o falta de cuotas capturadas")
     global _ULTIMO_RESULTADO
     _ULTIMO_RESULTADO = {'actualizado': datos.get('actualizado'),
             'partidos_evaluados': evaluados,
@@ -332,11 +350,32 @@ def _picks_tenis() -> Dict[str, List[Dict]]:
 
 
 def _picks_nba() -> Dict[str, List[Dict]]:
-    """NBA: sin cuotas en julio (fuera de temporada) → capa 2 si hay partidos."""
+    """NBA (v34 §4): cuotas reales EN CUANTO arranque la temporada, con
+    cadena de resiliencia The Odds API → Betexplorer. Fuera de temporada
+    (julio) ninguna fuente devuelve partidos y no se gasta ni un crédito."""
     salida = {'capa1': [], 'capa2': []}
     try:
         import betexplorer_scraper as bx
-        partidos = bx.cuotas_baloncesto_hoy()
+        import odds_api
+        import source_resilience as sr
+
+        def _de_odds_api():
+            filas = odds_api.capturar_liga('nba')      # respeta temporada
+            por_partido: Dict[str, Dict] = {}
+            for f in filas:
+                if f['mercado'] != 'h2h':
+                    continue
+                d = por_partido.setdefault(f['match_id'], {})
+                partes = f['match_id'].split('_')
+                d['home'] = partes[1].replace('-', ' ')
+                d['away'] = partes[2].replace('-', ' ')
+                d[f"odd_{f['seleccion']}"] = f['cuota']
+            return [m for m in por_partido.values()
+                    if m.get('odd_home') and m.get('odd_away')]
+
+        cadena = sr.Cadena('cuotas NBA', [('The Odds API', _de_odds_api),
+                                          ('Betexplorer', bx.cuotas_baloncesto_hoy)])
+        partidos = cadena.obtener(lambda d: d is not None and len(d) > 0) or []
         if not partidos:
             return salida
         from engines.nba_engine import NBAEngine

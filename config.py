@@ -116,6 +116,36 @@ LEAGUES = {
         'urls': [f'{FD_BASE}/new/ARG.csv'], 'anios_ventana': 8,
         'disponible': True, 'features_extra': ['cuotas'],
     },
+    # v34 (prioridad absoluta: cobertura): ligas nórdicas y del este, TODAS
+    # en plena temporada en julio. Verificado 2026-07-23 en football-data:
+    # NOR 5 d · SWE 3 d · FIN 3 d · ROU 3 d · IRL 12 d de antigüedad.
+    # (China y Corea tienen cuotas en The Odds API pero NO histórico
+    #  gratuito para entrenar → sin modelo no hay pick; documentado.)
+    'noruega': {
+        'nombre': 'Eliteserien', 'pais': 'Noruega', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/NOR.csv'], 'anios_ventana': 8,
+        'disponible': True, 'features_extra': ['cuotas'],
+    },
+    'suecia': {
+        'nombre': 'Allsvenskan', 'pais': 'Suecia', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/SWE.csv'], 'anios_ventana': 8,
+        'disponible': True, 'features_extra': ['cuotas'],
+    },
+    'finlandia': {
+        'nombre': 'Veikkausliiga', 'pais': 'Finlandia', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/FIN.csv'], 'anios_ventana': 8,
+        'disponible': True, 'features_extra': ['cuotas'],
+    },
+    'rumania': {
+        'nombre': 'Liga I', 'pais': 'Rumanía', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/ROU.csv'], 'anios_ventana': 8,
+        'disponible': True, 'features_extra': ['cuotas'],
+    },
+    'irlanda': {
+        'nombre': 'Premier Division', 'pais': 'Irlanda', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/IRL.csv'], 'anios_ventana': 8,
+        'disponible': True, 'features_extra': ['cuotas'],
+    },
     'premier': {
         # Premier se mantiene en 3 temporadas: el experimento de 5 temporadas
         # bajó la precisión (49.5%→48.9%) — regla de adopción no superada.

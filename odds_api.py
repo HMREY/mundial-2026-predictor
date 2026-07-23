@@ -63,9 +63,30 @@ SPORT_KEYS = {
     # v33 (§1.1): ligas de verano — cubren el hueco de julio-agosto
     'brasil': 'soccer_brazil_campeonato',
     'argentina': 'soccer_argentina_primera_division',
+    # v34: ligas de verano (verificadas activas en la API el 2026-07-23)
+    'noruega': 'soccer_norway_eliteserien',
+    'suecia': 'soccer_sweden_allsvenskan',
+    'finlandia': 'soccer_finland_veikkausliiga',
+    'rumania': 'soccer_romania_liga_1',
+    'irlanda': 'soccer_league_of_ireland',
     'champions': 'soccer_uefa_champs_league',
     'mundial': 'soccer_fifa_world_cup',
+    # v34 (§4): la NBA se captura SOLA en cuanto arranca la temporada
+    # (oct-jun). Fuera de ese rango ni se intenta, para no gastar créditos.
+    'nba': 'basketball_nba',
 }
+
+# deportes con ventana de temporada: (mes_inicio, mes_fin) inclusive
+TEMPORADA = {'nba': (10, 6)}
+
+
+def _en_temporada(clave: str) -> bool:
+    rango = TEMPORADA.get(clave)
+    if not rango:
+        return True
+    mes = datetime.date.today().month
+    ini, fin = rango
+    return (ini <= mes <= 12) or (1 <= mes <= fin) if ini > fin else ini <= mes <= fin
 
 
 def _clave() -> str:
@@ -289,7 +310,11 @@ def capturar_auto() -> int:
     ahora = pd.Timestamp.utcnow()
     tier1_hoy = st.get('tier1_hoy', [])
     ult = pd.Timestamp(tier1_hoy[-1]) if tier1_hoy else None
-    if len(tier1_hoy) < 3 and \
+    # v34: presupuesto ADAPTATIVO — con 17 ligas de fútbol la captura
+    # completa cuesta ~20 créditos, así que los snapshots RLM se reducen
+    # cuando el saldo mensual baja.
+    max_snapshots = 3 if (rem is None or rem > 250) else (2 if rem > 150 else 1)
+    if len(tier1_hoy) < max_snapshots and \
             (ult is None or (ahora - ult) >= pd.Timedelta(hours=3)):
         for liga in TIER1:
             filas = capturar_liga(liga)
@@ -298,8 +323,11 @@ def capturar_auto() -> int:
             total += len(filas)
         st = _merge(tier1_hoy=tier1_hoy + [str(ahora)], fecha_auto=hoy)
     rem = st.get('restantes')
-    if not st.get('resto_hecho') and (rem is None or rem > 150):
-        for liga in [l for l in SPORT_KEYS if l not in TIER1]:
+    if not st.get('resto_hecho') and (rem is None or rem > 120):
+        # la NBA no entra en odds_actuales (es otro deporte y sus nombres
+        # no mapean a ligas de fútbol): la consume su propio motor.
+        for liga in [l for l in SPORT_KEYS
+                     if l not in TIER1 and l != 'nba' and _en_temporada(l)]:
             filas = capturar_liga(liga)
             guardar_snapshots([{k: v for k, v in f.items() if k != 'event_id'}
                                for f in filas])
@@ -315,6 +343,9 @@ def capturar_liga(clave_liga: str) -> List[Dict]:
     if not k:
         return []
     if clave_liga not in SPORT_KEYS or not _presupuesto_disponible():
+        return []
+    if not _en_temporada(clave_liga):        # v34: no gastar fuera de temporada
+        logger.info(f"[{clave_liga}] fuera de temporada: captura omitida.")
         return []
     _consumir_request()
     filas = []
