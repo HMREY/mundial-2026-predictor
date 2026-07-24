@@ -68,6 +68,19 @@ limpiar_interfaz_v2 = """
 """
 st.markdown(limpiar_interfaz_v2, unsafe_allow_html=True)
 
+# v47: REFRESCO AUTOMÁTICO AL ABRIR LA APP. En Streamlit Cloud el proceso es
+# compartido entre visitantes, así que el caché de datos (cuotas, picks) puede
+# venir de la sesión de otra persona y quedar obsoleto. Al abrir la app en una
+# sesión NUEVA se limpia el caché de datos una sola vez, garantizando que cada
+# usuario ve la última información al entrar. No toca @st.cache_resource (los
+# modelos, que no cambian) para no recargarlos en balde.
+if not st.session_state.get('_refresco_inicial'):
+    st.session_state['_refresco_inicial'] = True
+    try:
+        st.cache_data.clear()
+    except Exception:
+        pass
+
 COLORES = {'local': '#2ecc71', 'empate': '#95a5a6', 'visitante': '#3498db'}
 
 
@@ -802,8 +815,13 @@ def render_alpha_finder():
     """v26 (§4.1-§4.2): Apuestas del Día + simulador Montecarlo de bankroll."""
     st.header("💎 Apuestas del Día")
     st.caption("Barrido UNIVERSAL (v31): 10 ligas de fútbol + Mundial, ⚾ MLB, "
-               "🏀 NBA y 🎾 tenis ATP. **Capa 1** = cuota real con EV; "
+               "🏀 NBA y 🎾 tenis ATP/WTA. **Capa 1** = cuota real con EV; "
                "**Capa 2** = alta confianza sin cuota en vivo.")
+    # v47: refresco manual bajo demanda (además del automático al abrir)
+    if st.button("🔄 Actualizar ahora", key='refresh_alpha',
+                 help="Vuelve a bajar cuotas y recalcula todas las apuestas."):
+        st.cache_data.clear()
+        st.rerun()
 
     @st.cache_data(ttl=1800, show_spinner="🔍 Buscando valor en todos los deportes…")
     def _buscar():
@@ -920,9 +938,9 @@ def render_alpha_finder():
                 c2.markdown(f"**{t.get('apuesta','?')}**  \n{t.get('mercado','')}")
                 rent = t.get('rentabilidad') or {}
                 _gap = t.get('sharp_gap')
+                import traductor_quant as _tq
                 c3.markdown(precio
-                            + ((f"  \n💠 **+{_gap*100:.0f}% sobre Pinnacle** (confirmado sharp)"
-                                if _gap else "  \n💠 **Confirmado por línea sharp**")
+                            + (f"  \n**{_tq.frase_sharp(_gap, ES_PRO)}**"
                                if t.get('sharp_confirmado') else '')
                             + (f"  \n🏠 mejor cuota en **{t['casa']}**" if t.get('casa') else '')
                             + (f"  \n{t['fiabilidad']}" if t.get('fiabilidad') else '')
@@ -930,7 +948,20 @@ def render_alpha_finder():
                                and rent.get('tier') != 'sin_ev' else '')
                             + (f"  \n💼 Stake: **{t['stake_txt']}**"
                                if t.get('stake_txt') else '')
+                            + (f"  \nℹ️ {t['nota_seleccion']}" if t.get('nota_seleccion') else '')
                             + (f"  \n{t['nota']}" if t.get('nota') else ''))
+                # v47: tenis — 19 mercados derivados para armar parlays
+                mts = t.get('mercados_tenis') or []
+                if mts:
+                    with st.expander(f"🎾 Ver {len(mts)} mercados de este partido "
+                                     "(para parlays)"):
+                        import pandas as _pd
+                        df = _pd.DataFrame([
+                            {'Mercado': c['etiqueta'],
+                             'Probabilidad': f"{c['valor']:.0f}%",
+                             'Cuota justa': round(100 / max(c['valor'], 1e-6), 2)}
+                            for c in sorted(mts, key=lambda x: -x['valor'])])
+                        st.dataframe(df, hide_index=True, width='stretch')
 
     # v27 (§5+§7): stakes por Kelly SIMULTÁNEO (⅛, cap global 20 %)
     elite = r.get('elite') or []
@@ -957,6 +988,17 @@ def render_alpha_finder():
         st.caption(tq.tooltip('evc'))
     _tarjetas([t for t in elite if not t.get('evc')], "⭐ Picks de élite")
 
+    # v47: SELECCIÓN DEL DÍA — la Capa 1 nunca queda vacía. Si hoy no hubo
+    # ningún 1X2 con cuota real y confirmación, se promueven las mejores
+    # oportunidades por valor esperado (con aviso honesto).
+    seleccion = r.get('seleccion_dia') or []
+    if not elite and seleccion:
+        st.subheader("⭐ Selección del Día — mejor valor disponible")
+        st.info("Hoy ninguna apuesta reunió cuota real + confirmación profesional. "
+                "Estas son las de mayor valor esperado del día. Úsalas con stake "
+                "prudente: no llevan el sello de la línea sharp.")
+        _tarjetas(seleccion, "")
+
     # v31 (§5): CAPA 2 — alta confianza SIN cuota real (modo analítico)
     capa2 = r.get('capa2') or []
     if capa2:
@@ -978,6 +1020,43 @@ def render_alpha_finder():
                    + (" y EV > +3 % donde hay cuota real." if any(p.get('cuota')
                       for p in btts) else "."))
         _tarjetas(btts, "")
+
+    # v47: PARLAY DEL DÍA DE TENIS — combinación contundente de los mercados
+    # derivados más seguros (uno por partido). El usuario pidió una apuesta de
+    # tenis "contundente" para parlay a partir de la plantilla de mercados.
+    tp = r.get('tenis_parlay') or {}
+    if tp.get('patas'):
+        st.divider()
+        st.subheader("🎾 Parlay del Día — Tenis")
+        st.caption(tp.get('nota', ''))
+        cpa, cpb = st.columns(2)
+        cpa.metric("Cuota combinada", tp['cuota_combinada'])
+        cpb.metric("Prob. conjunta", f"{tp['prob_conjunta']*100:.0f}%")
+        import pandas as _pd
+        st.dataframe(_pd.DataFrame([
+            {'Circuito': p['circuito'], 'Partido': p['partido'],
+             'Mercado': p['mercado'], 'Prob': f"{p['prob']*100:.0f}%",
+             'Cuota justa': p['cuota_justa']} for p in tp['patas']],
+        ), hide_index=True, width='stretch')
+
+    # v47: ENVIAR A TELEGRAM AHORA — el usuario quiere un botón bajo demanda
+    # además del envío diario automático (GitHub Actions).
+    st.divider()
+    with st.expander("📲 Enviar estas apuestas a Telegram"):
+        st.caption("Envía el resumen completo del día a tu canal de Telegram. "
+                   "El envío automático diario sigue activo por separado.")
+        if st.button("📤 Enviar a Telegram ahora", key='tg_send', type="primary"):
+            try:
+                import bot_telegram
+                msg = bot_telegram.construir_mensaje()
+                if bot_telegram.enviar(msg):
+                    st.success("✅ Enviado a Telegram.")
+                else:
+                    st.warning("No hay TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID "
+                               "configurados en los Secrets. Vista previa abajo:")
+                    st.code(msg, language=None)
+            except Exception as e:
+                st.error(f"No se pudo enviar ({type(e).__name__}: {e}).")
 
     # v43 (§4.1): Auditoría de modelos — matriz de rendimiento por liga
     st.divider()

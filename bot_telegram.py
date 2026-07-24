@@ -28,21 +28,30 @@ MAX_LEN = 3900          # límite práctico de Telegram (4096)
 
 
 def _fmt_pick(p: dict) -> str:
+    import traductor_quant as tq
     cuota = p.get('cuota')
     if cuota:
         precio = (f"@ {cuota} (justa {p.get('cuota_justa','?')}) · "
                   f"EV {(p.get('ev') or 0)*100:+.1f}%")
     else:
         precio = f"sin cuota en vivo · mínima sugerida {p.get('cuota_justa','?')}"
-    marca = '💠' if p.get('sharp_confirmado') else \
+    marca = '🔥' if p.get('sharp_confirmado') else \
             ('⭐' if p.get('platino') else ('💎' if p.get('evc') else '•'))
     extras = []
+    # v47: sharp en lenguaje llano (el usuario pidió que "+6% sobre Pinnacle"
+    # deje de ser jerga técnica)
     if p.get('sharp_confirmado'):
-        gap = p.get('sharp_gap')
-        extras.append(f"💠 +{gap*100:.0f}% sobre Pinnacle" if gap else "💠 confirmado sharp")
+        extras.append(tq.sello_sharp(p.get('sharp_gap')))
     if p.get('casa'):
         extras.append(f"🏠 mejor cuota en {p['casa']}")   # v43 line shopping
     cola = ('\n   ' + ' · '.join(extras)) if extras else ''
+    # v47: tenis — desglose de mercados derivados para parlays
+    mts = p.get('mercados_tenis') or []
+    if mts:
+        top = sorted(mts, key=lambda c: -c['valor'])[:5]
+        cola += "\n   🎾 " + " · ".join(f"{c['etiqueta']} {c['valor']:.0f}%" for c in top)
+    if p.get('nota_seleccion'):
+        cola += f"\n   ℹ️ {p['nota_seleccion']}"
     return (f"{marca} [{p.get('deporte','Fútbol')}] {p.get('partido','?')}\n"
             f"   {p.get('apuesta','?')} {precio} · prob "
             f"{(p.get('prob') or 0)*100:.0f}% {p.get('fiabilidad','')}{cola}")
@@ -99,10 +108,28 @@ def construir_mensaje() -> str:
         lineas.append(f"💎 *CAPA 1 — con cuota real* ({len(capa1)})")
         lineas += [_fmt_pick(p) for p in capa1[:8]]
         lineas.append("")
+    # v47: si la Capa 1 quedó vacía, mostramos la Selección del día para que
+    # el usuario nunca vea un panel sin recomendaciones accionables.
+    seleccion = r.get('seleccion_dia') or []
+    if not capa1 and seleccion:
+        lineas.append(f"⭐ *SELECCIÓN DEL DÍA — mejor valor* ({len(seleccion)})")
+        lineas += [_fmt_pick(p) for p in seleccion[:6]]
+        lineas.append("")
+
     capa2 = r.get('capa2') or []
     if capa2:
         lineas.append(f"🎯 *CAPA 2 — alta confianza, sin cuota* ({len(capa2)})")
         lineas += [_fmt_pick(p) for p in capa2[:5]]
+        lineas.append("")
+
+    # v47: PARLAY DEL DÍA DE TENIS — combinación contundente de mercados seguros
+    tp = r.get('tenis_parlay') or {}
+    if tp.get('patas'):
+        lineas.append(f"🎾 *PARLAY DEL DÍA (TENIS)* — cuota {tp['cuota_combinada']} · "
+                      f"prob {tp['prob_conjunta']*100:.0f}%")
+        for p in tp['patas']:
+            lineas.append(f"   • [{p['circuito']}] {p['partido']}: {p['mercado']} "
+                          f"({p['prob']*100:.0f}%)")
         lineas.append("")
 
     # v43: sección ⚽ AMBOS MARCAN destacada (el usuario la prioriza — buen

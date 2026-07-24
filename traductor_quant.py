@@ -66,3 +66,29 @@ def frase_estrella(equipo: str, prob_modelo: float, prob_casa: float) -> str:
             f"según nuestro análisis, pero las casas pagan como si solo "
             f"tuviera un {prob_casa*100:.0f} %. Eso nos da una ventaja del "
             f"{ventaja:.0f} %.")
+
+
+# v47: el usuario pidió que "💠 +6% sobre Pinnacle (confirmado sharp)" deje de
+# ser jerga. Pinnacle es la casa que usan los apostadores profesionales; que
+# nuestra probabilidad supere su línea es la señal más rentable (+14.7 % ROI
+# histórico). Se traduce a algo que cualquiera entiende: es la más respaldada.
+def frase_sharp(gap: Optional[float], experto: bool = False) -> str:
+    """Etiqueta llana de la confirmación sharp (Pinnacle).
+    `gap` = puntos porcentuales por encima de la línea profesional."""
+    if experto:
+        return (f"💠 +{gap*100:.0f} pp sobre la línea sharp (Pinnacle)"
+                if gap else "💠 Confirmado por línea sharp (Pinnacle)")
+    # modo principiante: sin nombres de casas ni "pp"
+    if gap and gap >= 0.05:
+        return ("🔥 La MÁS respaldada del día: los apostadores profesionales "
+                "le dan más valor del que paga la cuota")
+    return "🔥 Respaldada por el dinero profesional"
+
+
+def sello_sharp(gap: Optional[float], experto: bool = False) -> str:
+    """Versión de una línea para tarjetas/Telegram (sin saltos)."""
+    if experto:
+        return (f"💠 +{gap*100:.0f} pp vs Pinnacle" if gap
+                else "💠 confirmada por línea sharp")
+    return (f"🔥 apuesta más segura (respaldo profesional, +{gap*100:.0f} % de valor)"
+            if gap else "🔥 respaldada por el dinero profesional")

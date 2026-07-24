@@ -372,7 +372,7 @@ def _picks_tenis() -> Dict[str, List[Dict]]:
       2. Betexplorer — página /next/tennis/ (ATP y WTA).
     Cada circuito usa SU modelo (modelos/tennis y modelos/tennis_wta).
     """
-    salida = {'capa1': [], 'capa2': [], 'no_enlazados': []}
+    salida = {'capa1': [], 'capa2': [], 'no_enlazados': [], 'parlay_legs': []}
     try:
         import betexplorer_scraper as bx
         import odds_api
@@ -414,6 +414,30 @@ def _picks_tenis() -> Dict[str, List[Dict]]:
             pred = eng.predecir(j1, j2)
             if 'error' in pred:
                 continue
+            # v47: la plantilla ya calcula 19 mercados derivados (ganador,
+            # totales de juegos, hándicaps, sets 2-0/2-1, "ambos ganan un
+            # set"...). El usuario los pidió expresamente para armar parlays y
+            # porque "en tenis no se muestra nada". Se calculan UNA vez por
+            # partido y se adjuntan a las tarjetas; los mejores legs alimentan
+            # el "Parlay del día de tenis".
+            superficie = m.get('surface') or m.get('superficie') or 'Hard'
+            try:
+                pl = eng.plantilla(j1, j2, surface=superficie)
+                mercados = [c for c in pl.get('campos', [])]
+            except Exception as e:
+                logger.warning(f"[alpha] plantilla tenis {m['home']}: {e}")
+                mercados = []
+            # legs candidatos a parlay: mercados con prob en [55%, 88%] (ni
+            # trivial ni arriesgado), ordenados por confianza. Se etiquetan con
+            # el partido y su cuota justa (1/prob) para combinar.
+            for c in mercados:
+                pr = c['valor'] / 100.0
+                if 0.55 <= pr <= 0.90:
+                    salida['parlay_legs'].append({
+                        'partido': f"{m['home']} vs {m['away']}",
+                        'circuito': eng.circuito.upper(),
+                        'mercado': c['etiqueta'], 'prob': round(pr, 3),
+                        'cuota_justa': round(1 / max(pr, 1e-6), 2)})
             for lado, nombre, prob, cuota in (
                     ('home', m['home'], pred['prob_home'], m['odd_home']),
                     ('away', m['away'], pred['prob_away'], m['odd_away'])):
@@ -423,6 +447,8 @@ def _picks_tenis() -> Dict[str, List[Dict]]:
                         'fecha': str(pd.Timestamp.today().date()),
                         'mercado': 'Ganador', 'apuesta': f'Gana {nombre}',
                         'prob': round(prob, 3),
+                        'superficie': superficie,
+                        'mercados_tenis': mercados,   # v47: 19 mercados
                         'cuota_justa': round(1 / max(prob, 1e-6), 2)}
                 if prob > UMBRAL_CONF['Tenis'] and ev > MIN_EV and cuota > MIN_CUOTA:
                     salida['capa1'].append({**base, 'cuota': round(cuota, 2),
@@ -649,6 +675,40 @@ def _oleadas(picks: List[Dict]) -> Dict[str, List[Dict]]:
             'resto': sorted(resto, key=clave)}
 
 
+def _construir_parlay_tenis(legs: List[Dict], objetivo_cuota: float = 2.0,
+                            max_patas: int = 4) -> Dict:
+    """v47: parlay del día de tenis. Elige los mercados derivados más seguros
+    (uno por partido para diversificar el riesgo) hasta alcanzar una cuota
+    combinada ≈ objetivo. Cuotas justas (1/prob); el usuario compara con su
+    casa. Devuelve {} si no hay material suficiente."""
+    if not legs:
+        return {}
+    # el mejor leg por partido (mayor prob), evitando duplicar el mismo evento
+    mejor_por_partido: Dict[str, Dict] = {}
+    for l in sorted(legs, key=lambda x: -(x.get('prob') or 0)):
+        mejor_por_partido.setdefault(l['partido'], l)
+    ordenados = sorted(mejor_por_partido.values(), key=lambda x: -(x.get('prob') or 0))
+    patas: List[Dict] = []
+    cuota_comb = 1.0
+    prob_comb = 1.0
+    for l in ordenados:
+        if len(patas) >= max_patas:
+            break
+        patas.append(l)
+        cuota_comb *= l['cuota_justa']
+        prob_comb *= l['prob']
+        if cuota_comb >= objetivo_cuota and len(patas) >= 2:
+            break
+    if len(patas) < 2:
+        return {}
+    return {'patas': patas, 'n_patas': len(patas),
+            'cuota_combinada': round(cuota_comb, 2),
+            'prob_conjunta': round(prob_comb, 3),
+            'nota': ('Combinación de tenis con los mercados más seguros del día '
+                     '(uno por partido). Cuotas justas = 1/probabilidad; '
+                     'apuesta solo si tu casa paga MÁS que la combinada.')}
+
+
 def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
     """Barrido de TODAS las competiciones activas (11 de fútbol + MLB, NBA,
     tenis) con clasificación en dos capas (§1.2, §5.1)."""
@@ -656,7 +716,7 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
     capa1 = list(r.get('elite') or [])
     for p in capa1:
         p.setdefault('deporte', 'Fútbol')
-    capa2, no_enlazados = [], []
+    capa2, no_enlazados, parlay_legs = [], [], []
     for fn in (_picks_mlb, _picks_tenis, _picks_nba):
         try:
             sub = fn()
@@ -666,13 +726,16 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
         capa1 += sub.get('capa1', [])
         capa2 += sub.get('capa2', [])
         no_enlazados += sub.get('no_enlazados', [])
+        parlay_legs += sub.get('parlay_legs', [])
     # --- v32: fiabilidad, pretemporada y segregación de EV extremo -------
     LIGA_A_CLAVE = {'Liga MX': 'liga_mx', 'MLS': 'mls', 'Premier League': 'premier',
                     'LaLiga': 'laliga', 'Serie A': 'serie_a',
                     'Bundesliga': 'bundesliga', 'Ligue 1': 'ligue_1',
                     'Eredivisie': 'eredivisie', 'Primeira Liga': 'primeira',
                     'UEFA Champions League': 'champions',
-                    'Süper Lig': 'turquia', 'Superliga': 'dinamarca'}
+                    'Süper Lig': 'turquia', 'Superliga': 'dinamarca',
+                    'Chinese Super League': 'china', 'Ekstraklasa': 'polonia',
+                    'Swiss Super League': 'suiza_v48'}
     for p in capa1 + capa2:
         clave = LIGA_A_CLAVE.get(p.get('liga', ''), p.get('liga', '').lower())
         p['brier'] = fiabilidad_liga(clave)
@@ -719,11 +782,31 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
     oleadas = _oleadas(capa1)
     # v41 (§3.1): mejores patas para construir parlays
     mejores_patas = _mejores_patas(todos_pool)
+    # v47: PARLAY DEL DÍA DE TENIS — combina los mercados derivados más seguros
+    # (uno por partido para diversificar), objetivo cuota combinada contundente.
+    tenis_parlay = _construir_parlay_tenis(parlay_legs)
+    # v47: la CAPA 1 nunca debe quedar vacía (el usuario notó que "desapareció").
+    # Si hoy no hay ningún 1X2 con cuota real que pase los filtros de élite, se
+    # promueve una "Selección del día" con los mejores candidatos por convicción
+    # (prob×EV), etiquetada con honestidad como NO confirmada por línea sharp.
+    seleccion_dia = []
+    if not capa1:
+        pool = [p for p in (r.get('candidatos') or []) if (p.get('ev') or 0) > 0]
+        pool.sort(key=lambda p: -((p.get('prob') or 0) * (p.get('ev') or 0)))
+        for p in pool[:6]:
+            q = dict(p)
+            q['seleccion_dia'] = True
+            q['nota_seleccion'] = ('Mejor oportunidad del día por valor esperado. '
+                                   'Sin confirmación de la línea profesional: '
+                                   'apuesta con stake prudente.')
+            seleccion_dia.append(q)
     r.update({'capa1': capa1, 'capa2': capa2, 'ev_extremo': ev_extremo,
               'no_enlazados': no_enlazados, 'deportes_cubiertos': deportes,
               'pick_del_dia': pick_del_dia(capa1),
               'btts_destacado': btts, 'oleadas': oleadas,
               'mejores_patas': mejores_patas,
+              'tenis_parlay': tenis_parlay,
+              'seleccion_dia': seleccion_dia,
               'elite': capa1,          # compatibilidad con UI/exportación
               })
     try:                      # v32 §6: registro para el rendimiento REAL
@@ -742,12 +825,15 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
 def exportar_txt(r: Optional[Dict] = None) -> str:
     """Apuestas del día como texto plano (v30 §1: arg opcional — si es None
     usa el último barrido; robusto ante cualquier forma de los picks)."""
+    import traductor_quant as _tq
     r = r if r is not None else _ULTIMO_RESULTADO
     lineas = [f"APUESTAS DEL DÍA — {r.get('actualizado', '?')}",
               f"(cobertura: {r.get('cobertura_ligas', {})})", ""]
-    for grupo, titulo in (('elite', '💎 CAPA 1 — EVC PLATINO / ÉLITE (cuota real)'),
-                          ('capa2', '🎯 CAPA 2 — ALTA CONFIANZA (sin cuota real)'),
-                          ('candidatos', 'CANDIDATOS')):
+    grupos = [('elite', '💎 CAPA 1 — ÉLITE (cuota real, respaldo profesional)'),
+              ('seleccion_dia', '⭐ SELECCIÓN DEL DÍA (mejor valor, sin confirmar)'),
+              ('capa2', '🎯 CAPA 2 — ALTA CONFIANZA (sin cuota real)'),
+              ('candidatos', 'CANDIDATOS')]
+    for grupo, titulo in grupos:
         picks = r.get(grupo) or []
         if not picks:
             continue
@@ -761,11 +847,33 @@ def exportar_txt(r: Optional[Dict] = None) -> str:
                       f"EV {ev*100:+.1f}%" if cuota else
                       f"SIN cuota real · cuota mínima sugerida "
                       f"{t.get('cuota_justa','?')}")
+            # v47: sharp en lenguaje llano en vez de "+6% sobre Pinnacle"
+            cola = ''
+            if t.get('sharp_confirmado'):
+                cola += '\n     ' + _tq.sello_sharp(t.get('sharp_gap'))
+            if t.get('casa'):
+                cola += f"\n     🏠 mejor cuota en {t['casa']}"
             lineas.append(
                 f"{estrella} [{t.get('deporte','Fútbol')}] {t.get('partido','?')} "
                 f"({t.get('liga','?')}, {t.get('fecha','')}) — "
                 f"{t.get('apuesta','?')} {precio} · prob {prob*100:.0f}%"
-                + (f" · stake {t['stake_txt']}" if t.get('stake_txt') else ''))
+                + (f" · stake {t['stake_txt']}" if t.get('stake_txt') else '')
+                + cola)
+            # v47: tenis — desglose de los mercados derivados (parlays)
+            mts = t.get('mercados_tenis') or []
+            if mts:
+                top = sorted(mts, key=lambda c: -c['valor'])[:6]
+                lineas.append("     🎾 Mercados: " + " · ".join(
+                    f"{c['etiqueta']} {c['valor']:.0f}%" for c in top))
+        lineas.append("")
+    # v47: parlay del día de tenis
+    tp = r.get('tenis_parlay') or {}
+    if tp.get('patas'):
+        lineas.append(f"== 🎾 PARLAY DEL DÍA (TENIS) — cuota {tp['cuota_combinada']} · "
+                      f"prob {tp['prob_conjunta']*100:.0f}% ==")
+        for p in tp['patas']:
+            lineas.append(f"  • [{p['circuito']}] {p['partido']}: {p['mercado']} "
+                          f"({p['prob']*100:.0f}%, justa {p['cuota_justa']})")
         lineas.append("")
     lineas.append("Juego responsable. Cuotas justas = 1/probabilidad.")
     return '\n'.join(lineas)
