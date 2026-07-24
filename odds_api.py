@@ -40,6 +40,15 @@ logger = logging.getLogger(__name__)
 DB = 'odds_historico.db'
 ESTADO = 'odds_api_state.json'
 BASE = 'https://api.the-odds-api.com/v4'
+
+
+def redact(msg) -> str:
+    """v52: NUNCA registrar la API key. Las excepciones de requests incluyen la
+    URL completa con ?apiKey=... — se enmascara antes de loguear (seguridad)."""
+    import re as _re
+    return _re.sub(r'(apiKey=)[0-9a-fA-F]+', r'\1***', str(msg))
+
+
 MAX_REQUESTS_DIA = 30            # v27: capturas + BTTS + arbitraje cruzado
                                  # (500/mes ≈ 16/día sostenidos; 30 da aire
                                  # los días de jornada y el estado lo frena)
@@ -467,7 +476,7 @@ def capturar_liga(clave_liga: str) -> List[Dict]:
                                       'event_id': ev.get('id')})
         logger.info(f"The Odds API [{clave_liga}]: {len(filas)} cuotas capturadas.")
     except Exception as e:
-        logger.warning(f"The Odds API [{clave_liga}] falló: {e}")
+        logger.warning(f"The Odds API [{clave_liga}] falló: {redact(e)}")
     return filas
 
 
@@ -482,7 +491,7 @@ def deportes_activos() -> List[str]:
         r.raise_for_status()
         return [s['key'] for s in r.json()]
     except Exception as e:
-        logger.warning(f"The Odds API /sports falló: {e}")
+        logger.warning(f"The Odds API /sports falló: {redact(e)}")
         return []
 
 
@@ -533,7 +542,7 @@ def capturar_tenis(max_torneos: int = 2) -> List[Dict]:
                                       'jugador': o['name'], 'cuota': o['price'],
                                       'home': ev['home_team'], 'away': ev['away_team']})
         except Exception as e:
-            logger.warning(f"The Odds API [{clave_torneo}] falló: {e}")
+            logger.warning(f"The Odds API [{clave_torneo}] falló: {redact(e)}")
     logger.info(f"The Odds API tenis: {len(filas)} cuotas de "
                 f"{len(activos[:max_torneos])} torneo(s) de {len(activos)} activos.")
     return filas
@@ -576,7 +585,7 @@ def capturar_btts_evento(clave_liga: str, event_id: str, match_id: str,
                                       'seleccion': str(o['name']).lower(),
                                       'cuota': o['price']})
     except Exception as e:
-        logger.warning(f"The Odds API btts [{clave_liga}/{event_id}]: {e}")
+        logger.warning(f"The Odds API btts [{clave_liga}/{event_id}]: {redact(e)}")
     return filas
 
 

@@ -84,7 +84,8 @@ def descargar_cuotas_historicas(dias_atras: int = 365) -> pd.DataFrame:
                               'odd_away': float(odd_a)})
         logger.info(f"The Odds API: {len(filas)} eventos con cuotas 1X2.")
     except Exception as e:
-        logger.warning(f"The Odds API no disponible ({e}): se omiten las cuotas.")
+        import odds_api as _oa
+        logger.warning(f"The Odds API no disponible ({_oa.redact(e)}): se omiten las cuotas.")
         return pd.DataFrame()
     return pd.DataFrame(filas)
 

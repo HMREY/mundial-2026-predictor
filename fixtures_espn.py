@@ -70,6 +70,59 @@ _TTL = 1800  # 30 min
 TIMEOUT = 8
 
 
+def _am2dec(ml):
+    """Cuota americana (moneyline) → decimal. v52."""
+    try:
+        ml = float(str(ml).replace('+', ''))
+    except (TypeError, ValueError):
+        return None
+    if ml == 0:
+        return None
+    return round(1 + ml / 100, 3) if ml > 0 else round(1 + 100 / abs(ml), 3)
+
+
+def _odds_de_evento(comp: dict) -> dict:
+    """v52: extrae las cuotas 1X2 y O/U 2.5 que ESPN incluye en el MISMO JSON
+    del scoreboard (proveedor DraftKings/consenso). Cero coste, sin clave. Es la
+    fuente que rellena la mayoría de los partidos que The Odds API/Betexplorer
+    no cubren. Devuelve {} si el evento no trae cuotas usables."""
+    odds_list = comp.get('odds') or []
+    if not odds_list:
+        return {}
+    o = odds_list[0] or {}
+
+    def _lado(d):
+        d = d or {}
+        for k in ('close', 'open'):
+            sub = d.get(k) or {}
+            if sub.get('odds') is not None:
+                return _am2dec(sub['odds'])
+        return None
+
+    ml = o.get('moneyline') or {}
+    oh, oa = _lado(ml.get('home')), _lado(ml.get('away'))
+    dv = (o.get('drawOdds') or {}).get('moneyLine')
+    od = _am2dec(dv) if dv is not None else None
+    salida = {}
+    if oh and od and oa:
+        salida.update({'odd_home': oh, 'odd_draw': od, 'odd_away': oa,
+                       'casa': o.get('provider', {}).get('name') or 'ESPN'})
+    # over/under 2.5 (solo si la línea es 2.5)
+    total = o.get('total') or {}
+    if (o.get('overUnder') == 2.5) or (str(total.get('over', {}).get('close', {})
+                                           .get('line', '')).lstrip('o') == '2.5'):
+        over = ((total.get('over') or {}).get('close') or
+                (total.get('over') or {}).get('open') or {})
+        under = ((total.get('under') or {}).get('close') or
+                 (total.get('under') or {}).get('open') or {})
+        oo, ou = _am2dec(over.get('odds')), _am2dec(under.get('odds'))
+        if oo:
+            salida['odd_over25'] = oo
+        if ou:
+            salida['odd_under25'] = ou
+    return salida
+
+
 def fixtures_liga(clave: str, dias: int = 3) -> List[Dict]:
     """Próximos partidos (no finalizados) de una liga en [hoy, hoy+dias].
     Devuelve [{'fecha': 'YYYY-MM-DD', 'home': str, 'away': str}]."""
@@ -105,11 +158,13 @@ def fixtures_liga(clave: str, dias: int = 3) -> List[Dict]:
             fecha = pd.to_datetime(ev['date'])
             if fecha.tzinfo:
                 fecha = fecha.tz_convert(None)
-            fixtures.append({
+            fx = {
                 'fecha': fecha.strftime('%Y-%m-%d'),
                 'home': loc['team']['displayName'],
                 'away': vis['team']['displayName'],
-            })
+            }
+            fx.update(_odds_de_evento(comp))   # v52: cuotas ESPN si las hay
+            fixtures.append(fx)
         except Exception:
             continue
     logger.info(f"[fixtures/{clave}] {len(fixtures)} próximos partidos (ESPN {code}).")

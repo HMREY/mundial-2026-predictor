@@ -331,8 +331,11 @@ def apuestas_del_dia(max_partidos: int = 40) -> Dict:
     # v49: PASE DE FIXTURES (ESPN) — evalúa TODO partido con jornada aunque no
     # haya cuota en vivo. Sin esto, un fallo de The Odds API dejaba el barrido a
     # cero. Los partidos sin cuota generan Capa 2 (cuota justa) y pronósticos.
-    capa2_futbol, pronosticos, cob_fix, n_fix = _barrido_fixtures(
-        motores, evaluados_pares, HORIZONTE_HORAS)
+    elite_fix, candidatos_fix, capa2_futbol, pronosticos, cob_fix, n_fix = \
+        _barrido_fixtures(motores, evaluados_pares, HORIZONTE_HORAS)
+    # v52: los fixtures con cuota REAL de ESPN entran a la Capa 1 / candidatos
+    elite.extend(elite_fix)
+    candidatos.extend(candidatos_fix)
     for liga, n in cob_fix.items():
         cobertura[liga] = cobertura.get(liga, 0) + n
     evaluados += n_fix
@@ -377,7 +380,7 @@ def _barrido_fixtures(motores: Dict, evaluados_pares: set,
 
     hoy = pd.Timestamp.today().normalize()
     limite = hoy + pd.Timedelta(hours=horizonte_horas)
-    capa2_futbol, pronosticos = [], []
+    elite_fix, candidatos_fix, capa2_futbol, pronosticos = [], [], [], []
     cobertura: Dict[str, int] = {}
     n_eval = 0
     # v50.1: prefetch CONCURRENTE de los fixtures de todas las ligas (evita que
@@ -425,24 +428,51 @@ def _barrido_fixtures(motores: Dict, evaluados_pares: set,
             partido = f'{home} vs {away}'
             base = {'deporte': 'Fútbol', 'liga': cfg.get('nombre', clave),
                     'partido': partido, 'fecha': str(fecha.date()),
-                    'shadow': False, 'sin_cuota': True}
-            # 1X2 del modelo (el más probable) → pronóstico + Capa 2 si ≥ umbral
+                    'shadow': False}
+            # v50: board COMPLETO por partido (todas las apuestas posibles)
+            board = {m['apuesta']: round(m['prob'], 3) for m in mercados}
             x2 = [m for m in mercados if m['mercado'] == '1X2']
             mejor = max(x2, key=lambda m: m['prob'])
-            # v50: board COMPLETO por partido (todas las apuestas posibles) para
-            # que el usuario arme cualquier parlay de un vistazo.
-            board = {m['apuesta']: round(m['prob'], 3) for m in mercados}
-            pron = {**base, **mejor, 'mercados': mercados, 'board': board}
+            pron = {**base, **mejor, 'mercados': mercados, 'board': board,
+                    'sin_cuota': True}
             pronosticos.append(pron)
-            if mejor['prob'] >= CONF_CAPA2:
-                capa2_futbol.append({**pron, 'valor': '🎯'})
-            # también surfaceamos BTTS "Sí" y Under/Over confiables como opciones
-            for m in mercados:
-                if m['mercado'] in ('BTTS', 'Goles') and m['prob'] >= 0.62:
-                    capa2_futbol.append({**base, **m, 'valor': '🎯'})
-    logger.info(f"[alpha/fix] fixtures evaluados={n_eval} · "
-                f"capa2={len(capa2_futbol)} · pronósticos={len(pronosticos)}")
-    return capa2_futbol, pronosticos, cobertura, n_eval
+            # v52: ¿ESPN trajo cuotas 1X2/O-U reales para este partido? Si sí,
+            # se evalúan con la MISMA lógica de élite que las cuotas capturadas
+            # (line shopping ESPN) → Capa 1 con EV. Si no, van a Capa 2 (modelo).
+            o_espn = {}
+            if fx.get('odd_home') and fx.get('odd_away') and fx.get('odd_draw'):
+                casa = fx.get('casa', 'ESPN')
+                o_espn = {'odd_home': fx['odd_home'], 'odd_draw': fx['odd_draw'],
+                          'odd_away': fx['odd_away'],
+                          'odd_over25': fx.get('odd_over25'),
+                          'odd_under25': fx.get('odd_under25'),
+                          'casa_home': casa, 'casa_draw': casa, 'casa_away': casa}
+            if o_espn:
+                for c in _mercados_del_partido(pred, o_espn, home, away):
+                    tarjeta = {**base, **c, 'deporte': 'Fútbol',
+                               'valor': ('🟢' if c['ev'] > 0.05 else
+                                         '🟡' if c['ev'] > 0 else '🔴')}
+                    pasa = (c['prob'] > MIN_PROB and c['ev'] > MIN_EV
+                            and c['cuota'] > MIN_CUOTA
+                            and c['prob'] * c['ev'] >= MIN_CONVICCION)
+                    if pasa and c['mercado'] in MERCADOS_VALIDADOS_CAPA1:
+                        tarjeta['evc'] = True
+                        elite_fix.append(tarjeta)
+                    elif c['ev'] > 0:
+                        candidatos_fix.append(tarjeta)
+            else:
+                # sin cuota real → Capa 2 con el modelo (cuota justa)
+                if mejor['prob'] >= CONF_CAPA2:
+                    capa2_futbol.append({**pron, 'valor': '🎯'})
+                for m in mercados:
+                    if m['mercado'] in ('BTTS', 'Goles') and m['prob'] >= 0.62:
+                        capa2_futbol.append({**base, **m, 'sin_cuota': True,
+                                             'valor': '🎯'})
+    logger.info(f"[alpha/fix] fixtures evaluados={n_eval} · elite={len(elite_fix)} "
+                f"· candidatos={len(candidatos_fix)} · capa2={len(capa2_futbol)} "
+                f"· pronósticos={len(pronosticos)}")
+    return (elite_fix, candidatos_fix, capa2_futbol, pronosticos,
+            cobertura, n_eval)
 
 
 # ---------------------------------------------------------------------------
@@ -603,6 +633,12 @@ def _picks_nba() -> Dict[str, List[Dict]]:
         import odds_api
         import source_resilience as sr
 
+        # v52: fuera de temporada (jul-sep) ninguna fuente tiene NBA — se evita
+        # la cadena de resiliencia entera para no ensuciar los logs con ERROR.
+        if not odds_api._en_temporada('nba'):
+            logger.info("[alpha] NBA fuera de temporada: barrido omitido.")
+            return salida
+
         def _de_odds_api():
             filas = odds_api.capturar_liga('nba')      # respeta temporada
             por_partido: Dict[str, Dict] = {}
@@ -695,6 +731,46 @@ def etiqueta_fiabilidad(brier: Optional[float]) -> str:
     if brier < 0.22:
         return '🟡 Fiabilidad estándar'
     return '🔴 Alta incertidumbre'
+
+
+_PRECISION_MODELO: Dict[str, Optional[float]] = {}
+
+
+def _precision_modelo(clave: str) -> Optional[float]:
+    """v52: precisión de VALIDACIÓN (backtest walk-forward) del modelo de una
+    liga/deporte, leída de modelos/{clave}/metadata.json. Es el respaldo del
+    semáforo de fiabilidad cuando aún NO hay histórico de picks publicados
+    (evita el '⚪ Sin histórico' vacío: siempre hay dato del backtest)."""
+    if clave in _PRECISION_MODELO:
+        return _PRECISION_MODELO[clave]
+    import os
+    val = None
+    for sub in (clave, {'atp': 'tennis', 'wta': 'tennis_wta',
+                        'tenis': 'tennis'}.get(clave, clave)):
+        ruta = os.path.join('modelos', sub, 'metadata.json')
+        if os.path.exists(ruta):
+            try:
+                with open(ruta, encoding='utf-8') as f:
+                    val = json.load(f).get('precision_validacion')
+                if val:
+                    break
+            except Exception:
+                continue
+    _PRECISION_MODELO[clave] = val
+    return val
+
+
+def fiabilidad_label(clave: str, brier: Optional[float]) -> str:
+    """v52: etiqueta de fiabilidad con respaldo del backtest del modelo. Si hay
+    histórico de picks (Brier) usa el semáforo; si no, muestra la precisión
+    validada del modelo — nunca deja la celda vacía."""
+    if brier is not None:
+        return etiqueta_fiabilidad(brier)
+    prec = _precision_modelo(clave)
+    if prec:
+        icono = '🟢' if prec >= 0.55 else ('🟡' if prec >= 0.50 else '🔵')
+        return f'{icono} Modelo {prec*100:.0f}% (backtest)'
+    return '⚪ Sin histórico'
 
 
 DIAS_ESTADO_OBSOLETO = 45
@@ -860,18 +936,18 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
         no_enlazados += sub.get('no_enlazados', [])
         parlay_legs += sub.get('parlay_legs', [])
     # --- v32: fiabilidad, pretemporada y segregación de EV extremo -------
-    LIGA_A_CLAVE = {'Liga MX': 'liga_mx', 'MLS': 'mls', 'Premier League': 'premier',
-                    'LaLiga': 'laliga', 'Serie A': 'serie_a',
-                    'Bundesliga': 'bundesliga', 'Ligue 1': 'ligue_1',
-                    'Eredivisie': 'eredivisie', 'Primeira Liga': 'primeira',
-                    'UEFA Champions League': 'champions',
-                    'Süper Lig': 'turquia', 'Superliga': 'dinamarca',
-                    'Chinese Super League': 'china', 'Ekstraklasa': 'polonia',
-                    'Swiss Super League': 'suiza_v48'}
-    for p in capa1 + capa2:
+    # v52: mapa nombre→clave DERIVADO de la config (cubre TODAS las ligas, no
+    # solo un puñado) + circuitos de tenis. Antes faltaban Veikkausliiga,
+    # Allsvenskan, etc. → su fiabilidad salía vacía.
+    from config import LEAGUES as _LGN
+    LIGA_A_CLAVE = {cfg.get('nombre', c): c for c, cfg in _LGN.items()}
+    LIGA_A_CLAVE.update({'ATP': 'atp', 'WTA': 'wta', 'MLB': 'mlb', 'NBA': 'nba',
+                         'Brasileirão Serie A': 'brasil',
+                         'Primera División': 'argentina'})
+    for p in capa1 + capa2 + list(r.get('candidatos') or []):
         clave = LIGA_A_CLAVE.get(p.get('liga', ''), p.get('liga', '').lower())
         p['brier'] = fiabilidad_liga(clave)
-        p['fiabilidad'] = etiqueta_fiabilidad(p['brier'])
+        p['fiabilidad'] = fiabilidad_label(clave, p['brier'])   # v52
         dias = (_dias_estado_obsoleto(clave, p.get('fecha'))
                 if p.get('deporte', 'Fútbol') == 'Fútbol' else None)
         p['dias_estado'] = dias
