@@ -219,12 +219,21 @@ def _filtro_evc(tarjeta: Dict, resid: Optional[float]) -> str:
 
 def apuestas_del_dia(max_partidos: int = 40) -> Dict:
     """Tarjetas del panel. Devuelve élite + candidatos (degradación honesta)."""
+    # v61 FIX: antes se hacía `return` aquí si faltaba odds_actuales.json, lo
+    # que ANULABA el pase de fixtures de ESPN (v49) — que además trae sus
+    # PROPIAS cuotas desde la v52. Resultado en producción: con The Odds API
+    # caída (401) y el disco efímero del cloud sin el fichero, las Apuestas del
+    # Día se quedaban solo con tenis. Ahora se sigue adelante sin cuotas
+    # capturadas: el barrido ESPN cubre fixtures Y cuotas.
+    sin_captura = False
     try:
         with open('odds_actuales.json', encoding='utf-8') as f:
             datos = json.load(f)
     except Exception:
-        return {'actualizado': None, 'elite': [], 'candidatos': [],
-                'aviso': 'Sin odds_actuales.json — corre el pipeline de cuotas.'}
+        sin_captura = True
+        datos = {}
+        logger.warning("[alpha] sin odds_actuales.json — se continúa con el "
+                       "barrido de fixtures/cuotas de ESPN.")
     cuotas = datos.get('cuotas', {})
     mapa = _mapa_equipo_liga()
     senales = _senales_shadow()
@@ -350,15 +359,23 @@ def apuestas_del_dia(max_partidos: int = 40) -> Dict:
                        f"({len(vacias)}/{len(activas)}): {vacias} — puede ser "
                        "parón de temporada")
     global _ULTIMO_RESULTADO
-    _ULTIMO_RESULTADO = {'actualizado': datos.get('actualizado'),
+    _ULTIMO_RESULTADO = {
+            # v61: sin captura propia la fecha es la de HOY (los fixtures y las
+            # cuotas vienen de ESPN en esta misma corrida), no None.
+            'actualizado': (datos.get('actualizado')
+                            or pd.Timestamp.today().strftime('%Y-%m-%d')),
             'partidos_evaluados': evaluados,
             'cobertura_ligas': cobertura, 'partidos_sin_liga': sin_liga,
             'elite': sorted(elite, key=orden),
             'candidatos': sorted(candidatos, key=orden)[:15],
             'capa2_futbol': capa2_futbol,        # v49
             'pronosticos': pronosticos,          # v49: TODOS los partidos
+            'sin_captura_odds': sin_captura,                     # v61
             'aviso': None if elite else
-            ('Ningún mercado cumple hoy los filtros de élite (prob >70 %, '
+            (('Sin captura de cuotas propia (The Odds API caída o disco '
+              'efímero): las cuotas y los partidos salen de ESPN. ' if sin_captura
+              else '')
+             + 'Ningún mercado cumple hoy los filtros de élite (prob >70 %, '
              'EV >+3 %, cuota >1.50) — se muestran Capa 2 (sin cuota) y '
              'candidatos con EV positivo.')}
     return _ULTIMO_RESULTADO

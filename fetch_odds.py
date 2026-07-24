@@ -216,7 +216,17 @@ def actualizar_odds():
                     "(no estaban en fixtures.csv/Betexplorer).")
 
     if snapshot.empty:
-        logger.info("Sin cuotas vigentes que registrar en odds_actuales.json.")
+        # v61: aun sin cuotas se ESCRIBE el fichero (vacío). Antes se retornaba
+        # sin crearlo y en el disco efímero del cloud el consumidor veía «Sin
+        # odds_actuales.json», indistinguible de un fallo de pipeline.
+        logger.info("Sin cuotas vigentes: se escribe odds_actuales.json vacío.")
+        try:
+            import json as _json
+            with open('odds_actuales.json', 'w', encoding='utf-8') as f:
+                _json.dump({'actualizado': pd.Timestamp.today().strftime('%Y-%m-%d'),
+                            'cuotas': {}}, f)
+        except Exception as e:
+            logger.warning(f"No se pudo escribir odds_actuales.json vacío: {e}")
         return
     snapshot = snapshot.drop_duplicates(subset='MATCH_ID', keep='first')
     cuotas_dict = snapshot.set_index('MATCH_ID').to_dict('index')

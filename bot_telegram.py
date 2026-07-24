@@ -88,11 +88,18 @@ def construir_mensaje() -> str:
     # v41: ALARMA de datos AL PRINCIPIO — distingue "no llegaron datos"
     # (problema) de "llegaron pero hoy no hay picks" (normal). El fallo del
     # runner sin ODDS_API_KEY salía como un mensaje vacío indistinguible.
+    # v61: la alarma solo se muestra si el barrido NO produjo picks. Con las
+    # cuotas de ESPN (v52) puede no haber captura propia y aun así haber Capa 1
+    # perfectamente válida: avisar entonces sería una FALSA alarma.
     try:
         import data_health
+        hay_picks = bool((r.get('capa1') or []) or (r.get('capa2') or []))
         alarma = data_health.linea_alarma_telegram()
-        if alarma:
+        if alarma and not hay_picks:
             lineas.insert(0, alarma.strip())
+        elif alarma and r.get('sin_captura_odds'):
+            lineas.insert(0, 'ℹ️ Sin captura propia de cuotas: los partidos y '
+                             'las cuotas de hoy vienen de ESPN.')
     except Exception as e:
         logger.warning(f"data_health no disponible: {e}")
 
