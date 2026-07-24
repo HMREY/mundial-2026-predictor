@@ -1,13 +1,13 @@
 {
   "liga": "Liga MX",
-  "n_train": 2092,
-  "n_validacion": 523,
-  "fecha_corte": "2024-11-13",
-  "precision_validacion": 0.5163,
-  "precision_linea_base_elo": 0.5029,
-  "precision_mercado_cuotas": 0.5354,
-  "log_loss_validacion": 1.0007,
-  "n_equipos": 21,
+  "n_train": 2095,
+  "n_validacion": 525,
+  "fecha_corte": "2024-12-01",
+  "precision_validacion": 0.5162,
+  "precision_linea_base_elo": 0.5067,
+  "precision_mercado_cuotas": 0.5352,
+  "log_loss_validacion": 1.0037,
+  "n_equipos": 22,
   "features_extra_cols": [
     "PROB_IMP_H",
     "PROB_IMP_D",
@@ -21,89 +21,35 @@
     "IMT_DIFF"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4396,
+    "PROB_IMP_H": 0.4395,
     "PROB_IMP_D": 0.2671,
-    "PROB_IMP_A": 0.2933,
+    "PROB_IMP_A": 0.2934,
     "OVERROUND": 0.071
   },
   "roi_sim": {
-    "n_apuestas": 234,
-    "roi_pct": -8.95,
-    "aciertos": 97
+    "n_apuestas": 250,
+    "roi_pct": -11.85,
+    "aciertos": 101,
+    "roi_pct_pinnacle": -9.91,
+    "n_con_pinnacle": 154
   },
   "mesm": {
-    "n_val_con_cuotas": 523,
-    "acc_prod": 0.5163,
-    "acc_mesm": 0.5545,
-    "ll_prod": 1.0007,
-    "ll_mesm": 0.9699,
+    "n_val_con_cuotas": 525,
+    "acc_prod": 0.5162,
+    "acc_mesm": 0.5467,
+    "ll_prod": 1.0037,
+    "ll_mesm": 0.9691,
     "adoptado": true
   },
   "imt": {
     "coef": {
-      "alpha": 1.0205,
-      "beta": 0.1059,
-      "gamma": -0.5025,
-      "delta": -0.5601
+      "alpha": 1.0137,
+      "beta": 0.0873,
+      "gamma": -0.5562,
+      "delta": -0.5715
     },
-    "intercepto": 0.3674,
-    "correlacion": 0.1825,
-    "n": 2128
-  },
-  "walk_forward": {
-    "ventanas": [
-      {
-        "ventana": "2023-04-01 → 2023-10-01",
-        "n": 148,
-        "precision": 0.5,
-        "log_loss": 1.0831,
-        "precision_mercado": 0.4932
-      },
-      {
-        "ventana": "2023-10-01 → 2024-04-01",
-        "n": 199,
-        "precision": 0.5276,
-        "log_loss": 0.9982,
-        "precision_mercado": 0.5427
-      },
-      {
-        "ventana": "2024-04-01 → 2024-10-01",
-        "n": 148,
-        "precision": 0.5,
-        "log_loss": 1.0316,
-        "precision_mercado": 0.5203
-      },
-      {
-        "ventana": "2024-10-01 → 2025-04-01",
-        "n": 195,
-        "precision": 0.5231,
-        "log_loss": 0.9976,
-        "precision_mercado": 0.5333
-      },
-      {
-        "ventana": "2025-04-01 → 2025-10-01",
-        "n": 152,
-        "precision": 0.5395,
-        "log_loss": 0.9959,
-        "precision_mercado": 0.5461
-      },
-      {
-        "ventana": "2025-10-01 → 2026-04-01",
-        "n": 177,
-        "precision": 0.548,
-        "log_loss": 0.9777,
-        "precision_mercado": 0.5311
-      },
-      {
-        "ventana": "2026-04-01 → 2026-10-01",
-        "n": 60,
-        "precision": 0.45,
-        "log_loss": 1.0805,
-        "precision_mercado": 0.4833
-      }
-    ],
-    "precision_media": 0.5126,
-    "log_loss_medio": 1.0235,
-    "precision_mercado_media": 0.5214
+    "intercepto": 0.3697,
+    "correlacion": 0.1823,
+    "n": 2133
   }
 }
