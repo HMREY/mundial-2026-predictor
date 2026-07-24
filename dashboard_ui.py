@@ -451,15 +451,15 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
         with c2:
             perfil_sel = st.radio(
                 "Perfil de riesgo",
-                ['🛡️ Conservador', '⚖️ Medio', '🚀 Agresivo'],
-                index=1, key=f"mp_perfil_{key}", horizontal=True,
-                help="Cada perfil garantiza un PISO de probabilidad de acertar "
-                     "el parlay completo. 🛡️ Conservador: el parlay más seguro, "
-                     "mínimo 60 % conjunto (si no alcanza, devuelve menos picks). "
-                     "⚖️ Medio: balance probabilidad/cuota en la zona 15-60 % "
-                     "conjunta. 🚀 Agresivo: la cuota más alta posible sin bajar "
-                     "del 5 % conjunto (ni del 30 % por pick) — momio alto pero "
-                     "factible, nunca una quimera.")
+                ['🔒 Super Seguro', '🛡️ Conservador', '⚖️ Medio', '🚀 Agresivo'],
+                index=0, key=f"mp_perfil_{key}", horizontal=True,
+                help="🔒 Super Seguro (v37): prioriza mercados de ALTA "
+                     "probabilidad (doble oportunidad, hándicap +0.5, BTTS) para "
+                     "maximizar el PFP — la probabilidad real de acertar TODO el "
+                     "parlay. 🛡️ Conservador: mínimo 60 % conjunto. ⚖️ Medio: "
+                     "balance prob/cuota (15-60 %). 🚀 Agresivo: cuota más alta "
+                     "sin bajar del 5 % conjunto. Los parlays con PFP < 45 % solo "
+                     "salen en Medio/Agresivo (riesgo asumido).")
         excluir = st.checkbox("Excluir si el partido tiene riesgo de mercado 🔴",
                               value=True, key=f"mp_riesgo_{key}")
         # v25 (§2.1): lista blanca dinámica + control de categorías
@@ -483,14 +483,17 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
         if st.button("🎯 Proponer parlay para este partido", key=f"mp_btn_{key}",
                      type="primary"):
             from match_parlay import construir_parlay_partido
-            perfil = ('conservador' if 'Conservador' in perfil_sel else
+            perfil = ('super_seguro' if 'Super Seguro' in perfil_sel else
+                      'conservador' if 'Conservador' in perfil_sel else
                       'agresivo' if 'Agresivo' in perfil_sel else 'medio')
             with st.spinner("🧮 Combinando los mercados del partido..."):
                 r = construir_parlay_partido(motor, home, away,
                                              num_selecciones=n_sel, perfil=perfil,
                                              excluir_alto_riesgo=excluir,
                                              solo_cuotas_reales=solo_reales,
-                                             categorias=categorias)
+                                             categorias=categorias,
+                                             bankroll=float(st.session_state.get(
+                                                 'bankroll', 0) or 0))
             if 'error' in r:
                 st.warning(r['error'])
                 return
@@ -517,9 +520,13 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
             m1, m2, m3, m4 = st.columns(4)
             m1.metric("Cuota combinada", f"{r['cuota_combinada']:.2f}",
                       help="Producto de las cuotas: lo que pagaría 1 unidad si aciertas todo.")
-            m2.metric("Prob. conjunta", f"{r['prob_conjunta']*100:.1f} %",
-                      help=f"Producto de probabilidades con haircut de correlación 0.95 "
-                           f"aplicado a {r['n_parejas_correlacionadas']} pareja(s).")
+            pfp = r.get('pfp', r['prob_conjunta'])
+            m2.metric("🎯 PFP (fuerza real)", f"{pfp*100:.1f} %",
+                      delta=("✅ ≥45 %" if r.get('cumple_pfp') else "⚠️ <45 %"),
+                      delta_color=("normal" if r.get('cumple_pfp') else "inverse"),
+                      help="Parlay Force Point: probabilidad REAL de acertar TODAS "
+                           "las patas, ajustada por correlación empírica. Es el "
+                           "criterio rey: por debajo del 45 % el parlay es arriesgado.")
             m3.metric("EV del parlay", f"{r['ev_parlay']:+.3f}",
                       help="Solo accionable con cuotas reales de mercado.")
             m4.metric("Riesgo del partido",
@@ -543,6 +550,33 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
             st.download_button("📥 Descargar parlay (.txt)", data=texto.encode('utf-8'),
                                file_name=f"parlay_{home}_vs_{away}.txt".replace(' ', '_'),
                                mime="text/plain", key=f"mp_dl_{key}")
+
+        # v37 (§1): SGP+ — pareja correlacionada del MISMO partido que la casa
+        # tiende a infrapreciar (requiere cuotas reales vigentes).
+        st.divider()
+        st.caption("**🔗 SGP+** — busca DOS mercados de este partido "
+                   "positivamente correlacionados que las casas suelen "
+                   "infrapreciar (necesita cuotas reales vigentes).")
+        if st.button("🔗 Buscar SGP+ en este partido", key=f"sgp_btn_{key}"):
+            from match_parlay import construir_sgp_plus
+            s = construir_sgp_plus(motor, home, away)
+            if 'error' in s:
+                st.info(s['error'])
+            else:
+                st.success(f"**SGP+ detectado** · EV estimado "
+                           f"**{s['ev_estimado']*100:+.0f} %** · φ={s['phi']}")
+                st.dataframe(pd.DataFrame([
+                    {'Mercado': x['mercado'], 'Apuesta': x['apuesta'],
+                     'Prob.': f"{x['prob']*100:.0f} %", 'Cuota': x['cuota']}
+                    for x in s['selecciones']], ), hide_index=True, width='stretch')
+                cs1, cs2, cs3 = st.columns(3)
+                cs1.metric("Prob. conjunta REAL", f"{s['prob_conjunta_real']*100:.1f} %",
+                           help="Ajustada por la correlación empírica φ.")
+                cs2.metric("Si fueran independientes",
+                           f"{s['prob_si_independientes']*100:.1f} %",
+                           help=f"Boost por correlación: ×{s['boost_correlacion']}")
+                cs3.metric("Cuota SGP estimada", f"{s['cuota_sgp_estimada']:.2f}")
+                st.caption(s['nota'])
 
 
 def render_liga_club(clave: str, nombre_liga: str):
@@ -817,6 +851,23 @@ def render_alpha_finder():
                 "EV entre +2 % y +15 % y fiabilidad histórica suficiente. "
                 "Forzarlo sería el error clásico.")
 
+    # v37 (§5): PLAN DE ATAQUE TEMPORAL (oleadas)
+    oleadas = r.get('oleadas') or {}
+    if any(oleadas.get(k) for k in ('oleada1', 'oleada2', 'resto')):
+        with st.container(border=True):
+            st.markdown("**🌊 Plan de ataque temporal** — no inviertas más del "
+                        "**50 % del bankroll** en una sola oleada.")
+            co1, co2, co3 = st.columns(3)
+            def _mejor(lst):
+                return (f"{lst[0]['partido']} · {lst[0].get('apuesta','')} "
+                        f"(EV {(lst[0].get('ev') or 0)*100:+.0f} %)") if lst else '—'
+            co1.metric("🔴 Oleada 1 · Hoy", len(oleadas.get('oleada1', [])),
+                       help=_mejor(oleadas.get('oleada1', [])))
+            co2.metric("🟡 Oleada 2 · Mañana", len(oleadas.get('oleada2', [])),
+                       help=_mejor(oleadas.get('oleada2', [])))
+            co3.metric("📋 Días siguientes", len(oleadas.get('resto', [])),
+                       help=_mejor(oleadas.get('resto', [])))
+
     def _tarjetas(lista, titulo):
         if not lista:
             return
@@ -890,6 +941,50 @@ def render_alpha_finder():
                    "manualmente con tu casa. Solo apuesta si te ofrecen MÁS "
                    "que la cuota mínima sugerida. No se calcula stake.")
         _tarjetas(capa2, "")
+
+    # v37 (§6): sección destacada de Ambos Marcan (BTTS)
+    btts = r.get('btts_destacado') or []
+    if btts:
+        st.divider()
+        st.subheader("⚽ Ambos Marcan (BTTS)")
+        st.caption("Uno de los mercados mejor calibrados del sistema (modelo de "
+                   "supervivencia Weibull, v27). Picks con confianza > 70 %"
+                   + (" y EV > +3 % donde hay cuota real." if any(p.get('cuota')
+                      for p in btts) else "."))
+        _tarjetas(btts, "")
+
+    # v37 (§7): informe mensual de rendimiento
+    st.divider()
+    with st.expander("📊 Informe Mensual de rendimiento"):
+        import resumen_mensual as rm
+        meses = rm.meses_disponibles()
+        if not meses:
+            st.info("Aún no hay picks liquidados. El informe se llena a medida "
+                    "que los partidos publicados terminan y se registran sus "
+                    "resultados (rendimiento_real.db).")
+        else:
+            mes_sel = st.selectbox("Mes", meses, key='rm_mes')
+            inf = rm.informe_mes(mes_sel)
+            if inf.get('n'):
+                m1, m2, m3, m4 = st.columns(4)
+                m1.metric("Picks liquidados", inf['n'])
+                m2.metric("Tasa de acierto", f"{inf['tasa_acierto']*100:.1f} %")
+                m3.metric("ROI real", f"{inf['roi_pct']:+.1f} %",
+                          help="Con la cuota registrada al publicar el pick.")
+                m4.metric("EV prometido",
+                          f"{(inf.get('ev_medio_prometido') or 0)*100:+.1f} %",
+                          help="Compara el EV que prometía el modelo con el ROI real.")
+                serie = rm.serie_mensual()
+                if not serie.empty:
+                    st.line_chart(serie.set_index('mes')[['roi_pct']],
+                                  height=200)
+                if inf.get('por_deporte'):
+                    st.caption("Por deporte:")
+                    st.dataframe(pd.DataFrame(inf['por_deporte']),
+                                 hide_index=True, width='stretch')
+            else:
+                st.info(inf.get('aviso', 'Sin datos.'))
+
     if r.get('no_enlazados'):
         with st.expander(f"ℹ️ {len(r['no_enlazados'])} partidos no evaluados "
                          "(nombre no enlazado con el modelo)"):

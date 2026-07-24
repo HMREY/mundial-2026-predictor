@@ -226,18 +226,102 @@ def phi(id_a: str, id_b: str) -> Optional[float]:
     return par['phi'] if par else None
 
 
+def _factor_bruto(ph: float, p_a: float, p_b: float) -> float:
+    """Factor multiplicativo SIN truncar: 1 + φ·σA·σB/(pA·pB)."""
+    pa = min(max(p_a, 1e-6), 1 - 1e-6)
+    pb = min(max(p_b, 1e-6), 1 - 1e-6)
+    return 1.0 + ph * np.sqrt(pa * (1 - pa) * pb * (1 - pb)) / (pa * pb)
+
+
 def factor_par(id_a: str, p_a: float, id_b: str, p_b: float,
                misma_familia: bool) -> float:
-    """Factor multiplicativo de la prob conjunta para la pareja (truncado).
-
-    Sin φ empírica: haircut legado si comparten macro-familia, 1.0 si no."""
+    """Factor multiplicativo de la prob conjunta para la pareja (TRUNCADO a
+    [0.5, 1.0]). Este es el que usa el constructor de parlays para PRECIAR de
+    forma conservadora: la correlación positiva nunca infla la conjunta
+    accionable. Sin φ empírica: haircut legado si comparten macro-familia.
+    """
     ph = phi(id_a, id_b)
     if ph is None:
         return HAIRCUT_LEGADO if misma_familia else 1.0
-    pa = min(max(p_a, 1e-6), 1 - 1e-6)
-    pb = min(max(p_b, 1e-6), 1 - 1e-6)
-    f = 1.0 + ph * np.sqrt(pa * (1 - pa) * pb * (1 - pb)) / (pa * pb)
-    return float(np.clip(f, F_MIN, F_MAX))
+    return float(np.clip(_factor_bruto(ph, p_a, p_b), F_MIN, F_MAX))
+
+
+def factor_par_real(id_a: str, p_a: float, id_b: str, p_b: float) -> Optional[float]:
+    """Factor SIN truncar (para DETECTAR SGP+, no para preciar). Devuelve None
+    si no hay φ empírica fiable para la pareja."""
+    ph = phi(id_a, id_b)
+    if ph is None:
+        return None
+    return float(_factor_bruto(ph, p_a, p_b))
+
+
+# ---------------------------------------------------------------------------
+# v37 (§1): explotación de correlaciones positivas asimétricas (SGP+)
+# ---------------------------------------------------------------------------
+# Un SGP con dos patas POSITIVAMENTE correlacionadas (φ>0) tiene una prob
+# conjunta REAL mayor que el producto de las individuales. Las casas suelen
+# preciar el SGP como (producto de cuotas) × (recorte genérico) sin medir la
+# correlación exacta de ESA pareja. Cuando nuestra φ empírica dice que la
+# correlación real es más fuerte que la que el recorte genérico de la casa
+# asume, el SGP está infravalorado y hay ventaja.
+#
+# HONESTIDAD (documentada en VALIDACION_v37): no existe feed gratuito de
+# precios HISTÓRICOS de SGP, así que no podemos backtestear el ROI del SGP+
+# directamente. Lo que SÍ validamos (sgp_correlation.backtest, error de la
+# conjunta 0.049→0.003) es que nuestra φ predice bien la frecuencia conjunta
+# real. La señal SGP+ es, por tanto, "esta pareja está correlacionada de
+# forma que las casas tienden a infrapreciar; búscala en tu libro".
+PHI_MIN_SGP = 0.08          # correlación mínima para considerar SGP+
+RECORTE_GENERICO_CASA = 0.92  # recorte típico que aplica una casa al SGP
+# El SGP+ está pensado para mercados de probabilidad RAZONABLE, no para
+# billetes de lotería: con probabilidades extremas la cópula gaussiana de
+# primer orden se dispara (σσ/(pa·pb) → ∞) y fabrica EV+ ilusorio. Ese fue
+# precisamente el motivo del truncado de la v25.
+PROB_MIN_LEG_SGP = 0.20     # cada pata debe ser al menos moderadamente probable
+PROB_MAX_LEG_SGP = 0.92     # y no una casi-certeza (cuota ínfima, sin margen)
+
+
+def senal_sgp_plus(id_a: str, p_a: float, cuota_a: float,
+                   id_b: str, p_b: float, cuota_b: float) -> Optional[Dict]:
+    """Detecta si la pareja (A,B) del MISMO partido es un SGP+ accionable.
+
+    SOLO tiene sentido con cuotas REALES de mercado en ambas patas (con cuotas
+    justas cuota=1/prob y el EV degenera en f_real·recorte−1, un artefacto).
+    El llamador debe garantizar que cuota_a/cuota_b son de mercado.
+
+    Compara la prob conjunta REAL (ajustada por φ, ACOTADA a [pa·pb, min(pa,pb)]
+    porque una conjunta no puede exceder ninguna marginal) contra lo que
+    pagaría la casa si preciara el SGP como producto × recorte genérico.
+    """
+    ph = phi(id_a, id_b)
+    if ph is None or ph < PHI_MIN_SGP or ph >= 0.985:
+        return None                      # sin corr. relevante, o identidad (φ≈1)
+    if not (PROB_MIN_LEG_SGP <= p_a <= PROB_MAX_LEG_SGP and
+            PROB_MIN_LEG_SGP <= p_b <= PROB_MAX_LEG_SGP):
+        return None                      # probabilidades fuera del rango sano
+    if not (cuota_a and cuota_b and cuota_a > 1 and cuota_b > 1):
+        return None
+    f_real = factor_par_real(id_a, p_a, id_b, p_b)
+    if f_real is None:
+        return None
+    # conjunta acotada: nunca por debajo del producto (corr positiva) ni por
+    # encima de la marginal más pequeña (cota de Fréchet).
+    prob_conjunta_real = float(np.clip(p_a * p_b * f_real,
+                                       p_a * p_b, min(p_a, p_b)))
+    # cuota que la casa daría al SGP ≈ producto × recorte (payout menor)
+    cuota_sgp_estimada = cuota_a * cuota_b * RECORTE_GENERICO_CASA
+    ev = prob_conjunta_real * cuota_sgp_estimada - 1.0
+    if ev <= 0.05:                       # umbral del spec: EV conjunto > +5 %
+        return None
+    return {
+        'id_a': _canonico(id_a), 'id_b': _canonico(id_b),
+        'phi': round(ph, 3),
+        'prob_conjunta_real': round(float(prob_conjunta_real), 4),
+        'prob_producto': round(float(p_a * p_b), 4),
+        'boost_correlacion': round(float(f_real), 3),
+        'cuota_sgp_estimada': round(float(cuota_sgp_estimada), 2),
+        'ev_estimado': round(float(ev), 3),
+    }
 
 
 def backtest(temporadas: int = TEMPORADAS,
@@ -330,11 +414,29 @@ def backtest(temporadas: int = TEMPORADAS,
     return resumen
 
 
+def parejas_correlacionadas(phi_min: float = PHI_MIN_SGP) -> List[Dict]:
+    """Parejas con correlación POSITIVA fuerte, ordenadas — consulta O(1)
+    sobre la matriz ya precalculada (spec §1.2: nada de cómputo en el
+    frontend). Sirve para priorizar SGP+ y para la UI de diagnóstico."""
+    out = []
+    for par, d in _matriz().items():
+        if d['phi'] >= phi_min:
+            a, b = par.split('|')
+            out.append({'par': par, 'a': a, 'b': b,
+                        'phi': d['phi'], 'n': d['n']})
+    return sorted(out, key=lambda d: -d['phi'])
+
+
 if __name__ == '__main__':
     import sys
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
     if '--construir' in sys.argv:
         construir_matriz()
+    if '--sgp-plus' in sys.argv:
+        top = parejas_correlacionadas()
+        print(f"{len(top)} parejas con φ ≥ {PHI_MIN_SGP}:")
+        for d in top[:25]:
+            print(f"  {d['par']:40s} φ={d['phi']:+.3f}  n={d['n']}")
     if '--backtest' in sys.argv:
         print(json.dumps({k: v for k, v in backtest().items()
                           if k != 'peores_independencia'}, indent=2))

@@ -22,6 +22,8 @@ from typing import Dict, List, Optional
 import numpy as np
 import pandas as pd
 
+import sgp_correlation
+
 # Grupos de mercados dependientes dentro del MISMO partido: no se combinan
 GRUPOS_DEPENDIENTES = {
     'resultado': {'1x2', 'doble_oportunidad', 'handicap'},
@@ -31,6 +33,32 @@ GRUPOS_DEPENDIENTES = {
 }
 HAIRCUT_MISMO_PARTIDO = 0.95
 CUOTA_MAXIMA_TOTAL = 1000.0
+
+
+def _sgp_id(mercado: str, apuesta: str) -> Optional[str]:
+    """Mapea (mercado, etiqueta) del builder multi-partido a un id canónico de
+    sgp_correlation, para aplicar el factor de correlación empírico a los pares
+    del mismo partido (v37 §1). Devuelve None si no hay equivalente."""
+    ap = apuesta.lower()
+    if mercado == '1x2':
+        if ap.startswith('gana '):    # ganador local o visitante (ambiguo → n/d)
+            return None
+    if mercado == 'over_under':
+        if 'más de 2.5' in ap:
+            return 'over25'
+        if 'menos de 2.5' in ap:
+            return 'under25'
+        if 'más de 1.5' in ap:
+            return 'over15'
+    if mercado == 'btts':
+        return 'btts_si' if 'sí' in ap else 'btts_no'
+    if mercado == 'doble_oportunidad':
+        return 'dc_1x' if ('empate' in ap) else None
+    if mercado == 'corners':
+        return 'ck_o85' if 'más' in ap else 'ck_o95'
+    if mercado == 'tarjetas':
+        return 'cards_o35' if 'más' in ap else 'cards_o45'
+    return None
 
 
 def _grupo(mercado: str) -> str:
@@ -196,8 +224,25 @@ def construir_parlay(engine, n_legs: int = 8, prob_min: float = 0.55,
 
     cuota_total = float(np.prod([s['cuota'] for s in seleccion]))
     prob_conjunta = float(np.prod([s['prob'] for s in seleccion]))
-    pares_mismo_partido = sum(1 for p, n in conteo_partido.items() if n >= 2)
-    prob_conjunta *= HAIRCUT_MISMO_PARTIDO ** pares_mismo_partido
+    # v37 (§1): para los pares del MISMO partido, sustituir el haircut fijo
+    # 0.95 por el factor de correlación EMPÍRICO (φ de sgp_correlation), igual
+    # que en el parlay por-partido. Truncado a ≤1 (nunca infla la conjunta).
+    pares_mismo_partido = 0
+    for partido, n in conteo_partido.items():
+        if n < 2:
+            continue
+        legs = [s for s in seleccion if s['partido'] == partido]
+        for i in range(len(legs)):
+            for j in range(i + 1, len(legs)):
+                pares_mismo_partido += 1
+                ida = _sgp_id(legs[i]['mercado'], legs[i]['apuesta'])
+                idb = _sgp_id(legs[j]['mercado'], legs[j]['apuesta'])
+                if ida and idb:
+                    prob_conjunta *= sgp_correlation.factor_par(
+                        ida, legs[i]['prob'], idb, legs[j]['prob'],
+                        misma_familia=True)
+                else:
+                    prob_conjunta *= HAIRCUT_MISMO_PARTIDO
     orden_riesgo = {'bajo': 0, 'medio': 1, 'alto': 2}
     riesgo_parlay = max((s.get('riesgo', 'bajo') for s in seleccion),
                         key=lambda r: orden_riesgo[r])
@@ -206,6 +251,7 @@ def construir_parlay(engine, n_legs: int = 8, prob_min: float = 0.55,
         'n_legs': len(seleccion),
         'cuota_combinada': round(cuota_total, 2),
         'prob_conjunta': round(prob_conjunta, 4),
+        'pfp': round(prob_conjunta, 4),          # v37 (§2): Parlay Force Point
         'ev_parlay': round(cuota_total * prob_conjunta - 1, 4),
         'cuotas_reales': con_mercado,
         'riesgo_parlay': riesgo_parlay,

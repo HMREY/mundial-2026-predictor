@@ -517,6 +517,48 @@ def pick_del_dia(picks: List[Dict]) -> Optional[Dict]:
                                         -(p.get('prob') or 0)))[0]
 
 
+def _seccion_btts(picks: List[Dict]) -> List[Dict]:
+    """v37 (§6): sección destacada de Ambos Marcan. Picks de BTTS con
+    confianza > 70 % y (si hay cuota real) EV > +3 %; si no hay cuota, se
+    muestran igual con la cuota mínima sugerida (1/prob)."""
+    out = []
+    for p in picks:
+        if str(p.get('mercado', '')).upper() != 'BTTS':
+            continue
+        if (p.get('prob') or 0) <= 0.70:
+            continue
+        if p.get('cuota') and (p.get('ev') or 0) <= MIN_EV:
+            continue
+        out.append(p)
+    return sorted(out, key=lambda p: (-(p.get('ev') or 0), -(p.get('prob') or 0)))
+
+
+def _oleadas(picks: List[Dict]) -> Dict[str, List[Dict]]:
+    """v37 (§5): plan de ataque temporal — agrupa por fecha del partido.
+      🔴 Oleada 1 (hoy): el/los mejores picks de hoy.
+      🟡 Oleada 2 (mañana): los mejores del día siguiente.
+      📋 Resto: lo demás, colapsable.
+    """
+    hoy = pd.Timestamp.today().normalize()
+    manana = hoy + pd.Timedelta(days=1)
+    o1, o2, resto = [], [], []
+    for p in picks:
+        try:
+            f = pd.Timestamp(p.get('fecha')).normalize()
+        except (ValueError, TypeError):
+            resto.append(p); continue
+        if f <= hoy:
+            o1.append(p)
+        elif f == manana:
+            o2.append(p)
+        else:
+            resto.append(p)
+    clave = lambda p: (-int(p.get('platino', False)), -(p.get('ev') or 0),
+                       -(p.get('prob') or 0))
+    return {'oleada1': sorted(o1, key=clave), 'oleada2': sorted(o2, key=clave),
+            'resto': sorted(resto, key=clave)}
+
+
 def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
     """Barrido de TODAS las competiciones activas (11 de fútbol + MLB, NBA,
     tenis) con clasificación en dos capas (§1.2, §5.1)."""
@@ -566,9 +608,15 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
     capa2.sort(key=lambda t: -(t.get('prob') or 0))
     ev_extremo.sort(key=lambda t: -(t.get('ev') or 0))
     deportes = sorted({p.get('deporte', 'Fútbol') for p in capa1 + capa2})
+    # v37 (§6): sección BTTS destacada — de todo el universo de picks
+    # (capa1 + capa2 + candidatos del barrido de fútbol)
+    btts = _seccion_btts(capa1 + capa2 + list(r.get('candidatos') or []))
+    # v37 (§5): oleadas temporales sobre la capa 1 (la accionable con cuota)
+    oleadas = _oleadas(capa1)
     r.update({'capa1': capa1, 'capa2': capa2, 'ev_extremo': ev_extremo,
               'no_enlazados': no_enlazados, 'deportes_cubiertos': deportes,
               'pick_del_dia': pick_del_dia(capa1),
+              'btts_destacado': btts, 'oleadas': oleadas,
               'elite': capa1,          # compatibilidad con UI/exportación
               })
     try:                      # v32 §6: registro para el rendimiento REAL

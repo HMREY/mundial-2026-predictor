@@ -37,11 +37,31 @@ logger = logging.getLogger(__name__)
 #                  individual del 30 % (momio alto pero factible, nunca la
 #                  quimera del 0.2 %)
 PERFILES = {
+    # v37 (§3): "Super Seguro" prioriza mercados de alta probabilidad
+    # (doble oportunidad, hándicap +0.5, BTTS bien calibrado) para maximizar
+    # el PFP — el criterio rey del cambio de paradigma "de no perder a ganar".
+    'super_seguro': {'min_prob': 0.70, 'zona': (0.55, 1.01), 'objetivo': 'prob',
+                     'reduce_picks': True, 'preferir_alta_prob': True},
     'conservador': {'min_prob': 0.65, 'zona': (0.60, 1.01), 'objetivo': 'prob',
                     'reduce_picks': True},
     'medio':       {'min_prob': 0.50, 'zona': (0.15, 0.60), 'objetivo': 'balance',
                     'alpha': 0.3},
     'agresivo':    {'min_prob': 0.30, 'zona': (0.05, 1.01), 'objetivo': 'cuota'},
+}
+
+# v37 (§2): PFP = Parlay Force Point = probabilidad conjunta REAL de acertar
+# todas las patas (ya ajustada por correlación). Es el criterio rey: solo se
+# sugieren parlays con PFP ≥ este umbral, salvo modo avanzado.
+PFP_MINIMO = 0.45
+
+# v37 (§3): mercados de ALTA probabilidad individual — con ellos se arma un
+# PFP elevado aunque la cuota sea moderada. Son la "lista blanca" del perfil
+# Super Seguro.
+MERCADOS_ALTA_PROB = {
+    'dc_1x', 'dc_x2', 'home_or_draw_prob', 'draw_or_away_prob',
+    'home_plus05_prob', 'away_plus05_prob', 'ah_home_mas05', 'ah_away_mas05',
+    'over05', 'over15', 'under35', 'btts_si', 'btts_no',
+    'btts_yes_prob', 'btts_no_prob',
 }
 # v25: el haircut fijo 0.95 fue reemplazado por factores de correlación
 # EMPÍRICOS por pareja de mercados (sgp_correlation.py, cópula gaussiana
@@ -482,13 +502,36 @@ def _explicar_categorias(sels: List[Seleccion]) -> List[str]:
     return lineas
 
 
+def limite_patas_por_bankroll(bankroll: float, n_pedido: int,
+                              cuota_combinada_tipica: float = 6.0) -> int:
+    """v37 (§4): degradación dinámica del nº de patas según el bankroll.
+
+    Si el stake mínimo razonable de un parlay de N patas superaría el 10 %
+    del capital, se recorta el número de patas para proteger la banca. Con
+    bankroll 0 o desconocido no se recorta (el usuario no lo configuró).
+    """
+    if not bankroll or bankroll <= 0:
+        return n_pedido
+    # unidad mínima práctica ≈ 1 % del bankroll; un parlay largo de cuota alta
+    # es una apuesta de baja probabilidad → limitar exposición al 10 %.
+    # Regla escalonada del spec: 4→3, 3→2, 2→simple según agresividad.
+    if bankroll < 50:
+        return min(n_pedido, 2)
+    if bankroll < 150:
+        return min(n_pedido, 3)
+    return n_pedido
+
+
 def construir_parlay_partido(motor, home: str, away: str,
                              num_selecciones: int = 6,
                              perfil: str = 'medio',
                              usar_cuotas_reales: bool = True,
                              excluir_alto_riesgo: bool = True,
                              solo_cuotas_reales: bool = False,
-                             categorias: Optional[Set[str]] = None) -> Dict:
+                             categorias: Optional[Set[str]] = None,
+                             bankroll: float = 0.0,
+                             aplicar_pfp: bool = True,
+                             modo_avanzado: bool = False) -> Dict:
     """Parlay óptimo dentro de UN partido (v20: SmartParlayBuilder).
 
     v25 (§2.1):
@@ -497,8 +540,20 @@ def construir_parlay_partido(motor, home: str, away: str,
         accionable pero hay menos mercados disponibles.
       categorias — macro-familias permitidas ({'resultado','goles','corners',
         'tarjetas'}); None = todas.
+    v37:
+      bankroll — si >0, recorta las patas para no exponer >10 % del capital (§4).
+      aplicar_pfp — si True (defecto), rechaza parlays con PFP < 45 % salvo
+        que modo_avanzado sea True (§2).
     """
-    num_selecciones = max(MIN_SELECCIONES, min(8, int(num_selecciones)))
+    num_pedido = max(MIN_SELECCIONES, min(8, int(num_selecciones)))
+    # §4: límite dinámico por bankroll ANTES de construir
+    num_selecciones = limite_patas_por_bankroll(bankroll, num_pedido)
+    aviso_bankroll = None
+    if num_selecciones < num_pedido:
+        aviso_bankroll = ("💡 Tu bankroll actual favorece apuestas de menor "
+                          "riesgo para hacer crecer tu capital de forma "
+                          f"consistente: el parlay se limitó a {num_selecciones} "
+                          f"patas (pediste {num_pedido}).")
     cfg = PERFILES.get(perfil, PERFILES['medio'])
     umbral = cfg['min_prob']
 
@@ -524,6 +579,13 @@ def construir_parlay_partido(motor, home: str, away: str,
                 s.ev = 0.0
 
     candidatas = [s for s in todas if s.prob >= umbral]
+    # v37 (§3): el perfil Super Seguro prioriza mercados de alta probabilidad
+    # (doble oportunidad, hándicap +0.5, BTTS) — si hay al menos MIN de ellos,
+    # se restringe a esos; si no, se usa todo para no quedarse sin parlay.
+    if cfg.get('preferir_alta_prob'):
+        alta = [s for s in candidatas if s.id in MERCADOS_ALTA_PROB]
+        if len(alta) >= MIN_SELECCIONES:
+            candidatas = alta
     # v25 (§2.1): lista blanca dinámica y control de categorías
     if solo_cuotas_reales:
         candidatas = [s for s in candidatas if s.cuota_fuente == 'real']
@@ -575,10 +637,34 @@ def construir_parlay_partido(motor, home: str, away: str,
     cuota_combinada = min(cuota_combinada, CUOTA_MAXIMA_COMBINADA)
     ev_parlay = round(cuota_combinada * prob_conjunta - 1.0, 3) if hay_reales else 0.0
 
+    if aviso_bankroll:
+        avisos.insert(0, aviso_bankroll)
+
+    # v37 (§2): PFP = probabilidad conjunta real. El PFP SIEMPRE se muestra
+    # (criterio rey). El filtro duro del 45 % solo bloquea los perfiles cuya
+    # razón de ser es la seguridad (super_seguro, conservador); elegir MEDIO o
+    # AGRESIVO ya es optar por el riesgo — son el "modo avanzado" del spec §2.2,
+    # donde el PFP se avisa pero no oculta.
+    es_avanzado = modo_avanzado or perfil in ('agresivo', 'medio')
+    pfp = round(float(prob_conjunta), 4)
+    cumple_pfp = pfp >= PFP_MINIMO
+    if aplicar_pfp and not cumple_pfp and len(elegidas) > 1 and not es_avanzado:
+        return {'error': (f"🛡️ El parlay más seguro posible para este partido "
+                          f"tiene un PFP (probabilidad real de acertar todas "
+                          f"las patas) del {pfp*100:.0f} %, por debajo del "
+                          f"umbral del {PFP_MINIMO*100:.0f} %. Activa el modo "
+                          f"avanzado si aun así quieres verlo, o reduce el "
+                          f"número de patas / elige el perfil Super Seguro."),
+                'pfp': pfp, 'pfp_bajo': True}
+    if aplicar_pfp and not cumple_pfp and es_avanzado:
+        avisos.insert(0, f"⚠️ MODO AVANZADO: PFP {pfp*100:.0f} % < "
+                         f"{PFP_MINIMO*100:.0f} % — parlay de riesgo elevado.")
+
     return {
         'partido': pl.get('partido', f'{home} vs {away}'),
         'perfil': perfil, 'umbral_usado': umbral,
         'piso_conjunto': cfg['zona'][0],
+        'pfp': pfp, 'cumple_pfp': cumple_pfp, 'pfp_minimo': PFP_MINIMO,
         'riesgo_partido': riesgo,
         'selecciones': [{
             'mercado': s.mercado, 'apuesta': s.apuesta,
@@ -598,4 +684,78 @@ def construir_parlay_partido(motor, home: str, away: str,
         'nota': ('EV calculado con cuotas reales de mercado.' if hay_reales else
                  '⚠️ EV teórico (cuotas justas del modelo) — no accionable; '
                  'compara contra las cuotas de tu casa para encontrar valor.'),
+    }
+
+
+# ---------------------------------------------------------------------------
+# v37 (§1): constructor de SGP+ — pares correlacionados POSITIVAMENTE del
+# mismo partido que las casas tienden a infrapreciar. A diferencia del parlay
+# diversificado (que busca patas independientes), aquí buscamos DOS patas
+# correlacionadas cuya prob conjunta real supera lo que la casa paga.
+# ---------------------------------------------------------------------------
+def construir_sgp_plus(motor, home: str, away: str) -> Dict:
+    """Mejor SGP+ de 2 patas del partido (o aviso si no hay ninguno).
+
+    EXIGE cuotas REALES en ambas patas: sin precio de mercado no se puede
+    afirmar que la casa infraprecia, y con cuotas justas (1/prob) el EV
+    degenera en un artefacto (la trampa de EV+ ilusorio de la v25). Recorre
+    parejas compatibles y devuelve la de mayor EV estimado que supere el +5 %
+    conjunto (spec §1.2).
+    """
+    if hasattr(motor, 'plantilla_club'):
+        pl = motor.plantilla_club(home, away)
+    else:
+        pl = motor.plantilla(home, away)
+    if 'error' in pl:
+        return {'error': pl['error']}
+
+    todas = obtener_selecciones(pl)
+    reales = [s for s in todas if s.cuota_fuente == 'real']   # SIEMPRE reales
+    if len(reales) < 2:
+        return {'error': ('SGP+ necesita cuotas REALES en al menos 2 mercados '
+                          'del partido (1X2, O/U 2.5, BTTS, AH ±0.5). Hoy no '
+                          'hay suficientes cuotas vigentes para este partido.')}
+
+    mejor = None
+    evaluadas = 0
+    for i in range(len(reales)):
+        for j in range(i + 1, len(reales)):
+            a, b = reales[i], reales[j]
+            if not _compatibles(a, b):
+                continue
+            evaluadas += 1
+            señal = sgp_correlation.senal_sgp_plus(
+                a.id, a.prob, a.cuota, b.id, b.prob, b.cuota)
+            if señal is None:
+                continue
+            if mejor is None or señal['ev_estimado'] > mejor['senal']['ev_estimado']:
+                mejor = {'a': a, 'b': b, 'senal': señal}
+    if mejor is None:
+        return {'error': ('Sin SGP+ accionable en este partido: ninguna pareja '
+                          'de mercados con cuota real muestra correlación '
+                          'positiva infravalorada (EV conjunto > +5 %). Esto es '
+                          'lo normal — un SGP+ real es infrecuente.'),
+                'sin_senal': True, 'parejas_evaluadas': evaluadas}
+    a, b, s = mejor['a'], mejor['b'], mejor['senal']
+    return {
+        'partido': pl.get('partido', f'{home} vs {away}'),
+        'tipo': 'SGP+',
+        'selecciones': [
+            {'mercado': a.mercado, 'apuesta': a.apuesta, 'prob': round(a.prob, 3),
+             'cuota': a.cuota},
+            {'mercado': b.mercado, 'apuesta': b.apuesta, 'prob': round(b.prob, 3),
+             'cuota': b.cuota}],
+        'phi': s['phi'],
+        'prob_conjunta_real': s['prob_conjunta_real'],
+        'prob_si_independientes': s['prob_producto'],
+        'boost_correlacion': s['boost_correlacion'],
+        'cuota_sgp_estimada': s['cuota_sgp_estimada'],
+        'ev_estimado': s['ev_estimado'],
+        'parejas_evaluadas': evaluadas,
+        'nota': ('Prob conjunta REAL ajustada por correlación empírica (φ de 3 '
+                 'temporadas). La casa suele preciar el SGP como producto × '
+                 'recorte genérico; cuando la correlación real es más fuerte, '
+                 'infraprecia. Verifica el precio del SGP en tu libro: si es '
+                 'cercano al producto de cuotas, tiene EV+ esperado. Sin feed '
+                 'histórico de SGP no se puede backtestear el ROI (documentado).'),
     }

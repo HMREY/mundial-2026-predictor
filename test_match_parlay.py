@@ -34,8 +34,11 @@ def probar_motor(nombre, motor, home, away):
             r = construir_parlay_partido(motor, home, away, num_selecciones=n,
                                          perfil=perfil, excluir_alto_riesgo=False)
             if 'error' in r:
-                # aceptable solo si el perfil restrictivo no tiene 2 mercados
-                check(perfil == 'conservador',
+                # aceptable solo en los perfiles SEGUROS (v37: super_seguro y
+                # conservador pueden quedarse sin combinación que alcance su
+                # piso / PFP mínimo, y entonces avisan con error en vez de
+                # sugerir un parlay flojo)
+                check(perfil in ('conservador', 'super_seguro'),
                       f"{perfil}/n={n}: sin mercados suficientes ({r['error'][:60]})")
                 continue
             check(2 <= r['n_selecciones'] <= n,
