@@ -172,6 +172,60 @@ def fixtures_liga(clave: str, dias: int = 3) -> List[Dict]:
     return fixtures
 
 
+# v59: otros deportes en el MISMO scoreboard de ESPN (mismo patrón, sin clave).
+# Verificado 2026-07-24: MLB devuelve 57 partidos programados; la NBA 0 por
+# estar fuera de temporada (correcto, no es un fallo).
+ESPN_DEPORTES = {
+    'mlb': 'baseball/mlb',
+    'nba': 'basketball/nba',
+}
+ESPN_BASE_DEP = 'https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard'
+
+
+def fixtures_deporte(deporte: str, dias: int = 2) -> List[Dict]:
+    """Próximos partidos de un deporte NO futbolístico (mlb, nba) desde ESPN.
+    Devuelve [{'fecha','home','away'}] con los nombres que publica ESPN."""
+    path = ESPN_DEPORTES.get(deporte)
+    if not path:
+        return []
+    ck = f'dep:{deporte}:{dias}'
+    ahora = time.time()
+    if ck in _CACHE and ahora - _CACHE[ck][0] < _TTL:
+        return _CACHE[ck][1]
+    hoy = pd.Timestamp.today().normalize()
+    ini = hoy.strftime('%Y%m%d')
+    fin = (hoy + pd.Timedelta(days=dias)).strftime('%Y%m%d')
+    salida: List[Dict] = []
+    try:
+        r = requests.get(ESPN_BASE_DEP.format(path=path),
+                         params={'dates': f'{ini}-{fin}', 'limit': 300},
+                         timeout=TIMEOUT, headers={'User-Agent': 'Mozilla/5.0'})
+        r.raise_for_status()
+        eventos = r.json().get('events', []) or []
+    except Exception as e:
+        logger.warning(f"[fixtures/{deporte}] ESPN falló: {type(e).__name__}: {e}")
+        _CACHE[ck] = (ahora, [])
+        return []
+    for ev in eventos:
+        try:
+            comp = ev['competitions'][0]
+            if comp.get('status', ev.get('status', {})).get('type', {}).get('completed'):
+                continue
+            loc = next(c for c in comp['competitors'] if c['homeAway'] == 'home')
+            vis = next(c for c in comp['competitors'] if c['homeAway'] == 'away')
+            fecha = pd.to_datetime(ev['date'])
+            if fecha.tzinfo:
+                fecha = fecha.tz_convert(None)
+            salida.append({'fecha': fecha.strftime('%Y-%m-%d'),
+                           'home': loc['team']['displayName'],
+                           'away': vis['team']['displayName']})
+        except Exception:
+            continue
+    logger.info(f"[fixtures/{deporte}] {len(salida)} próximos partidos (ESPN).")
+    _CACHE[ck] = (ahora, salida)
+    return salida
+
+
 def fixtures_multi(claves: List[str], dias: int = 3) -> Dict[str, List[Dict]]:
     """v50.1: descarga los fixtures de MUCHAS ligas EN PARALELO. Convierte
     ~14 llamadas secuenciales (que colgaban el barrido en Streamlit Cloud) en

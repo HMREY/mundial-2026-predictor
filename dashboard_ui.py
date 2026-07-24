@@ -469,6 +469,52 @@ def render_comparador(motor, equipos: list, key: str):
                        "de confianza en el favorito).")
 
 
+def selector_proximos(deporte: str, catalogo, key_home: str, key_away: str,
+                      etiqueta: str, mapear=None) -> None:
+    """v59: selector de PRÓXIMOS PARTIDOS reutilizable para cualquier deporte
+    (MLB, NBA...). Se alimenta del scoreboard de ESPN (se refresca solo: caché
+    de 30 min) y autorrellena los selectores de equipos al pulsar «Cargar».
+
+    `mapear` traduce el nombre de ESPN al identificador del motor (p. ej.
+    `codigo_mlb`); si es None se usa name_mapper contra `catalogo`."""
+    try:
+        import fixtures_espn
+        fx = fixtures_espn.fixtures_deporte(deporte)
+    except Exception:
+        fx = []
+    if not fx:
+        st.caption(f"📅 Sin partidos programados de {etiqueta} en las próximas "
+                   "48 h (fuera de temporada o sin datos).")
+        return
+    cat = list(catalogo)
+    ops = {}
+    for f in fx:
+        try:
+            if mapear:
+                h, a = mapear(f['home']), mapear(f['away'])
+            else:
+                import name_mapper as _nm
+                h = _nm.mapear(f['home'], cat, contexto=f'ui→{deporte}')
+                a = _nm.mapear(f['away'], cat, contexto=f'ui→{deporte}')
+        except Exception:
+            continue
+        if h in cat and a in cat and h != a:
+            ops[f"{f['fecha']} · {f['away']} @ {f['home']}"] = (h, a)
+    if not ops:
+        st.caption(f"📅 {len(fx)} partidos de {etiqueta} encontrados, pero sus "
+                   "equipos no coinciden con los del modelo.")
+        return
+    c1, c2 = st.columns([3, 1])
+    sel = c1.selectbox(f"📅 Próximos partidos de {etiqueta} ({len(ops)})",
+                       list(ops.keys()), key=f"fxd_sel_{deporte}",
+                       help="Elige un partido programado y pulsa «Cargar».")
+    if c2.button("⬇️ Cargar", key=f"fxd_btn_{deporte}", width='stretch'):
+        h, a = ops[sel]
+        st.session_state[key_home] = h
+        st.session_state[key_away] = a
+        st.rerun()
+
+
 def render_parlay_partido(motor, home: str, away: str, key: str):
     """Sección interactiva de parlay para EL partido en pantalla."""
     # v58.1 FIX: este símbolo se importa MÁS ABAJO dentro de esta misma función
@@ -1751,6 +1797,10 @@ def render_mlb():
     nombres = {c: CODIGO_A_NOMBRE.get(c, c) for c in eng.equipos}
     tab1, tab2 = st.tabs(["🎯 Predecir partido", "💰 Apuestas del Día MLB"])
     with tab1:
+        # v59: próximos partidos MLB (ESPN) con autorrelleno
+        from engines.mlb_engine import codigo_mlb as _cod_mlb
+        selector_proximos('mlb', eng.equipos, 'mlb_h', 'mlb_a', 'MLB',
+                          mapear=_cod_mlb)
         c1, c2 = st.columns(2)
         home = c1.selectbox("🏠 Local", eng.equipos,
                             format_func=lambda c: nombres.get(c, c), key='mlb_h')
@@ -1816,6 +1866,7 @@ def render_nba():
                f"precisión backtest {md.get('precision_validacion')*100:.1f} % "
                f"(ELO {md.get('precision_linea_base_elo')*100:.1f} %) · "
                f"incluye el CDI (desincronización circadiana). {md.get('modo')}")
+    selector_proximos('nba', eng.equipos, 'nba_h', 'nba_a', 'NBA')  # v59
     c1, c2 = st.columns(2)
     home = c1.selectbox("🏠 Local", eng.equipos, key='nba_h')
     away = c2.selectbox("✈️ Visitante", eng.equipos, index=1, key='nba_a')
@@ -1919,6 +1970,36 @@ def render_tennis():
                f"{_pct(md.get('precision_validacion'))} (ranking "
                f"{_pct(md.get('precision_linea_base_elo'))}, mercado "
                f"{_pct(md.get('precision_mercado'))}).")
+    # v59: próximos partidos de tenis (Betexplorer, la fuente que ya usa el
+    # barrido) con autorrelleno de los dos jugadores.
+    try:
+        import betexplorer_scraper as _bx
+        _tp = _bx.cuotas_tenis_hoy() or []
+    except Exception:
+        _tp = []
+    _ops_t = {}
+    for _m in _tp:
+        try:
+            _j1 = _bx.emparejar_jugador(_m['home'], eng.jugadores)
+            _j2 = _bx.emparejar_jugador(_m['away'], eng.jugadores)
+        except Exception:
+            continue
+        if _j1 and _j2 and _j1 != _j2:
+            _ops_t[f"{_m['home']} vs {_m['away']}"] = (_j1, _j2)
+    if _ops_t:
+        ct1, ct2 = st.columns([3, 1])
+        _sel_t = ct1.selectbox(f"📅 Partidos de hoy ({len(_ops_t)})",
+                               list(_ops_t.keys()), key='ten_fx_sel',
+                               help="Elige un partido y pulsa «Cargar».")
+        if ct2.button("⬇️ Cargar", key='ten_fx_btn', width='stretch'):
+            _a, _b = _ops_t[_sel_t]
+            st.session_state['ten_1'] = _a
+            st.session_state['ten_2'] = _b
+            st.rerun()
+    else:
+        st.caption("📅 Sin partidos de tenis enlazables hoy en la fuente de "
+                   "cuotas (fuera de torneo o nombres no reconocidos).")
+
     c1, c2, c3 = st.columns(3)
     p1 = c1.selectbox("Jugador 1", eng.jugadores, key='ten_1')
     p2 = c2.selectbox("Jugador 2", eng.jugadores, index=1, key='ten_2')

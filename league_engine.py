@@ -32,6 +32,7 @@ import requests
 
 import feature_engineering as fe
 import features_v26 as f26
+import features_v59 as f59
 import mls_features
 import cdi_futbol
 import momentum_tactico as mt
@@ -249,6 +250,8 @@ def columnas_extra(clave: str) -> list:
         cols += f26.COLS_URG
     if 'cdi' in grupos:            # v35: desincronización circadiana
         cols += cdi_futbol.COLS_CDI
+    if 'ck' in grupos:             # v59: dominio territorial (córners/remates)
+        cols += f59.COLS_CK
     return cols
 
 
@@ -676,6 +679,7 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
     estado_extra = None
     estado_imt = None
     estado_v26 = None
+    estado_ck = None
     mapa_tz = None
     imt_coef = None
     medias_cuotas = {}
@@ -705,6 +709,10 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
         # v35 (§3): CDI — solo en las competiciones donde el walk-forward lo
         # adoptó (run_wf_v35.py). El mapa club→huso se guarda en team_stats
         # para poder reproducir la feature en inferencia.
+        # v59: dominio territorial (walk-forward run_wf_ck_v59.py)
+        if 'ck' in grupos:
+            ck_df, estado_ck = f59.features_ck(df)
+            extras_df = extras_df.join(ck_df)
         if 'cdi' in grupos:
             mapa_tz = cdi_futbol.mapa_tz_liga(clave, df)
             extras_df = extras_df.join(cdi_futbol.features_cdi(df, mapa_tz))
@@ -1012,6 +1020,7 @@ def entrenar_liga(clave: str, con_ratings: bool = False) -> Dict:
                    'estado_extra': estado_extra,
                    'estado_imt': estado_imt,
                    'estado_v26': estado_v26,
+                   'estado_ck': estado_ck,
                    'mapa_tz': mapa_tz,
                    'imt_coef': imt_coef}, f, ensure_ascii=False)
 
@@ -1076,6 +1085,7 @@ class ClubEngine:
             self.estado_imt = ts.get('estado_imt')   # v24 (IMT)
             self.imt_coef = ts.get('imt_coef')       # v24 (índice compuesto)
             self.estado_v26 = ts.get('estado_v26')   # v26 (ortogonales)
+            self.estado_ck = ts.get('estado_ck')     # v59 (territorial)
             self.mapa_tz = ts.get('mapa_tz')         # v35 (CDI: club→huso)
             self.fecha_estado = ts.get('ultima_fecha_historico', '?')
             with open('calibracion_statsbomb.json', 'r', encoding='utf-8') as f:
@@ -1153,6 +1163,9 @@ class ClubEngine:
         # v26: entropía/volatilidad, derivadas ELO y urgencia desde el estado
         if any(c in cols for c in f26.COLS_V26):
             valores.update(f26.vector_v26(self.estado_v26, home, away))
+        if any(c in cols for c in f59.COLS_CK):
+            valores.update(f59.vector_ck(getattr(self, 'estado_ck', None),
+                                         home, away))
         # v35: CDI del partido (huso de la sede del local − huso del visitante)
         if any(c in cols for c in cdi_futbol.COLS_CDI):
             valores.update(cdi_futbol.vector_cdi(self.mapa_tz, home, away))

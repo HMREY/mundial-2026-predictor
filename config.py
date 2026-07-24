@@ -235,7 +235,10 @@ LEAGUES = {
         # v17 (walk-forward +1.5pp / -0.055): cuotas de cierre como features
         # v24 (walk-forward 53.09→53.33, ll 1.0328→0.9908): + componentes IMT
         # v26 (walk-forward 53.33→54.30, +0.97pp): + urgencia asimétrica
-        'features_extra': ['cuotas', 'imt', 'urg'],
+        # v59 (A/B en el espacio de producción, run_wf_ck_v59.py): +'ck'
+        # (dominio territorial: córners, volumen de remates, conversión) sube
+        # 52.82→53.62 (+0.80 pp) y MEJORA el log-loss 1.0679→0.9726.
+        'features_extra': ['cuotas', 'imt', 'urg', 'ck'],
         # v25 (walk-forward 53.33→54.09, ll −0.016): blending con el mercado
         # en inferencia cuando hay cuotas vigentes del partido
         'blend_mercado': 0.70,
@@ -290,7 +293,8 @@ LEAGUES = {
                            '2122', '2223', '2324', '2425', '2526')],
         'disponible': True,
         # v24 (walk-forward 56.52→57.16, +0.64pp): componentes IMT
-        'features_extra': ['imt'],
+        # v59: +'ck' (territorial) 54.23→54.73 (+0.50 pp) y ll 0.9604→0.9519.
+        'features_extra': ['imt', 'ck'],
     },
     'champions': {
         # v21: activada con API-Football (plan Free). LIMITACIÓN honesta del
