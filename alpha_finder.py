@@ -99,7 +99,7 @@ def _mercados_del_partido(pred: Dict, o: Dict, home: str, away: str) -> List[Dic
 
     candidatos = []
 
-    def _add(mercado, etiqueta, prob, cuota, sharp_gap=None):
+    def _add(mercado, etiqueta, prob, cuota, sharp_gap=None, casa=None):
         if not cuota or pd.isna(cuota) or cuota <= 1:
             return
         c = {'mercado': mercado, 'apuesta': etiqueta,
@@ -110,6 +110,8 @@ def _mercados_del_partido(pred: Dict, o: Dict, home: str, away: str) -> List[Dic
         if sharp_gap is not None:
             c['sharp_gap'] = round(float(sharp_gap), 4)
             c['sharp_confirmado'] = bool(sharp_gap >= SHARP_GAP_MIN)   # v42
+        if casa:
+            c['casa'] = casa                                          # v43 line shopping
         candidatos.append(c)
 
     # v42: confirmación SHARP — la prob implícita (devig) del cierre de
@@ -127,9 +129,12 @@ def _mercados_del_partido(pred: Dict, o: Dict, home: str, away: str) -> List[Dic
                           'draw': pr['draw'] - devig['draw'],
                           'away': pr['away'] - devig['away']}
 
-    _add('1X2', f'Gana {home}', pr['home'], o.get('odd_home'), _sharp_gap.get('home'))
-    _add('1X2', 'Empate', pr['draw'], o.get('odd_draw'), _sharp_gap.get('draw'))
-    _add('1X2', f'Gana {away}', pr['away'], o.get('odd_away'), _sharp_gap.get('away'))
+    _add('1X2', f'Gana {home}', pr['home'], o.get('odd_home'),
+         _sharp_gap.get('home'), o.get('casa_home'))
+    _add('1X2', 'Empate', pr['draw'], o.get('odd_draw'),
+         _sharp_gap.get('draw'), o.get('casa_draw'))
+    _add('1X2', f'Gana {away}', pr['away'], o.get('odd_away'),
+         _sharp_gap.get('away'), o.get('casa_away'))
     _add('Goles', 'Más de 2.5', over25, o.get('odd_over25'))
     _add('Goles', 'Menos de 2.5', 1 - over25, o.get('odd_under25'))
     _add('BTTS', 'Ambos marcan: Sí', btts, o.get('odd_btts_yes'))
@@ -567,13 +572,15 @@ def _seccion_btts(picks: List[Dict]) -> List[Dict]:
     """v37 (§6): sección destacada de Ambos Marcan. Picks de BTTS con
     confianza > 70 % y (si hay cuota real) EV > +3 %; si no hay cuota, se
     muestran igual con la cuota mínima sugerida (1/prob)."""
+    # v43: el usuario prioriza BTTS (buen momio, base de parlays) → umbral más
+    # amplio (prob > 0.60, EV > +1 %) para surfacear más oportunidades.
     out = []
     for p in picks:
         if str(p.get('mercado', '')).upper() != 'BTTS':
             continue
-        if (p.get('prob') or 0) <= 0.70:
+        if (p.get('prob') or 0) <= 0.60:
             continue
-        if p.get('cuota') and (p.get('ev') or 0) <= MIN_EV:
+        if p.get('cuota') and (p.get('ev') or 0) <= 0.01:
             continue
         out.append(p)
     return sorted(out, key=lambda p: (-(p.get('ev') or 0), -(p.get('prob') or 0)))

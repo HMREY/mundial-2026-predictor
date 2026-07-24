@@ -919,9 +919,12 @@ def render_alpha_finder():
                             if t.get('antiguedad') else None)
                 c2.markdown(f"**{t.get('apuesta','?')}**  \n{t.get('mercado','')}")
                 rent = t.get('rentabilidad') or {}
+                _gap = t.get('sharp_gap')
                 c3.markdown(precio
-                            + ("  \n💠 **Confirmado por línea sharp** (Pinnacle)"
+                            + ((f"  \n💠 **+{_gap*100:.0f}% sobre Pinnacle** (confirmado sharp)"
+                                if _gap else "  \n💠 **Confirmado por línea sharp**")
                                if t.get('sharp_confirmado') else '')
+                            + (f"  \n🏠 mejor cuota en **{t['casa']}**" if t.get('casa') else '')
                             + (f"  \n{t['fiabilidad']}" if t.get('fiabilidad') else '')
                             + (f"  \n{rent['etiqueta']}" if rent.get('etiqueta')
                                and rent.get('tier') != 'sin_ev' else '')
@@ -975,6 +978,29 @@ def render_alpha_finder():
                    + (" y EV > +3 % donde hay cuota real." if any(p.get('cuota')
                       for p in btts) else "."))
         _tarjetas(btts, "")
+
+    # v43 (§4.1): Auditoría de modelos — matriz de rendimiento por liga
+    st.divider()
+    with st.expander("📊 Auditoría de Modelos (transparencia total)"):
+        st.caption("Rendimiento REAL de cada liga contra su mercado de cierre "
+                   "(pool 1X2 crudo, ANTES del filtro de selección validado). "
+                   "🟢 bate al mercado y es rentable · 🟡 marginal · 🔴 no bate.")
+        try:
+            import model_audit
+            aud = model_audit.cargar() or model_audit.auditar()
+            ligas = aud.get('ligas', [])
+            if ligas:
+                st.caption(f"**{aud.get('ligas_rentables')}/{aud.get('n_ligas')} "
+                           "ligas rentables en el pool crudo.**")
+                import pandas as _pd
+                dfa = _pd.DataFrame([{
+                    '': l['semaforo'], 'Liga': l['nombre'], 'n': l['n'],
+                    'ROI %': l['roi_pct'], 'Precisión': l['precision'],
+                    'CLV %': l['clv_pct'], 'En Capa 1': '✅' if l['disponible'] else '—',
+                } for l in ligas])
+                st.dataframe(dfa, hide_index=True, width='stretch')
+        except Exception as e:
+            st.caption(f"Auditoría no disponible ({type(e).__name__}).")
 
     # v38: MOTOR DE RENTABILIDAD — CLV (métrica rey) + banda validada + mapa
     st.divider()

@@ -36,10 +36,37 @@ def _fmt_pick(p: dict) -> str:
         precio = f"sin cuota en vivo · mínima sugerida {p.get('cuota_justa','?')}"
     marca = '💠' if p.get('sharp_confirmado') else \
             ('⭐' if p.get('platino') else ('💎' if p.get('evc') else '•'))
-    sharp = ' · 💠 confirmado sharp' if p.get('sharp_confirmado') else ''
+    extras = []
+    if p.get('sharp_confirmado'):
+        gap = p.get('sharp_gap')
+        extras.append(f"💠 +{gap*100:.0f}% sobre Pinnacle" if gap else "💠 confirmado sharp")
+    if p.get('casa'):
+        extras.append(f"🏠 mejor cuota en {p['casa']}")   # v43 line shopping
+    cola = ('\n   ' + ' · '.join(extras)) if extras else ''
     return (f"{marca} [{p.get('deporte','Fútbol')}] {p.get('partido','?')}\n"
             f"   {p.get('apuesta','?')} {precio} · prob "
-            f"{(p.get('prob') or 0)*100:.0f}% {p.get('fiabilidad','')}{sharp}")
+            f"{(p.get('prob') or 0)*100:.0f}% {p.get('fiabilidad','')}{cola}")
+
+
+def _guia_simple(r: dict) -> str:
+    """v43: una recomendación en lenguaje llano de por dónde empezar — el pick
+    más seguro y confirmado del día, para el usuario que no quiere analizar."""
+    capa1 = r.get('capa1') or []
+    # preferimos el confirmado por sharp; si no, el de mayor prob de la capa 1
+    conf = [p for p in capa1 if p.get('sharp_confirmado')]
+    cand = (sorted(conf, key=lambda p: -(p.get('prob') or 0))
+            or sorted(capa1, key=lambda p: -(p.get('prob') or 0)))
+    if not cand:
+        btts = r.get('btts_destacado') or []
+        cand = sorted(btts, key=lambda p: -(p.get('prob') or 0))
+    if not cand:
+        return ""
+    p = cand[0]
+    porque = ("la línea sharp de Pinnacle lo confirma" if p.get('sharp_confirmado')
+              else f"el modelo le da {(p.get('prob') or 0)*100:.0f}% de acierto")
+    casa = f" en {p['casa']}" if p.get('casa') else ""
+    return (f"👉 *{p.get('apuesta','?')}* ({p.get('partido','?')}) "
+            f"@ {p.get('cuota','?')}{casa} — {porque}.")
 
 
 def construir_mensaje() -> str:
@@ -77,6 +104,19 @@ def construir_mensaje() -> str:
         lineas.append(f"🎯 *CAPA 2 — alta confianza, sin cuota* ({len(capa2)})")
         lineas += [_fmt_pick(p) for p in capa2[:5]]
         lineas.append("")
+
+    # v43: sección ⚽ AMBOS MARCAN destacada (el usuario la prioriza — buen
+    # momio y alta certeza para los parlays)
+    btts = r.get('btts_destacado') or []
+    if btts:
+        lineas.append(f"⚽ *AMBOS MARCAN (BTTS)* ({len(btts)}) — buen momio, base de parlay")
+        lineas += [_fmt_pick(p) for p in btts[:6]]
+        lineas.append("")
+
+    # v43: guía SIMPLE de "por cuál apostar" — la mejor pata segura del día
+    guia = _guia_simple(r)
+    if guia:
+        lineas += ["🧭 *¿POR CUÁL EMPEZAR?*", guia, ""]
 
     esc = reto_escalera.construir(capa1 + capa2, capital=100)
     if esc.get('picks'):

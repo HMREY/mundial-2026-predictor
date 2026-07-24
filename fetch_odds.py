@@ -192,9 +192,12 @@ def actualizar_odds():
         api_tot = odds_api.cuotas_recientes('totals25')
         # v42: línea SHARP de Pinnacle (referencia de confirmación)
         api_pin = odds_api.cuotas_recientes('h2h', fuente='pinnacle')
+        # v43: casa con el mejor precio (line shopping) — dónde apostar
+        api_casa = odds_api.casas_recientes('h2h')
     except Exception as e:
         logger.warning(f"Almacén CLV no disponible: {e}")
         api_pin = {}
+        api_casa = {}
 
     extra = []
     ya = set(snapshot['MATCH_ID']) if not snapshot.empty else set()
@@ -228,6 +231,13 @@ def actualizar_odds():
         if mid in cuotas_dict:
             for sel, attr in (('home', 'odd_home_pin'), ('draw', 'odd_draw_pin'),
                               ('away', 'odd_away_pin')):
+                if c.get(sel):
+                    cuotas_dict[mid][attr] = c[sel]
+    # v43: casa con el mejor precio (line shopping) → dónde apostar
+    for mid, c in (api_casa or {}).items():
+        if mid in cuotas_dict:
+            for sel, attr in (('home', 'casa_home'), ('draw', 'casa_draw'),
+                              ('away', 'casa_away')):
                 if c.get(sel):
                     cuotas_dict[mid][attr] = c[sel]
     with open('odds_actuales.json', 'w', encoding='utf-8') as f:

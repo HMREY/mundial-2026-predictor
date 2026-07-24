@@ -114,18 +114,45 @@ def _clave() -> str:
 # ---------------------------------------------------------------------------
 # Almacén SQLite (funciona con y sin clave)
 # ---------------------------------------------------------------------------
-def _conexion() -> sqlite3.Connection:
-    con = sqlite3.connect(DB)
-    con.execute("""CREATE TABLE IF NOT EXISTS snapshots (
+_DDL = """CREATE TABLE IF NOT EXISTS snapshots (
         match_id TEXT NOT NULL,
         liga TEXT,
         capturado_utc TEXT NOT NULL,
         inicio_utc TEXT,
-        fuente TEXT,
+        fuente TEXT NOT NULL,
         mercado TEXT NOT NULL,       -- h2h | totals25 | btts | ah
         seleccion TEXT NOT NULL,     -- home/draw/away | over/under | yes/no
         cuota REAL NOT NULL,
-        PRIMARY KEY (match_id, capturado_utc, mercado, seleccion))""")
+        casa TEXT,                   -- v43: casa que ofrece el mejor precio
+        PRIMARY KEY (match_id, capturado_utc, fuente, mercado, seleccion))"""
+
+
+def _conexion() -> sqlite3.Connection:
+    con = sqlite3.connect(DB)
+    con.execute(_DDL)
+    # v42/v43 MIGRACIÓN: la PK antigua no incluía `fuente`, así que las filas
+    # de Pinnacle (misma marca de tiempo que odds_api) COLISIONABAN y se
+    # descartaban con INSERT OR IGNORE — la confirmación sharp nunca recibía
+    # datos. Se detecta por el nº de columnas del PK y se reconstruye la tabla.
+    try:
+        cols = con.execute("PRAGMA table_info(snapshots)").fetchall()
+        pk_cols = [c[1] for c in cols if c[5] > 0]          # c[5] = pk order
+        if 'fuente' not in pk_cols or 'casa' not in [c[1] for c in cols]:
+            con.executescript("""
+                ALTER TABLE snapshots RENAME TO snapshots_old;
+                """ + _DDL + """;
+                INSERT OR IGNORE INTO snapshots
+                    (match_id, liga, capturado_utc, inicio_utc, fuente,
+                     mercado, seleccion, cuota)
+                    SELECT match_id, liga, capturado_utc, inicio_utc,
+                           COALESCE(fuente,'odds_api'), mercado, seleccion, cuota
+                    FROM snapshots_old;
+                DROP TABLE snapshots_old;""")
+            con.commit()
+            logger.info("[odds_api] snapshots migrada: PK ahora incluye fuente "
+                        "(+ columna casa) — Pinnacle/mejor-precio ya no colisionan.")
+    except Exception as e:
+        logger.warning(f"[odds_api] migración snapshots omitida: {e}")
     con.execute("CREATE INDEX IF NOT EXISTS ix_snap_match ON snapshots(match_id)")
     return con
 
@@ -134,16 +161,16 @@ def guardar_snapshots(filas: List[Dict]):
     """filas: dicts con match_id/liga/inicio_utc/fuente/mercado/seleccion/cuota."""
     if not filas:
         return
-    ahora = pd.Timestamp.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+    ahora = pd.Timestamp.now('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
     con = _conexion()
     with con:
         con.executemany(
             """INSERT OR IGNORE INTO snapshots
                (match_id, liga, capturado_utc, inicio_utc, fuente, mercado,
-                seleccion, cuota) VALUES (?,?,?,?,?,?,?,?)""",
+                seleccion, cuota, casa) VALUES (?,?,?,?,?,?,?,?,?)""",
             [(f['match_id'], f.get('liga'), ahora, f.get('inicio_utc'),
-              f.get('fuente', '?'), f['mercado'], f['seleccion'],
-              float(f['cuota'])) for f in filas])
+              f.get('fuente', 'odds_api'), f['mercado'], f['seleccion'],
+              float(f['cuota']), f.get('casa')) for f in filas])
     con.close()
     logger.info(f"odds_historico.db: +{len(filas)} cuotas ({ahora}).")
 
@@ -374,35 +401,64 @@ def capturar_liga(clave_liga: str) -> List[Dict]:
             mid = (f"{fecha.strftime('%Y%m%d')}_"
                    f"{home.replace(' ', '-')}_{away.replace(' ', '-')}")
             casas = ev.get('bookmakers', [])
-            # v42: PINNACLE como línea de referencia SHARP (la casa más
-            # eficiente). El modelo que supera su probabilidad devig por ≥5 pp
-            # rinde +14.7 % de ROI (validado) — "confirmación sharp", lo que
-            # hacen las apps de pago. Se captura en la MISMA petición (0 crédito
-            # extra): basta con buscar la casa 'pinnacle' entre las devueltas.
+            if not casas:
+                continue
+            # v43 LINE SHOPPING: The Odds API devuelve ~23 casas/evento. En vez
+            # de la PRIMERA, se toma la MEJOR cuota de cada selección entre
+            # todas — mejora el precio ~+8 % de media (cada +1 % de cuota es
+            # +1 pp de ROI directo). Gratis: ya viene en la misma respuesta.
+            # Se guarda también la CASA que la ofrece (para que el usuario sepa
+            # dónde apostar). Pinnacle se EXCLUYE del mejor-precio y se guarda
+            # aparte como línea sharp de referencia (v42).
+            def _mejor(mercado_key, selector, punto=None):
+                mejores = {}   # sel -> (cuota, casa)
+                for b in casas:
+                    if b.get('key') == 'pinnacle':
+                        continue
+                    for m in b.get('markets', []):
+                        if m['key'] != mercado_key:
+                            continue
+                        for o in m['outcomes']:
+                            if punto is not None and abs(
+                                    float(o.get('point', -99)) - punto) > 0.01:
+                                continue
+                            sel = selector(o)
+                            if sel is None:
+                                continue
+                            precio = float(o['price'])
+                            if sel not in mejores or precio > mejores[sel][0]:
+                                mejores[sel] = (precio, b.get('title') or b.get('key'))
+                return mejores
+
+            def _sel_h2h(o):
+                return ('home' if o['name'] == ev['home_team'] else
+                        'away' if o['name'] == ev['away_team'] else 'draw')
+
+            for sel, (precio, casa) in _mejor('h2h', _sel_h2h).items():
+                filas.append({'match_id': mid, 'liga': clave_liga,
+                              'inicio_utc': inicio, 'fuente': 'odds_api',
+                              'mercado': 'h2h', 'seleccion': sel,
+                              'cuota': precio, 'casa': casa,
+                              'event_id': ev.get('id')})
+            for sel, (precio, casa) in _mejor(
+                    'totals', lambda o: o['name'].lower(), punto=2.5).items():
+                filas.append({'match_id': mid, 'liga': clave_liga,
+                              'inicio_utc': inicio, 'fuente': 'odds_api',
+                              'mercado': 'totals25', 'seleccion': sel,
+                              'cuota': precio, 'casa': casa,
+                              'event_id': ev.get('id')})
+            # v42: Pinnacle como referencia sharp (no entra en el mejor-precio)
             pin = next((b for b in casas if b.get('key') == 'pinnacle'), None)
-            fuentes = [('odds_api', casas[0])] if casas else []
             if pin is not None:
-                fuentes.append(('pinnacle', pin))
-            for etiqueta, casa in fuentes:
-                for m in casa.get('markets', []):
-                    if m['key'] == 'h2h':
-                        for o in m['outcomes']:
-                            sel = ('home' if o['name'] == ev['home_team'] else
-                                   'away' if o['name'] == ev['away_team'] else 'draw')
-                            filas.append({'match_id': mid, 'liga': clave_liga,
-                                          'inicio_utc': inicio, 'fuente': etiqueta,
-                                          'mercado': 'h2h', 'seleccion': sel,
-                                          'cuota': o['price'],
-                                          'event_id': ev.get('id')})
-                    elif m['key'] == 'totals' and etiqueta == 'odds_api':
-                        for o in m['outcomes']:
-                            if abs(float(o.get('point', 0)) - 2.5) < 0.01:
-                                filas.append({'match_id': mid, 'liga': clave_liga,
-                                              'inicio_utc': inicio, 'fuente': 'odds_api',
-                                              'mercado': 'totals25',
-                                              'seleccion': o['name'].lower(),
-                                              'cuota': o['price'],
-                                              'event_id': ev.get('id')})
+                for m in pin.get('markets', []):
+                    if m['key'] != 'h2h':
+                        continue
+                    for o in m['outcomes']:
+                        filas.append({'match_id': mid, 'liga': clave_liga,
+                                      'inicio_utc': inicio, 'fuente': 'pinnacle',
+                                      'mercado': 'h2h', 'seleccion': _sel_h2h(o),
+                                      'cuota': o['price'], 'casa': 'Pinnacle',
+                                      'event_id': ev.get('id')})
         logger.info(f"The Odds API [{clave_liga}]: {len(filas)} cuotas capturadas.")
     except Exception as e:
         logger.warning(f"The Odds API [{clave_liga}] falló: {e}")
@@ -577,6 +633,33 @@ def cuotas_recientes(mercado: str, horas: int = 24,
         ultimo = g['capturado_utc'].iloc[-1]
         sel = g[g['capturado_utc'] == ultimo]
         out[mid] = {r['seleccion']: float(r['cuota']) for _, r in sel.iterrows()}
+    return out
+
+
+def casas_recientes(mercado: str, horas: int = 24) -> Dict[str, Dict[str, str]]:
+    """v43: la CASA que ofrece la mejor cuota de cada selección (line shopping)
+    — para decirle al usuario DÓNDE apostar. {match_id: {seleccion: casa}}."""
+    if not os.path.exists(DB):
+        return {}
+    con = _conexion()
+    desde = (pd.Timestamp.now('UTC') - pd.Timedelta(hours=horas)) \
+        .strftime('%Y-%m-%dT%H:%M:%SZ')
+    try:
+        df = pd.read_sql_query(
+            "SELECT match_id, capturado_utc, seleccion, casa FROM snapshots "
+            "WHERE mercado=? AND fuente='odds_api' AND casa IS NOT NULL "
+            "AND capturado_utc>=? ORDER BY capturado_utc",
+            con, params=[mercado, desde])
+    except Exception:
+        df = pd.DataFrame()
+    con.close()
+    out: Dict[str, Dict[str, str]] = {}
+    if df.empty:
+        return out
+    for (mid), g in df.groupby('match_id'):
+        ultimo = g['capturado_utc'].iloc[-1]
+        sel = g[g['capturado_utc'] == ultimo]
+        out[mid] = {r['seleccion']: r['casa'] for _, r in sel.iterrows()}
     return out
 
 
