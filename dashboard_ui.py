@@ -1570,7 +1570,11 @@ def render_tennis():
     p1 = c1.selectbox("Jugador 1", eng.jugadores, key='ten_1')
     p2 = c2.selectbox("Jugador 2", eng.jugadores, index=1, key='ten_2')
     sup = c3.selectbox("Superficie", ['Hard', 'Clay', 'Grass'], key='ten_s')
-    indoor = st.checkbox("Pista cubierta (indoor)", key='ten_in')
+    c4, c5 = st.columns(2)
+    indoor = c4.checkbox("Pista cubierta (indoor)", key='ten_in')
+    formato = c5.radio("Formato", ['Al mejor de 3 sets', 'Al mejor de 5 sets (Grand Slam)'],
+                       key='ten_bo', horizontal=False)
+    best_of = 5 if formato.startswith('Al mejor de 5') else 3
     if p1 != p2:
         pred = eng.predecir(p1, p2, surface=sup, indoor=indoor)
         if 'error' in pred:
@@ -1585,6 +1589,58 @@ def render_tennis():
                        f"**{p1 if pred['prob_home']>=0.5 else p2}**. "
                        "El mercado de tenis (cuotas de cierre) es más preciso "
                        "que nuestro modelo — herramienta de análisis, no de EV.")
+            # v51: PLANTILLA COMPLETA de mercados de tenis (la que pidió el
+            # usuario): ganador, primer set, marcador exacto, hándicap de sets
+            # y juegos, totales de juegos, gana exactamente 1 set, doble
+            # resultado. Todo derivado del modelo con cuota justa (1/prob).
+            pl = eng.plantilla(p1, p2, surface=sup, best_of=best_of, indoor=indoor)
+            campos = pl.get('campos', [])
+            if campos:
+                st.divider()
+                st.subheader("📋 Plantilla completa de mercados (para parlays)")
+                if pl.get('total_juegos_estimado'):
+                    st.caption(f"Total de juegos estimado: "
+                               f"**{pl['total_juegos_estimado']}** · "
+                               "todas las cuotas son justas (1/probabilidad).")
+                import pandas as _pd
+                # agrupación por tipo de mercado para legibilidad
+                def _grupo(c):
+                    i = c.get('id', '')
+                    if i.startswith('ml_'):
+                        return '🏆 Ganador'
+                    if i.startswith('set1_'):
+                        return '1️⃣ Primer set'
+                    if i.startswith('juegos_'):
+                        return '🎾 Total de juegos'
+                    if i.startswith('hand_'):
+                        return '➕ Hándicap de juegos'
+                    if i.startswith('hset_'):
+                        return '➕ Hándicap de sets'
+                    if i.startswith('dr_'):
+                        return '🔗 Doble resultado (1er set / partido)'
+                    return '📐 Sets (marcador y especiales)'
+                orden_grupos = ['🏆 Ganador', '1️⃣ Primer set',
+                                '📐 Sets (marcador y especiales)',
+                                '➕ Hándicap de sets', '🎾 Total de juegos',
+                                '➕ Hándicap de juegos',
+                                '🔗 Doble resultado (1er set / partido)']
+                for g in orden_grupos:
+                    filas = [{'Mercado': c['etiqueta'],
+                              'Probabilidad': f"{c['valor']:.0f}%",
+                              'Cuota justa': round(100 / max(c['valor'], 1e-6), 2)}
+                             for c in campos if _grupo(c) == g]
+                    if not filas:
+                        continue
+                    st.markdown(f"**{g}**")
+                    st.dataframe(_pd.DataFrame(filas), hide_index=True,
+                                 width='stretch')
+                if pl.get('excluidos'):
+                    with st.expander("¿Por qué no están todos los mercados?"):
+                        st.caption("Estos mercados exigen datos de saque/resto "
+                                   "o cadenas de Markov que esta fuente gratuita "
+                                   "no publica, así que NO se inventan:")
+                        for e in pl['excluidos']:
+                            st.caption(f"• {e}")
 
 
 _clave_comp = COMPETENCIAS[competencia_sel]

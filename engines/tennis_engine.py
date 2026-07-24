@@ -393,19 +393,61 @@ class TennisEngine(BaseSportsEngine):
                      'valor': (1 - p_cubre) * 100},
                 ]
         # --- sets: se invierte p → prob de ganar UN set (independencia) ---
+        # v51: se amplía a TODOS los mercados de sets derivables bajo la
+        # asunción de independencia entre sets (declarada). Cubre la plantilla
+        # del usuario salvo lo que exige datos de saque/Markov (par/impar de
+        # juegos, marcador exacto de juegos), que sigue en 'excluidos'.
         s = _prob_set_desde_partido(p, best_of)
         if best_of == 3:
-            p20, p21 = s ** 2, 2 * s ** 2 * (1 - s)
+            # marcador exacto de sets (ambas direcciones)
+            h20, h21 = s ** 2, 2 * s ** 2 * (1 - s)          # home 2-0, 2-1
+            a20, a21 = (1 - s) ** 2, 2 * (1 - s) ** 2 * s     # away 2-0, 2-1
             p_ambos = 1 - s ** 2 - (1 - s) ** 2
+            # primer set (≈ prob de ganar UN set, sets i.i.d.)
+            # doble resultado 1er set / partido (independencia entre sets)
+            dr_hh = s * (1 - (1 - s) ** 2)      # gana set1 y gana partido
+            dr_ha = s * (1 - s) ** 2            # gana set1 y pierde partido
+            dr_ah = (1 - s) * s ** 2            # pierde set1 y gana partido
+            dr_aa = (1 - s) * (1 - s ** 2)      # pierde set1 y pierde partido
             campos += [
-                {'id': 'set_2_0', 'etiqueta': f'{home} gana 2-0', 'valor': p20 * 100},
-                {'id': 'set_2_1', 'etiqueta': f'{home} gana 2-1', 'valor': p21 * 100},
+                {'id': 'set_2_0', 'etiqueta': f'{home} gana 2-0', 'valor': h20 * 100},
+                {'id': 'set_2_1', 'etiqueta': f'{home} gana 2-1', 'valor': h21 * 100},
+                {'id': 'set_0_2', 'etiqueta': f'{away} gana 2-0', 'valor': a20 * 100},
+                {'id': 'set_1_2', 'etiqueta': f'{away} gana 2-1', 'valor': a21 * 100},
                 {'id': 'ambos_set', 'etiqueta': 'Ambos ganan al menos un set',
                  'valor': p_ambos * 100},
                 {'id': 'set_home', 'etiqueta': f'{home} gana al menos un set',
                  'valor': (1 - (1 - s) ** 2) * 100},
                 {'id': 'set_away', 'etiqueta': f'{away} gana al menos un set',
                  'valor': (1 - s ** 2) * 100},
+                # gana EXACTAMENTE 1 set = el rival gana 2-1
+                {'id': 'exact1_home', 'etiqueta': f'{home} gana exactamente 1 set',
+                 'valor': a21 * 100},
+                {'id': 'exact1_away', 'etiqueta': f'{away} gana exactamente 1 set',
+                 'valor': h21 * 100},
+                # primer set - ganador
+                {'id': 'set1_home', 'etiqueta': f'Gana 1er set: {home}',
+                 'valor': s * 100},
+                {'id': 'set1_away', 'etiqueta': f'Gana 1er set: {away}',
+                 'valor': (1 - s) * 100},
+                # hándicap de sets (±1.5 en bo3 = ganar/perder 2-0)
+                {'id': 'hset_home_-1.5', 'etiqueta': f'{home} −1.5 sets (gana 2-0)',
+                 'valor': h20 * 100},
+                {'id': 'hset_home_+1.5', 'etiqueta': f'{home} +1.5 sets (gana ≥1 set)',
+                 'valor': (1 - (1 - s) ** 2) * 100},
+                {'id': 'hset_away_-1.5', 'etiqueta': f'{away} −1.5 sets (gana 2-0)',
+                 'valor': a20 * 100},
+                {'id': 'hset_away_+1.5', 'etiqueta': f'{away} +1.5 sets (gana ≥1 set)',
+                 'valor': (1 - s ** 2) * 100},
+                # doble resultado (1er set / partido)
+                {'id': 'dr_hh', 'etiqueta': f'Doble: {home} 1er set y {home} partido',
+                 'valor': dr_hh * 100},
+                {'id': 'dr_ha', 'etiqueta': f'Doble: {home} 1er set y {away} partido',
+                 'valor': dr_ha * 100},
+                {'id': 'dr_ah', 'etiqueta': f'Doble: {away} 1er set y {home} partido',
+                 'valor': dr_ah * 100},
+                {'id': 'dr_aa', 'etiqueta': f'Doble: {away} 1er set y {away} partido',
+                 'valor': dr_aa * 100},
             ]
         return {'deporte': self.deporte, 'partido': f'{home} vs {away}',
                 'superficie': surface, 'prediccion': pred,
