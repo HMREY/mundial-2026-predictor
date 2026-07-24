@@ -1,0 +1,37 @@
+{
+  "liga": "Süper Lig",
+  "n_train": 783,
+  "n_validacion": 198,
+  "fecha_corte": "2025-11-22",
+  "precision_validacion": 0.5505,
+  "precision_linea_base_elo": 0.4949,
+  "precision_mercado_cuotas": 0.5354,
+  "log_loss_validacion": 0.9739,
+  "n_equipos": 25,
+  "features_extra_cols": [
+    "PROB_IMP_H",
+    "PROB_IMP_D",
+    "PROB_IMP_A",
+    "OVERROUND"
+  ],
+  "medias_cuotas": {
+    "PROB_IMP_H": 0.4418,
+    "PROB_IMP_D": 0.246,
+    "PROB_IMP_A": 0.3122,
+    "OVERROUND": 0.0709
+  },
+  "roi_sim": {
+    "n_apuestas": 111,
+    "roi_pct": 14.23,
+    "aciertos": 67
+  },
+  "mesm": {
+    "n_val_con_cuotas": 198,
+    "acc_prod": 0.5505,
+    "acc_mesm": 0.5404,
+    "ll_prod": 0.9739,
+    "ll_mesm": 0.9633,
+    "adoptado": false
+  },
+  "imt": null
+}

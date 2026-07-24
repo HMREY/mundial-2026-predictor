@@ -150,6 +150,47 @@ LEAGUES = {
         'urls': [f'{FD_BASE}/new/IRL.csv'], 'anios_ventana': 8,
         'disponible': True, 'features_extra': ['cuotas'],
     },
+    # v39 (§2.2): cobertura de INVIERNO. Verificado 2026-07-24 en football-data
+    # (todas frescas a 17-21 de mayo 2026, fin de sus temporadas de invierno).
+    # Grecia/Turquía en formato 'main' (stats + B365); Dinamarca/Suiza/Austria
+    # en 'new' (goles + cierre AvgC*). Croacia y Chequia NO están en
+    # football-data (404) → no se añaden por esta vía (candidatas a ESPN v40).
+    # ADOPTADAS en Capa 1 (baten la línea base ELO en split, v39):
+    #   Turquía 55.1 % (ELO 49.5, mercado 53.5) — bate mercado, ROI +14.2 %.
+    #   Dinamarca 50.6 % (ELO 47.5) — bate ELO, iguala mercado.
+    'turquia': {
+        'nombre': 'Süper Lig', 'pais': 'Turquía', 'formato': 'main',
+        'urls': [f'{FD_BASE}/mmz4281/{s}/T1.csv' for s in ('2324', '2425', '2526')],
+        'disponible': True, 'features_extra': ['cuotas'],
+    },
+    'dinamarca': {
+        'nombre': 'Superliga', 'pais': 'Dinamarca', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/DNK.csv'], 'anios_ventana': 8,
+        'disponible': True, 'features_extra': ['cuotas'],
+    },
+    # NO adoptadas (no baten ELO en split Y su backtest sangra: Grecia −24.9 %,
+    # Suiza −2.3 % pero acc<ELO, Austria −17.7 %). Se dejan definidas pero
+    # `disponible: False` para NO meter picks deficitarios en la Capa 1 (regla
+    # del spec §2.2). Candidatas a re-evaluar en v40 con más datos / como
+    # Capa 2. edge_engine excluye de la calibración las ligas no disponibles.
+    'grecia': {
+        'nombre': 'Super League', 'pais': 'Grecia', 'formato': 'main',
+        'urls': [f'{FD_BASE}/mmz4281/{s}/G1.csv' for s in ('2324', '2425', '2526')],
+        'disponible': False, 'features_extra': ['cuotas'],
+        'nota': 'no bate ELO (42.6<44.1) y ROI backtest −24.9 % — v40.',
+    },
+    'suiza': {
+        'nombre': 'Super League', 'pais': 'Suiza', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/SWZ.csv'], 'anios_ventana': 8,
+        'disponible': False, 'features_extra': ['cuotas'],
+        'nota': 'no bate ELO (46.0<47.3) — v40.',
+    },
+    'austria': {
+        'nombre': 'Bundesliga', 'pais': 'Austria', 'formato': 'new',
+        'urls': [f'{FD_BASE}/new/AUT.csv'], 'anios_ventana': 8,
+        'disponible': False, 'features_extra': ['cuotas'],
+        'nota': 'no bate ELO (37.3<42.5) y ROI backtest −17.7 % — v40.',
+    },
     'premier': {
         # Premier se mantiene en 3 temporadas: el experimento de 5 temporadas
         # bajó la precisión (49.5%→48.9%) — regla de adopción no superada.

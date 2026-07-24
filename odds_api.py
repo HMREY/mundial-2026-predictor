@@ -69,6 +69,10 @@ SPORT_KEYS = {
     'finlandia': 'soccer_finland_veikkausliiga',
     'rumania': 'soccer_romania_liga_1',
     'irlanda': 'soccer_league_of_ireland',
+    # v39 (§2.2): ligas de invierno ADOPTADAS (baten baseline). Grecia, Suiza
+    # y Austria NO se capturan (disponible=False: no baten ELO / sangran ROI).
+    'turquia': 'soccer_turkey_super_league',
+    'dinamarca': 'soccer_denmark_superliga',
     'champions': 'soccer_uefa_champs_league',
     # v35 (§2): competiciones UEFA secundarias
     'europa_league': 'soccer_uefa_europa_league',

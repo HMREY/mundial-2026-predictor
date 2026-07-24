@@ -33,8 +33,18 @@ logger = logging.getLogger(__name__)
 # exportación sin argumentos; evita el AttributeError de producción v29).
 _ULTIMO_RESULTADO: Dict = {}
 
-MIN_PROB = 0.70
-MIN_EV = 0.03
+# v39: el PISO DE PROBABILIDAD lo fija edge_engine (maximin walk-forward). El
+# 0.70 de la v38 apenas dejaba pasar 18 apuestas dentro de la banda de EV
+# (ruido, peor ventana −7.3 %); el piso validado 0.55 rescata la franja
+# [0.55,0.70) → 337 apuestas, +7.9 % ROI, peor ventana +14 %. Más cobertura Y
+# más rentabilidad, ambas validadas. Fallback 0.55.
+try:
+    import edge_engine as _ee
+    MIN_PROB = _ee.piso_prob()
+    MIN_EV = _ee.banda_rentable()[0]
+except Exception:
+    MIN_PROB = 0.55
+    MIN_EV = 0.03
 MIN_CUOTA = 1.50
 # v34 (prioridad: cobertura): 72 h en vez de 48. Las casas ya publican
 # cuotas con 3 días de antelación y el barrido pasaba de 178 partidos con
@@ -589,7 +599,8 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
                     'LaLiga': 'laliga', 'Serie A': 'serie_a',
                     'Bundesliga': 'bundesliga', 'Ligue 1': 'ligue_1',
                     'Eredivisie': 'eredivisie', 'Primeira Liga': 'primeira',
-                    'UEFA Champions League': 'champions'}
+                    'UEFA Champions League': 'champions',
+                    'Süper Lig': 'turquia', 'Superliga': 'dinamarca'}
     for p in capa1 + capa2:
         clave = LIGA_A_CLAVE.get(p.get('liga', ''), p.get('liga', '').lower())
         p['brier'] = fiabilidad_liga(clave)

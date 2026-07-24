@@ -47,12 +47,33 @@ BANDA_DEFECTO = (0.03, 0.12)
 # Candidatas que se escanean en la calibración.
 BANDAS_CANDIDATAS = [(0.02, 0.10), (0.02, 0.12), (0.03, 0.10), (0.03, 0.12),
                      (0.03, 0.13), (0.025, 0.11), (0.04, 0.12), (0.03, 0.14)]
+# v39: piso de PROBABILIDAD dentro de la banda. El hallazgo: con el piso 0.70
+# de la v38 apenas entraban 18 apuestas (ruido); bajarlo a 0.55 rescata la
+# franja [0.55,0.70) que rinde +8 % ROI → más cobertura Y más ROI.
+PISO_PROB_DEFECTO = 0.55
+PISOS_PROB_CANDIDATOS = [0.50, 0.55, 0.60, 0.65, 0.70]
+
+
+def _ligas_disponibles() -> Optional[set]:
+    """Claves de liga con disponible=True en config (para no calibrar sobre
+    ligas retiradas de Capa 1, que sesgarían la banda). None si no se puede
+    leer config (entonces no se filtra)."""
+    try:
+        from config import LEAGUES
+        return {k for k, v in LEAGUES.items() if v.get('disponible')}
+    except Exception:
+        return None
 
 
 def _cargar_apuestas() -> List[Dict]:
+    disponibles = _ligas_disponibles()
     filas = []
     for f in glob.glob('roi_bets_*.json'):
         liga = f.split('roi_bets_')[1].rsplit('.', 1)[0]
+        # v39: excluir ligas NO disponibles (retiradas de Capa 1) — sus
+        # apuestas deficitarias contaminaban la calibración de la banda.
+        if disponibles is not None and liga not in disponibles:
+            continue
         try:
             for b in json.load(open(f, encoding='utf-8')):
                 if b.get('cuota') and b.get('gano') is not None and b.get('fecha'):
@@ -126,6 +147,33 @@ def calibrar(guardar: bool = True) -> Dict:
     mejor = max(validas, key=lambda r: (r['peor_ventana'],
                                         r['ventanas_positivas'], r['n']))
 
+    # v39: piso de probabilidad (maximin) DENTRO de la banda adoptada. Solo se
+    # evalúa sobre apuestas que traen prob; si no hay, se usa el defecto.
+    lo_b, hi_b = mejor['banda']
+    escaneo_prob = []
+    con_prob = [b for b in rows if b.get('prob') is not None]
+    if con_prob:
+        for piso in PISOS_PROB_CANDIDATOS:
+            vent = []
+            for k in range(4):
+                a = int(len(con_prob) * (0.5 + 0.1 * k))
+                c = int(len(con_prob) * (0.6 + 0.1 * k))
+                seg = [x for x in con_prob[a:c]
+                       if lo_b <= x['ev'] <= hi_b and x['prob'] >= piso]
+                vent.append(_roi(seg)[1])
+            g = _roi([x for x in con_prob
+                      if lo_b <= x['ev'] <= hi_b and x['prob'] >= piso])
+            escaneo_prob.append({'piso': piso, 'n': g[0], 'roi_global': g[1],
+                                 'ventanas_oos': vent,
+                                 'peor_ventana': round(min(vent), 2),
+                                 'ventanas_positivas': int(sum(v > 0 for v in vent))})
+        # maximin con volumen mínimo (evitar pisos altos con muy pocas apuestas)
+        cand = [e for e in escaneo_prob if e['n'] >= 100] or escaneo_prob
+        mejor_piso = max(cand, key=lambda e: (e['peor_ventana'],
+                                              e['ventanas_positivas'], e['n']))['piso']
+    else:
+        mejor_piso = PISO_PROB_DEFECTO
+
     # mapa de ligas (DIAGNÓSTICO, no filtro)
     ligas = {}
     for lg in sorted(set(b['liga'] for b in rows)):
@@ -138,6 +186,8 @@ def calibrar(guardar: bool = True) -> Dict:
         'banda_adoptada': mejor['banda'],
         'roi_banda_global': mejor['roi_global'],
         'ventanas_oos_banda': mejor['ventanas_oos'],
+        'piso_prob_adoptado': mejor_piso,
+        'escaneo_prob': sorted(escaneo_prob, key=lambda e: -e['peor_ventana']),
         'escaneo_bandas': sorted(resultados, key=lambda r: -r['peor_ventana']),
         'tramos_ev': tramos,
         'ligas': ligas,
@@ -169,6 +219,11 @@ def banda_rentable() -> Tuple[float, float]:
     m = _mapa()
     b = m.get('banda_adoptada')
     return (b[0], b[1]) if b and len(b) == 2 else BANDA_DEFECTO
+
+
+def piso_prob() -> float:
+    """Piso de probabilidad adoptado (v39, maximin) o el defecto."""
+    return _mapa().get('piso_prob_adoptado', PISO_PROB_DEFECTO)
 
 
 def en_banda(ev: Optional[float]) -> bool:
