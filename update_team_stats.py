@@ -49,20 +49,43 @@ def _metricas_reaccion(historico: pd.DataFrame) -> dict:
     fin = historico['date'].max()
     goles = goles[goles['date'] >= fin - pd.DateOffset(months=24)]
 
+    # Carga de partidos de los últimos 30 días: un único value_counts en vez de
+    # un filtro completo del histórico por selección (v66).
+    recientes = historico[historico['date'] >= fin - pd.Timedelta(days=30)]
+    conteo_30d = pd.concat([recientes['home_team'],
+                            recientes['away_team']]).value_counts().to_dict()
+
+    # v66 (200 selecciones): filtrar el DataFrame completo una vez por equipo
+    # era O(n_equipos x n_goles). Se indexa UNA vez por equipo implicado y
+    # después cada selección trabaja sólo sobre sus propios goles.
+    goles = goles.sort_values(['MATCH_ID', 'minute'], kind='mergesort')
+    por_equipo = {}
+    for lado in ('home_team', 'away_team'):
+        for equipo, bloque in goles.groupby(lado, sort=False):
+            por_equipo.setdefault(equipo, []).append(bloque)
+    indice = {e: pd.concat(bl) if len(bl) > 1 else bl[0]
+              for e, bl in por_equipo.items()}
+
     resultado = {}
     for equipo in TEAMS:
-        del_partido = goles[(goles['home_team'] == equipo) | (goles['away_team'] == equipo)]
+        del_partido = indice.get(equipo)
+        if del_partido is None:
+            del_partido = goles.iloc[0:0]
         propios = del_partido[del_partido['team'] == equipo]
         encajados = del_partido[del_partido['team'] != equipo]
 
         # Reacción: de cada gol encajado, ¿hubo respuesta propia más tarde?
+        # Como los goles vienen ordenados por (partido, minuto), basta comparar
+        # cada gol encajado con el ÚLTIMO minuto propio del mismo partido.
         respuestas, total_encajados = 0, 0
-        for match_id, grupo in del_partido.groupby('MATCH_ID'):
-            minutos_propios = grupo.loc[grupo['team'] == equipo, 'minute'].values
-            for m in grupo.loc[grupo['team'] != equipo, 'minute'].values:
-                total_encajados += 1
-                if (minutos_propios > m).any():
-                    respuestas += 1
+        for _match_id, grupo in del_partido.groupby('MATCH_ID', sort=False):
+            propio = grupo['team'].values == equipo
+            minutos = grupo['minute'].values
+            ultimo_propio = minutos[propio].max() if propio.any() else None
+            contra = minutos[~propio]
+            total_encajados += len(contra)
+            if ultimo_propio is not None:
+                respuestas += int((contra < ultimo_propio).sum())
         tasa = respuestas / total_encajados if total_encajados else 0.30
         if tasa >= 0.40:
             reaccion = 'Fuerte (responde tras encajar)'
@@ -80,10 +103,7 @@ def _metricas_reaccion(historico: pd.DataFrame) -> dict:
         else:
             rendimiento = 'Estable'
 
-        partidos_30d = int(len(historico[
-            ((historico['home_team'] == equipo) | (historico['away_team'] == equipo)) &
-            (historico['date'] >= fin - pd.Timedelta(days=30))
-        ]))
+        partidos_30d = int(conteo_30d.get(equipo, 0))
 
         resultado[equipo] = {
             'REACCION_TRAS_GOL': reaccion,
@@ -111,12 +131,24 @@ def build_team_stats() -> dict:
         s['PERF10'] = [list(map(float, v)) for v in estado.perf10[t]]
         s.update(reaccion.get(t, {}))
         equipos[t] = s
+    # ---- H2H --------------------------------------------------------------
+    # v66: el bucle por PAREJAS era O(n²) sobre TEAMS — 1.176 parejas con 49
+    # selecciones pero 19.900 con 200 (y 52.975 si algún día se cubren las 326).
+    # Además `estado.h2h` es un defaultdict: consultar una pareja inexistente
+    # CREABA la entrada, inflando memoria con decenas de miles de deques vacíos.
+    #
+    # Se recorre en su lugar el propio índice de cruces reales (las parejas que
+    # SÍ se han enfrentado), que es lineal en el nº de cruces existentes. La
+    # salida es idéntica: el bucle antiguo ya descartaba `balance == 0.0`, y
+    # prediction_api.h2h_balance() resuelve la pareja en cualquier orden.
+    equipos_set = set(TEAMS)
     h2h = {}
-    for i, a in enumerate(TEAMS):
-        for b in TEAMS[i + 1:]:
-            balance = estado.h2h_balance(a, b)  # desde la óptica de `a`
-            if balance != 0.0:
-                h2h[f"{a}|{b}"] = round(balance, 3)
+    for (a, b) in list(estado.h2h.keys()):
+        if a not in equipos_set or b not in equipos_set or not estado.h2h[(a, b)]:
+            continue
+        balance = estado.h2h_balance(a, b)   # desde la óptica de `a`
+        if balance != 0.0:
+            h2h[f"{a}|{b}"] = round(balance, 3)
 
     stats = {
         'generado': datetime.date.today().isoformat(),
@@ -152,13 +184,26 @@ def build_key_players() -> pd.DataFrame:
     inicio = fin - pd.DateOffset(months=24)
     goles = goles[(goles['date'] >= inicio) & (~goles['own_goal'].fillna(False))]
 
+    # v66: índices por equipo calculados UNA vez. Con 200 selecciones, filtrar
+    # el histórico completo dentro del bucle multiplicaba por 4 el coste.
+    por_goleador = {e: b for e, b in goles.groupby('team', sort=False)}
+    # Orden total determinista (date + MATCH_ID): con sort_values('date') a
+    # secas los empates de fecha quedaban a merced del algoritmo de ordenación
+    # y `ultimos5_ids` podía variar entre ejecuciones.
+    hist_v = historico[historico['date'] >= inicio].sort_values(
+        ['date', 'MATCH_ID'], kind='mergesort')
+    partidos_por_equipo = {}
+    for lado in ('home_team', 'away_team'):
+        for equipo, bloque in hist_v.groupby(lado, sort=False):
+            partidos_por_equipo.setdefault(equipo, []).append(bloque)
+
     filas = []
     for equipo in TEAMS:
-        g_eq = goles[goles['team'] == equipo]
-        partidos_eq = historico[
-            ((historico['home_team'] == equipo) | (historico['away_team'] == equipo)) &
-            (historico['date'] >= inicio)
-        ].sort_values('date')
+        g_eq = por_goleador.get(equipo, goles.iloc[0:0])
+        bloques = partidos_por_equipo.get(equipo)
+        partidos_eq = (pd.concat(bloques).sort_values(['date', 'MATCH_ID'],
+                                                      kind='mergesort')
+                       if bloques else hist_v.iloc[0:0])
         n_partidos = max(len(partidos_eq), 1)
         ultimos5_ids = set(partidos_eq.tail(5)['MATCH_ID'])
 

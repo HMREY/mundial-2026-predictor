@@ -2,8 +2,24 @@
 # -*- coding: utf-8 -*-
 """Configuración central del pipeline."""
 
-# Las 49 selecciones clasificadas al Mundial 2026 (incluye Cabo Verde)
-TEAMS = [
+# ---------------------------------------------------------------------------
+# v66: el universo de selecciones pasa de 49 a 200.
+#
+# El histórico real (historico_partidos.csv) cubre 326 selecciones y el modelo
+# YA se entrenaba sobre todas (train_tda_model no filtra por TEAMS): el límite
+# de 49 era SÓLO de configuración — team_stats.json, el selector de la UI y el
+# mapeo de fixtures de ESPN no conocían más códigos. Ampliar TEAMS abre esas
+# tres puertas sin tocar el conjunto de entrenamiento.
+#
+# `config_selecciones.py` lo genera `generar_universo_selecciones.py` con el
+# criterio ">= 100 partidos en el histórico" (= exactamente 200 selecciones).
+# Si ese módulo faltara, se cae a la lista de 49 de siempre (degradación limpia).
+# ---------------------------------------------------------------------------
+
+# Las 49 selecciones clasificadas al Mundial 2026 (incluye Cabo Verde).
+# Se conserva como subconjunto de referencia: es el universo con el que se
+# validó el modelo hasta v65 y con el que se compara la precisión en v66.
+TEAMS_MUNDIAL_2026 = [
     'MEX', 'USA', 'CAN', 'ARG', 'BRA', 'URU', 'COL', 'ECU', 'PER', 'CHI',
     'FRA', 'ENG', 'ESP', 'GER', 'ITA', 'POR', 'NED', 'BEL', 'CRO', 'SRB',
     'MAR', 'SEN', 'CMR', 'GHA', 'NGA', 'TUN', 'ALG', 'EGY',
@@ -11,6 +27,7 @@ TEAMS = [
     'PAR', 'NOR', 'SUI', 'DEN', 'AUT', 'SCO', 'CIV', 'UZB', 'JOR', 'NZL',
     'CPV',
 ]
+TEAMS = list(TEAMS_MUNDIAL_2026)
 
 # Mapeo código FIFA <-> nombre en el dataset de Kaggle (inglés)
 TEAM_NAMES_EN = {
@@ -51,6 +68,48 @@ TEAM_STYLE = {
     'CIV': 'bloque_bajo', 'UZB': 'bloque_bajo', 'JOR': 'bloque_bajo',
     'NZL': 'bloque_bajo', 'CPV': 'bloque_bajo',
 }
+
+# Alias por selección con los que OTRAS fuentes publican al equipo (ESPN usa
+# "Czechia", "Türkiye", "Bosnia-Herzegovina"...). Con 49 selecciones el fuzzy
+# de name_mapper bastaba; con 200 hace falta el mapeo exacto para no confundir
+# Congo/RD Congo, Guinea/Guinea Ecuatorial o Sudán/Sudán del Sur.
+TEAM_ALIAS = {k: [v] for k, v in TEAM_NAMES_EN.items()}
+
+# Nombre en español (lo consume prediction_api.NOMBRES_PAIS).
+TEAM_NAMES_ES = {}
+
+# Nº de partidos en el histórico por selección (insumo de la UI y de la
+# feature de "nivel de datos"). Vacío si no se ha generado el universo.
+TEAM_PARTIDOS = {}
+
+# ELO final de cada selección según el histórico (lo consume el generador
+# sintético para estimar el nivel de las selecciones sin tier manual).
+TEAM_ELO = {}
+
+# --- v66: ampliación a 200 selecciones (ver cabecera) -----------------------
+# Interruptor de emergencia / A-B: con MUNDIAL_UNIVERSO=v65 en el entorno, el
+# proyecto entero vuelve al universo de 49 selecciones sin tocar código. Es lo
+# que hace comparable el A/B de v66 (mismo histórico, sólo cambia el universo).
+import os as _os
+try:
+    if _os.getenv('MUNDIAL_UNIVERSO', '').lower() == 'v65':
+        raise ImportError('universo v65 forzado por MUNDIAL_UNIVERSO')
+    import config_selecciones as _sel
+    TEAMS = list(_sel.TEAMS)
+    TEAM_NAMES_EN = dict(_sel.TEAM_NAMES_EN)
+    TEAM_STYLE = dict(_sel.TEAM_STYLE)
+    TEAM_NAMES_ES = dict(_sel.TEAM_NAMES_ES)
+    TEAM_PARTIDOS = dict(_sel.TEAM_PARTIDOS)
+    TEAM_ELO = dict(getattr(_sel, 'TEAM_ELO', {}))
+    TEAM_ALIAS = dict(_sel.TEAM_ALIAS)
+    UNIVERSO_SELECCIONES = 'v66:>=100 partidos'
+except Exception:                      # degradación limpia a las 49 de siempre
+    UNIVERSO_SELECCIONES = 'v65:mundial-2026'
+
+NAME_EN_TO_FIFA = {v: k for k, v in TEAM_NAMES_EN.items()}
+# Todos los alias apuntando al código (para el mapeo de fixtures y scrapers).
+ALIAS_TO_FIFA = {a: c for c, lista in TEAM_ALIAS.items() for a in lista}
+ALIAS_TO_FIFA.update(NAME_EN_TO_FIFA)   # el nombre canónico siempre gana
 
 STADIUMS = {
     'Azteca': 2240, 'MetLife': 2, 'AT&T': 168, 'SoFi': 71,

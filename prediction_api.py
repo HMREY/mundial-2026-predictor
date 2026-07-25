@@ -5,7 +5,7 @@ Motor de inferencia + API de predicción (v3, arquitectura híbrida).
 
 Consume el estado precalculado por update_team_stats.py (team_stats.json,
 carga instantánea) y los goleadores REALES (jugadores_clave.csv), de modo
-que cualquier par de las 48 selecciones puede enfrentarse en tiempo real:
+que cualquier par de las selecciones cubiertas puede enfrentarse en tiempo real:
 
     GET /predict?home=ARG&away=FRA
     GET /query?q=¿quién gana el México vs Ecuador?
@@ -28,7 +28,8 @@ import ripser
 import altitud
 import arbitros
 import feature_engineering as fe
-from config import TEAMS, TEAM_STYLE, STADIUMS, CALENDARIO_FILE, HISTORICO_FILE
+from config import (TEAMS, TEAM_STYLE, STADIUMS, CALENDARIO_FILE, HISTORICO_FILE,
+                    TEAM_NAMES_ES, TEAMS_MUNDIAL_2026)
 
 DIRECTORIO_MODELOS = 'modelos'
 DRIFT_LOG = 'predicciones_log.json'   # última consulta por cruce (monitor de cambios)
@@ -48,12 +49,17 @@ NOMBRES_PAIS = {
     'UZB': 'Uzbekistán', 'JOR': 'Jordania', 'NZL': 'Nueva Zelanda',
     'CPV': 'Cabo Verde',
 }
+# v66: las 151 selecciones nuevas traen su nombre en español desde
+# config_selecciones.py (generado). Los 49 de arriba mandan siempre: son los
+# nombres revisados a mano y no se pisan.
+for _cod, _es in TEAM_NAMES_ES.items():
+    NOMBRES_PAIS.setdefault(_cod, _es)
 
 # Priors neutrales si una selección aún no tiene historial suficiente
 STATS_NEUTRALES = {
     'ELO': 1500.0, 'GF_MA5': 1.2, 'GA_MA5': 1.2, 'XGF_MA5': 1.25,
     'XGC_MA5': 1.25, 'SOTF_MA5': 4.0, 'SOTC_MA5': 4.0, 'AMAR_MA5': 1.8,
-    'ROJAS_MA5': 0.08, 'FORMA_MA5': 0.5, 'N_PARTIDOS': 0,
+    'ROJAS_MA5': 0.08, 'FORMA_MA5': 0.5, 'N_PARTIDOS': 0, 'N_TOTAL': 0,
     'G2H_MA5': 0.5, 'ENCU15_MA5': 0.3,
     'REACCION_TRAS_GOL': 'Neutra', 'REACCION_RATE': 0.30,
     'RENDIMIENTO_2DA_MITAD': 'Estable', 'PCT_GOLES_2H': 0.5,
@@ -138,12 +144,17 @@ class PredictionEngine:
                 s = estado.stats_equipo(t)
                 s['PERF10'] = [list(map(float, v)) for v in estado.perf10[t]]
                 self.stats_equipos[t] = s
+            # v66: mismo cambio que en update_team_stats — se recorren los
+            # cruces REALES en vez de las n(n-1)/2 parejas posibles (19.900
+            # con 200 selecciones). Salida idéntica, coste lineal.
+            equipos_set = set(TEAMS)
             self.h2h = {}
-            for i, a in enumerate(TEAMS):
-                for b in TEAMS[i + 1:]:
-                    bal = estado.h2h_balance(a, b)
-                    if bal != 0.0:
-                        self.h2h[f"{a}|{b}"] = bal
+            for (a, b) in list(estado.h2h.keys()):
+                if a not in equipos_set or b not in equipos_set:
+                    continue
+                bal = estado.h2h_balance(a, b)
+                if bal != 0.0:
+                    self.h2h[f"{a}|{b}"] = bal
             self.fecha_estado = str(historico['date'].max().date())
             self.generado = self.fecha_estado
 
@@ -166,7 +177,10 @@ class PredictionEngine:
         except Exception:
             self.fuente, self.fuente_detalle = 'synthetic', ''
 
-        self.equipos = sorted(TEAMS)
+        # v66: con 200 selecciones, ordenar por CÓDIGO dejaba la lista de la UI
+        # en un orden que no es el que ve el usuario (ALG=Argelia antes que
+        # AND=Andorra). Se ordena por el nombre mostrado, sin acentos.
+        self.equipos = sorted(TEAMS, key=lambda c: _sin_acentos(NOMBRES_PAIS.get(c, c)))
 
     # ------------------------------------------------------------------ #
     # Estado de equipos y contexto                                         #
@@ -573,7 +587,7 @@ class PredictionEngine:
     # ------------------------------------------------------------------ #
     def predecir(self, home: str, away: str, arbitro: Optional[str] = None,
                  fase: str = 'grupos', estadio: Optional[str] = None) -> Dict:
-        """Predicción completa para CUALQUIER par de las 48 selecciones."""
+        """Predicción completa para CUALQUIER par de selecciones cubiertas."""
         if not self.listo:
             return {'error': f"Motor no inicializado: {self.error}"}
         if home not in self.equipos or away not in self.equipos:
@@ -789,13 +803,24 @@ class PredictionEngine:
         alias.update({'eeuu': 'USA', 'estados unidos': 'USA', 'brasil': 'BRA',
                       'corea': 'KOR', 'inglaterra': 'ENG', 'alemania': 'GER',
                       'espana': 'ESP', 'mejico': 'MEX', 'holanda': 'NED'})
-        encontrados = []
-        for nombre, codigo in alias.items():
-            if nombre in t and codigo not in [c for _, c in encontrados]:
-                encontrados.append((t.index(nombre), codigo))
+        # v66: con 200 selecciones hay nombres CONTENIDOS en otros ("Congo" en
+        # "RD Congo", "Guinea" en "Guinea Ecuatorial", "Corea del Norte" en
+        # "Corea del Sur" tras quitar acentos). Se buscan de MÁS LARGO a MÁS
+        # CORTO y se tacha el trozo ya consumido, para que "RD Congo vs Guinea
+        # Ecuatorial" no devuelva Congo y Guinea.
+        restante = t
+        encontrados, ya = [], set()
+        for nombre in sorted(alias, key=len, reverse=True):
+            codigo = alias[nombre]
+            pos = restante.find(nombre)
+            if pos >= 0 and codigo not in ya:
+                encontrados.append((pos, codigo))
+                ya.add(codigo)
+                restante = restante[:pos] + ('\x00' * len(nombre)) + restante[pos + len(nombre):]
         for codigo in self.equipos:
-            if codigo.lower() in t.split() and codigo not in [c for _, c in encontrados]:
-                encontrados.append((t.index(codigo.lower()), codigo))
+            if codigo.lower() in restante.split() and codigo not in ya:
+                encontrados.append((restante.index(codigo.lower()), codigo))
+                ya.add(codigo)
         return [c for _, c in sorted(encontrados)]
 
     def responder_consulta(self, texto: str,

@@ -39,3 +39,9 @@ transfermarkt_cache/
 rendimiento_real.db
 rendimiento_real.db-wal
 rendimiento_real.db-shm
+
+# v66: artefactos de los A/B del universo de selecciones (se regeneran con
+# `train_tda_model.py --salida ...`) y ficheros de medición temporales.
+modelos_ab_*/
+_v66_*
+universo_selecciones.json

@@ -47,6 +47,70 @@ TEAM_TIER = {
     'CPV': 0.50,
 }
 
+
+_ANCLAS_TIER = None
+
+
+def _anclas_tier():
+    """
+    Recta tier ~ a + b·percentil(ELO) ajustada por mínimos cuadrados sobre las
+    49 selecciones que SÍ tienen tier manual.
+
+    Se trabaja en PERCENTIL y no en ELO bruto por dos razones:
+      * el ELO del histórico va de ~950 (San Marino) a ~2090 (Argentina), pero
+        las 49 anclas se concentran en la mitad alta: una recta sobre el ELO
+        crudo extrapola a valores negativos para casi todo el resto;
+      * la tabla manual no es monótona en ELO (Honduras 0.38 con ELO 1646,
+        Malí sin tier con 1645), así que interpolar punto a punto daba una
+        curva en zigzag. El ajuste global suaviza ese ruido.
+    Devuelve (a, b, elos_ordenados) o None si no hay ELO disponible.
+    """
+    global _ANCLAS_TIER
+    if _ANCLAS_TIER is None:
+        try:
+            from config import TEAM_ELO
+        except Exception:
+            TEAM_ELO = {}
+        elos = sorted(TEAM_ELO.values())
+        anclas = [(TEAM_ELO[t], TEAM_TIER[t]) for t in TEAM_TIER if t in TEAM_ELO]
+        if len(anclas) < 5 or len(elos) < 10:
+            _ANCLAS_TIER = ()
+        else:
+            pct = [np.searchsorted(elos, e, side='right') / len(elos) for e, _ in anclas]
+            b, a = np.polyfit(pct, [t for _, t in anclas], 1)
+            _ANCLAS_TIER = (float(a), float(b), elos)
+    return _ANCLAS_TIER or None
+
+
+def tier_equipo(codigo: str) -> float:
+    """
+    Nivel [0,1] de una selección.
+
+    v66: `TEAM_TIER` está calibrado a mano para las 49 selecciones del Mundial
+    2026. Al ampliar el universo a 200, las 151 restantes caían TODAS en el
+    default 0.5 — el aumento sintético generaba partidos irrealmente parejos
+    entre selecciones de nivel muy distinto (San Marino "igual que" Suecia).
+
+    Para esas, el tier se estima con la recta tier ~ percentil de ELO ajustada
+    sobre esas 49 (ver `_anclas_tier`), acotada a [0.15, 0.97].
+    """
+    if codigo in TEAM_TIER:
+        return TEAM_TIER[codigo]
+    anclas = _anclas_tier()
+    if not anclas:
+        return 0.5
+    a, b, elos = anclas
+    try:
+        from config import TEAM_ELO
+        elo = TEAM_ELO.get(codigo)
+    except Exception:
+        elo = None
+    if elo is None:
+        return 0.5
+    pct = np.searchsorted(elos, elo, side='right') / len(elos)
+    return round(float(np.clip(a + b * pct, 0.15, 0.97)), 3)
+
+
 # Selecciones nativas de altura (rinden mejor por encima de 1500 msnm)
 EQUIPOS_DE_ALTURA = {'MEX', 'ECU', 'COL', 'PER'}
 
@@ -140,11 +204,11 @@ class CorrelatedSyntheticGenerator:
         self.rng = default_rng(seed)
         # ELO inicial anclado al nivel real de cada selección
         self.elo = {
-            t: 1300.0 + 550.0 * TEAM_TIER.get(t, 0.5) + float(self.rng.normal(0, 20))
+            t: 1300.0 + 550.0 * tier_equipo(t) + float(self.rng.normal(0, 20))
             for t in TEAMS
         }
         # Calidad de plantilla (persistente) y agresividad táctica
-        self.squad_quality = {t: TEAM_TIER.get(t, 0.5) + float(self.rng.normal(0, 0.03)) for t in TEAMS}
+        self.squad_quality = {t: tier_equipo(t) + float(self.rng.normal(0, 0.03)) for t in TEAMS}
         self.aggression = {t: float(self.rng.uniform(0.8, 1.35)) for t in TEAMS}
         # Forma reciente: resultados de los últimos 5 partidos (1/0.5/0)
         self.form = {t: [] for t in TEAMS}

@@ -50,7 +50,7 @@ from lightgbm import LGBMClassifier
 import ripser
 
 import feature_engineering as fe
-from config import HISTORICO_FILE
+from config import HISTORICO_FILE, TEAMS_MUNDIAL_2026
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -152,6 +152,32 @@ def construir_ensemble() -> CalibratedClassifierCV:
     return CalibratedClassifierCV(ensemble, method='isotonic', cv=3)
 
 
+def _mascara_mundial2026(meta) -> np.ndarray:
+    """
+    Filas en las que AMBOS equipos pertenecen a las 49 selecciones del Mundial
+    2026 — el universo con el que se validó el modelo hasta v65.
+
+    v66: al ampliar el universo a 200 selecciones, la precisión GLOBAL deja de
+    ser comparable con la de v65 (el conjunto de test cambia de composición).
+    Esta máscara permite la comparación manzana-con-manzana: es la métrica que
+    NO puede degradarse.
+    """
+    ref = set(TEAMS_MUNDIAL_2026)
+    return np.array([m[0] in ref and m[1] in ref for m in meta], dtype=bool)
+
+
+def _metricas_subconjunto(y_va, proba_va, mascara) -> dict:
+    """precisión y log-loss restringidos a un subconjunto de la validación."""
+    if mascara.sum() < 30:
+        return {'n': int(mascara.sum()), 'precision': None, 'log_loss': None}
+    y_s, p_s = y_va[mascara], proba_va[mascara]
+    return {
+        'n': int(mascara.sum()),
+        'precision': round(float(accuracy_score(y_s, p_s.argmax(axis=1))), 4),
+        'log_loss': round(float(log_loss(y_s, p_s, labels=[0, 1, 2])), 4),
+    }
+
+
 def validacion_walk_forward(ds: dict, topo: np.ndarray) -> dict:
     """
     Backtesting walk-forward: entrenamiento expansivo (todo el pasado) y
@@ -159,6 +185,9 @@ def validacion_walk_forward(ds: dict, topo: np.ndarray) -> dict:
     y el ensemble se reajustan en cada ventana (sin fuga temporal).
     """
     X_df, y, fechas = ds['X_df'], ds['y'], ds['fechas']
+    # v66: máscara del subconjunto histórico (49 selecciones) para poder
+    # reportar la métrica comparable ventana a ventana.
+    m49_total = _mascara_mundial2026(ds['meta'])
     ventanas = pd.date_range('2024-01-01', fechas.max(), freq='6MS')
     filas = []
     for inicio in ventanas:
@@ -173,22 +202,38 @@ def validacion_walk_forward(ds: dict, topo: np.ndarray) -> dict:
         proba = modelo.predict_proba(np.hstack([X_va_n, topo[m_va]]))
         acc = accuracy_score(y[m_va], proba.argmax(axis=1))
         ll = log_loss(y[m_va], proba, labels=[0, 1, 2])
+        sub49 = _metricas_subconjunto(y[m_va], proba, m49_total[m_va])
         filas.append({'ventana': f"{inicio.date()} → {fin.date()}",
                       'n': int(m_va.sum()), 'precision': round(float(acc), 4),
-                      'log_loss': round(float(ll), 4)})
-        logger.info(f"  walk-forward {inicio.date()}: n={m_va.sum()} acc={acc:.3f} ll={ll:.3f}")
+                      'log_loss': round(float(ll), 4),
+                      'mundial2026': sub49})
+        logger.info(f"  walk-forward {inicio.date()}: n={m_va.sum()} acc={acc:.3f} "
+                    f"ll={ll:.3f} · 49-sel n={sub49['n']} acc={sub49['precision']}")
+    con49 = [f for f in filas if f['mundial2026']['precision'] is not None]
     resumen = {
         'ventanas': filas,
         'precision_media': round(float(np.mean([f['precision'] for f in filas])), 4),
         'log_loss_medio': round(float(np.mean([f['log_loss'] for f in filas])), 4),
+        'mundial2026': {
+            'precision_media': round(float(np.mean([f['mundial2026']['precision'] for f in con49])), 4) if con49 else None,
+            'log_loss_medio': round(float(np.mean([f['mundial2026']['log_loss'] for f in con49])), 4) if con49 else None,
+            'ventanas_con_datos': len(con49),
+        },
     }
     logger.info(f"Walk-forward: precisión media {resumen['precision_media']:.3f} · "
-                f"log-loss medio {resumen['log_loss_medio']:.3f} sobre {len(filas)} ventanas.")
+                f"log-loss medio {resumen['log_loss_medio']:.3f} sobre {len(filas)} ventanas "
+                f"| 49 selecciones: {resumen['mundial2026']['precision_media']}")
     return resumen
 
 
 def entrenar(corte: str = None, con_aumento: bool = True,
-             walkforward: bool = False) -> dict:
+             walkforward: bool = False,
+             salida: str = DIRECTORIO_MODELOS) -> dict:
+    """
+    `salida` (v66): directorio donde escribir los artefactos. Por defecto
+    'modelos/' (producción); en los A/B se apunta a un directorio aparte para
+    NO pisar el modelo desplegado hasta que la comparación esté decidida.
+    """
     # ------------------------------------------------------------------ 1
     if not os.path.exists(HISTORICO_FILE):
         logger.error(f"No existe {HISTORICO_FILE}. Ejecuta primero pipeline_mundial.py")
@@ -278,6 +323,17 @@ def entrenar(corte: str = None, con_aumento: bool = True,
                 f"(línea base 'siempre el favorito': {precision_base:.3f})")
     logger.info(f"Log-loss validación: {perdida:.4f}")
 
+    # v66 — métrica COMPARABLE con el modelo previo: sólo los partidos en los
+    # que ambos equipos son de las 49 selecciones del Mundial 2026.
+    meta_val = [m for m, ok in zip(ds['meta'], m_val) if ok]
+    m49 = _mascara_mundial2026(meta_val)
+    sub_mundial = _metricas_subconjunto(y_va, proba_va, m49)
+    sub_resto = _metricas_subconjunto(y_va, proba_va, ~m49)
+    logger.info(f"  · 49 selecciones Mundial 2026: n={sub_mundial['n']} "
+                f"acc={sub_mundial['precision']} ll={sub_mundial['log_loss']}")
+    logger.info(f"  · resto del universo:          n={sub_resto['n']} "
+                f"acc={sub_resto['precision']} ll={sub_resto['log_loss']}")
+
     # ------------------------------------------------------------------ 6
     logger.info("Entrenando regresores de goles esperados (Poisson)...")
     reg_local = HistGradientBoostingRegressor(loss='poisson', max_iter=300,
@@ -306,23 +362,29 @@ def entrenar(corte: str = None, con_aumento: bool = True,
     else:
         logger.error(f"❌ Precisión {precision:.1%} < {UMBRAL_DESPLIEGUE:.0%}: NO desplegar.")
 
-    os.makedirs(DIRECTORIO_MODELOS, exist_ok=True)
+    os.makedirs(salida, exist_ok=True)
     # compress=3: mantiene el ensemble bajo el límite de 100 MB de GitHub
-    joblib.dump(modelo, os.path.join(DIRECTORIO_MODELOS, 'modelo_tda.joblib'), compress=3)
-    joblib.dump(escalador, os.path.join(DIRECTORIO_MODELOS, 'escalador.joblib'), compress=3)
-    joblib.dump(reg_local, os.path.join(DIRECTORIO_MODELOS, 'reg_goles_local.joblib'), compress=3)
-    joblib.dump(reg_visit, os.path.join(DIRECTORIO_MODELOS, 'reg_goles_visit.joblib'), compress=3)
+    joblib.dump(modelo, os.path.join(salida, 'modelo_tda.joblib'), compress=3)
+    joblib.dump(escalador, os.path.join(salida, 'escalador.joblib'), compress=3)
+    joblib.dump(reg_local, os.path.join(salida, 'reg_goles_local.joblib'), compress=3)
+    joblib.dump(reg_visit, os.path.join(salida, 'reg_goles_visit.joblib'), compress=3)
 
     # Insumos del notebook de backtesting (curvas de calibración, etc.)
-    np.savez_compressed(os.path.join(DIRECTORIO_MODELOS, 'validacion.npz'),
+    np.savez_compressed(os.path.join(salida, 'validacion.npz'),
                         proba=proba_va, y=y_va,
                         fechas=fechas[m_val].astype('int64').values)
 
     # ------------------------------------------------------------------ 8
     walk = validacion_walk_forward(ds, topo) if walkforward else None
 
+    import config as _cfg
     metadata = {
-        'version': 11,
+        'version': 12,
+        'universo_selecciones': {
+            'criterio': getattr(_cfg, 'UNIVERSO_SELECCIONES', 'v65:mundial-2026'),
+            'n_selecciones': len(_cfg.TEAMS),
+            'n_mundial_2026': len(TEAMS_MUNDIAL_2026),
+        },
         'walk_forward': walk,
         'odds_features': {'activas': odds_activas,
                           'cobertura': round(cobertura, 4),
@@ -337,6 +399,9 @@ def entrenar(corte: str = None, con_aumento: bool = True,
         'precision_validacion': round(float(precision), 4),
         'precision_linea_base': round(float(precision_base), 4),
         'log_loss_validacion': round(float(perdida), 4),
+        # v66: desglose por universo (comparable vs. informativo)
+        'validacion_mundial_2026': sub_mundial,
+        'validacion_resto_universo': sub_resto,
         'mae_goles_local': round(mae_l, 4),
         'mae_goles_visitante': round(mae_v, 4),
         'deploy_ready': deploy_ready,
@@ -345,9 +410,9 @@ def entrenar(corte: str = None, con_aumento: bool = True,
                               'cumplido': objetivo_estricto},
         'features': fe.FEATURES_MODELO + fe.FEATURES_TOPO,
     }
-    with open(os.path.join(DIRECTORIO_MODELOS, 'metadata.json'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(salida, 'metadata.json'), 'w', encoding='utf-8') as f:
         json.dump(metadata, f, indent=2, ensure_ascii=False)
-    logger.info(f"Artefactos guardados en ./{DIRECTORIO_MODELOS}/")
+    logger.info(f"Artefactos guardados en ./{salida}/")
     return metadata
 
 
@@ -359,5 +424,9 @@ if __name__ == '__main__':
                         help='Desactiva el aumento de datos sintéticos.')
     parser.add_argument('--walkforward', action='store_true',
                         help='Añade backtesting walk-forward (ventanas de 6 meses, 2024-2026).')
+    parser.add_argument('--salida', type=str, default=DIRECTORIO_MODELOS,
+                        help='Directorio de artefactos (por defecto "modelos"). '
+                             'Úsalo en los A/B para no pisar producción.')
     args = parser.parse_args()
-    entrenar(args.corte, con_aumento=not args.sin_aumento, walkforward=args.walkforward)
+    entrenar(args.corte, con_aumento=not args.sin_aumento,
+             walkforward=args.walkforward, salida=args.salida)

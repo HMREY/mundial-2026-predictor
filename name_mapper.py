@@ -84,9 +84,19 @@ def mapear(nombre: str, catalogo: Iterable[str], umbral: float = UMBRAL,
     for c, n in normalizados.items():            # coincidencia exacta tras normalizar
         if n == objetivo:
             return c
-    for c, n in normalizados.items():            # contención (subcadena)
-        if len(objetivo) >= 5 and (objetivo in n or n in objetivo):
-            return c
+    # Contención (subcadena). v66: antes devolvía el PRIMER candidato que
+    # contuviera al objetivo, lo que con catálogos grandes es una lotería —
+    # "Congo" entra en "DR Congo", "Guinea" en "Equatorial Guinea" y
+    # "Guinea-Bissau", "Sudan" en "South Sudan", "Ireland" en "Northern
+    # Ireland". Ahora se recogen TODOS los candidatos por contención y se
+    # devuelve el más parecido (mayor ratio y, a igualdad, el de longitud más
+    # próxima), que es siempre el correcto en esos pares.
+    contenidos = [c for c, n in normalizados.items()
+                  if len(objetivo) >= 5 and (objetivo in n or n in objetivo)]
+    if contenidos:
+        return max(contenidos,
+                   key=lambda c: (SequenceMatcher(None, objetivo, normalizados[c]).ratio(),
+                                  -abs(len(normalizados[c]) - len(objetivo))))
     mejor, ratio = None, 0.0
     for c, n in normalizados.items():
         s = SequenceMatcher(None, objetivo, n).ratio()

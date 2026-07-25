@@ -62,7 +62,8 @@ def download_kaggle_results(live: bool = False) -> pd.DataFrame:
     df = df.dropna(subset=['date', 'home_goals', 'away_goals'])
     df = df[df['date'] >= FECHA_INICIO_HISTORICO].copy()
 
-    # Mapear las 48 selecciones a código FIFA; los demás países conservan su
+    # Mapear las selecciones de TEAMS a código FIFA (v66: 200); los demás
+    # países conservan su
     # nombre (siguen aportando señal a ELO y medias móviles de los nuestros).
     df['home_team'] = df['home_team'].map(lambda x: NAME_EN_TO_FIFA.get(x, x))
     df['away_team'] = df['away_team'].map(lambda x: NAME_EN_TO_FIFA.get(x, x))
@@ -220,7 +221,7 @@ def fetch_last_matches_api_football(team_fifa: str, n: int = 5) -> pd.DataFrame:
 
 
 def fetch_recent_all_teams(n: int = 5) -> pd.DataFrame:
-    """Actualización reciente de las 48 selecciones (si hay RAPIDAPI_KEY)."""
+    """Actualización reciente de las selecciones de TEAMS (si hay RAPIDAPI_KEY)."""
     if not _api_headers():
         logger.info("RAPIDAPI_KEY no configurada: se omite la capa API-Football "
                     "(el histórico de Kaggle ya llega hasta ayer).")

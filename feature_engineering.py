@@ -63,6 +63,25 @@ FEATURES_MODELO = [
     'CLIMA_TEMP_NORM', 'H2H_BALANCE',
 ]
 
+# --- v66: "nivel de datos" (opcional, apagado por defecto) ------------------
+# Al abrir el universo a 200 selecciones conviven Brasil (535 partidos en el
+# histórico) con Bután (101). La alternativa §7.1 del spec propone decirle al
+# modelo DE QUIÉN tiene poca información:
+#   NIVEL_DATOS_MIN — partidos previos del equipo con MENOS historial (log-norm)
+#   NIVEL_DATOS_DIF — asimetría de historial entre ambos
+# Son features sin fuga: cuentan sólo partidos ANTERIORES al que se predice.
+# Se activan con MUNDIAL_NIVEL_DATOS=1 y sólo se adoptan si baten al modelo sin
+# ellas (regla de oro). El estado se mantiene SIEMPRE, así que activarlas no
+# obliga a rehacer nada: sólo cambia el vector de entrada.
+import os as _os
+
+USAR_NIVEL_DATOS = _os.getenv('MUNDIAL_NIVEL_DATOS', '') == '1'
+FEATURES_NIVEL_DATOS = ['NIVEL_DATOS_MIN', 'NIVEL_DATOS_DIF']
+if USAR_NIVEL_DATOS:
+    FEATURES_MODELO = FEATURES_MODELO + FEATURES_NIVEL_DATOS
+# Escala de normalización: log(1+n)/log(1+600) ~ [0,1] para 0-600 partidos.
+_LOG_MAX_PARTIDOS = float(np.log1p(600.0))
+
 # Features topológicas que se anexan tras la normalización:
 # entropías del par (nube combinada) + entropías por equipo (últimos 10 partidos)
 FEATURES_TOPO = ['ENT_PAR_H0', 'ENT_PAR_H1',
@@ -111,6 +130,9 @@ class EstadoRodante:
         self.h2h: Dict[Tuple[str, str], deque] = defaultdict(lambda: deque(maxlen=6))
         # Vectores de rendimiento de los últimos 10 partidos (nube topológica)
         self.perf10: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10))
+        # v66: partidos ACUMULADOS por selección (las ventanas están topadas a
+        # 5/10, así que no servían para medir cuánta historia hay de un equipo).
+        self.n_total: Dict[str, int] = defaultdict(int)
 
     # ---------------- lectura del estado previo ---------------- #
     def stats_equipo(self, equipo: str) -> Dict[str, float]:
@@ -130,6 +152,8 @@ class EstadoRodante:
             'G2H_MA5': media_ponderada(list(v['g2h'])) if len(v['g2h']) else 0.5,
             'ENCU15_MA5': media_ponderada(list(v['encu15'])) if len(v['encu15']) else 0.3,
             'N_PARTIDOS': len(v['gf']),
+            # v66: historial ACUMULADO (no topado por la ventana de 5)
+            'N_TOTAL': self.n_total[equipo],
         }
 
     def h2h_balance(self, local: str, visitante: str) -> float:
@@ -167,6 +191,7 @@ class EstadoRodante:
             v['amar'].append(float(amar)); v['rojas'].append(float(rojas))
             pts = 1.0 if gf > gc else (0.5 if gf == gc else 0.0)
             v['pts'].append(pts)
+            self.n_total[equipo] += 1
             self.perf10[equipo].append([float(gf), float(gc), float(xgf),
                                         float(xgc), float(sotf), float(sotc)])
 
@@ -207,9 +232,20 @@ def contexto_partido(local: str, visitante: str, stadium: Optional[str],
     }
 
 
+def nivel_datos(stats_local: Dict, stats_visit: Dict) -> List[float]:
+    """
+    Cuánta historia tiene el modelo de cada equipo ANTES de este partido
+    (v66 §7.1). Devuelve [mínimo normalizado, asimetría].
+    """
+    n_l = float(stats_local.get('N_TOTAL', 0) or 0)
+    n_v = float(stats_visit.get('N_TOTAL', 0) or 0)
+    l_l, l_v = np.log1p(n_l) / _LOG_MAX_PARTIDOS, np.log1p(n_v) / _LOG_MAX_PARTIDOS
+    return [float(min(l_l, l_v)), float(l_l - l_v)]
+
+
 def vector_features(stats_local: Dict, stats_visit: Dict, contexto: Dict) -> List[float]:
     """Vector de entrada del clasificador (orden = FEATURES_MODELO)."""
-    return [
+    base = [
         (stats_local['ELO'] - stats_visit['ELO']) / 400.0,
         stats_local['GF_MA5'] - stats_visit['GF_MA5'],
         stats_local['GA_MA5'] - stats_visit['GA_MA5'],
@@ -226,6 +262,9 @@ def vector_features(stats_local: Dict, stats_visit: Dict, contexto: Dict) -> Lis
         contexto['CLIMA_TEMP_NORM'],
         contexto['H2H_BALANCE'],
     ]
+    if USAR_NIVEL_DATOS:
+        base = base + nivel_datos(stats_local, stats_visit)
+    return base
 
 
 def nube_de_puntos(stats_local: Dict, stats_visit: Dict, contexto: Dict) -> np.ndarray:

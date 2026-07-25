@@ -2240,7 +2240,7 @@ with col_boton:
     if st.button("🔄 Actualizar datos ahora", width='stretch',
                  help="Ejecuta el pipeline completo (Kaggle + árbitros + estado de equipos). Tarda ~1 minuto."):
         import subprocess, sys as _sys
-        with st.spinner("⏬ Descargando resultados y recalculando el estado de las 49 selecciones..."):
+        with st.spinner("⏬ Descargando resultados y recalculando el estado de todas las selecciones..."):
             proceso = subprocess.run(
                 [_sys.executable, "pipeline_mundial.py"],
                 capture_output=True, text=True, cwd=".", timeout=1800)
@@ -2305,7 +2305,8 @@ if MOTOR.metadata.get('deploy_ready') and not objetivo.get('cumplido', False):
 st.title("🏆 ¿Quién gana? — Predictor deportivo")
 st.caption(
     f"Motor topológico-predictivo · Ensemble XGBoost+RF+LightGBM calibrado · "
-    f"Enfrenta a **cualquiera de las 49 selecciones clasificadas** (incluye Cabo Verde) · "
+    f"Enfrenta a **cualquiera de las {len(MOTOR.equipos)} selecciones nacionales** "
+    f"cubiertas por el histórico · "
     f"Precisión backtesting: **{MOTOR.metadata.get('precision_validacion', 0)*100:.1f} %**"
 )
 
@@ -2327,16 +2328,25 @@ with col_sel1:
     # ESPN publica los nombres en INGLÉS ("Netherlands", "Germany"), así que el
     # catálogo se construye con TEAM_NAMES_EN (mapear contra los nombres en
     # español dejaba fuera casi todo).
-    from config import TEAM_NAMES_EN as _EN
+    # v66: con 200 selecciones el catálogo incluye además los ALIAS de cada una
+    # ("Czechia", "Türkiye", "Bosnia-Herzegovina"...). El alias da coincidencia
+    # EXACTA y evita que el fuzzy confunda pares peligrosos que antes no
+    # coexistían: Congo / RD Congo, Guinea / Guinea Ecuatorial / Guinea-Bisáu,
+    # Irlanda / Irlanda del Norte, Corea del Sur / Corea del Norte.
+    from config import TEAM_NAMES_EN as _EN, TEAM_ALIAS as _ALIAS
     _cat_int = {}
     for _c in MOTOR.equipos:
         _cat_int[_EN.get(_c, _c)] = _c
+        for _al in _ALIAS.get(_c, []):
+            _cat_int.setdefault(_al, _c)
         _cat_int.setdefault(NOMBRES_PAIS.get(_c, _c), _c)
     _n_int = 0
+    _sin_enlazar = []
     for f in _sel_fx:
         _h = _nm_int.mapear(f['home'], _cat_int.keys(), contexto='selecciones')
         _a = _nm_int.mapear(f['away'], _cat_int.keys(), contexto='selecciones')
         if not (_h and _a) or _h == _a:
+            _sin_enlazar.append(f"{f['home']} vs {f['away']}")
             continue
         etiqueta = (f"{f['fecha']} · {f['home']} vs {f['away']} — {f['torneo']}")
         opciones_fixture.append(etiqueta)
@@ -2352,8 +2362,16 @@ with col_sel1:
     partido_fixture = st.selectbox(
         f"📅 Próximos partidos de selecciones ({_n_int})" if _n_int
         else "📅 Partido del fixture oficial (opcional)", opciones_fixture,
-        help="Amistosos, Nations League y clasificatorias que vienen, desde "
-             "ESPN (se actualizan solos)." if _n_int else None)
+        help=(f"Amistosos, Nations League y clasificatorias que vienen, desde "
+              f"ESPN (se actualizan solos). {_n_int} de {len(_sel_fx)} "
+              f"programados enlazan con el modelo.") if _n_int else None)
+    if _sin_enlazar:
+        with st.expander(f"ℹ️ {len(_sin_enlazar)} partidos programados que el "
+                         f"modelo aún no cubre"):
+            st.caption("Selecciones con menos de 100 partidos en el histórico "
+                       "desde 1990: no hay muestra suficiente para predecirlas "
+                       "con la misma exigencia que al resto.")
+            st.write(" · ".join(_sin_enlazar))
 
 equipos_disponibles = MOTOR.equipos
 if partido_fixture != "(elegir equipos manualmente)":
@@ -2616,8 +2634,10 @@ with tab_rapida:
     st.divider()
     render_parlay_partido(MOTOR, home, away, key='mundial')
     render_h2h_mundial(home, away)
-    from config import TEAMS as _TEAMS
-    render_comparador(MOTOR, sorted(_TEAMS), key='mundial')     # v25 (§2.4)
+    # v66: el comparador usa el MISMO orden que el selector principal (por
+    # nombre mostrado). Antes recibía sorted(TEAMS) — con 200 selecciones eso
+    # ordenaba por código y arrancaba en Afganistán/Albania.
+    render_comparador(MOTOR, MOTOR.equipos, key='mundial')      # v25 (§2.4)
     render_rendimiento(key='mundial')
 
     # ---- 🎯 Asistente de Parlay del FIXTURE (v12; v14/M11: niveles de riesgo) --

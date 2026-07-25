@@ -1,5 +1,31 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v66 — El modelo internacional pasa de 49 a 200 selecciones (ver [VALIDACION_v66.md](VALIDACION_v66.md))
+
+- **🌍 De 49 a 200 selecciones** seleccionables. Criterio reproducible (≥100
+  partidos en el histórico desde 1990) generado por
+  `generar_universo_selecciones.py` → `config_selecciones.py`.
+- **📅 Fixtures internacionales: de 30 a 163 de 163** partidos programados de
+  ESPN enlazan con el modelo. **Cero nombres sin mapear.**
+- **🔍 Hallazgo**: `TEAMS` nunca filtró los datos de entrenamiento — el modelo
+  llevaba versiones entrenándose con las 326 selecciones del histórico (sólo el
+  17 % de las filas tiene a los dos equipos entre las 49). El límite era de
+  **superficie**: `team_stats.json`, el selector y el mapeo de fixtures.
+- **📊 Hallazgo 2**: el «60 % de precisión» está dominado por partidos
+  desnivelados. Entre las 49 del Mundial el modelo acierta **~50 %**. Ahora
+  `metadata.json` publica los tres números por separado para que las
+  comparaciones entre versiones sean válidas.
+- **✅ Sin degradación**: precisión 0.5986→**0.6008**, log-loss
+  0.8756→**0.8697**, y sobre las 49 originales 0.5000→**0.5023** /
+  0.9863→**0.9824**. Walk-forward 0.5960/0.8716→**0.5967/0.8683**.
+- **🔁 Interruptor de rollback**: `MUNDIAL_UNIVERSO=v65` devuelve todo el
+  proyecto a las 49 selecciones sin tocar código.
+- **⚡ Escala**: `team_stats.json` 85→385 KB (irrelevante para Streamlit);
+  el H2H O(n²) (19.900 parejas) pasa a recorrido lineal sobre cruces reales.
+- **❌ Feature «nivel de datos» NO adoptada**: mejora el log-loss en los tres
+  protocolos pero la precisión va en direcciones distintas — ruido de
+  comparaciones múltiples. Queda tras `MUNDIAL_NIVEL_DATOS=1`.
+
 ## Novedades v34 — Cobertura universal (ver [VALIDACION_v34.md](VALIDACION_v34.md))
 
 - **📈 Cobertura ×4.4: de 11 a 48 partidos evaluados** al día, en 10 ligas y
