@@ -608,6 +608,55 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
             except Exception as e:
                 st.error(f"No se pudo enviar ({type(e).__name__}: {e}).")
 
+    # v63: PEGAR LAS CUOTAS DE TU CASA → EV real por mercado. Alternativa
+    # legal y estable al scraping de la casa (auditado: Cloudflare + acordeones
+    # colapsados + clases con hash que cambian en cada despliegue).
+    with st.expander("💰 Pegar cuotas de mi casa → calcular EV real"):
+        st.caption("Copia de tu casa de apuestas los mercados con sus cuotas "
+                   "(texto o el HTML del inspector) y pégalo aquí. Se cruzan "
+                   "con el modelo y se calcula el **EV real** de cada uno. "
+                   "Funciona con cualquier casa.")
+        _casa = st.text_input("Casa de apuestas", value="", key=f"cm_casa_{key}",
+                              placeholder="Playdoit, Caliente, Bet365...")
+        _pegado = st.text_area(
+            "Cuotas pegadas", height=160, key=f"cm_txt_{key}",
+            placeholder="Gana Atlante 2.55\nEmpate 3.10\n"
+                        "Menos de 2.5 goles 1.95\nAmbos marcan: Sí 1.72")
+        if st.button("💰 Calcular EV con estas cuotas", key=f"cm_btn_{key}"):
+            if not _pegado.strip():
+                st.warning("Pega primero las cuotas.")
+            else:
+                try:
+                    import cuotas_manual as _cm
+                    _pl_cm = (motor.plantilla_club(home, away)
+                              if hasattr(motor, 'plantilla_club')
+                              else motor.plantilla(home, away))
+                    _filas = _cm.parsear(_pegado)
+                    _res = _cm.cruzar_con_plantilla(_filas, _pl_cm)
+                    if not _res:
+                        st.warning(f"Detecté {len(_filas)} cuotas pero ninguna "
+                                   "coincide con los mercados del modelo. "
+                                   "Revisa que el texto incluya el nombre del "
+                                   "mercado junto a la cuota.")
+                    else:
+                        _cm.guardar(f'{home} vs {away}', _casa or 'casa', _res)
+                        _pos = [r for r in _res if r['ev'] > 0]
+                        st.success(f"{len(_res)} mercados cruzados · "
+                                   f"**{len(_pos)} con EV positivo**.")
+                        import pandas as _pd
+                        st.dataframe(_pd.DataFrame([{
+                            'Mercado': r['apuesta'],
+                            'Cuota casa': r['cuota_casa'],
+                            'Cuota justa': r['cuota_justa'],
+                            'Prob. modelo': f"{r['prob']*100:.0f}%",
+                            'EV': f"{r['ev']*100:+.1f}%",
+                        } for r in _res]), hide_index=True, width='stretch')
+                        st.caption("EV = cuota de tu casa × probabilidad del "
+                                   "modelo − 1. Positivo = la casa paga de más "
+                                   "según el modelo. " + AVISO_JUEGO_RESPONSABLE)
+                except Exception as e:
+                    st.error(f"No se pudo procesar ({type(e).__name__}: {e}).")
+
     # v58: copiar TODAS las estadísticas del partido (universal)
     with st.expander("📋 Copiar todas las estadísticas de este partido"):
         try:
