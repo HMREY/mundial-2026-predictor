@@ -608,10 +608,55 @@ def render_parlay_partido(motor, home: str, away: str, key: str):
             except Exception as e:
                 st.error(f"No se pudo enviar ({type(e).__name__}: {e}).")
 
-    # v63: PEGAR LAS CUOTAS DE TU CASA → EV real por mercado. Alternativa
-    # legal y estable al scraping de la casa (auditado: Cloudflare + acordeones
-    # colapsados + clases con hash que cambian en cada despliegue).
-    with st.expander("💰 Pegar cuotas de mi casa → calcular EV real"):
+    # v64: CUOTAS REALES AUTOMÁTICAS (ESPN core: 1X2, O/U, HÁNDICAP y props de
+    # jugador con cuota decimal). Sin pegar nada, sin clave y sin scraping.
+    if key in NOMBRES_LIGAS or key in getattr(motor, 'clave', ''):
+        with st.expander("💰 Cuotas reales AUTOMÁTICAS + EV", expanded=False):
+            st.caption("Cuotas de casa descargadas automáticamente (1X2, "
+                       "over/under, **hándicap** y props de jugador) y cruzadas "
+                       "con el modelo para darte el EV real de cada mercado.")
+            _clave_liga_auto = getattr(motor, 'clave', None) or key
+            if st.button("💰 Traer cuotas reales ahora", key=f"ca_btn_{key}",
+                         type="primary"):
+                try:
+                    import cuotas_auto as _ca
+                    with st.spinner("Descargando cuotas reales…"):
+                        _eid = _ca.buscar_event_id(_clave_liga_auto, home, away)
+                        if not _eid:
+                            st.info("Este partido no aparece entre los próximos "
+                                    "fixtures con cuotas (puede estar fuera de "
+                                    "la ventana de 3 días).")
+                        else:
+                            _plc = (motor.plantilla_club(home, away)
+                                    if hasattr(motor, 'plantilla_club')
+                                    else motor.plantilla(home, away))
+                            _res = _ca.evaluar(_clave_liga_auto, home, away,
+                                               _eid, _plc)
+                            if not _res:
+                                st.info("La casa aún no publica cuotas para "
+                                        "este partido.")
+                            else:
+                                _pos = [r for r in _res if r['ev'] > 0]
+                                st.success(f"**{len(_res)} mercados** con cuota "
+                                           f"real de *{_res[0]['casa']}* · "
+                                           f"**{len(_pos)} con EV positivo**.")
+                                import pandas as _pd
+                                st.dataframe(_pd.DataFrame([{
+                                    'Mercado': r['apuesta'],
+                                    'Cuota casa': r['cuota_casa'],
+                                    'Cuota justa': r['cuota_justa'],
+                                    'Prob. modelo': f"{r['prob']*100:.0f}%",
+                                    'EV': f"{r['ev']*100:+.1f}%",
+                                } for r in _res]), hide_index=True,
+                                    width='stretch')
+                                st.caption("EV = cuota real × probabilidad del "
+                                           "modelo − 1. " + AVISO_JUEGO_RESPONSABLE)
+                except Exception as e:
+                    st.error(f"No se pudo obtener ({type(e).__name__}: {e}).")
+
+    # v63: PEGAR LAS CUOTAS DE TU CASA → EV real por mercado (RESPALDO manual
+    # para casas que no cubre la vía automática).
+    with st.expander("✍️ Pegar cuotas de otra casa (opcional)"):
         st.caption("Copia de tu casa de apuestas los mercados con sus cuotas "
                    "(texto o el HTML del inspector) y pégalo aquí. Se cruzan "
                    "con el modelo y se calcula el **EV real** de cada uno. "

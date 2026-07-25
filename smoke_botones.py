@@ -19,7 +19,7 @@ from streamlit.testing.v1 import AppTest
 # vista -> subcadenas de los botones a pulsar (los costosos/críticos)
 VISTAS = {
     '⚾ MLB (béisbol)': ['Proponer parlays', 'Enviar estos parlays'],
-    '🇲🇽 Liga MX': ['Proponer parlays', 'Enviar estos parlays', 'Calcular EV con estas cuotas'],
+    '🇲🇽 Liga MX': ['Proponer parlays', 'Enviar estos parlays', 'Traer cuotas reales ahora'],
     '🎾 Tenis (ATP/WTA)': [],
     '💎 Apuestas del Día': ['Generar combinadas'],
     '🌍 Partidos Internacionales': ['Proponer parlays'],

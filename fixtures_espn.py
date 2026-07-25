@@ -19,7 +19,7 @@ endpoint), se devuelve [] y el barrido sigue con las demás fuentes.
 
 import logging
 import time
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import pandas as pd
 import requests
@@ -162,6 +162,7 @@ def fixtures_liga(clave: str, dias: int = 3) -> List[Dict]:
                 'fecha': fecha.strftime('%Y-%m-%d'),
                 'home': loc['team']['displayName'],
                 'away': vis['team']['displayName'],
+                'event_id': ev.get('id'),      # v64: para las cuotas por evento
             }
             fx.update(_odds_de_evento(comp))   # v52: cuotas ESPN si las hay
             fixtures.append(fx)
@@ -318,3 +319,116 @@ if __name__ == '__main__':
         print(f"\n{c}: {len(fs)} partidos")
         for f in fs[:6]:
             print(f"  {f['fecha']}  {f['home']} vs {f['away']}")
+
+
+# ---------------------------------------------------------------------------
+# v64 — CUOTAS AUTOMÁTICAS POR EVENTO (hándicap + props de jugador).
+#
+# El scoreboard ya daba 1X2 y O/U (v52). El endpoint `core` POR EVENTO añade,
+# también gratis y sin clave:
+#   · spread + spreadOdds  → el HÁNDICAP con su cuota real
+#   · propBets             → ~229 mercados por partido, incluido «First
+#                            Goalscorer» / «Anytime Goalscorer», con cuota
+#                            DECIMAL real y el atleta al que pertenecen.
+# Verificado 2026-07-24 en Liga MX (proveedor DraftKings).
+# ---------------------------------------------------------------------------
+ESPN_CORE_ODDS = ('https://sports.core.api.espn.com/v2/sports/soccer/leagues/'
+                  '{liga}/events/{eid}/competitions/{eid}/odds')
+TTL_ODDS = 900          # 15 min: las cuotas se mueven
+
+
+def _num(x):
+    try:
+        v = float(x)
+        return v if v == v else None       # descarta NaN
+    except (TypeError, ValueError):
+        return None
+
+
+def _am2dec_seguro(ml):
+    v = _am2dec(ml)
+    return v if v and v > 1.0 else None
+
+
+def odds_evento(clave: str, event_id: str) -> Dict:
+    """Cuotas del EVENTO: 1X2, over/under y HÁNDICAP con su cuota. {} si no hay."""
+    code = ESPN_CODIGOS.get(clave)
+    if not code or not event_id:
+        return {}
+    ck = f'oddsev:{clave}:{event_id}'
+    ahora = time.time()
+    if ck in _CACHE and ahora - _CACHE[ck][0] < TTL_ODDS:
+        return _CACHE[ck][1]
+    try:
+        r = requests.get(ESPN_CORE_ODDS.format(liga=code, eid=event_id),
+                         timeout=TIMEOUT, headers={'User-Agent': 'Mozilla/5.0'})
+        r.raise_for_status()
+        items = r.json().get('items') or []
+    except Exception as e:
+        logger.warning(f"[odds/{clave}/{event_id}] {type(e).__name__}: {e}")
+        _CACHE[ck] = (ahora, {})
+        return {}
+    if not items:
+        _CACHE[ck] = (ahora, {})
+        return {}
+    it = items[0]
+    ho, ao = it.get('homeTeamOdds') or {}, it.get('awayTeamOdds') or {}
+    salida = {
+        'casa': (it.get('provider') or {}).get('name') or 'ESPN',
+        'odd_home': _am2dec_seguro(ho.get('moneyLine')),
+        'odd_away': _am2dec_seguro(ao.get('moneyLine')),
+        'odd_draw': _am2dec_seguro((it.get('drawOdds') or {}).get('moneyLine')),
+        'ou_linea': _num(it.get('overUnder')),
+        'odd_over': _am2dec_seguro(it.get('overOdds')),
+        'odd_under': _am2dec_seguro(it.get('underOdds')),
+        # HÁNDICAP: la línea es del LOCAL (negativa = favorito)
+        'ah_linea': _num(it.get('spread')),
+        'odd_ah_home': _am2dec_seguro(ho.get('spreadOdds')),
+        'odd_ah_away': _am2dec_seguro(ao.get('spreadOdds')),
+        'event_id': event_id,
+    }
+    _CACHE[ck] = (ahora, salida)
+    return salida
+
+
+def props_evento(clave: str, event_id: str, max_paginas: int = 4,
+                 nombres: Optional[Dict[str, str]] = None) -> List[Dict]:
+    """Props del evento con CUOTA DECIMAL real. `nombres` mapea id de atleta →
+    nombre (se obtiene del roster cacheado de goleadores.py) para no gastar una
+    petición por jugador. Devuelve [{'tipo','atleta','cuota'}]."""
+    code = ESPN_CODIGOS.get(clave)
+    if not code or not event_id:
+        return []
+    ck = f'props:{clave}:{event_id}'
+    ahora = time.time()
+    if ck in _CACHE and ahora - _CACHE[ck][0] < TTL_ODDS:
+        return _CACHE[ck][1]
+    base = (ESPN_CORE_ODDS.format(liga=code, eid=event_id)
+            + '/100/propBets?limit=25')
+    salida: List[Dict] = []
+    try:
+        for pagina in range(1, max_paginas + 1):
+            r = requests.get(f'{base}&page={pagina}', timeout=TIMEOUT,
+                             headers={'User-Agent': 'Mozilla/5.0'})
+            r.raise_for_status()
+            j = r.json()
+            for it in (j.get('items') or []):
+                cuota = ((it.get('current') or {}).get('over') or {}).get('decimal')
+                cuota = _num(cuota)
+                if not cuota or cuota <= 1.0:
+                    continue
+                ref = (it.get('athlete') or {}).get('$ref') or ''
+                aid = ref.rstrip('/').split('/')[-1].split('?')[0] if ref else ''
+                salida.append({
+                    'tipo': (it.get('type') or {}).get('name') or 'Prop',
+                    'atleta_id': aid,
+                    'atleta': (nombres or {}).get(aid, ''),
+                    'cuota': round(cuota, 2),
+                })
+            if pagina >= (j.get('pageCount') or 1):
+                break
+    except Exception as e:
+        logger.warning(f"[props/{clave}/{event_id}] {type(e).__name__}: {e}")
+    logger.info(f"[props/{clave}] {len(salida)} props con cuota real.")
+    _CACHE[ck] = (ahora, salida)
+    return salida
