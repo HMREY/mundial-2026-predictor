@@ -144,17 +144,39 @@ def _mercados_del_partido(pred: Dict, o: Dict, home: str, away: str) -> List[Dic
     _add('Goles', 'Menos de 2.5', 1 - over25, o.get('odd_under25'))
     _add('BTTS', 'Ambos marcan: Sí', btts, o.get('odd_btts_yes'))
     _add('BTTS', 'Ambos marcan: No', 1 - btts, o.get('odd_btts_no'))
+    # v65: O/U en la LÍNEA REAL de la casa (ESPN publica 2.5, 3.5...), no solo 2.5
+    ou_linea = o.get('ou_linea')
+    try:
+        ou_linea = float(ou_linea)
+    except (TypeError, ValueError):
+        ou_linea = None
+    if ou_linea is not None and not np.isfinite(ou_linea):
+        ou_linea = None
+    if ou_linea is not None and abs(ou_linea - 2.5) > 1e-6:
+        p_over = float(M[total > ou_linea].sum())
+        _add('Goles', f'Más de {ou_linea}', p_over, o.get('odd_over'))
+        _add('Goles', f'Menos de {ou_linea}', 1 - p_over, o.get('odd_under'))
+    elif ou_linea is not None:
+        _add('Goles', 'Más de 2.5', over25, o.get('odd_over'))
+        _add('Goles', 'Menos de 2.5', 1 - over25, o.get('odd_under'))
+
+    # v65: HÁNDICAP con línea ARBITRARIA. Antes solo se evaluaba ±0.5 y las
+    # casas publican −1.5, −2.5... La probabilidad sale de la misma matriz de
+    # marcadores: el local cubre −L si su margen supera L (líneas .5 → sin push).
     linea = o.get('ah_linea')
     try:
         linea = float(linea)
     except (TypeError, ValueError):
         linea = None
-    if linea == -0.5:
-        _add('Hándicap', f'{home} −0.5', float(M[diff > 0].sum()), o.get('odd_ah_home'))
-        _add('Hándicap', f'{away} +0.5', float(M[diff <= 0].sum()), o.get('odd_ah_away'))
-    elif linea == 0.5:
-        _add('Hándicap', f'{home} +0.5', float(M[diff >= 0].sum()), o.get('odd_ah_home'))
-        _add('Hándicap', f'{away} −0.5', float(M[diff < 0].sum()), o.get('odd_ah_away'))
+    if linea is not None and not np.isfinite(linea):
+        linea = None                       # NaN de capturas antiguas
+    if linea is not None and abs(linea * 2 - round(linea * 2)) < 1e-6:
+        # margen del local necesario para cubrir: diff > -linea
+        p_home_cubre = float(M[diff > -linea].sum())
+        etq_h = f'{home} {"−" if linea < 0 else "+"}{abs(linea)}'
+        etq_a = f'{away} {"+" if linea < 0 else "−"}{abs(linea)}'
+        _add('Hándicap', etq_h, p_home_cubre, o.get('odd_ah_home'))
+        _add('Hándicap', etq_a, 1 - p_home_cubre, o.get('odd_ah_away'))
     return candidatos
 
 
@@ -411,6 +433,15 @@ def _barrido_fixtures(motores: Dict, evaluados_pares: set,
         fixtures = fixtures_por_liga.get(clave) or []
         if not fixtures:
             continue
+        # v65: cuotas RICAS por evento (hándicap con su línea y O/U real) en
+        # paralelo. El scoreboard solo trae 1X2 + O/U 2.5; este endpoint añade
+        # el hándicap, que es donde suele estar el valor.
+        try:
+            odds_ricas = fixtures_espn.odds_multi(
+                clave, [f.get('event_id') for f in fixtures])
+        except Exception as e:
+            logger.warning(f"[alpha/fix] odds_multi {clave}: {e}")
+            odds_ricas = {}
         eng = motores.get(clave)
         if eng is None:
             try:
@@ -457,12 +488,24 @@ def _barrido_fixtures(motores: Dict, evaluados_pares: set,
             # se evalúan con la MISMA lógica de élite que las cuotas capturadas
             # (line shopping ESPN) → Capa 1 con EV. Si no, van a Capa 2 (modelo).
             o_espn = {}
-            if fx.get('odd_home') and fx.get('odd_away') and fx.get('odd_draw'):
-                casa = fx.get('casa', 'ESPN')
-                o_espn = {'odd_home': fx['odd_home'], 'odd_draw': fx['odd_draw'],
-                          'odd_away': fx['odd_away'],
+            # v65: se combinan las cuotas del scoreboard con las RICAS del
+            # endpoint por evento (que aportan hándicap y la línea real de O/U).
+            _ricas = odds_ricas.get(fx.get('event_id')) or {}
+            _oh = _ricas.get('odd_home') or fx.get('odd_home')
+            _od = _ricas.get('odd_draw') or fx.get('odd_draw')
+            _oa = _ricas.get('odd_away') or fx.get('odd_away')
+            if _oh and _od and _oa:
+                casa = _ricas.get('casa') or fx.get('casa', 'ESPN')
+                o_espn = {'odd_home': _oh, 'odd_draw': _od, 'odd_away': _oa,
                           'odd_over25': fx.get('odd_over25'),
                           'odd_under25': fx.get('odd_under25'),
+                          # línea real de O/U y HÁNDICAP (v65)
+                          'ou_linea': _ricas.get('ou_linea'),
+                          'odd_over': _ricas.get('odd_over'),
+                          'odd_under': _ricas.get('odd_under'),
+                          'ah_linea': _ricas.get('ah_linea'),
+                          'odd_ah_home': _ricas.get('odd_ah_home'),
+                          'odd_ah_away': _ricas.get('odd_ah_away'),
                           'casa_home': casa, 'casa_draw': casa, 'casa_away': casa}
             if o_espn:
                 for c in _mercados_del_partido(pred, o_espn, home, away):

@@ -432,3 +432,24 @@ def props_evento(clave: str, event_id: str, max_paginas: int = 4,
     logger.info(f"[props/{clave}] {len(salida)} props con cuota real.")
     _CACHE[ck] = (ahora, salida)
     return salida
+
+
+def odds_multi(clave: str, event_ids: List[str]) -> Dict[str, Dict]:
+    """v65: cuotas por evento de MUCHOS partidos EN PARALELO. El barrido diario
+    necesita ~1 petición por partido; secuencial serían minutos, concurrente
+    son segundos. Cada evento conserva su caché individual (15 min)."""
+    from concurrent.futures import ThreadPoolExecutor
+    ids = [e for e in event_ids if e]
+    if not ids:
+        return {}
+    salida: Dict[str, Dict] = {}
+    with ThreadPoolExecutor(max_workers=min(10, len(ids))) as ex:
+        futuros = {ex.submit(odds_evento, clave, eid): eid for eid in ids}
+        for fut in futuros:
+            eid = futuros[fut]
+            try:
+                salida[eid] = fut.result() or {}
+            except Exception as e:
+                logger.warning(f"[odds_multi/{clave}/{eid}] {type(e).__name__}: {e}")
+                salida[eid] = {}
+    return salida
