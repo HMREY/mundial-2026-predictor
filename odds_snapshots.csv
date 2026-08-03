@@ -11059,3 +11059,10 @@ match_id,league_key,match_date,home_team,away_team,bookmaker,fase,snapshot_key,d
 20260808_Rhode-Island-FC_Colorado-Springs-Switchbacks-FC,usl_championship,2026-08-08,Rhode Island FC,Colorado Springs Switchbacks FC,Playdoit,snapshot,2026-08-02T08|Playdoit,6.0,2.3334,3.25,2.75,,,,,,,,daily_snapshots,2026-08-02T08:18:51Z
 20260809_Louisville-City-FC_San-Antonio-FC,usl_championship,2026-08-09,Louisville City FC,San Antonio FC,Playdoit,snapshot,2026-08-02T08|Playdoit,7.0,1.5455,4.0,5.0,,,,,,,,daily_snapshots,2026-08-02T08:18:51Z
 20260809_Orange-County-SC_Tampa-Bay-Rowdies,usl_championship,2026-08-09,Orange County SC,Tampa Bay Rowdies,Playdoit,snapshot,2026-08-02T08|Playdoit,7.0,4.0,3.4,1.8,,,,,,,,daily_snapshots,2026-08-02T08:18:52Z
+20260802_Club-America_Santos-Laguna,liga_mx,2026-08-02,Club America,Santos Laguna,Bovada,snapshot,2026-08-03T00|Bovada,0.0,1.0667,9.25,22.0,,,,,,,,daily_snapshots,2026-08-03T00:48:18Z
+20260803_Toluca_Necaxa,liga_mx,2026-08-03,Toluca,Necaxa,Bovada,snapshot,2026-08-03T00|Bovada,1.0,1.2353,4.5,2.65,,,,,,,,daily_snapshots,2026-08-03T00:48:18Z
+20260802_Club-America_Santos-Laguna,liga_mx,2026-08-02,Club America,Santos Laguna,DraftKings,snapshot,2026-08-03T00|DraftKings,0.0,1.385,5.0,7.5,,,,,,,,daily_snapshots,2026-08-03T00:48:18Z
+20260803_Toluca_Necaxa,liga_mx,2026-08-03,Toluca,Necaxa,DraftKings,snapshot,2026-08-03T00|DraftKings,1.0,1.476,4.7,6.0,,,,,,,,daily_snapshots,2026-08-03T00:48:18Z
+20260803_Toluca_Necaxa,liga_mx,2026-08-03,Toluca,Necaxa,Pinnacle,snapshot,2026-08-03T00|Pinnacle,1.0,1.5155,4.69,6.06,,,1.6623,2.29,,,,daily_snapshots,2026-08-03T00:48:18Z
+20260802_Club-America_Santos-Laguna,liga_mx,2026-08-02,Club America,Santos Laguna,Playdoit,snapshot,2026-08-03T00|Playdoit,0.0,1.091,8.0,26.0,,,,,,,,daily_snapshots,2026-08-03T00:48:18Z
+20260803_Toluca_Necaxa,liga_mx,2026-08-03,Toluca,Necaxa,Playdoit,snapshot,2026-08-03T00|Playdoit,1.0,1.48,4.75,6.0,,,,,,,,daily_snapshots,2026-08-03T00:48:18Z
