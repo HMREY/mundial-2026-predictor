@@ -11808,3 +11808,83 @@ match_id,league_key,match_date,home_team,away_team,bookmaker,fase,snapshot_key,d
 20260809_Indy-Eleven_Hartford-Athletic,usl_championship,2026-08-09,Indy Eleven,Hartford Athletic,Playdoit,snapshot,2026-08-04T08|Playdoit,5.0,1.8,3.6,3.75,,,,,,,,daily_snapshots,2026-08-04T08:50:42Z
 20260809_Louisville-City-FC_San-Antonio-FC,usl_championship,2026-08-09,Louisville City FC,San Antonio FC,Playdoit,snapshot,2026-08-04T08|Playdoit,5.0,1.3847,4.75,6.0,,,,,,,,daily_snapshots,2026-08-04T08:50:42Z
 20260809_Orange-County-SC_Tampa-Bay-Rowdies,usl_championship,2026-08-09,Orange County SC,Tampa Bay Rowdies,Playdoit,snapshot,2026-08-04T08|Playdoit,5.0,4.0,3.5,1.7778,,,,,,,,daily_snapshots,2026-08-04T08:50:42Z
+20260804_Columbus-Crew_Atlas,leagues_cup,2026-08-04,Columbus Crew,Atlas,Bovada,snapshot,2026-08-04T23|Bovada,0.0,1.8197,3.75,4.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260804_FC-Cincinnati_Pachuca,leagues_cup,2026-08-04,FC Cincinnati,Pachuca,Bovada,snapshot,2026-08-04T23|Bovada,0.0,2.05,3.8,3.15,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Charlotte_UNAM-Pumas,leagues_cup,2026-08-05,Charlotte,UNAM Pumas,Bovada,snapshot,2026-08-04T23|Bovada,1.0,2.25,3.55,2.9,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Inter-Miami_Atl.-San-Luis,leagues_cup,2026-08-05,Inter Miami,Atl. San Luis,Bovada,snapshot,2026-08-04T23|Bovada,1.0,1.4255,5.0,5.75,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Minnesota-United_Juarez,leagues_cup,2026-08-05,Minnesota United,Juarez,Bovada,snapshot,2026-08-04T23|Bovada,1.0,1.8,3.75,4.1,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Monterrey_Orlando-City,leagues_cup,2026-08-05,Monterrey,Orlando City,Bovada,snapshot,2026-08-04T23|Bovada,1.0,2.25,3.9,2.7,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Tigres-UANL_Real-Salt-Lake,leagues_cup,2026-08-05,Tigres UANL,Real Salt Lake,Bovada,snapshot,2026-08-04T23|Bovada,1.0,2.75,3.6,2.35,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Vancouver-Whitecaps_Atlante,leagues_cup,2026-08-05,Vancouver Whitecaps,Atlante,Bovada,snapshot,2026-08-04T23|Bovada,1.0,1.2778,5.75,9.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_FC-Dallas_Queretaro,leagues_cup,2026-08-06,FC Dallas,Queretaro,Bovada,snapshot,2026-08-04T23|Bovada,2.0,1.7576,3.95,4.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Los-Angeles-FC_Guadalajara-Chivas,leagues_cup,2026-08-06,Los Angeles FC,Guadalajara Chivas,Bovada,snapshot,2026-08-04T23|Bovada,2.0,2.5,3.45,2.65,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Nashville-SC_Club-Leon,leagues_cup,2026-08-06,Nashville SC,Club Leon,Bovada,snapshot,2026-08-04T23|Bovada,2.0,1.6579,4.0,4.7,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_New-York-City_Santos-Laguna,leagues_cup,2026-08-06,New York City,Santos Laguna,Bovada,snapshot,2026-08-04T23|Bovada,2.0,1.5952,4.2,4.9,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Toluca_Seattle-Sounders,leagues_cup,2026-08-06,Toluca,Seattle Sounders,Bovada,snapshot,2026-08-04T23|Bovada,2.0,1.3846,4.9,7.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Austin-FC_Club-Tijuana,leagues_cup,2026-08-07,Austin FC,Club Tijuana,Bovada,snapshot,2026-08-04T23|Bovada,3.0,2.2,3.55,3.05,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Chicago-Fire_Necaxa,leagues_cup,2026-08-07,Chicago Fire,Necaxa,Bovada,snapshot,2026-08-04T23|Bovada,3.0,1.6173,4.1,4.9,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Club-America_San-Diego-FC,leagues_cup,2026-08-07,Club America,San Diego FC,Bovada,snapshot,2026-08-04T23|Bovada,3.0,1.5882,4.2,5.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Cruz-Azul_Philadelphia-Union,leagues_cup,2026-08-07,Cruz Azul,Philadelphia Union,Bovada,snapshot,2026-08-04T23|Bovada,3.0,2.5,3.5,2.6,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Portland-Timbers_Puebla,leagues_cup,2026-08-07,Portland Timbers,Puebla,Bovada,snapshot,2026-08-04T23|Bovada,3.0,1.7576,4.0,4.1,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Charlotte_UNAM-Pumas,leagues_cup,2026-08-05,Charlotte,UNAM Pumas,DraftKings,snapshot,2026-08-04T23|DraftKings,1.0,2.85,3.5,2.25,1.625,2.25,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Inter-Miami_Atl.-San-Luis,leagues_cup,2026-08-05,Inter Miami,Atl. San Luis,DraftKings,snapshot,2026-08-04T23|DraftKings,1.0,1.351,5.5,6.5,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Minnesota-United_Juarez,leagues_cup,2026-08-05,Minnesota United,Juarez,DraftKings,snapshot,2026-08-04T23|DraftKings,1.0,1.714,3.85,4.3,1.625,2.25,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Monterrey_Orlando-City,leagues_cup,2026-08-05,Monterrey,Orlando City,DraftKings,snapshot,2026-08-04T23|DraftKings,1.0,2.2,3.9,2.7,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Tigres-UANL_Real-Salt-Lake,leagues_cup,2026-08-05,Tigres UANL,Real Salt Lake,DraftKings,snapshot,2026-08-04T23|DraftKings,1.0,2.6,3.5,2.4,1.645,2.25,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Vancouver-Whitecaps_Atlante,leagues_cup,2026-08-05,Vancouver Whitecaps,Atlante,DraftKings,snapshot,2026-08-04T23|DraftKings,1.0,1.256,5.75,9.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_FC-Dallas_Queretaro,leagues_cup,2026-08-06,FC Dallas,Queretaro,DraftKings,snapshot,2026-08-04T23|DraftKings,2.0,1.741,3.95,4.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Los-Angeles-FC_Guadalajara-Chivas,leagues_cup,2026-08-06,Los Angeles FC,Guadalajara Chivas,DraftKings,snapshot,2026-08-04T23|DraftKings,2.0,2.55,3.35,2.55,1.714,2.1,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Nashville-SC_Club-Leon,leagues_cup,2026-08-06,Nashville SC,Club Leon,DraftKings,snapshot,2026-08-04T23|DraftKings,2.0,1.625,4.0,4.7,1.69,2.15,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_New-York-City_Santos-Laguna,leagues_cup,2026-08-06,New York City,Santos Laguna,DraftKings,snapshot,2026-08-04T23|DraftKings,2.0,1.556,4.2,5.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Toluca_Seattle-Sounders,leagues_cup,2026-08-06,Toluca,Seattle Sounders,DraftKings,snapshot,2026-08-04T23|DraftKings,2.0,1.345,5.0,7.0,1.588,2.35,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Austin-FC_Club-Tijuana,leagues_cup,2026-08-07,Austin FC,Club Tijuana,DraftKings,snapshot,2026-08-04T23|DraftKings,3.0,2.2,3.45,3.0,1.667,2.15,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Chicago-Fire_Necaxa,leagues_cup,2026-08-07,Chicago Fire,Necaxa,DraftKings,snapshot,2026-08-04T23|DraftKings,3.0,1.571,4.1,5.0,1.571,2.4,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Club-America_San-Diego-FC,leagues_cup,2026-08-07,Club America,San Diego FC,DraftKings,snapshot,2026-08-04T23|DraftKings,3.0,1.556,4.2,5.0,1.588,2.35,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Cruz-Azul_Philadelphia-Union,leagues_cup,2026-08-07,Cruz Azul,Philadelphia Union,DraftKings,snapshot,2026-08-04T23|DraftKings,3.0,2.45,3.3,2.7,1.571,2.35,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Portland-Timbers_Puebla,leagues_cup,2026-08-07,Portland Timbers,Puebla,DraftKings,snapshot,2026-08-04T23|DraftKings,3.0,1.714,4.0,4.1,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Doosan-Bears_NC-Dinos,kbo,2026-08-05,Doosan Bears,NC Dinos,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,2.29,,1.6329,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_Kia-Tigers_KT-Wiz,kbo,2026-08-05,Kia Tigers,KT Wiz,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,1.8333,,1.9901,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_Lotte-Giants_Kiwoom-Heroes,kbo,2026-08-05,Lotte Giants,Kiwoom Heroes,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,1.9524,,1.8696,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_SSG-Landers_LG-Twins,kbo,2026-08-05,SSG Landers,LG Twins,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,2.26,,1.6494,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_Samsung-Lions_Hanwha-Eagles,kbo,2026-08-05,Samsung Lions,Hanwha Eagles,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,1.578,,2.41,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260804_Columbus-Crew_Atlas,leagues_cup,2026-08-04,Columbus Crew,Atlas,Pinnacle,snapshot,2026-08-04T23|Pinnacle,0.0,,,,1.8475,2.03,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260804_FC-Cincinnati_Pachuca,leagues_cup,2026-08-04,FC Cincinnati,Pachuca,Pinnacle,snapshot,2026-08-04T23|Pinnacle,0.0,2.24,3.8,3.15,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Charlotte_UNAM-Pumas,leagues_cup,2026-08-05,Charlotte,UNAM Pumas,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,2.72,3.64,2.53,,,1.5102,2.63,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Inter-Miami_Atl.-San-Luis,leagues_cup,2026-08-05,Inter Miami,Atl. San Luis,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,1.3559,5.64,6.71,,,1.4673,2.69,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Minnesota-United_Juarez,leagues_cup,2026-08-05,Minnesota United,Juarez,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,1.7519,4.0,4.51,,,1.6623,2.26,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Monterrey_Orlando-City,leagues_cup,2026-08-05,Monterrey,Orlando City,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,2.23,4.06,2.77,,,1.3937,2.98,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Tigres-UANL_Real-Salt-Lake,leagues_cup,2026-08-05,Tigres UANL,Real Salt Lake,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,2.76,3.7,2.46,,,1.5319,2.56,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Vancouver-Whitecaps_Atlante,leagues_cup,2026-08-05,Vancouver Whitecaps,Atlante,Pinnacle,snapshot,2026-08-04T23|Pinnacle,1.0,1.2591,6.33,10.19,,,1.8547,1.9615,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_FC-Dallas_Queretaro,leagues_cup,2026-08-06,FC Dallas,Queretaro,Pinnacle,snapshot,2026-08-04T23|Pinnacle,2.0,1.7634,4.0,4.12,,,1.5155,2.55,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Los-Angeles-FC_Guadalajara-Chivas,leagues_cup,2026-08-06,Los Angeles FC,Guadalajara Chivas,Pinnacle,snapshot,2026-08-04T23|Pinnacle,2.0,2.64,3.4,2.62,,,1.5682,2.41,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Nashville-SC_Club-Leon,leagues_cup,2026-08-06,Nashville SC,Club Leon,Pinnacle,snapshot,2026-08-04T23|Pinnacle,2.0,1.6452,4.06,4.83,,,1.7143,2.13,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_New-York-City_Santos-Laguna,leagues_cup,2026-08-06,New York City,Santos Laguna,Pinnacle,snapshot,2026-08-04T23|Pinnacle,2.0,1.5464,4.37,5.37,,,1.6173,2.28,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Toluca_Seattle-Sounders,leagues_cup,2026-08-06,Toluca,Seattle Sounders,Pinnacle,snapshot,2026-08-04T23|Pinnacle,2.0,1.2882,4.59,6.45,,,1.7692,1.8333,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Austin-FC_Club-Tijuana,leagues_cup,2026-08-07,Austin FC,Club Tijuana,Pinnacle,snapshot,2026-08-04T23|Pinnacle,3.0,2.25,3.51,3.07,,,1.5495,2.43,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Chicago-Fire_Necaxa,leagues_cup,2026-08-07,Chicago Fire,Necaxa,Pinnacle,snapshot,2026-08-04T23|Pinnacle,3.0,1.5682,4.25,5.29,,,1.6173,2.28,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Club-America_San-Diego-FC,leagues_cup,2026-08-07,Club America,San Diego FC,Pinnacle,snapshot,2026-08-04T23|Pinnacle,3.0,1.5495,4.39,5.3,,,1.6897,2.15,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Cruz-Azul_Philadelphia-Union,leagues_cup,2026-08-07,Cruz Azul,Philadelphia Union,Pinnacle,snapshot,2026-08-04T23|Pinnacle,3.0,2.49,3.35,2.82,,,1.4525,2.71,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Portland-Timbers_Puebla,leagues_cup,2026-08-07,Portland Timbers,Puebla,Pinnacle,snapshot,2026-08-04T23|Pinnacle,3.0,1.7246,4.06,4.27,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Doosan-Bears_NC-Dinos,kbo,2026-08-05,Doosan Bears,NC Dinos,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,2.4,,1.5556,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_Kia-Tigers_KT-Wiz,kbo,2026-08-05,Kia Tigers,KT Wiz,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,1.8,,2.0,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_Lotte-Giants_Kiwoom-Heroes,kbo,2026-08-05,Lotte Giants,Kiwoom Heroes,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,1.9091,,1.8696,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_SSG-Landers_LG-Twins,kbo,2026-08-05,SSG Landers,LG Twins,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,2.25,,1.625,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260805_Samsung-Lions_Hanwha-Eagles,kbo,2026-08-05,Samsung Lions,Hanwha Eagles,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,1.5556,,2.4,,,,,,,,daily_snapshots/kbo,2026-08-04T23:32:41Z
+20260804_Columbus-Crew_Atlas,leagues_cup,2026-08-04,Columbus Crew,Atlas,Playdoit,snapshot,2026-08-04T23|Playdoit,0.0,2.05,3.4,3.75,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260804_FC-Cincinnati_Pachuca,leagues_cup,2026-08-04,FC Cincinnati,Pachuca,Playdoit,snapshot,2026-08-04T23|Playdoit,0.0,2.2223,3.75,3.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Charlotte_UNAM-Pumas,leagues_cup,2026-08-05,Charlotte,UNAM Pumas,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,2.6667,3.8,2.4286,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Inter-Miami_Atl.-San-Luis,leagues_cup,2026-08-05,Inter Miami,Atl. San Luis,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,1.375,5.75,6.6667,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Minnesota-United_Juarez,leagues_cup,2026-08-05,Minnesota United,Juarez,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,1.7334,4.0,4.5,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Monterrey_Orlando-City,leagues_cup,2026-08-05,Monterrey,Orlando City,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,2.2,4.2,2.8,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Tigres-UANL_Real-Salt-Lake,leagues_cup,2026-08-05,Tigres UANL,Real Salt Lake,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,2.6667,3.8,2.4286,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260805_Vancouver-Whitecaps_Atlante,leagues_cup,2026-08-05,Vancouver Whitecaps,Atlante,Playdoit,snapshot,2026-08-04T23|Playdoit,1.0,1.25,6.3334,11.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_FC-Dallas_Queretaro,leagues_cup,2026-08-06,FC Dallas,Queretaro,Playdoit,snapshot,2026-08-04T23|Playdoit,2.0,1.7858,4.0,4.2,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Los-Angeles-FC_Guadalajara-Chivas,leagues_cup,2026-08-06,Los Angeles FC,Guadalajara Chivas,Playdoit,snapshot,2026-08-04T23|Playdoit,2.0,2.6667,3.4,2.625,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Nashville-SC_Club-Leon,leagues_cup,2026-08-06,Nashville SC,Club Leon,Playdoit,snapshot,2026-08-04T23|Playdoit,2.0,1.6667,4.0,5.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_New-York-City_Santos-Laguna,leagues_cup,2026-08-06,New York City,Santos Laguna,Playdoit,snapshot,2026-08-04T23|Playdoit,2.0,1.5715,4.3334,5.5,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260806_Toluca_Seattle-Sounders,leagues_cup,2026-08-06,Toluca,Seattle Sounders,Playdoit,snapshot,2026-08-04T23|Playdoit,2.0,1.3637,5.5,7.5,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Austin-FC_Club-Tijuana,leagues_cup,2026-08-07,Austin FC,Club Tijuana,Playdoit,snapshot,2026-08-04T23|Playdoit,3.0,2.2858,3.6,3.0,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Chicago-Fire_Necaxa,leagues_cup,2026-08-07,Chicago Fire,Necaxa,Playdoit,snapshot,2026-08-04T23|Playdoit,3.0,1.5834,4.3334,5.3334,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Club-America_San-Diego-FC,leagues_cup,2026-08-07,Club America,San Diego FC,Playdoit,snapshot,2026-08-04T23|Playdoit,3.0,1.5834,4.3334,5.3334,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Cruz-Azul_Philadelphia-Union,leagues_cup,2026-08-07,Cruz Azul,Philadelphia Union,Playdoit,snapshot,2026-08-04T23|Playdoit,3.0,2.5455,3.3334,2.8,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
+20260807_Portland-Timbers_Puebla,leagues_cup,2026-08-07,Portland Timbers,Puebla,Playdoit,snapshot,2026-08-04T23|Playdoit,3.0,1.7334,4.0,4.5,,,,,,,,daily_snapshots,2026-08-04T23:52:49Z
