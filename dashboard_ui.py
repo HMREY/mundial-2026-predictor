@@ -727,6 +727,116 @@ def render_comentario(pred: dict, home: str, away: str, riesgo: str = 'bajo'):
 # HISTORIAL RECIENTE H2H (v21): API-Football para clubes, histórico local
 # para el Mundial. Solo consume requests al pulsar el botón (caché 24 h).
 # ===========================================================================
+def render_panel_equipos(clave: str, home: str, away: str, key: str,
+                         prob_modelo: dict = None) -> None:
+    """
+    v107 — H2H, clasificación y forma del cruce, sin pulsar nada.
+
+    Sustituye en la práctica a `render_h2h_club`, que dependía de API-Football:
+    hacía falta una clave, gastaba presupuesto de peticiones, exigía un botón y
+    su plan gratuito **se queda en la temporada 2024-25**. Quien no configuraba
+    la clave no veía absolutamente nada.
+
+    Esto sale del `historico_<clave>.csv` que el proyecto ya usa para entrenar:
+    cubre las 50 competiciones activas, llega más atrás que el plan gratuito de
+    la API, es instantáneo y no puede fallar por red. Medido en Liga MX: 26
+    cruces de América-Cruz Azul entre 2018 y 2026.
+    """
+    import panel_equipos as _pe
+
+    st.subheader(f"📊 {home} vs {visitante_txt(away)}")
+
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def _resumen(cl, h, a):
+        return _pe.resumen(cl, h, a)
+
+    try:
+        r = _resumen(clave, home, away)
+    except Exception as e:
+        st.caption(f"Panel no disponible ahora ({type(e).__name__}).")
+        return
+
+    # --- la lectura, primero: es lo que se usa para decidir ------------------
+    for frase in _pe.lectura(clave, home, away, prob_modelo):
+        st.markdown(f"- {frase}")
+
+    h = r['h2h']
+    t1, t2, t3 = st.tabs(['🤝 Cara a cara', '🏆 Clasificación', '📈 Forma'])
+
+    with t1:
+        if not h.get('n'):
+            st.info(h.get('motivo') or 'Sin cruces en el histórico.')
+        else:
+            c1, c2, c3 = st.columns(3)
+            c1.metric(home, h['gana_a'], help='victorias en el historial')
+            c2.metric('Empates', h['empates'])
+            c3.metric(away, h['gana_b'], help='victorias en el historial')
+            st.caption(
+                f"{h['n']} cruces entre {h['desde']} y {h['hasta']} · "
+                f"goles totales {h['goles_a']}-{h['goles_b']} · "
+                f"media {h['media_goles']} por partido · ambos marcan el "
+                f"{h['pct_ambos_marcan']*100:.0f} %")
+            st.dataframe(pd.DataFrame([{
+                'Fecha': p['fecha'],
+                'Local': p['local'], 'Resultado': f"{p['goles_local']} - {p['goles_visit']}",
+                'Visitante': p['visitante'],
+                'Ganó': p['ganador'] or 'Empate',
+            } for p in h['partidos']]), hide_index=True, width='stretch')
+
+    with t2:
+        cl = r['clasificacion']
+        if not cl:
+            st.info('Sin partidos suficientes del torneo en curso.')
+        else:
+            df = pd.DataFrame([{
+                '#': f['pos'], 'Equipo': f['equipo'], 'PJ': f['pj'],
+                'G': f['g'], 'E': f['e'], 'P': f['p'],
+                'GF': f['gf'], 'GC': f['gc'], 'DG': f['dg'], 'Pts': f['pts'],
+            } for f in cl])
+            st.dataframe(df, hide_index=True, width='stretch',
+                         height=min(38 * (len(df) + 1) + 3, 620))
+            st.caption("Calculada del histórico del propio proyecto (3 puntos "
+                       "por victoria) sobre el torneo en curso, que se detecta "
+                       "por el último parón largo del calendario. No se lee de "
+                       "ninguna fuente externa, así que no puede contradecir "
+                       "al modelo ni quedarse sin actualizar por su cuenta.")
+
+    with t3:
+        for lado, eq, f, cf in (('🏠', home, r['forma_local'], r['casa_fuera_local']),
+                                ('✈️', away, r['forma_visitante'],
+                                 r['casa_fuera_visitante'])):
+            if not f.get('n'):
+                continue
+            st.markdown(
+                f"**{lado} {eq}** — últimos {f['n']}: `{f['racha']}` · "
+                f"{f['pts_por_partido']} pts/partido · "
+                f"{f['gf_media']} goles a favor y {f['gc_media']} en contra")
+            if cf:
+                partes = []
+                for donde, d in cf.items():
+                    partes.append(f"{donde}: {d['g']}-{d['e']}-{d['p']} en "
+                                  f"{d['pj']} PJ ({d['pts_por_partido']} pts/p)")
+                st.caption('En el torneo actual · ' + ' · '.join(partes))
+            st.dataframe(pd.DataFrame([{
+                'Fecha': p['fecha'],
+                'Dónde': 'Casa' if p['casa'] else 'Fuera',
+                'Rival': p['rival'],
+                'Marcador': f"{p['goles']} - {p['encajados']}",
+                'Resultado': {'G': 'Ganó', 'E': 'Empató', 'P': 'Perdió'}[p['resultado']],
+            } for p in f['partidos']]), hide_index=True, width='stretch')
+
+    st.caption("ℹ️ Esto es información para juzgar, no una señal de apuesta: "
+               "el historial y la forma **ya están dentro del modelo** (el ELO "
+               "los absorbe partido a partido), así que ver aquí que un equipo "
+               "domina no significa que haya valor — lo normal es que la cuota "
+               "ya lo refleje.")
+
+
+def visitante_txt(x: str) -> str:
+    """Pequeña ayuda para el encabezado (evita romper si llega vacío)."""
+    return str(x or '?')
+
+
 def render_h2h_club(clave: str, home: str, away: str, key: str):
     with st.expander(f"📜 Historial reciente — {home} vs {away}"):
         import api_football_manager as afm
@@ -801,6 +911,24 @@ def render_remates_reales(lados: list, key: str):
     """
     st.divider()
     st.subheader("🎯 Remates por jugador (datos reales)")
+    # v107 — SI ESTA COMPETICIÓN NO LA CUBRE ESPN, SE DICE UNA VEZ Y CLARO.
+    #
+    # Antes salía una tabla vacía con un «no disponible» junto a cada equipo,
+    # que es indistinguible de un fallo de red o de un equipo mal mapeado.
+    # Medido sobre las 49 activas: 41 tienen estadística por jugador y 8 no
+    # (ver `remates_jugadores.cobertura`).
+    try:
+        import remates_jugadores as _rjc
+        _hay = _rjc.hay_remates(key)
+        if _hay is False:
+            st.info(
+                "ESPN **no publica estadística por jugador** de esta "
+                "competición — no es un fallo ni le falta nada a tu conexión. "
+                "Está medido: de las 49 competiciones activas la cubre en 41. "
+                "Los remates por EQUIPO sí están en el análisis del partido.")
+            return
+    except Exception:
+        pass
     cols = st.columns(len(lados))
     hubo = False
     for col, (etiqueta, obtener) in zip(cols, lados):
@@ -1952,9 +2080,27 @@ def render_liga_club(clave: str, nombre_liga: str):
          (f"✈️ {away}", lambda: _remates_club(clave, away))],
         key=clave)
 
+    # v107 — EL PANEL DE EQUIPOS, ANTES DEL PARLAY.
+    #
+    # Va aquí y no al final a propósito: el usuario lo pidió para DECIDIR la
+    # apuesta («si los equipos en todos los partidos los ha ganado el equipo A
+    # pues obvio hay más probabilidad, pero si en el torneo actual el equipo B
+    # tiene mejor rendimiento baja su probabilidad»), así que tiene que estar
+    # antes del combinador, no después.
+    st.divider()
+    try:
+        render_panel_equipos(clave, home, away, key=clave,
+                             prob_modelo=(p.get('probabilities')
+                                          if isinstance(p, dict) else None))
+    except Exception as e:
+        st.caption(f"Panel de equipos no disponible ahora ({type(e).__name__}).")
+
     # v15: parlay del partido en pantalla
     st.divider()
     render_parlay_partido(motor, home, away, key=clave)
+    # el H2H de API-Football se conserva como extra opcional: aporta cruces en
+    # OTRAS competiciones (copas, europeas) que el histórico de esta liga no
+    # tiene. Ya no es la única vía, así que no pasa nada si falta la clave.
     render_h2h_club(clave, home, away, key=clave)
     render_comparador(motor, motor.equipos, key=clave)      # v25 (§2.4)
     render_rendimiento(key=clave)

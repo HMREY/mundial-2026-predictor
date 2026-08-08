@@ -2480,6 +2480,143 @@ def test_ev_automatico_en_todos_los_deportes():
               f"hashea y los cuatro deportes compartirían caché ({args})")
 
 
+def test_panel_equipos():
+    """
+    v107 — H2H, clasificación y forma del cruce, sin API y sin pulsar nada.
+
+    Lo pidió el usuario para decidir la apuesta con todo delante, al estilo de
+    SofaScore. La sección que había (`render_h2h_club`) dependía de
+    API-Football: clave obligatoria, presupuesto de peticiones, un botón, y su
+    plan gratuito **se queda en 2024-25**. Quien no configuraba la clave no
+    veía nada.
+
+    Todo esto sale del `historico_<clave>.csv` con el que ya se entrena el
+    modelo: cubre las 50 competiciones activas, llega más atrás que el plan
+    gratuito y no puede fallar por red.
+    """
+    import config
+    import panel_equipos as pe
+
+    # --- cara a cara --------------------------------------------------------
+    h = pe.h2h('liga_mx', 'Club America', 'Cruz Azul')
+    check(h['n'] >= 20,
+          f"el H2H sale del histórico local ({h['n']} cruces de "
+          f"América-Cruz Azul, desde {h.get('desde')})")
+    check(h['gana_a'] + h['empates'] + h['gana_b'] == h['n'],
+          "el balance cuadra con el número de cruces")
+    check(all(p['fecha'] and p['local'] and p['visitante']
+              for p in h['partidos']),
+          "cada cruce trae fecha y los dos equipos")
+    check(h['partidos'] == sorted(h['partidos'], key=lambda p: p['fecha'],
+                                  reverse=True),
+          "y salen del más reciente al más antiguo")
+
+    # --- clasificación en TODAS las competiciones activas --------------------
+    activas = [k for k, v in config.LEAGUES.items() if v.get('disponible')]
+    sin_tabla = []
+    for k in activas:
+        try:
+            if not pe.clasificacion(k):
+                sin_tabla.append(k)
+        except Exception as e:
+            sin_tabla.append(f'{k}({type(e).__name__})')
+    check(not sin_tabla,
+          f"las {len(activas)} competiciones activas tienen clasificación "
+          f"calculable ({sin_tabla[:5]})")
+
+    cl = pe.clasificacion('liga_mx')
+    check(cl[0]['pos'] == 1 and cl[0]['pts'] >= cl[-1]['pts'],
+          "la tabla va ordenada por puntos")
+    for f in cl:
+        check(f['g'] + f['e'] + f['p'] == f['pj'],
+              f"{f['equipo']}: G+E+P cuadra con PJ") if f is cl[0] else None
+        check(f['pts'] == f['g'] * 3 + f['e'],
+              f"{f['equipo']}: los puntos cuadran (3 por victoria)") \
+            if f is cl[0] else None
+
+    # --- degradación limpia: nunca lanza, nunca inventa ---------------------
+    check(pe.h2h('__no_existe__', 'A', 'B')['n'] == 0,
+          "una competición inexistente devuelve 0 cruces, no una excepción")
+    check(pe.forma('liga_mx', '__equipo_inventado__')['n'] == 0,
+          "un equipo que no está devuelve forma vacía")
+    check(pe.posicion('liga_mx', '__equipo_inventado__') is None,
+          "y no aparece en la clasificación")
+    check(pe.clasificacion('__no_existe__') == [],
+          "y una liga sin histórico no tiene tabla")
+
+    # --- LA LECTURA NO PUEDE CONTRADECIRSE ---------------------------------
+    #
+    # Primera versión: la frase de arriba exigía el doble de victorias para
+    # decir «domina» y la de abajo se conformaba con `ga > gb`. Con un 9-10-7
+    # el panel decía «historial parejo» y dos líneas después «América domina el
+    # historial». Un panel que se contradice es peor que uno escueto: el
+    # usuario no sabe cuál creerse.
+    frases = pe.lectura('liga_mx', 'Club America', 'Cruz Azul')
+    texto = ' '.join(frases)
+    check(not ('parejo' in texto and 'domina el historial' in texto),
+          f"la lectura no dice «parejo» y «domina» a la vez")
+    check(len(frases) >= 2, f"la lectura dice algo útil ({len(frases)} frases)")
+
+    src = open('panel_equipos.py', encoding='utf-8').read()
+    check('HUECO_TEMPORADA_DIAS' in src,
+          "la temporada en curso se detecta por el parón del calendario, no "
+          "con una regla por país (hay ligas de año natural, de agosto a mayo "
+          "y de dos torneos por año)")
+    check("format='mixed'" in src,
+          "las fechas se parsean con formato mixto: los históricos de ESPN "
+          "traen hora y los de football-data no, y inferir uno solo convierte "
+          "en NaT medio fichero (el fallo que la v105 encontró en el ELO)")
+
+    # --- y la interfaz lo usa ----------------------------------------------
+    dash = open('dashboard_ui.py', encoding='utf-8').read()
+    check('def render_panel_equipos' in dash, "la interfaz tiene el panel")
+    check('render_panel_equipos(clave, home, away' in dash,
+          "y lo llama en la vista de liga, para todas las competiciones")
+    i_panel = dash.find('render_panel_equipos(clave, home, away')
+    i_parlay = dash.find('render_parlay_partido(motor, home, away, key=clave)')
+    check(0 < i_panel < i_parlay,
+          "el panel va ANTES del combinador: se usa para decidir la apuesta, "
+          "no para repasarla después")
+
+
+def test_cobertura_remates_medida():
+    """
+    v107 — dónde hay remates por jugador y dónde no, medido en vez de supuesto.
+
+    `remates_jugadores` funciona igual en todas las competiciones —pide el
+    `summary` del partido y lee `rosters`— pero ESPN no lo publica para todas.
+    Hasta aquí eso salía como una tabla vacía con un «no disponible» junto a
+    cada equipo, indistinguible de un fallo de red o de un equipo mal mapeado.
+
+    Medido el 2026-08-08 pidiendo un equipo real de cada una de las 49 activas
+    con código de ESPN: **41 con datos, 8 sin ellos**. Con la medición, la
+    interfaz lo dice una sola vez y con seguridad.
+    """
+    import remates_jugadores as rj
+
+    c = rj.cobertura()
+    check(bool(c), "existe el fichero de cobertura de remates")
+    con = c.get('con_remates') or []
+    sin = c.get('sin_remates') or {}
+    check(len(con) >= 35,
+          f"la mayoría de competiciones tienen remates por jugador "
+          f"({len(con)} con, {len(sin)} sin)")
+    check(not (set(con) & set(sin)),
+          "ninguna competición está a la vez con y sin datos")
+
+    check(rj.hay_remates('liga_mx') is True, "Liga MX sí tiene remates")
+    check(rj.hay_remates('brasil') is False,
+          "y el Brasileirão está medido como que NO")
+    # `None` tiene que ser distinto de `False`: una liga sin medir puede tener
+    # datos, y decir «no hay» sin comprobarlo sería inventar.
+    check(rj.hay_remates('__no_medida__') is None,
+          "una competición sin medir devuelve None, no False")
+
+    dash = open('dashboard_ui.py', encoding='utf-8').read()
+    check('hay_remates' in dash,
+          "la interfaz consulta la cobertura antes de enseñar la sección")
+
+
 def test_ninguna_liga_activa_sin_modelo():
     """
     v106 — una competición ACTIVA no puede tener su modelo fuera del repo.
@@ -2843,6 +2980,8 @@ if __name__ == '__main__':
     test_handicap_con_push()
     test_hora_cdmx()
     test_ev_automatico_en_todos_los_deportes()
+    test_panel_equipos()
+    test_cobertura_remates_medida()
     test_ninguna_liga_activa_sin_modelo()
     test_motores_de_deporte_cargan()
     test_beisbol_pitchers()

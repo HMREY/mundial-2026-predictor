@@ -1,5 +1,52 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v107 — El panel de equipos: H2H, clasificación y forma, sin API y sin botones
+
+- **📊 TODO EL CONTEXTO DEL CRUCE EN UN SOLO SITIO.** El usuario lo pidió al
+  estilo de SofaScore: abrir «América vs Cruz Azul» y ver el historial de
+  cruces con marcadores y fechas, la clasificación del torneo en curso y cómo
+  llega cada equipo, sin pulsar nada. Ahora está, y **en las 50 competiciones
+  activas**.
+
+- **✅ Y NO NECESITA NINGUNA API.** La sección que había dependía de
+  API-Football: clave obligatoria, presupuesto diario de peticiones, un botón
+  que había que pulsar y un plan gratuito que **se queda en la temporada
+  2024-25**. Quien no configuraba la clave no veía absolutamente nada. Todo
+  esto sale del `historico_<clave>.csv` con el que ya se entrena el modelo:
+  llega más atrás que el plan gratuito, es instantáneo, no gasta cuota y no
+  puede fallar por red. Medido: **26 cruces de América-Cruz Azul entre 2018 y
+  2026**, con su balance 9-10-7.
+
+- **🏆 LA CLASIFICACIÓN SE CALCULA, NO SE LEE.** Sale de los mismos partidos
+  con los que se entrena el modelo, así que no puede contradecirlo ni quedarse
+  desactualizada por su cuenta. El torneo en curso se detecta por **el último
+  parón largo del calendario** en vez de codificar la temporada de cada país:
+  hay ligas de año natural (Brasil, MLS), de agosto a mayo (Europa) y de dos
+  torneos por año (México, Argentina), y una regla por liga se rompe en cuanto
+  una cambia de formato. Verificado en las 50.
+
+- **🧠 Y LA LECTURA QUE PIDIÓ, EXPLÍCITA.** «Si los equipos en todos los
+  partidos los ha ganado el equipo A hay más probabilidad, pero si en el torneo
+  actual el equipo B tiene mejor rendimiento baja su probabilidad» — eso está
+  ahora escrito en pantalla: cuando historial y forma **coinciden** se dice, y
+  cuando **se contradicen** también, que es justo el caso en el que conviene no
+  forzar la apuesta. Con dos guardarraíles: no se declara «mejor ahora» sin una
+  diferencia real (0,3 pts/partido) y se avisa cuando la tabla lleva menos de 6
+  jornadas, porque ser «1º con 3 partidos» es azar, no nivel.
+
+- **🐛 UN PANEL QUE SE CONTRADECÍA A SÍ MISMO.** La primera versión usaba dos
+  criterios distintos de «domina»: la frase de arriba exigía el doble de
+  victorias y la de abajo se conformaba con ganar una más. Con un 9-10-7 decía
+  «historial parejo» y dos líneas después «América domina el historial». Un
+  panel que se contradice es peor que uno escueto — el usuario no sabe cuál de
+  las dos creerse. Unificado a un solo criterio y fijado con un test.
+
+- **⚠️ Y SE DICE LO QUE ESTO NO ES.** El historial y la forma **ya están dentro
+  del modelo** (el ELO los absorbe partido a partido), así que ver aquí que un
+  equipo domina **no significa que haya valor**: lo normal es que la cuota ya lo
+  refleje. Esto sirve para juzgar por qué el modelo dice lo que dice y para
+  detectar el contexto que los números no ven, no como señal de apuesta.
+
 ## Novedades v106 — El hándicap deja de regalar el push, la hora sale en CDMX y el EV+ llega a todos los deportes (ver [VALIDACION_v106.md](VALIDACION_v106.md))
 
 - **🐛 EL HÁNDICAP FALLABA, Y AHORA SE SABE POR QUÉ.** El usuario reportó que le
