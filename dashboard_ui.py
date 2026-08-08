@@ -223,6 +223,54 @@ def _render_maxima_confianza(r) -> None:
     try:
         with open('calibracion_confianza.json', encoding='utf-8') as f:
             cal = json.load(f)
+        # -------------------------------------------------------------------
+        # v108 — EL ROI VA DELANTE, NO ESCONDIDO EN UN DESPLEGABLE.
+        #
+        # El usuario dijo «no quiero perder dinero y quiero que sean seguras», y
+        # usa esta pestaña para decidir («los que tienen de 67 % si aciertan»).
+        # La medición dice lo contrario y estaba dentro de un expander que hay
+        # que abrir:
+        #
+        #     banda        n        ROI
+        #     0,50-0,55  13.792   -5,03 %
+        #     0,55-0,60  13.106   -4,66 %
+        #     0,60-0,65   8.821   -4,88 %
+        #     0,65-0,70   1.439   -6,52 %   <- justo la que él usa
+        #     0,70-0,75      33  +27,76 %   <- 33 apuestas: ruido, no señal
+        #
+        # Apostar por la probabilidad del modelo pierde dinero en TODAS las
+        # bandas con muestra real. Enseñar el acierto («61,5 %») sin el ROI
+        # («-6,52 %») al lado es la media verdad que hace perder dinero: se
+        # acierta seis de cada diez y aun así se pierde, porque la cuota de un
+        # favorito no paga lo que arriesga.
+        #
+        # Un aviso que hay que desplegar para verlo no es un aviso.
+        # -------------------------------------------------------------------
+        _bandas = [b for b in cal.get('bandas', [])
+                   if b.get('roi') is not None and b.get('n', 0) >= 500]
+        _perdedoras = [b for b in _bandas if b['roi'] < 0]
+        if _perdedoras:
+            _peor = min(_perdedoras, key=lambda b: b['roi'])
+            _n = sum(b['n'] for b in _perdedoras)
+            st.error(
+                f"🚨 **Estos picks, apostados sueltos, han PERDIDO dinero.** "
+                f"Medido sobre {_n:,} apuestas fuera de muestra: las "
+                f"{len(_perdedoras)} bandas con muestra real dan ROI negativo, "
+                f"y la peor es la de "
+                f"{_peor['desde']:.2f}–{_peor['hasta']:.2f} con "
+                f"**{_peor['roi']:+.2%}** ({_peor['n']:,} apuestas, acierto "
+                f"{_peor['acierto']:.1%}).  \n\n"
+                f"Acertar y ganar no son lo mismo: se acierta seis de cada "
+                f"diez y aun así se pierde, porque la cuota de un favorito no "
+                f"paga lo que arriesga. **Esta pestaña sirve para elegir patas "
+                f"de combinada, no para apostar sueltas.**  \n\n"
+                f"Lo único con ROI positivo y robusto en el histórico del "
+                f"proyecto es el **line shopping** (una casa pagando por "
+                f"encima del precio justo de Pinnacle): +11,5 % en el tramo de "
+                f"juicio con p5 +1,7 %. Está en «⚡ Máximo Valor», marcado "
+                f"como «line shopping vs Pinnacle»."
+                .replace(',', '.')
+            )
         st.warning(
             f"**Cómo leer esta pestaña.** Sobre {cal['n_total']:,} predicciones "
             f"fuera de muestra, el acierto **no crece** con la probabilidad: se "
@@ -232,16 +280,31 @@ def _render_maxima_confianza(r) -> None:
             f"rindió, y por eso cada pick muestra el acierto real de su banda."
             .replace(',', '.')
         )
-        with st.expander("📊 Acierto real por banda de probabilidad"):
+        with st.expander("📊 Acierto real y ROI por banda de probabilidad",
+                         expanded=True):
             dfb = pd.DataFrame([
                 {'Banda': f"{b['desde']:.2f}–{b['hasta']:.2f}", 'n': b['n'],
                  'Dice el modelo': (f"{b['prob_media_modelo']:.1%}"
                                     if b.get('prob_media_modelo') else '—'),
                  'Acierta de verdad': (f"{b['acierto']:.1%}"
                                        if b.get('acierto') else 'muestra corta'),
-                 'ROI': (f"{b['roi']:+.2%}" if b.get('roi') is not None else '—')}
+                 'ROI': (f"{b['roi']:+.2%}" if b.get('roi') is not None else '—'),
+                 # v108: el ROI sin su p5 engaña. La banda 0,70-0,75 luce
+                 # +27,76 % con 33 apuestas: eso no es una oportunidad, es el
+                 # tamaño de muestra. El percentil 5 del bootstrap dice cuánto
+                 # de eso aguanta.
+                 'ROI en el peor 5 %': (f"{b['p5']:+.2%}"
+                                        if b.get('p5') is not None else '—'),
+                 'Fiable': ('✅' if (b.get('n', 0) >= 500) else
+                            '⚠️ muestra corta')}
                 for b in cal.get('bandas', [])])
             st.dataframe(dfb, hide_index=True, width='stretch')
+            st.caption(
+                "**n** es cuántas apuestas se midieron. Una banda con menos de "
+                "500 no dice nada: la de 0,70–0,75 luce +27,8 % con **33 "
+                "apuestas**, que es ruido, no una oportunidad. La columna del "
+                "peor 5 % es el bootstrap: cuánto queda del ROI si repites el "
+                "histórico mil veces y te toca una racha mala.")
     except Exception:
         pass
 

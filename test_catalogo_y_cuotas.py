@@ -2579,6 +2579,75 @@ def test_panel_equipos():
           "no para repasarla después")
 
 
+def test_roi_negativo_se_avisa_de_frente():
+    """
+    v108 — el ROI negativo va DELANTE, no escondido en un desplegable.
+
+    El usuario dijo «no quiero perder dinero y quiero que sean seguras», y usa
+    la pestaña de Máxima Confianza para decidir («los que tienen de 67 % si
+    aciertan»). La medición dice justo lo contrario, y estaba dentro de un
+    expander que había que abrir:
+
+        banda        n        ROI       p5
+        0,50-0,55  13.792   -5,03 %   -6,31 %
+        0,55-0,60  13.106   -4,66 %   -5,94 %
+        0,60-0,65   8.821   -4,88 %   -6,17 %
+        0,65-0,70   1.439   -6,52 %   -9,77 %   <- justo la que él usa
+        0,70-0,75      33  +27,76 %   +8,75 %   <- 33 apuestas: ruido
+
+    Las CUATRO bandas con muestra real (37.158 apuestas en total) pierden
+    dinero. Enseñar el acierto («61,5 %») sin el ROI («−6,52 %») al lado es la
+    media verdad que hace perder dinero: se acierta seis de cada diez y aun
+    así se pierde, porque la cuota de un favorito no paga lo que arriesga.
+
+    Un aviso que hay que desplegar para verlo no es un aviso.
+    """
+    if not os.path.exists('calibracion_confianza.json'):
+        check(False, 'calibracion_confianza.json existe')
+        return
+    with open('calibracion_confianza.json', encoding='utf-8') as f:
+        cal = json.load(f)
+
+    bandas = [b for b in cal.get('bandas', [])
+              if b.get('roi') is not None and b.get('n', 0) >= 500]
+    check(len(bandas) >= 3,
+          f"hay bandas con muestra suficiente para juzgar ({len(bandas)})")
+    perdedoras = [b for b in bandas if b['roi'] < 0]
+    # Esto NO es un test de que el modelo sea malo: es un test de que, mientras
+    # lo sea, la interfaz lo diga. Si algún día el ROI se vuelve positivo, el
+    # aviso desaparece solo y este test sigue pasando.
+    dash = open('dashboard_ui.py', encoding='utf-8').read()
+    i_fn = dash.find('def _render_maxima_confianza')
+    cuerpo = dash[i_fn:i_fn + 6000]
+
+    check('st.error' in cuerpo,
+          "el aviso de ROI negativo usa `st.error` (rojo), no un caption")
+    check('PERDIDO dinero' in cuerpo or 'perdido dinero' in cuerpo.lower(),
+          "y dice literalmente que se ha perdido dinero")
+    i_error = cuerpo.find('st.error')
+    i_expander = cuerpo.find('st.expander')
+    check(0 < i_error < i_expander,
+          "el aviso va ANTES del desplegable: uno que hay que abrir para verlo "
+          "no es un aviso")
+    check('no para apostar sueltas' in cuerpo or 'patas de combinada' in cuerpo,
+          "se dice para qué SÍ sirven estos picks (patas de combinada)")
+    check('line shopping' in cuerpo,
+          "y se apunta al único canal con ROI positivo y robusto del histórico")
+
+    # la tabla tiene que traer el p5 y el tamaño de muestra, o el ROI engaña
+    check("'ROI en el peor 5 %'" in cuerpo or 'p5' in cuerpo,
+          "la tabla enseña el p5 del bootstrap junto al ROI")
+    check('muestra corta' in cuerpo,
+          "y marca las bandas con muestra insuficiente (la de +27,8 % tiene 33 "
+          "apuestas)")
+
+    if perdedoras:
+        peor = min(perdedoras, key=lambda b: b['roi'])
+        print(f'      · dato actual: la peor banda es '
+              f'{peor["desde"]:.2f}-{peor["hasta"]:.2f} con ROI '
+              f'{peor["roi"]:+.2%} sobre {peor["n"]} apuestas')
+
+
 def test_cobertura_remates_medida():
     """
     v107 — dónde hay remates por jugador y dónde no, medido en vez de supuesto.
@@ -2981,6 +3050,7 @@ if __name__ == '__main__':
     test_hora_cdmx()
     test_ev_automatico_en_todos_los_deportes()
     test_panel_equipos()
+    test_roi_negativo_se_avisa_de_frente()
     test_cobertura_remates_medida()
     test_ninguna_liga_activa_sin_modelo()
     test_motores_de_deporte_cargan()

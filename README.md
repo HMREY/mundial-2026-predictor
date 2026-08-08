@@ -1,5 +1,42 @@
 # 🏆 Motor Predictivo TDA — Mundial 2026 (v4, plantilla de análisis completa)
 
+## Novedades v108 — Dónde se gana dinero y dónde se pierde, dicho de frente
+
+- **🚨 APOSTAR POR LA PROBABILIDAD DEL MODELO PIERDE DINERO, Y AHORA SE DICE EN
+  ROJO Y ARRIBA.** El usuario pidió «no quiero perder dinero y quiero que sean
+  seguras», y usaba la pestaña de Máxima Confianza para decidir («los que tienen
+  de 67 % si aciertan»). La medición dice lo contrario, y estaba escondida
+  dentro de un desplegable que había que abrir:
+
+  | banda | n | ROI | peor 5 % |
+  |---|---|---|---|
+  | 0,50–0,55 | 13.792 | **−5,03 %** | −6,31 % |
+  | 0,55–0,60 | 13.106 | **−4,66 %** | −5,94 % |
+  | 0,60–0,65 | 8.821 | **−4,88 %** | −6,17 % |
+  | **0,65–0,70** | **1.439** | **−6,52 %** | −9,77 % |
+  | 0,70–0,75 | 33 | +27,76 % | +8,75 % |
+
+  Las **cuatro** bandas con muestra real —37.158 apuestas— pierden dinero, y la
+  peor es justo la que el usuario usaba. La de +27,8 % tiene **33 apuestas**:
+  eso no es una oportunidad, es el tamaño de muestra.
+
+  Enseñar el acierto («61,5 %») sin el ROI («−6,52 %») al lado es la media
+  verdad que hace perder dinero: **se acierta seis de cada diez y aun así se
+  pierde**, porque la cuota de un favorito no paga lo que arriesga. Un aviso que
+  hay que desplegar para verlo no es un aviso.
+
+- **✅ Y SE APUNTA AL ÚNICO CANAL QUE SÍ GANA.** El histórico del proyecto tiene
+  una vía con ROI positivo y **robusto**: el line shopping al lado local (una
+  casa pagando por encima del precio justo de Pinnacle) — **+5,09 % en el tramo
+  de elección y +11,49 % en el de juicio, con p5 +1,73 %**. Los otros dos lados
+  (empate y visitante) NO son robustos y se dice. Esos picks ya existían,
+  marcados «line shopping vs Pinnacle» en «⚡ Máximo Valor»; lo que faltaba era
+  decir que son los únicos con edge medido.
+
+- **📊 LA TABLA DE BANDAS TRAE AHORA EL p5 Y EL TAMAÑO DE MUESTRA.** El ROI
+  solo engaña: sin el percentil 5 del bootstrap y sin la n, un +27,8 % de 33
+  apuestas parece lo mejor de la pantalla.
+
 ## Novedades v107 — El panel de equipos: H2H, clasificación y forma, sin API y sin botones
 
 - **📊 TODO EL CONTEXTO DEL CRUCE EN UN SOLO SITIO.** El usuario lo pidió al
