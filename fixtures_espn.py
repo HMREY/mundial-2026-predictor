@@ -180,6 +180,42 @@ def _odds_de_evento(comp: dict) -> dict:
             salida['odd_over25'] = oo
         if ou:
             salida['odd_under25'] = ou
+
+    # -----------------------------------------------------------------------
+    # v106 — EL HÁNDICAP, QUE ESTABA EN EL MISMO JSON Y NO SE LEÍA.
+    #
+    # El scoreboard trae `pointSpread` con la línea y el precio de cada lado.
+    # Sólo se leía el hándicap del CORE API (`odds_evento`), que es una
+    # petición POR PARTIDO y que el barrido diario no hace para todas las
+    # ligas. Resultado medido: de las 57 competiciones activas, sólo 20 tenían
+    # backtest de hándicap — las 20 cuyo CSV de football-data trae columnas
+    # asiáticas. Aquí sale gratis y para TODAS: 33 de 33 partidos con cuotas
+    # en Liga MX, MLS, Brasileirão, Argentina y Premier lo traían (comprobado
+    # el 2026-08-08).
+    #
+    # La línea que se guarda es la del LOCAL —negativa si es favorito—, que es
+    # el convenio del resto del proyecto.
+    ps = o.get('pointSpread') or {}
+
+    def _linea(d):
+        d = d or {}
+        for k in ('close', 'open'):
+            sub = d.get(k) or {}
+            if sub.get('line') is not None:
+                try:
+                    return float(str(sub['line']).replace('+', ''))
+                except ValueError:
+                    return None
+        return None
+
+    linea_h = _linea(ps.get('home'))
+    if linea_h is not None:
+        salida['ah_linea'] = linea_h
+        oah, oaa = _lado(ps.get('home')), _lado(ps.get('away'))
+        if oah:
+            salida['odd_ah_home'] = oah
+        if oaa:
+            salida['odd_ah_away'] = oaa
     return salida
 
 
