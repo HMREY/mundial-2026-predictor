@@ -257,13 +257,43 @@ def _render_maxima_confianza(r) -> None:
                  f"acierta mucho y aun así se pierde dinero a la larga, porque "
                  f"la cuota no paga el riesgo. Úsalos como patas de combinada, "
                  f"no como apuesta simple.")
+    # -----------------------------------------------------------------------
+    # v106 — HORA DEL PARTIDO Y FRANJA HORARIA.
+    #
+    # El usuario usa esta tabla para decidir («los que tienen de 67 % si
+    # aciertan») y pidió dos cosas más: ver la hora, y poder agrupar por
+    # franjas «para saber qué parlay puedo armar por secciones de hora». Una
+    # combinada sólo tiene sentido si sus patas se juegan en una ventana que
+    # se pueda seguir; con la tabla ordenada por fecha eso había que deducirlo
+    # partido a partido.
+    #
+    # Se ordena por HORA dentro del día, no por liga: es el orden en que hay
+    # que apostarlos.
+    # -----------------------------------------------------------------------
+    def _franja(p):
+        """Bloque de 3 horas en hora de CDMX, o '' si la fuente no dio hora."""
+        h = p.get('hora_cdmx')
+        if not h:
+            return ''
+        try:
+            hh = int(str(h).split(':')[0])
+        except (ValueError, IndexError):
+            return ''
+        ini = (hh // 3) * 3
+        return f'{ini:02d}:00–{(ini + 3) % 24:02d}:00'
+
     filas = []
     # v89: la semana entera entra al barrido — HOY primero y el resto por fecha
+    # v106: y dentro del día, por hora de inicio
     for p in sorted(picks, key=lambda p: (not p.get('es_hoy'),
-                                          str(p.get('fecha', '')))):
+                                          str(p.get('fecha_cdmx')
+                                              or p.get('fecha', '')),
+                                          str(p.get('hora_cdmx') or '99:99'))):
         ar = p.get('acierto_real')
         filas.append({
-            'Fecha': p.get('fecha', ''),
+            'Fecha': p.get('fecha_cdmx') or p.get('fecha', ''),
+            'Hora (CDMX)': p.get('hora_cdmx') or '—',
+            'Franja': _franja(p) or '—',
             'Deporte': p.get('deporte'), 'Liga': p.get('liga'),
             'Partido': p.get('partido'), 'Apuesta': p.get('apuesta'),
             'Dice el modelo': f"{(p.get('prob') or 0):.0%}",
@@ -272,6 +302,50 @@ def _render_maxima_confianza(r) -> None:
             'EV': f"{(p.get('ev') or 0):+.1%}",
         })
     st.dataframe(pd.DataFrame(filas), hide_index=True, width='stretch')
+    st.caption("Las horas son de **Ciudad de México**. «Franja» agrupa en "
+               "bloques de 3 h para armar la combinada con partidos que se "
+               "juegan seguidos; «—» es que la casa aún no publicó la hora.")
+
+    # --- combinada por franja horaria --------------------------------------
+    porh: dict = {}
+    for p in picks:
+        f = _franja(p)
+        if f:
+            porh.setdefault((p.get('fecha_cdmx') or p.get('fecha', ''), f),
+                            []).append(p)
+    if porh:
+        with st.expander(f"🕒 Por franja horaria ({len(porh)} bloques) — "
+                         f"para armar la parlay por secciones", expanded=False):
+            st.caption("Sólo se listan las franjas con **2 o más** picks: con "
+                       "una sola pata no hay combinada que armar. La "
+                       "probabilidad conjunta supone independencia, así que es "
+                       "un TECHO — dos partidos de la misma liga y hora "
+                       "correlacionan y el número real es algo menor.")
+            for (fecha, franja), ps in sorted(porh.items()):
+                if len(ps) < 2:
+                    continue
+                # se usa el acierto MEDIDO cuando existe; si no, el del modelo
+                probs = [(p.get('acierto_real') or p.get('prob') or 0)
+                         for p in ps]
+                conjunta = 1.0
+                for x in probs:
+                    conjunta *= x
+                cuota = 1.0
+                for p in ps:
+                    cuota *= float(p.get('cuota') or 1.0)
+                st.markdown(
+                    f"**{fecha} · {franja}** — {len(ps)} picks · "
+                    f"prob. conjunta ≈ **{conjunta*100:.0f} %** · "
+                    f"cuota combinada **{cuota:.2f}**")
+                for p in ps:
+                    _ar = p.get('acierto_real')
+                    st.caption(
+                        f"  {p.get('hora_cdmx')} · [{p.get('deporte')}] "
+                        f"{p.get('partido')} → **{p.get('apuesta')}** "
+                        f"@ {p.get('cuota')} · "
+                        + (f"acierta de verdad {_ar:.0%}" if _ar
+                           else f"modelo {(p.get('prob') or 0):.0%}"))
+
     for p in picks:
         if p.get('aviso_calibracion'):
             st.caption(f"· {p.get('partido')} — {p['aviso_calibracion']}")

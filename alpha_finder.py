@@ -566,8 +566,8 @@ def apuestas_del_dia(max_partidos: int = 40) -> Dict:
     # v49: PASE DE FIXTURES (ESPN) — evalúa TODO partido con jornada aunque no
     # haya cuota en vivo. Los partidos sin cuota generan Capa 2 (cuota justa)
     # y pronósticos. Desde la v91 es EL camino (ver el docstring).
-    elite_fix, candidatos_fix, capa2_futbol, pronosticos, cob_fix, n_fix = \
-        _barrido_fixtures(motores, evaluados_pares)
+    elite_fix, candidatos_fix, capa2_futbol, pronosticos, cob_fix, n_fix, \
+        sin_motor_fix = _barrido_fixtures(motores, evaluados_pares)
     # v52: los fixtures con cuota REAL de ESPN entran a la Capa 1 / candidatos
     elite.extend(elite_fix)
     candidatos.extend(candidatos_fix)
@@ -593,6 +593,7 @@ def apuestas_del_dia(max_partidos: int = 40) -> Dict:
             # v89: 15 → 40 para no tirar apuestas con EV positivo.
             'candidatos': sorted(candidatos, key=orden)[:40],
             'capa2_futbol': capa2_futbol,        # v49
+            'ligas_sin_motor': sin_motor_fix,     # v106: activas cuyo modelo no carga
             'pronosticos': pronosticos,          # v49: TODOS los partidos
             'aviso': None if elite else
             ('Hoy ningún mercado cumple los filtros de élite (prob, EV y '
@@ -618,6 +619,9 @@ def _barrido_fixtures(motores: Dict, evaluados_pares: set):
     hoy = hoy_utc()
     elite_fix, candidatos_fix, capa2_futbol, pronosticos = [], [], [], []
     cobertura: Dict[str, int] = {}
+    # v106: competiciones activas cuyo motor no se pudo cargar. Ver el bloque
+    # que lo rellena, más abajo.
+    sin_motor: Dict[str, str] = {}
     n_eval = 0
     # v50.1: prefetch CONCURRENTE de los fixtures de todas las ligas (evita que
     # ~14 llamadas secuenciales a ESPN cuelguen el barrido en Streamlit Cloud).
@@ -673,9 +677,28 @@ def _barrido_fixtures(motores: Dict, evaluados_pares: set):
                 eng = ClubEngine(clave)
             except Exception as e:
                 logger.warning(f"[alpha/fix] motor {clave}: {e}")
+                sin_motor[clave] = f'{type(e).__name__}: {e}'
                 continue
             motores[clave] = eng
         if not getattr(eng, 'listo', False):
+            # v106 — UNA LIGA SIN MODELO YA NO DESAPARECE EN SILENCIO.
+            #
+            # Este `continue` llevaba versiones descartando competiciones
+            # ACTIVAS sin decir nada. Y no era un caso teórico: 12 de las 57
+            # disponibles —Championship, Hypermotion, Bélgica, Grecia, Serie B
+            # brasileña, Sudamericana, FA Cup…— tienen su carpeta de modelo en
+            # `.gitignore` desde la v68, con el argumento de que «la app nunca
+            # las carga porque el selector sólo muestra las `disponible`».
+            # Después se marcaron `disponible: True` y nadie tocó el
+            # .gitignore, así que el runner las entrena cada día, el commit las
+            # tira y Streamlit Cloud clona sin ellas: `ClubEngine` falla con
+            # FileNotFoundError y sus partidos no llegan NUNCA a las apuestas
+            # del día.
+            #
+            # Un fallo que se ve es un fallo que se arregla. Se recoge el
+            # motivo y sube a las incidencias de la interfaz.
+            if getattr(eng, 'error', None):
+                sin_motor[clave] = str(eng.error)[:120]
             continue
         catalogo = list(eng.stats.keys())
         for fx in fixtures:
@@ -872,8 +895,11 @@ def _barrido_fixtures(motores: Dict, evaluados_pares: set):
     logger.info(f"[alpha/fix] fixtures evaluados={n_eval} · elite={len(elite_fix)} "
                 f"· candidatos={len(candidatos_fix)} · capa2={len(capa2_futbol)} "
                 f"· pronósticos={len(pronosticos)}")
+    if sin_motor:
+        logger.warning(f"[alpha/fix] {len(sin_motor)} competiciones ACTIVAS "
+                       f"sin motor cargable: {sorted(sin_motor)}")
     return (elite_fix, candidatos_fix, capa2_futbol, pronosticos,
-            cobertura, n_eval)
+            cobertura, n_eval, sin_motor)
 
 
 # ---------------------------------------------------------------------------
@@ -2249,6 +2275,23 @@ def apuestas_del_dia_universal(max_partidos: int = 40) -> Dict:
             f'{umbral_conf:.0%} con cuota real.'
             + (f' Históricamente solo lo consigue el {pct:.2%} de los partidos, '
                f'así que es normal que algunos días esté vacía.' if pct else ''))
+
+    # v106 — LAS COMPETICIONES QUE SE CAYERON DEL BARRIDO, A LA VISTA.
+    #
+    # Si una liga ACTIVA no puede cargar su modelo, sus partidos no existen
+    # para el usuario: no salen en las apuestas del día, ni en los pronósticos,
+    # ni en la tabla de confianza. Hasta aquí eso pasaba en silencio (ver el
+    # `continue` de `_barrido_fixtures`), así que una competición podía llevar
+    # versiones desaparecida sin que nadie lo notara — y es exactamente lo que
+    # pasaba con 12 de las 57.
+    _sm = (r.get('ligas_sin_motor') or {}) if isinstance(r, dict) else {}
+    if _sm:
+        _n = ', '.join(sorted(_sm)[:6]) + ('…' if len(_sm) > 6 else '')
+        incidencias.append(
+            f'🚨 {len(_sm)} competiciones activas se quedaron fuera porque su '
+            f'modelo no carga ({_n}). Sus partidos NO aparecen hoy en ninguna '
+            f'lista. Motivo del primero: '
+            f'{list(_sm.values())[0] if _sm else "?"}')
 
     # v38: etiqueta de rentabilidad esperada (edge_engine) por pick de capa1 —
     # en qué tramo de EV real cae y si su liga es históricamente deficitaria.

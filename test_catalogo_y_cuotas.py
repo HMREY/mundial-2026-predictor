@@ -2480,6 +2480,66 @@ def test_ev_automatico_en_todos_los_deportes():
               f"hashea y los cuatro deportes compartirían caché ({args})")
 
 
+def test_ninguna_liga_activa_sin_modelo():
+    """
+    v106 — una competición ACTIVA no puede tener su modelo fuera del repo.
+
+    El fallo: `.gitignore` excluía 15 carpetas de `modelos/` con el argumento
+    «la app nunca las carga porque el selector sólo muestra las `disponible`».
+    Entre la v68 y hoy, **12 de esas 15 pasaron a `disponible: True`** y nadie
+    tocó el .gitignore. Resultado: el runner las entrenaba cada día, el commit
+    las descartaba, Streamlit Cloud clonaba sin ellas, `ClubEngine` moría con
+    FileNotFoundError y `_barrido_fixtures` las saltaba **sin decir nada**.
+    Doce competiciones desaparecidas de las apuestas del día, los pronósticos
+    y la tabla de confianza, sin un solo aviso.
+
+    Es un fallo de CONSISTENCIA entre dos ficheros, del tipo que no produce
+    excepción y no se nota hasta que alguien va a buscar una liga y no está.
+    Por eso se comprueba aquí y no se confía en recordarlo.
+    """
+    import config
+
+    ignoradas = set()
+    with open('.gitignore', encoding='utf-8') as f:
+        for linea in f:
+            linea = linea.strip()
+            if linea.startswith('modelos/') and not linea.startswith('#'):
+                ignoradas.add(linea.rstrip('/').split('/')[-1])
+
+    activas = {k for k, v in config.LEAGUES.items() if v.get('disponible')}
+    conflicto = sorted(activas & ignoradas)
+    check(not conflicto,
+          f"ninguna competición activa tiene su modelo excluido del repo "
+          f"({conflicto})")
+
+    # y las activas tienen que tener el artefacto de verdad
+    sin_artefacto = sorted(
+        k for k in activas
+        if k in _CLAVES_CON_MODELO_PROPIO()
+        and not os.path.exists(os.path.join('modelos', k, 'modelo.joblib')))
+    check(not sin_artefacto,
+          f"y todas las activas con motor propio traen su modelo.joblib "
+          f"({sin_artefacto})")
+
+    # las que se apartaron dicen POR QUÉ, con la cifra medida
+    for k in ('eng_championship', 'eng_fa_cup', 'ned_eerste'):
+        cfg = config.LEAGUES.get(k) or {}
+        check(not cfg.get('disponible'), f"{k} está apartada")
+        check('ELO' in str(cfg.get('nota', '')),
+              f"y su nota dice contra qué se midió ({str(cfg.get('nota'))[:60]})")
+
+
+def _CLAVES_CON_MODELO_PROPIO():
+    """Competiciones que entrena `league_engine` (las de fútbol de club).
+
+    Se excluyen las que tienen motor aparte o histórico compuesto, que no
+    escriben `modelos/<clave>/modelo.joblib`.
+    """
+    import config
+    return {k for k, v in config.LEAGUES.items()
+            if v.get('formato') not in ('api_football',)}
+
+
 def test_motores_de_deporte_cargan():
     """
     v106 — los CUATRO motores de deporte cargan, y dos fallos que lo impedían.
@@ -2783,6 +2843,7 @@ if __name__ == '__main__':
     test_handicap_con_push()
     test_hora_cdmx()
     test_ev_automatico_en_todos_los_deportes()
+    test_ninguna_liga_activa_sin_modelo()
     test_motores_de_deporte_cargan()
     test_beisbol_pitchers()
     test_handicap_en_todas_las_ligas()
