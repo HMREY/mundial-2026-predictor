@@ -1,12 +1,12 @@
 {
   "liga": "Ekstraklasa",
   "n_train": 1833,
-  "n_validacion": 460,
+  "n_validacion": 461,
   "fecha_corte": "2025-02-08",
-  "precision_validacion": 0.4609,
-  "precision_linea_base_elo": 0.4022,
-  "precision_mercado_cuotas": 0.4457,
-  "log_loss_validacion": 1.0631,
+  "precision_validacion": 0.4599,
+  "precision_linea_base_elo": 0.4013,
+  "precision_mercado_cuotas": 0.4447,
+  "log_loss_validacion": 1.0638,
   "n_equipos": 31,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -29,11 +29,11 @@
     "n_con_pinnacle": 94
   },
   "mesm": {
-    "n_val_con_cuotas": 460,
-    "acc_prod": 0.4609,
-    "acc_mesm": 0.4413,
-    "ll_prod": 1.0631,
-    "ll_mesm": 1.0542,
+    "n_val_con_cuotas": 461,
+    "acc_prod": 0.4599,
+    "acc_mesm": 0.4403,
+    "ll_prod": 1.0638,
+    "ll_mesm": 1.0546,
     "adoptado": false
   },
   "imt": null
