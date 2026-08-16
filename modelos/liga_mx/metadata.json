@@ -1,12 +1,12 @@
 {
   "liga": "Liga MX",
-  "n_train": 2095,
-  "n_validacion": 526,
-  "fecha_corte": "2025-01-12",
-  "precision_validacion": 0.5228,
-  "precision_linea_base_elo": 0.5038,
-  "precision_mercado_cuotas": 0.538,
-  "log_loss_validacion": 0.9954,
+  "n_train": 2099,
+  "n_validacion": 525,
+  "fecha_corte": "2025-01-14",
+  "precision_validacion": 0.5162,
+  "precision_linea_base_elo": 0.5029,
+  "precision_mercado_cuotas": 0.5383,
+  "log_loss_validacion": 0.9943,
   "n_equipos": 22,
   "familia_modelo": "beta",
   "features_extra_cols": [
@@ -22,35 +22,35 @@
     "IMT_DIFF"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4397,
-    "PROB_IMP_D": 0.2671,
-    "PROB_IMP_A": 0.2933,
+    "PROB_IMP_H": 0.4401,
+    "PROB_IMP_D": 0.267,
+    "PROB_IMP_A": 0.293,
     "OVERROUND": 0.071
   },
   "roi_sim": {
-    "n_apuestas": 238,
-    "roi_pct": -9.92,
-    "aciertos": 96,
-    "roi_pct_pinnacle": -8.48,
-    "n_con_pinnacle": 138
+    "n_apuestas": 229,
+    "roi_pct": -9.89,
+    "aciertos": 93,
+    "roi_pct_pinnacle": -12.62,
+    "n_con_pinnacle": 130
   },
   "mesm": {
-    "n_val_con_cuotas": 526,
-    "acc_prod": 0.5228,
-    "acc_mesm": 0.5456,
-    "ll_prod": 0.9954,
-    "ll_mesm": 0.9839,
+    "n_val_con_cuotas": 522,
+    "acc_prod": 0.5153,
+    "acc_mesm": 0.5498,
+    "ll_prod": 0.9953,
+    "ll_mesm": 0.9764,
     "adoptado": true
   },
   "imt": {
     "coef": {
-      "alpha": 1.0309,
-      "beta": 0.085,
+      "alpha": 1.0303,
+      "beta": 0.0809,
       "gamma": -0.5092,
-      "delta": -0.5618
+      "delta": -0.5612
     },
     "intercepto": 0.363,
-    "correlacion": 0.1826,
-    "n": 2131
+    "correlacion": 0.1825,
+    "n": 2135
   }
 }
