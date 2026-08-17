@@ -1,156 +1,173 @@
 {
- "generado": "2026-08-10",
- "n_apuestas": 5578,
+ "generado": "2026-08-17",
+ "n_apuestas": 5632,
  "banda_adoptada": [
-  0.025,
-  0.11
+  0.04,
+  0.12
  ],
- "roi_banda_global": -4.35,
+ "roi_banda_global": -6.73,
  "ventanas_oos_banda": [
-  -10.28,
-  2.52,
-  1.71,
-  -1.49
+  -4.83,
+  -1.29,
+  -0.45,
+  -5.82
  ],
- "piso_prob_adoptado": 0.55,
- "conviccion_adoptada": 0.02,
+ "piso_prob_adoptado": 0.65,
+ "conviccion_adoptada": 0.025,
  "ci_bootstrap_seleccion": {
-  "n": 534,
-  "roi_medio": 2.9,
-  "roi_p5": -2.83,
-  "roi_p95": 8.55
+  "n": 244,
+  "roi_medio": 3.62,
+  "roi_p5": -3.21,
+  "roi_p95": 10.42
  },
  "escaneo_prob": [
   {
-   "piso": 0.55,
-   "n": 588,
-   "roi_global": 2.05,
+   "piso": 0.65,
+   "n": 244,
+   "roi_global": 3.62,
    "ventanas_oos": [
-    10.44,
-    7.09,
-    4.55,
-    13.16
+    7.21,
+    3.39,
+    22.54,
+    10.75
    ],
-   "peor_ventana": 4.55,
+   "peor_ventana": 3.39,
    "ventanas_positivas": 4
   },
   {
-   "piso": 0.6,
-   "n": 404,
-   "roi_global": 0.46,
+   "piso": 0.7,
+   "n": 163,
+   "roi_global": 6.37,
    "ventanas_oos": [
-    4.5,
-    -0.84,
-    -1.62,
-    11.54
+    1.94,
+    16.33,
+    35.0,
+    4.87
    ],
-   "peor_ventana": -1.62,
+   "peor_ventana": 1.94,
+   "ventanas_positivas": 4
+  },
+  {
+   "piso": 0.55,
+   "n": 501,
+   "roi_global": 1.13,
+   "ventanas_oos": [
+    1.15,
+    -7.32,
+    11.33,
+    7.52
+   ],
+   "peor_ventana": -7.32,
+   "ventanas_positivas": 3
+  },
+  {
+   "piso": 0.6,
+   "n": 358,
+   "roi_global": -1.35,
+   "ventanas_oos": [
+    -2.02,
+    -7.56,
+    11.97,
+    11.38
+   ],
+   "peor_ventana": -7.56,
    "ventanas_positivas": 2
   },
   {
    "piso": 0.5,
-   "n": 826,
-   "roi_global": -1.58,
+   "n": 697,
+   "roi_global": -1.6,
    "ventanas_oos": [
-    -2.38,
-    6.85,
-    -4.93,
-    5.87
+    -7.33,
+    -10.09,
+    4.43,
+    1.54
    ],
-   "peor_ventana": -4.93,
+   "peor_ventana": -10.09,
    "ventanas_positivas": 2
-  },
-  {
-   "piso": 0.65,
-   "n": 274,
-   "roi_global": -0.96,
-   "ventanas_oos": [
-    -5.2,
-    0.51,
-    -1.32,
-    7.25
-   ],
-   "peor_ventana": -5.2,
-   "ventanas_positivas": 2
-  },
-  {
-   "piso": 0.7,
-   "n": 183,
-   "roi_global": 1.85,
-   "ventanas_oos": [
-    -13.73,
-    13.17,
-    27.25,
-    5.1
-   ],
-   "peor_ventana": -13.73,
-   "ventanas_positivas": 3
   }
  ],
  "escaneo_conviccion": [
   {
-   "conviccion": 0.02,
-   "n": 534,
-   "roi_global": 2.76,
-   "roi_p5_bootstrap": -2.7
-  },
-  {
    "conviccion": 0.025,
-   "n": 470,
-   "roi_global": 3.11,
-   "roi_p5_bootstrap": -2.73
+   "n": 244,
+   "roi_global": 3.62,
+   "roi_p5_bootstrap": -3.16
   },
   {
    "conviccion": 0.015,
-   "n": 584,
-   "roi_global": 2.12,
-   "roi_p5_bootstrap": -3.19
+   "n": 244,
+   "roi_global": 3.62,
+   "roi_p5_bootstrap": -3.26
   },
   {
    "conviccion": 0.0,
-   "n": 588,
-   "roi_global": 2.05,
-   "roi_p5_bootstrap": -3.2
+   "n": 244,
+   "roi_global": 3.62,
+   "roi_p5_bootstrap": -3.38
+  },
+  {
+   "conviccion": 0.02,
+   "n": 244,
+   "roi_global": 3.62,
+   "roi_p5_bootstrap": -3.42
   },
   {
    "conviccion": 0.03,
-   "n": 407,
-   "roi_global": 1.1,
-   "roi_p5_bootstrap": -5.09
+   "n": 240,
+   "roi_global": 3.41,
+   "roi_p5_bootstrap": -3.49
   }
  ],
  "escaneo_bandas": [
   {
    "banda": [
-    0.03,
-    0.13
+    0.04,
+    0.12
    ],
-   "roi_global": -3.25,
-   "n": 2111,
+   "roi_global": -6.73,
+   "n": 1719,
    "ventanas_oos": [
-    -4.34,
-    -5.35,
-    4.14,
-    0.32
+    -4.83,
+    -1.29,
+    -0.45,
+    -5.82
    ],
-   "peor_ventana": -5.35,
-   "ventanas_positivas": 2,
+   "peor_ventana": -5.82,
+   "ventanas_positivas": 0,
    "valida": false
   },
   {
    "banda": [
-    0.04,
-    0.12
+    0.03,
+    0.13
    ],
-   "roi_global": -5.25,
-   "n": 1678,
+   "roi_global": -4.52,
+   "n": 2131,
    "ventanas_oos": [
-    -4.77,
-    -5.7,
-    0.33,
-    -2.17
+    -6.23,
+    -2.48,
+    1.86,
+    -3.41
    ],
-   "peor_ventana": -5.7,
+   "peor_ventana": -6.23,
+   "ventanas_positivas": 1,
+   "valida": false
+  },
+  {
+   "banda": [
+    0.03,
+    0.14
+   ],
+   "roi_global": -4.23,
+   "n": 2296,
+   "ventanas_oos": [
+    -7.08,
+    -5.62,
+    1.48,
+    -4.77
+   ],
+   "peor_ventana": -7.08,
    "ventanas_positivas": 1,
    "valida": false
   },
@@ -159,32 +176,15 @@
     0.03,
     0.12
    ],
-   "roi_global": -3.25,
-   "n": 1932,
+   "roi_global": -5.12,
+   "n": 1973,
    "ventanas_oos": [
-    -7.1,
-    -2.53,
-    2.06,
-    2.03
+    -8.65,
+    0.25,
+    2.24,
+    -2.9
    ],
-   "peor_ventana": -7.1,
-   "ventanas_positivas": 2,
-   "valida": false
-  },
-  {
-   "banda": [
-    0.03,
-    0.14
-   ],
-   "roi_global": -2.68,
-   "n": 2265,
-   "ventanas_oos": [
-    -8.31,
-    -2.2,
-    1.4,
-    1.99
-   ],
-   "peor_ventana": -8.31,
+   "peor_ventana": -8.65,
    "ventanas_positivas": 2,
    "valida": false
   },
@@ -193,15 +193,32 @@
     0.02,
     0.12
    ],
-   "roi_global": -3.98,
-   "n": 2209,
+   "roi_global": -4.45,
+   "n": 2247,
    "ventanas_oos": [
-    -8.95,
-    1.61,
-    0.41,
-    -0.45
+    -10.53,
+    2.35,
+    2.64,
+    -1.76
    ],
-   "peor_ventana": -8.95,
+   "peor_ventana": -10.53,
+   "ventanas_positivas": 2,
+   "valida": false
+  },
+  {
+   "banda": [
+    0.03,
+    0.1
+   ],
+   "roi_global": -5.36,
+   "n": 1619,
+   "ventanas_oos": [
+    -11.61,
+    2.93,
+    0.92,
+    -7.31
+   ],
+   "peor_ventana": -11.61,
    "ventanas_positivas": 2,
    "valida": false
   },
@@ -210,51 +227,34 @@
     0.025,
     0.11
    ],
-   "roi_global": -4.35,
-   "n": 1910,
+   "roi_global": -4.45,
+   "n": 1937,
    "ventanas_oos": [
-    -10.28,
-    2.52,
-    1.71,
-    -1.49
+    -11.83,
+    2.05,
+    6.33,
+    -2.01
    ],
-   "peor_ventana": -10.28,
+   "peor_ventana": -11.83,
    "ventanas_positivas": 2,
-   "valida": true
-  },
-  {
-   "banda": [
-    0.03,
-    0.1
-   ],
-   "roi_global": -3.92,
-   "n": 1568,
-   "ventanas_oos": [
-    -12.98,
-    0.29,
-    1.25,
-    1.35
-   ],
-   "peor_ventana": -12.98,
-   "ventanas_positivas": 3,
-   "valida": true
+   "valida": false
   },
   {
    "banda": [
     0.02,
     0.1
    ],
-   "roi_global": -4.69,
-   "n": 1845,
+   "roi_global": -4.53,
+   "n": 1893,
    "ventanas_oos": [
-    -14.44,
-    4.74,
-    -0.68,
-    -1.46
+    -13.36,
+    4.92,
+    1.61,
+    -5.42
    ],
-   "peor_ventana": -14.44,
-   "ventanas_positivas": 1,
-   "valida": true
+   "peor_ventana": -13.36,
+   "ventanas_positivas": 2,
+   "valida": false
   }
  ],
  "tramos_ev": [
@@ -263,84 +263,84 @@
     -1,
     0
    ],
-   "n": 299,
-   "roi": 0.51,
-   "hit": 0.819
+   "n": 284,
+   "roi": 1.91,
+   "hit": 0.831
   },
   {
    "ev": [
     0,
     0.03
    ],
-   "n": 875,
-   "roi": -3.92,
-   "hit": 0.488
+   "n": 918,
+   "roi": -2.02,
+   "hit": 0.499
   },
   {
    "ev": [
     0.03,
     0.08
    ],
-   "n": 1156,
-   "roi": -2.59,
-   "hit": 0.475
+   "n": 1193,
+   "roi": -3.32,
+   "hit": 0.474
   },
   {
    "ev": [
     0.08,
     0.12
    ],
-   "n": 775,
-   "roi": -4.46,
-   "hit": 0.453
+   "n": 779,
+   "roi": -7.74,
+   "hit": 0.431
   },
   {
    "ev": [
     0.12,
     0.13
    ],
-   "n": 179,
-   "roi": -1.82,
-   "hit": 0.447
+   "n": 158,
+   "roi": 1.09,
+   "hit": 0.481
   },
   {
    "ev": [
     0.13,
     0.14
    ],
-   "n": 155,
-   "roi": 4.52,
-   "hit": 0.458
+   "n": 163,
+   "roi": -0.18,
+   "hit": 0.423
   },
   {
    "ev": [
     0.12,
     0.15
    ],
-   "n": 479,
-   "roi": -1.17,
-   "hit": 0.443
+   "n": 462,
+   "roi": -0.39,
+   "hit": 0.448
   },
   {
    "ev": [
     0.15,
     10
    ],
-   "n": 1994,
-   "roi": -3.97,
-   "hit": 0.361
+   "n": 1996,
+   "roi": -3.16,
+   "hit": 0.365
   }
  ],
  "ligas": {
   "argentina": {
-   "n": 297,
-   "roi": 2.66,
-   "hit": 0.384
+   "n": 304,
+   "roi": 8.29,
+   "hit": 0.405
   },
   "brasil": {
-   "n": 283,
-   "roi": 3.51,
-   "hit": 0.459
+   "n": 289,
+   "roi": 7.39,
+   "hit": 0.471
   },
   "bundesliga": {
    "n": 148,
@@ -348,19 +348,19 @@
    "hit": 0.5
   },
   "china": {
-   "n": 167,
-   "roi": 8.27,
-   "hit": 0.575
+   "n": 171,
+   "roi": 0.88,
+   "hit": 0.55
   },
   "dinamarca": {
    "n": 105,
-   "roi": 0.36,
-   "hit": 0.448
+   "roi": 3.53,
+   "hit": 0.467
   },
   "eng_league_one": {
-   "n": 210,
-   "roi": -11.6,
-   "hit": 0.414
+   "n": 201,
+   "roi": -26.92,
+   "hit": 0.348
   },
   "eng_league_two": {
    "n": 61,
@@ -368,34 +368,34 @@
    "hit": 0.344
   },
   "eng_national": {
-   "n": 183,
-   "roi": 3.99,
-   "hit": 0.557
+   "n": 184,
+   "roi": 3.14,
+   "hit": 0.56
   },
   "eredivisie": {
-   "n": 117,
-   "roi": -2.7,
-   "hit": 0.513
+   "n": 114,
+   "roi": -5.09,
+   "hit": 0.5
   },
   "esp_hypermotion": {
-   "n": 175,
-   "roi": -12.49,
-   "hit": 0.411
+   "n": 188,
+   "roi": -9.81,
+   "hit": 0.426
   },
   "finlandia": {
-   "n": 119,
-   "roi": -14.08,
-   "hit": 0.437
+   "n": 116,
+   "roi": -15.35,
+   "hit": 0.414
   },
   "fra_ligue2": {
-   "n": 149,
-   "roi": 2.87,
-   "hit": 0.45
+   "n": 155,
+   "roi": -4.18,
+   "hit": 0.413
   },
   "ger_bundesliga2": {
-   "n": 93,
-   "roi": -17.41,
-   "hit": 0.355
+   "n": 108,
+   "roi": 0.15,
+   "hit": 0.426
   },
   "gre_super_league": {
    "n": 87,
@@ -403,9 +403,9 @@
    "hit": 0.529
   },
   "irlanda": {
-   "n": 93,
-   "roi": -12.48,
-   "hit": 0.366
+   "n": 83,
+   "roi": -9.24,
+   "hit": 0.41
   },
   "ita_serie_b": {
    "n": 144,
@@ -418,9 +418,9 @@
    "hit": 0.372
   },
   "laliga": {
-   "n": 219,
-   "roi": 9.13,
-   "hit": 0.557
+   "n": 197,
+   "roi": 11.74,
+   "hit": 0.574
   },
   "leagues_cup": {
    "n": 439,
@@ -428,9 +428,9 @@
    "hit": 0.419
   },
   "liga_mx": {
-   "n": 226,
-   "roi": -8.88,
-   "hit": 0.403
+   "n": 229,
+   "roi": -9.89,
+   "hit": 0.406
   },
   "ligue_1": {
    "n": 162,
@@ -438,19 +438,19 @@
    "hit": 0.451
   },
   "mls": {
-   "n": 229,
-   "roi": -13.33,
-   "hit": 0.367
+   "n": 252,
+   "roi": -14.45,
+   "hit": 0.365
   },
   "noruega": {
-   "n": 99,
-   "roi": 1.57,
-   "hit": 0.465
+   "n": 98,
+   "roi": -14.51,
+   "hit": 0.418
   },
   "polonia": {
-   "n": 217,
-   "roi": 0.72,
-   "hit": 0.396
+   "n": 211,
+   "roi": 6.95,
+   "hit": 0.422
   },
   "premier": {
    "n": 81,
@@ -458,19 +458,19 @@
    "hit": 0.432
   },
   "primeira": {
-   "n": 344,
-   "roi": -5.89,
-   "hit": 0.555
+   "n": 352,
+   "roi": -4.45,
+   "hit": 0.554
   },
   "rumania": {
-   "n": 235,
-   "roi": 5.74,
-   "hit": 0.528
+   "n": 234,
+   "roi": 5.36,
+   "hit": 0.526
   },
   "rus_premier": {
-   "n": 169,
-   "roi": -0.32,
-   "hit": 0.491
+   "n": 190,
+   "roi": 5.77,
+   "hit": 0.511
   },
   "sco_championship": {
    "n": 59,
@@ -478,9 +478,9 @@
    "hit": 0.288
   },
   "sco_premiership": {
-   "n": 115,
-   "roi": 1.31,
-   "hit": 0.513
+   "n": 113,
+   "roi": -3.05,
+   "hit": 0.504
   },
   "serie_a": {
    "n": 70,
@@ -488,14 +488,14 @@
    "hit": 0.443
   },
   "suecia": {
-   "n": 102,
-   "roi": -31.27,
-   "hit": 0.333
+   "n": 107,
+   "roi": -26.17,
+   "hit": 0.336
   },
   "turquia": {
-   "n": 112,
-   "roi": 8.64,
-   "hit": 0.571
+   "n": 111,
+   "roi": 9.03,
+   "hit": 0.595
   }
  }
 }
