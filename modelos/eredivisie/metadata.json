@@ -1,12 +1,12 @@
 {
   "liga": "Eredivisie",
   "n_train": 1199,
-  "n_validacion": 301,
+  "n_validacion": 304,
   "fecha_corte": "2025-08-24",
-  "precision_validacion": 0.515,
-  "precision_linea_base_elo": 0.4983,
+  "precision_validacion": 0.5066,
+  "precision_linea_base_elo": 0.4967,
   "precision_mercado_cuotas": 0.5298,
-  "log_loss_validacion": 1.1221,
+  "log_loss_validacion": 1.1237,
   "n_equipos": 24,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -25,18 +25,18 @@
     "OVERROUND": 0.0568
   },
   "roi_sim": {
-    "n_apuestas": 113,
-    "roi_pct": 4.41,
-    "aciertos": 58,
-    "roi_pct_pinnacle": 38.6,
-    "n_con_pinnacle": 47
+    "n_apuestas": 110,
+    "roi_pct": -3.5,
+    "aciertos": 54,
+    "roi_pct_pinnacle": 35.65,
+    "n_con_pinnacle": 43
   },
   "mesm": {
     "n_val_con_cuotas": 285,
-    "acc_prod": 0.5193,
-    "acc_mesm": 0.5228,
-    "ll_prod": 1.1251,
-    "ll_mesm": 0.9884,
+    "acc_prod": 0.5158,
+    "acc_mesm": 0.5193,
+    "ll_prod": 1.1256,
+    "ll_mesm": 1.0002,
     "adoptado": true
   },
   "imt": {

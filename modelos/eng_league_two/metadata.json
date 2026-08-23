@@ -1,12 +1,12 @@
 {
   "liga": "EFL League Two",
-  "n_train": 2136,
-  "n_validacion": 544,
-  "fecha_corte": "2025-08-09",
+  "n_train": 2145,
+  "n_validacion": 546,
+  "fecha_corte": "2025-08-16",
   "precision_validacion": 0.5055,
-  "precision_linea_base_elo": 0.4706,
-  "precision_mercado_cuotas": 0.5094,
-  "log_loss_validacion": 1.0273,
+  "precision_linea_base_elo": 0.4744,
+  "precision_mercado_cuotas": 0.5124,
+  "log_loss_validacion": 1.0267,
   "n_equipos": 42,
   "familia_modelo": "logistica",
   "features_extra_cols": [
@@ -22,22 +22,22 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4234,
+    "PROB_IMP_H": 0.4233,
     "PROB_IMP_D": 0.2725,
-    "PROB_IMP_A": 0.3041,
-    "OVERROUND": 0.0582
+    "PROB_IMP_A": 0.3043,
+    "OVERROUND": 0.0583
   },
   "roi_sim": {
     "n_apuestas": 61,
-    "roi_pct": -5.66,
-    "aciertos": 21
+    "roi_pct": -2.7,
+    "aciertos": 22
   },
   "mesm": {
-    "n_val_con_cuotas": 534,
-    "acc_prod": 0.5056,
-    "acc_mesm": 0.5169,
-    "ll_prod": 1.0261,
-    "ll_mesm": 1.0236,
+    "n_val_con_cuotas": 525,
+    "acc_prod": 0.5067,
+    "acc_mesm": 0.5124,
+    "ll_prod": 1.0253,
+    "ll_mesm": 1.0228,
     "adoptado": true
   },
   "imt": null

@@ -1,12 +1,12 @@
 {
   "liga": "Russian Premier League",
   "n_train": 1519,
-  "n_validacion": 380,
-  "fecha_corte": "2024-11-30",
-  "precision_validacion": 0.5132,
-  "precision_linea_base_elo": 0.5053,
+  "n_validacion": 383,
+  "fecha_corte": "2024-12-01",
+  "precision_validacion": 0.5274,
+  "precision_linea_base_elo": 0.5039,
   "precision_mercado_cuotas": 0.5385,
-  "log_loss_validacion": 0.9766,
+  "log_loss_validacion": 0.9757,
   "n_equipos": 29,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,19 +22,19 @@
     "OVERROUND": 0.0581
   },
   "roi_sim": {
-    "n_apuestas": 178,
-    "roi_pct": -2.48,
-    "aciertos": 86,
-    "roi_pct_pinnacle": 2.12,
-    "n_con_pinnacle": 121
+    "n_apuestas": 183,
+    "roi_pct": -0.83,
+    "aciertos": 90,
+    "roi_pct_pinnacle": 4.31,
+    "n_con_pinnacle": 125
   },
   "mesm": {
     "n_val_con_cuotas": 364,
-    "acc_prod": 0.5247,
+    "acc_prod": 0.5385,
     "acc_mesm": 0.5302,
-    "ll_prod": 0.9648,
-    "ll_mesm": 0.9668,
-    "adoptado": true
+    "ll_prod": 0.9638,
+    "ll_mesm": 0.9666,
+    "adoptado": false
   },
   "imt": null
 }

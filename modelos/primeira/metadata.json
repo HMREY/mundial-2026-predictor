@@ -1,12 +1,12 @@
 {
   "liga": "Primeira Liga",
-  "n_train": 2410,
+  "n_train": 2411,
   "n_validacion": 603,
-  "fecha_corte": "2024-08-21",
-  "precision_validacion": 0.5373,
-  "precision_linea_base_elo": 0.524,
-  "precision_mercado_cuotas": 0.5576,
-  "log_loss_validacion": 0.9573,
+  "fecha_corte": "2024-08-23",
+  "precision_validacion": 0.539,
+  "precision_linea_base_elo": 0.5224,
+  "precision_mercado_cuotas": 0.5569,
+  "log_loss_validacion": 0.9614,
   "n_equipos": 29,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -21,29 +21,29 @@
   ],
   "medias_cuotas": {},
   "roi_sim": {
-    "n_apuestas": 348,
-    "roi_pct": -7.22,
-    "aciertos": 191,
-    "roi_pct_pinnacle": -3.11,
-    "n_con_pinnacle": 257
+    "n_apuestas": 347,
+    "roi_pct": -7.5,
+    "aciertos": 187,
+    "roi_pct_pinnacle": -3.4,
+    "n_con_pinnacle": 253
   },
   "mesm": {
-    "n_val_con_cuotas": 590,
-    "acc_prod": 0.5373,
-    "acc_mesm": 0.5508,
-    "ll_prod": 0.9564,
-    "ll_mesm": 0.9491,
+    "n_val_con_cuotas": 589,
+    "acc_prod": 0.5416,
+    "acc_mesm": 0.5518,
+    "ll_prod": 0.9597,
+    "ll_mesm": 0.9521,
     "adoptado": true
   },
   "imt": {
     "coef": {
-      "alpha": 1.9375,
-      "beta": -0.2545,
-      "gamma": 0.088,
-      "delta": 0.482
+      "alpha": 1.9457,
+      "beta": -0.245,
+      "gamma": 0.0883,
+      "delta": 0.5015
     },
-    "intercepto": 0.3426,
-    "correlacion": 0.3609,
-    "n": 2466
+    "intercepto": 0.3417,
+    "correlacion": 0.3629,
+    "n": 2467
   }
 }
