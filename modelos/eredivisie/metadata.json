@@ -1,12 +1,12 @@
 {
   "liga": "Eredivisie",
-  "n_train": 1199,
-  "n_validacion": 304,
-  "fecha_corte": "2025-08-24",
-  "precision_validacion": 0.5066,
-  "precision_linea_base_elo": 0.4967,
-  "precision_mercado_cuotas": 0.5298,
-  "log_loss_validacion": 1.1237,
+  "n_train": 1204,
+  "n_validacion": 301,
+  "fecha_corte": "2025-08-29",
+  "precision_validacion": 0.4917,
+  "precision_linea_base_elo": 0.4917,
+  "precision_mercado_cuotas": 0.5214,
+  "log_loss_validacion": 1.134,
   "n_equipos": 24,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -19,35 +19,35 @@
     "ELO_ACC_DIFF"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4531,
+    "PROB_IMP_H": 0.4537,
     "PROB_IMP_D": 0.226,
-    "PROB_IMP_A": 0.3209,
-    "OVERROUND": 0.0568
+    "PROB_IMP_A": 0.3203,
+    "OVERROUND": 0.0569
   },
   "roi_sim": {
-    "n_apuestas": 110,
-    "roi_pct": -3.5,
-    "aciertos": 54,
-    "roi_pct_pinnacle": 35.65,
-    "n_con_pinnacle": 43
+    "n_apuestas": 112,
+    "roi_pct": -7.59,
+    "aciertos": 52,
+    "roi_pct_pinnacle": 45.45,
+    "n_con_pinnacle": 42
   },
   "mesm": {
-    "n_val_con_cuotas": 285,
-    "acc_prod": 0.5158,
-    "acc_mesm": 0.5193,
-    "ll_prod": 1.1256,
-    "ll_mesm": 1.0002,
+    "n_val_con_cuotas": 280,
+    "acc_prod": 0.4964,
+    "acc_mesm": 0.5286,
+    "ll_prod": 1.1383,
+    "ll_mesm": 0.9941,
     "adoptado": true
   },
   "imt": {
     "coef": {
-      "alpha": 2.3051,
-      "beta": -0.5285,
-      "gamma": -0.5413,
-      "delta": 0.64
+      "alpha": 2.3182,
+      "beta": -0.5191,
+      "gamma": -0.5704,
+      "delta": 0.6356
     },
-    "intercepto": 0.404,
-    "correlacion": 0.3985,
-    "n": 1245
+    "intercepto": 0.4081,
+    "correlacion": 0.4006,
+    "n": 1250
   }
 }

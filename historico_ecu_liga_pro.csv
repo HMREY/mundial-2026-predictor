@@ -1,5 +1,4 @@
 date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre,odd_home,odd_draw,odd_away,tournament,stadium,MATCH_ID,elo_diff,home_xg,away_xg,home_shots_on,away_shots_on,home_shots_off,away_shots_off,home_possession,away_possession,home_yellow,away_yellow,home_red,away_red,home_corners,away_corners
-2021-07-10 22:00:00,Barcelona SC,Emelec,1.0,1.0,Quito,Ecuador,Estadio Banco Pichincha,,,,LigaPro Serie A,,20210710_Barcelona-SC_Emelec,0.0,1.99,0.71,5,3,8,5,52.0,48.0,2,0,0,0,3,3
 2021-07-10 22:00:00,Independiente del Valle,Universidad Católica (Quito),2.0,3.0,Quito,Ecuador,Estadio Banco Guayaquil,,,,LigaPro Serie A,,20210710_Independiente-del-Valle_Universidad-Católica-(Quito),0.0,1.44,1.81,5,7,10,14,48.4,51.6,0,1,1,0,6,7
 2021-07-17 00:00:00,Técnico Universitario,Liga de Quito,0.0,1.0,Ambato,Ecuador,Estadio Universidad Indoamérica Bellavista,,,,LigaPro Serie A,,20210717_Técnico-Universitario_Liga-de-Quito,0.0,1.46,1.08,4,4,8,9,52.6,47.4,2,2,0,0,6,4
 2021-07-17 17:30:00,Mushuc Runa,Delfín,6.0,1.0,Ambato,Ecuador,Cooperativa de Ahorro y Crédito Mushuc Runa,,,,LigaPro Serie A,,20210717_Mushuc-Runa_Delfín,0.0,2.57,1.22,6,5,13,11,51.5,48.5,3,3,0,0,2,11
@@ -1374,3 +1373,5 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2026-08-22 19:00:00,Universidad Católica (Quito),Manta F.C.,5.0,1.0,Quito,Ecuador,Estadio Olímpico Atahualpa,,,,LigaPro Serie A,,20260822_Universidad-Católica-(Quito)_Manta-F.C.,182.59183607108957,1.85,0.71,5,1,10,3,57.9,42.1,2,3,0,1,4,3
 2026-08-22 21:30:00,Técnico Universitario,Guayaquil City FC,2.0,3.0,Ambato,Ecuador,Estadio Bellavista,,,,LigaPro Serie A,,20260822_Técnico-Universitario_Guayaquil-City-FC,-32.93120750101389,2.09,2.1,5,6,11,13,51.3,48.7,1,0,1,0,9,5
 2026-08-23 00:00:00,Barcelona SC,Orense,3.0,0.0,Quito,Ecuador,Estadio Banco Pichincha,,,,LigaPro Serie A,,20260823_Barcelona-SC_Orense,54.59000823332326,1.68,1.29,6,2,13,5,53.7,46.3,3,1,0,0,7,1
+2026-08-23 20:30:00,Delfín,Aucas,0.0,1.0,Manta,Ecuador,Estadio Jocay,,,,LigaPro Serie A,,20260823_Delfín_Aucas,-135.99948919186318,0.96,0.91,1,3,5,6,44.3,55.7,4,3,0,0,7,6
+2026-08-24 00:00:00,Liga de Quito,Emelec,2.0,0.0,Quito,Ecuador,Rodrigo Paz Delgado,,,,LigaPro Serie A,,20260824_Liga-de-Quito_Emelec,88.56682526635927,0.4,2.46,2,8,3,15,51.9,48.1,3,2,0,0,1,7

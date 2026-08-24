@@ -1,12 +1,12 @@
 {
   "liga": "Serie A",
-  "n_train": 876,
-  "n_validacion": 223,
-  "fecha_corte": "2025-12-28",
-  "precision_validacion": 0.5561,
-  "precision_linea_base_elo": 0.5336,
-  "precision_mercado_cuotas": 0.5708,
-  "log_loss_validacion": 0.9875,
+  "n_train": 882,
+  "n_validacion": 221,
+  "fecha_corte": "2026-01-02",
+  "precision_validacion": 0.552,
+  "precision_linea_base_elo": 0.5339,
+  "precision_mercado_cuotas": 0.5634,
+  "log_loss_validacion": 0.9975,
   "n_equipos": 25,
   "familia_modelo": "beta",
   "features_extra_cols": [
@@ -18,22 +18,22 @@
     "ELO_ACC_DIFF"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.425,
-    "PROB_IMP_D": 0.262,
-    "PROB_IMP_A": 0.313,
-    "OVERROUND": 0.0547
+    "PROB_IMP_H": 0.4249,
+    "PROB_IMP_D": 0.2619,
+    "PROB_IMP_A": 0.3133,
+    "OVERROUND": 0.0548
   },
   "roi_sim": {
-    "n_apuestas": 70,
-    "roi_pct": 1.37,
-    "aciertos": 31
+    "n_apuestas": 84,
+    "roi_pct": 1.92,
+    "aciertos": 37
   },
   "mesm": {
-    "n_val_con_cuotas": 219,
-    "acc_prod": 0.5525,
-    "acc_mesm": 0.5708,
-    "ll_prod": 0.9862,
-    "ll_mesm": 0.9485,
+    "n_val_con_cuotas": 213,
+    "acc_prod": 0.5493,
+    "acc_mesm": 0.5634,
+    "ll_prod": 0.9952,
+    "ll_mesm": 0.9628,
     "adoptado": true
   },
   "imt": null
