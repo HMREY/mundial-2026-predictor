@@ -1,12 +1,12 @@
 {
   "liga": "Superliga",
   "n_train": 1283,
-  "n_validacion": 323,
+  "n_validacion": 324,
   "fecha_corte": "2024-11-10",
-  "precision_validacion": 0.5263,
-  "precision_linea_base_elo": 0.4892,
+  "precision_validacion": 0.5216,
+  "precision_linea_base_elo": 0.4907,
   "precision_mercado_cuotas": 0.522,
-  "log_loss_validacion": 1.0307,
+  "log_loss_validacion": 1.0324,
   "n_equipos": 19,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,18 +22,18 @@
     "OVERROUND": 0.0604
   },
   "roi_sim": {
-    "n_apuestas": 94,
-    "roi_pct": 2.13,
-    "aciertos": 43,
-    "roi_pct_pinnacle": 9.03,
-    "n_con_pinnacle": 66
+    "n_apuestas": 97,
+    "roi_pct": -0.67,
+    "aciertos": 44,
+    "roi_pct_pinnacle": 3.87,
+    "n_con_pinnacle": 69
   },
   "mesm": {
     "n_val_con_cuotas": 318,
-    "acc_prod": 0.5252,
+    "acc_prod": 0.5189,
     "acc_mesm": 0.5283,
-    "ll_prod": 1.0316,
-    "ll_mesm": 1.017,
+    "ll_prod": 1.0345,
+    "ll_mesm": 1.0171,
     "adoptado": true
   },
   "imt": null
