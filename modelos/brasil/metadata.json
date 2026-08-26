@@ -1,12 +1,12 @@
 {
   "liga": "Brasileirão Serie A",
-  "n_train": 2421,
-  "n_validacion": 609,
-  "fecha_corte": "2025-03-29",
-  "precision_validacion": 0.5189,
-  "precision_linea_base_elo": 0.4516,
-  "precision_mercado_cuotas": 0.5092,
-  "log_loss_validacion": 1.0007,
+  "n_train": 2407,
+  "n_validacion": 605,
+  "fecha_corte": "2025-03-30",
+  "precision_validacion": 0.5091,
+  "precision_linea_base_elo": 0.4512,
+  "precision_mercado_cuotas": 0.5058,
+  "log_loss_validacion": 1.0073,
   "n_equipos": 32,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -16,24 +16,24 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4547,
+    "PROB_IMP_H": 0.4544,
     "PROB_IMP_D": 0.2765,
-    "PROB_IMP_A": 0.2688,
+    "PROB_IMP_A": 0.2691,
     "OVERROUND": 0.0617
   },
   "roi_sim": {
-    "n_apuestas": 275,
-    "roi_pct": 3.89,
-    "aciertos": 127,
-    "roi_pct_pinnacle": 2.52,
-    "n_con_pinnacle": 158
+    "n_apuestas": 291,
+    "roi_pct": 1.63,
+    "aciertos": 134,
+    "roi_pct_pinnacle": 0.75,
+    "n_con_pinnacle": 162
   },
   "mesm": {
-    "n_val_con_cuotas": 599,
-    "acc_prod": 0.5175,
-    "acc_mesm": 0.5075,
-    "ll_prod": 1.0018,
-    "ll_mesm": 1.0278,
+    "n_val_con_cuotas": 605,
+    "acc_prod": 0.5091,
+    "acc_mesm": 0.5074,
+    "ll_prod": 1.0073,
+    "ll_mesm": 1.0021,
     "adoptado": false
   },
   "imt": null

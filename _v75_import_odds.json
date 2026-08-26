@@ -1,6 +1,6 @@
 {
- "generado": "2026-08-25T06:49:40Z",
- "filas_insertadas": 136510,
+ "generado": "2026-08-26T06:44:55Z",
+ "filas_insertadas": 136381,
  "ligas_con_cuota": 36,
  "ligas_sin_cuota": [
   "afc_champions",
@@ -35,8 +35,8 @@
  ],
  "por_liga": {
   "argentina": {
-   "filas": 7227,
-   "partidos": 3805
+   "filas": 7214,
+   "partidos": 3806
   },
   "aut_bundesliga": {
    "filas": 3009,
@@ -47,20 +47,20 @@
    "partidos": 1547
   },
   "brasil": {
-   "filas": 5905,
-   "partidos": 3087
+   "filas": 5879,
+   "partidos": 3079
   },
   "bundesliga": {
    "filas": 2904,
    "partidos": 1530
   },
   "china": {
-   "filas": 3545,
-   "partidos": 1874
+   "filas": 3549,
+   "partidos": 1880
   },
   "dinamarca": {
-   "filas": 3136,
-   "partidos": 1637
+   "filas": 3128,
+   "partidos": 1636
   },
   "eng_championship": {
    "filas": 5238,
@@ -87,8 +87,8 @@
    "partidos": 2310
   },
   "finlandia": {
-   "filas": 2543,
-   "partidos": 1334
+   "filas": 2533,
+   "partidos": 1335
   },
   "fra_ligue2": {
    "filas": 3294,
@@ -103,40 +103,40 @@
    "partidos": 1189
   },
   "irlanda": {
-   "filas": 2590,
-   "partidos": 1370
+   "filas": 2582,
+   "partidos": 1368
   },
   "ita_serie_b": {
    "filas": 3510,
    "partidos": 1900
   },
   "jpn_j1": {
-   "filas": 4998,
-   "partidos": 2515
+   "filas": 4972,
+   "partidos": 2507
   },
   "laliga": {
    "filas": 3609,
    "partidos": 1900
   },
   "liga_mx": {
-   "filas": 5050,
-   "partidos": 2651
+   "filas": 5023,
+   "partidos": 2642
   },
   "ligue_1": {
    "filas": 3203,
    "partidos": 1678
   },
   "mls": {
-   "filas": 7117,
-   "partidos": 3716
+   "filas": 7126,
+   "partidos": 3728
   },
   "noruega": {
    "filas": 3674,
    "partidos": 1922
   },
   "polonia": {
-   "filas": 4497,
-   "partidos": 2361
+   "filas": 4488,
+   "partidos": 2360
   },
   "premier": {
    "filas": 2110,
@@ -147,8 +147,8 @@
    "partidos": 3060
   },
   "rumania": {
-   "filas": 4662,
-   "partidos": 2462
+   "filas": 4656,
+   "partidos": 2463
   },
   "rus_premier": {
    "filas": 3711,
@@ -167,8 +167,8 @@
    "partidos": 1140
   },
   "suecia": {
-   "filas": 3711,
-   "partidos": 1931
+   "filas": 3702,
+   "partidos": 1930
   },
   "suiza": {
    "filas": 3026,
