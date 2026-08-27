@@ -3,10 +3,10 @@
   "n_train": 2407,
   "n_validacion": 605,
   "fecha_corte": "2025-03-30",
-  "precision_validacion": 0.5091,
+  "precision_validacion": 0.5058,
   "precision_linea_base_elo": 0.4512,
   "precision_mercado_cuotas": 0.5058,
-  "log_loss_validacion": 1.0073,
+  "log_loss_validacion": 1.0056,
   "n_equipos": 32,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,19 +22,19 @@
     "OVERROUND": 0.0617
   },
   "roi_sim": {
-    "n_apuestas": 291,
-    "roi_pct": 1.63,
-    "aciertos": 134,
-    "roi_pct_pinnacle": 0.75,
-    "n_con_pinnacle": 162
+    "n_apuestas": 285,
+    "roi_pct": -1.46,
+    "aciertos": 126,
+    "roi_pct_pinnacle": -3.46,
+    "n_con_pinnacle": 159
   },
   "mesm": {
     "n_val_con_cuotas": 605,
-    "acc_prod": 0.5091,
-    "acc_mesm": 0.5074,
-    "ll_prod": 1.0073,
-    "ll_mesm": 1.0021,
-    "adoptado": false
+    "acc_prod": 0.5058,
+    "acc_mesm": 0.5174,
+    "ll_prod": 1.0056,
+    "ll_mesm": 1.0015,
+    "adoptado": true
   },
   "imt": null
 }
