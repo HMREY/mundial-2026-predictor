@@ -1,12 +1,12 @@
 {
   "liga": "Russian Premier League",
   "n_train": 1524,
-  "n_validacion": 383,
+  "n_validacion": 384,
   "fecha_corte": "2024-12-07",
-  "precision_validacion": 0.53,
-  "precision_linea_base_elo": 0.5117,
+  "precision_validacion": 0.5286,
+  "precision_linea_base_elo": 0.5104,
   "precision_mercado_cuotas": 0.546,
-  "log_loss_validacion": 0.9709,
+  "log_loss_validacion": 0.9721,
   "n_equipos": 29,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
