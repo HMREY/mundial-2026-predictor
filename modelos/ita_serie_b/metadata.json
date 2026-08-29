@@ -1,12 +1,12 @@
 {
   "liga": "Serie B",
   "n_train": 1451,
-  "n_validacion": 363,
-  "fecha_corte": "2025-09-05",
-  "precision_validacion": 0.4215,
-  "precision_linea_base_elo": 0.4325,
+  "n_validacion": 364,
+  "fecha_corte": "2025-09-13",
+  "precision_validacion": 0.4203,
+  "precision_linea_base_elo": 0.4313,
   "precision_mercado_cuotas": 0.493,
-  "log_loss_validacion": 1.0477,
+  "log_loss_validacion": 1.0485,
   "n_equipos": 44,
   "familia_modelo": "ensemble",
   "features_extra_cols": [

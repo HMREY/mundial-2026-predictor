@@ -1,10 +1,10 @@
 {
   "liga": "Serie A",
   "n_train": 882,
-  "n_validacion": 223,
+  "n_validacion": 224,
   "fecha_corte": "2026-01-03",
-  "precision_validacion": 0.5471,
-  "precision_linea_base_elo": 0.5381,
+  "precision_validacion": 0.5491,
+  "precision_linea_base_elo": 0.5402,
   "precision_mercado_cuotas": 0.5634,
   "log_loss_validacion": 0.9992,
   "n_equipos": 25,

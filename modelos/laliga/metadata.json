@@ -1,12 +1,12 @@
 {
   "liga": "LaLiga",
   "n_train": 1491,
-  "n_validacion": 373,
-  "fecha_corte": "2025-08-24",
-  "precision_validacion": 0.5255,
-  "precision_linea_base_elo": 0.4718,
+  "n_validacion": 374,
+  "fecha_corte": "2025-08-25",
+  "precision_validacion": 0.5241,
+  "precision_linea_base_elo": 0.4706,
   "precision_mercado_cuotas": 0.5512,
-  "log_loss_validacion": 0.9823,
+  "log_loss_validacion": 0.9825,
   "n_equipos": 26,
   "familia_modelo": "ensemble",
   "features_extra_cols": [

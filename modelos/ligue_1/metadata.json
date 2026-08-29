@@ -1,12 +1,12 @@
 {
   "liga": "Ligue 1",
   "n_train": 1311,
-  "n_validacion": 328,
-  "fecha_corte": "2025-05-06",
-  "precision_validacion": 0.5091,
-  "precision_linea_base_elo": 0.5,
+  "n_validacion": 329,
+  "fecha_corte": "2025-05-10",
+  "precision_validacion": 0.5076,
+  "precision_linea_base_elo": 0.4985,
   "precision_mercado_cuotas": 0.5358,
-  "log_loss_validacion": 1.0152,
+  "log_loss_validacion": 1.0165,
   "n_equipos": 25,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
