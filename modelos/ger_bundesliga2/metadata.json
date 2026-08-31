@@ -1,12 +1,12 @@
 {
   "liga": "2. Bundesliga",
-  "n_train": 1186,
-  "n_validacion": 297,
-  "fecha_corte": "2025-08-27",
-  "precision_validacion": 0.4343,
-  "precision_linea_base_elo": 0.4377,
-  "precision_mercado_cuotas": 0.491,
-  "log_loss_validacion": 1.0571,
+  "n_train": 1188,
+  "n_validacion": 298,
+  "fecha_corte": "2025-08-30",
+  "precision_validacion": 0.4631,
+  "precision_linea_base_elo": 0.4362,
+  "precision_mercado_cuotas": 0.4946,
+  "log_loss_validacion": 1.0544,
   "n_equipos": 31,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,22 +22,22 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4312,
+    "PROB_IMP_H": 0.4311,
     "PROB_IMP_D": 0.2546,
-    "PROB_IMP_A": 0.3142,
+    "PROB_IMP_A": 0.3143,
     "OVERROUND": 0.0575
   },
   "roi_sim": {
-    "n_apuestas": 111,
-    "roi_pct": -17.58,
-    "aciertos": 39
+    "n_apuestas": 104,
+    "roi_pct": -3.62,
+    "aciertos": 42
   },
   "mesm": {
-    "n_val_con_cuotas": 279,
-    "acc_prod": 0.4373,
-    "acc_mesm": 0.4767,
-    "ll_prod": 1.0544,
-    "ll_mesm": 1.0482,
+    "n_val_con_cuotas": 277,
+    "acc_prod": 0.4693,
+    "acc_mesm": 0.4801,
+    "ll_prod": 1.0533,
+    "ll_mesm": 1.0425,
     "adoptado": true
   },
   "imt": null

@@ -1,10 +1,10 @@
 {
   "liga": "MLS",
   "n_train": 2935,
-  "n_validacion": 746,
+  "n_validacion": 748,
   "fecha_corte": "2025-04-20",
-  "precision_validacion": 0.4678,
-  "precision_linea_base_elo": 0.4477,
+  "precision_validacion": 0.4679,
+  "precision_linea_base_elo": 0.4479,
   "precision_mercado_cuotas": 0.5034,
   "log_loss_validacion": 1.0434,
   "n_equipos": 30,
@@ -28,18 +28,18 @@
     "OVERROUND": 0.0598
   },
   "roi_sim": {
-    "n_apuestas": 264,
-    "roi_pct": -10.16,
-    "aciertos": 101,
-    "roi_pct_pinnacle": -16.16,
+    "n_apuestas": 258,
+    "roi_pct": -14.12,
+    "aciertos": 95,
+    "roi_pct_pinnacle": -22.17,
     "n_con_pinnacle": 152
   },
   "mesm": {
     "n_val_con_cuotas": 733,
-    "acc_prod": 0.4707,
-    "acc_mesm": 0.4925,
-    "ll_prod": 1.0405,
-    "ll_mesm": 1.0545,
+    "acc_prod": 0.472,
+    "acc_mesm": 0.4898,
+    "ll_prod": 1.04,
+    "ll_mesm": 1.0558,
     "adoptado": false
   },
   "imt": null

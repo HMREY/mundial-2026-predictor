@@ -1,12 +1,12 @@
 {
   "liga": "Serie A",
   "n_train": 887,
-  "n_validacion": 223,
+  "n_validacion": 226,
   "fecha_corte": "2026-01-04",
-  "precision_validacion": 0.5426,
-  "precision_linea_base_elo": 0.5471,
+  "precision_validacion": 0.5575,
+  "precision_linea_base_elo": 0.5487,
   "precision_mercado_cuotas": 0.5673,
-  "log_loss_validacion": 0.9968,
+  "log_loss_validacion": 1.0011,
   "n_equipos": 25,
   "familia_modelo": "beta",
   "features_extra_cols": [
@@ -25,16 +25,16 @@
   },
   "roi_sim": {
     "n_apuestas": 73,
-    "roi_pct": 2.3,
-    "aciertos": 32
+    "roi_pct": 7.34,
+    "aciertos": 33
   },
   "mesm": {
     "n_val_con_cuotas": 208,
-    "acc_prod": 0.5481,
+    "acc_prod": 0.5673,
     "acc_mesm": 0.5625,
-    "ll_prod": 0.9913,
-    "ll_mesm": 0.9554,
-    "adoptado": true
+    "ll_prod": 0.9919,
+    "ll_mesm": 0.9563,
+    "adoptado": false
   },
   "imt": null
 }

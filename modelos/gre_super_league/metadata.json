@@ -1,12 +1,12 @@
 {
   "liga": "Super League Greece",
-  "n_train": 925,
-  "n_validacion": 232,
-  "fecha_corte": "2025-08-29",
-  "precision_validacion": 0.5388,
-  "precision_linea_base_elo": 0.5,
-  "precision_mercado_cuotas": 0.4955,
-  "log_loss_validacion": 0.9805,
+  "n_train": 928,
+  "n_validacion": 233,
+  "fecha_corte": "2025-08-31",
+  "precision_validacion": 0.5236,
+  "precision_linea_base_elo": 0.5021,
+  "precision_mercado_cuotas": 0.4931,
+  "log_loss_validacion": 0.9884,
   "n_equipos": 19,
   "familia_modelo": "blend_elo",
   "features_extra_cols": [
@@ -16,22 +16,22 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4389,
-    "PROB_IMP_D": 0.2559,
-    "PROB_IMP_A": 0.3052,
-    "OVERROUND": 0.0565
+    "PROB_IMP_H": 0.4386,
+    "PROB_IMP_D": 0.2558,
+    "PROB_IMP_A": 0.3056,
+    "OVERROUND": 0.0566
   },
   "roi_sim": {
-    "n_apuestas": 98,
-    "roi_pct": 7.42,
-    "aciertos": 50
+    "n_apuestas": 89,
+    "roi_pct": -3.84,
+    "aciertos": 42
   },
   "mesm": {
-    "n_val_con_cuotas": 220,
-    "acc_prod": 0.5318,
-    "acc_mesm": 0.5091,
-    "ll_prod": 0.9835,
-    "ll_mesm": 1.013,
+    "n_val_con_cuotas": 217,
+    "acc_prod": 0.5069,
+    "acc_mesm": 0.5161,
+    "ll_prod": 0.9918,
+    "ll_mesm": 1.0085,
     "adoptado": false
   },
   "imt": null
