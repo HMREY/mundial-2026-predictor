@@ -37,9 +37,9 @@
   "mesm": {
     "n_val_con_cuotas": 431,
     "acc_prod": 0.4756,
-    "acc_mesm": 0.4988,
+    "acc_mesm": 0.4942,
     "ll_prod": 1.0416,
-    "ll_mesm": 1.0313,
+    "ll_mesm": 1.0324,
     "adoptado": true
   },
   "imt": null
