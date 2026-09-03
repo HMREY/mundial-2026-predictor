@@ -1,12 +1,12 @@
 {
   "liga": "Leagues Cup",
   "n_train": 5323,
-  "n_validacion": 1335,
+  "n_validacion": 1337,
   "fecha_corte": "2025-04-06",
   "precision_validacion": 0.5034,
-  "precision_linea_base_elo": 0.4659,
+  "precision_linea_base_elo": 0.466,
   "precision_mercado_cuotas": null,
-  "log_loss_validacion": 1.0317,
+  "log_loss_validacion": 1.0316,
   "n_equipos": 52,
   "familia_modelo": "elo_logit",
   "features_extra_cols": [

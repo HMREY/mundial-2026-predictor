@@ -6,7 +6,7 @@
   "precision_validacion": 0.4597,
   "precision_linea_base_elo": 0.3987,
   "precision_mercado_cuotas": 0.4444,
-  "log_loss_validacion": 1.0671,
+  "log_loss_validacion": 1.0642,
   "n_equipos": 31,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,18 +22,18 @@
     "OVERROUND": 0.07
   },
   "roi_sim": {
-    "n_apuestas": 213,
-    "roi_pct": 4.13,
-    "aciertos": 90,
-    "roi_pct_pinnacle": 20.17,
-    "n_con_pinnacle": 90
+    "n_apuestas": 208,
+    "roi_pct": 1.51,
+    "aciertos": 86,
+    "roi_pct_pinnacle": 15.24,
+    "n_con_pinnacle": 89
   },
   "mesm": {
     "n_val_con_cuotas": 459,
     "acc_prod": 0.4597,
-    "acc_mesm": 0.4379,
-    "ll_prod": 1.0671,
-    "ll_mesm": 1.0534,
+    "acc_mesm": 0.4357,
+    "ll_prod": 1.0642,
+    "ll_mesm": 1.0532,
     "adoptado": false
   },
   "imt": null
