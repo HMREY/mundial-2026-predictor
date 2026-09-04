@@ -3,7 +3,7 @@
   "n_train": 1799,
   "n_validacion": 450,
   "fecha_corte": "2025-08-31",
-  "precision_validacion": 0.4733,
+  "precision_validacion": 0.4756,
   "precision_linea_base_elo": 0.4467,
   "precision_mercado_cuotas": 0.4988,
   "log_loss_validacion": 1.0422,
@@ -28,18 +28,18 @@
     "OVERROUND": 0.0587
   },
   "roi_sim": {
-    "n_apuestas": 161,
-    "roi_pct": -8.14,
+    "n_apuestas": 160,
+    "roi_pct": -7.57,
     "aciertos": 69,
     "roi_pct_pinnacle": -19.25,
     "n_con_pinnacle": 72
   },
   "mesm": {
     "n_val_con_cuotas": 431,
-    "acc_prod": 0.4733,
+    "acc_prod": 0.4756,
     "acc_mesm": 0.4942,
     "ll_prod": 1.0416,
-    "ll_mesm": 1.0315,
+    "ll_mesm": 1.0324,
     "adoptado": true
   },
   "imt": null
