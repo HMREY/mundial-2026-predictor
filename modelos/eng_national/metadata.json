@@ -1,12 +1,12 @@
 {
   "liga": "National League",
   "n_train": 2127,
-  "n_validacion": 537,
+  "n_validacion": 538,
   "fecha_corte": "2025-08-30",
-  "precision_validacion": 0.5102,
-  "precision_linea_base_elo": 0.4991,
+  "precision_validacion": 0.5112,
+  "precision_linea_base_elo": 0.5,
   "precision_mercado_cuotas": 0.5293,
-  "log_loss_validacion": 1.0659,
+  "log_loss_validacion": 1.0654,
   "n_equipos": 44,
   "familia_modelo": "ensemble",
   "features_extra_cols": [

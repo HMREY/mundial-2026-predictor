@@ -1,12 +1,12 @@
 {
   "liga": "Ligue 2",
   "n_train": 1362,
-  "n_validacion": 344,
+  "n_validacion": 349,
   "fecha_corte": "2025-05-02",
-  "precision_validacion": 0.407,
-  "precision_linea_base_elo": 0.407,
+  "precision_validacion": 0.4011,
+  "precision_linea_base_elo": 0.4069,
   "precision_mercado_cuotas": 0.4199,
-  "log_loss_validacion": 1.0707,
+  "log_loss_validacion": 1.0733,
   "n_equipos": 36,
   "familia_modelo": "ensemble",
   "features_extra_cols": [

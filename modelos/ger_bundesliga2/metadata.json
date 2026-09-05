@@ -1,12 +1,12 @@
 {
   "liga": "2. Bundesliga",
   "n_train": 1188,
-  "n_validacion": 298,
+  "n_validacion": 300,
   "fecha_corte": "2025-08-30",
-  "precision_validacion": 0.4631,
-  "precision_linea_base_elo": 0.4362,
+  "precision_validacion": 0.46,
+  "precision_linea_base_elo": 0.4333,
   "precision_mercado_cuotas": 0.4946,
-  "log_loss_validacion": 1.0544,
+  "log_loss_validacion": 1.0563,
   "n_equipos": 31,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
