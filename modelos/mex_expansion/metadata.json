@@ -6,7 +6,7 @@
   "precision_validacion": 0.4786,
   "precision_linea_base_elo": 0.4071,
   "precision_mercado_cuotas": null,
-  "log_loss_validacion": 1.0492,
+  "log_loss_validacion": 1.0513,
   "n_equipos": 22,
   "familia_modelo": "ensemble",
   "features_extra_cols": [],
