@@ -1,12 +1,12 @@
 {
   "liga": "EFL League Two",
   "n_train": 2165,
-  "n_validacion": 546,
+  "n_validacion": 556,
   "fecha_corte": "2025-08-23",
-  "precision_validacion": 0.5018,
-  "precision_linea_base_elo": 0.4725,
+  "precision_validacion": 0.5036,
+  "precision_linea_base_elo": 0.473,
   "precision_mercado_cuotas": 0.5149,
-  "log_loss_validacion": 1.0315,
+  "log_loss_validacion": 1.0306,
   "n_equipos": 42,
   "familia_modelo": "logistica",
   "features_extra_cols": [
@@ -35,9 +35,9 @@
   "mesm": {
     "n_val_con_cuotas": 505,
     "acc_prod": 0.5069,
-    "acc_mesm": 0.5168,
+    "acc_mesm": 0.5149,
     "ll_prod": 1.028,
-    "ll_mesm": 1.0218,
+    "ll_mesm": 1.023,
     "adoptado": true
   },
   "imt": null

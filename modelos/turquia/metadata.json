@@ -1,12 +1,12 @@
 {
   "liga": "Süper Lig",
-  "n_train": 797,
-  "n_validacion": 200,
-  "fecha_corte": "2025-11-29",
-  "precision_validacion": 0.525,
-  "precision_linea_base_elo": 0.49,
-  "precision_mercado_cuotas": 0.5489,
-  "log_loss_validacion": 1.1491,
+  "n_train": 801,
+  "n_validacion": 201,
+  "fecha_corte": "2025-12-04",
+  "precision_validacion": 0.5423,
+  "precision_linea_base_elo": 0.4826,
+  "precision_mercado_cuotas": 0.55,
+  "log_loss_validacion": 0.9939,
   "n_equipos": 25,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -16,22 +16,22 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4425,
-    "PROB_IMP_D": 0.246,
-    "PROB_IMP_A": 0.3114,
+    "PROB_IMP_H": 0.4421,
+    "PROB_IMP_D": 0.2461,
+    "PROB_IMP_A": 0.3118,
     "OVERROUND": 0.071
   },
   "roi_sim": {
-    "n_apuestas": 109,
-    "roi_pct": 2.82,
-    "aciertos": 61
+    "n_apuestas": 102,
+    "roi_pct": 8.69,
+    "aciertos": 59
   },
   "mesm": {
-    "n_val_con_cuotas": 184,
-    "acc_prod": 0.538,
-    "acc_mesm": 0.5326,
-    "ll_prod": 1.1557,
-    "ll_mesm": 0.9823,
+    "n_val_con_cuotas": 180,
+    "acc_prod": 0.5556,
+    "acc_mesm": 0.5333,
+    "ll_prod": 0.9814,
+    "ll_mesm": 0.9847,
     "adoptado": false
   },
   "imt": null

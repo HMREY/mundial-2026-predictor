@@ -1,12 +1,12 @@
 {
   "liga": "Ekstraklasa",
-  "n_train": 1828,
-  "n_validacion": 458,
-  "fecha_corte": "2025-03-01",
-  "precision_validacion": 0.4651,
-  "precision_linea_base_elo": 0.4039,
-  "precision_mercado_cuotas": 0.4476,
-  "log_loss_validacion": 1.06,
+  "n_train": 1835,
+  "n_validacion": 460,
+  "fecha_corte": "2025-03-07",
+  "precision_validacion": 0.4587,
+  "precision_linea_base_elo": 0.3978,
+  "precision_mercado_cuotas": 0.4457,
+  "log_loss_validacion": 1.0673,
   "n_equipos": 31,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -16,24 +16,24 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4238,
+    "PROB_IMP_H": 0.424,
     "PROB_IMP_D": 0.2704,
-    "PROB_IMP_A": 0.3058,
+    "PROB_IMP_A": 0.3056,
     "OVERROUND": 0.07
   },
   "roi_sim": {
-    "n_apuestas": 209,
-    "roi_pct": 4.09,
-    "aciertos": 88,
-    "roi_pct_pinnacle": 21.72,
-    "n_con_pinnacle": 83
+    "n_apuestas": 211,
+    "roi_pct": 1.92,
+    "aciertos": 87,
+    "roi_pct_pinnacle": 16.64,
+    "n_con_pinnacle": 86
   },
   "mesm": {
-    "n_val_con_cuotas": 458,
-    "acc_prod": 0.4651,
-    "acc_mesm": 0.441,
-    "ll_prod": 1.06,
-    "ll_mesm": 1.0535,
+    "n_val_con_cuotas": 460,
+    "acc_prod": 0.4587,
+    "acc_mesm": 0.4348,
+    "ll_prod": 1.0673,
+    "ll_mesm": 1.0547,
     "adoptado": false
   },
   "imt": null
