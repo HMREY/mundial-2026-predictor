@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-10T10:41:45Z",
+ "generado": "2026-09-11T10:37:55Z",
  "filas_insertadas": 136154,
  "ligas_con_cuota": 36,
  "ligas_sin_cuota": [
@@ -87,7 +87,7 @@
    "partidos": 2310
   },
   "finlandia": {
-   "filas": 2525,
+   "filas": 2519,
    "partidos": 1334
   },
   "fra_ligue2": {
@@ -127,8 +127,8 @@
    "partidos": 1678
   },
   "mls": {
-   "filas": 7105,
-   "partidos": 3732
+   "filas": 7111,
+   "partidos": 3742
   },
   "noruega": {
    "filas": 3642,

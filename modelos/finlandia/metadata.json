@@ -2,11 +2,11 @@
   "liga": "Veikkausliiga",
   "n_train": 1033,
   "n_validacion": 259,
-  "fecha_corte": "2025-05-24",
+  "fecha_corte": "2025-05-31",
   "precision_validacion": 0.5019,
-  "precision_linea_base_elo": 0.4903,
-  "precision_mercado_cuotas": 0.5135,
-  "log_loss_validacion": 1.0393,
+  "precision_linea_base_elo": 0.4981,
+  "precision_mercado_cuotas": 0.5212,
+  "log_loss_validacion": 1.0269,
   "n_equipos": 20,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -16,24 +16,24 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4195,
-    "PROB_IMP_D": 0.2611,
-    "PROB_IMP_A": 0.3195,
-    "OVERROUND": 0.0685
+    "PROB_IMP_H": 0.4191,
+    "PROB_IMP_D": 0.261,
+    "PROB_IMP_A": 0.3199,
+    "OVERROUND": 0.0686
   },
   "roi_sim": {
-    "n_apuestas": 118,
-    "roi_pct": -9.71,
-    "aciertos": 53,
-    "roi_pct_pinnacle": -3.7,
-    "n_con_pinnacle": 53
+    "n_apuestas": 113,
+    "roi_pct": -18.08,
+    "aciertos": 48,
+    "roi_pct_pinnacle": -0.63,
+    "n_con_pinnacle": 49
   },
   "mesm": {
     "n_val_con_cuotas": 259,
     "acc_prod": 0.5019,
-    "acc_mesm": 0.5135,
-    "ll_prod": 1.0393,
-    "ll_mesm": 1.0115,
+    "acc_mesm": 0.5097,
+    "ll_prod": 1.0269,
+    "ll_mesm": 0.999,
     "adoptado": true
   },
   "imt": null

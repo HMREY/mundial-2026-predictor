@@ -6777,3 +6777,17 @@ date,home_team,away_team,home_goals,away_goals,competicion,sede_ciudad,sede_pais
 2026-09-06 22:00:00,Club Leon,Club America,1.0,0.0,leagues_cup,"Houston, Texas",USA,Shell Energy Stadium,,,,Leagues Cup,,20260906_Club-Leon_Club-America,-122.60973285130399,1.4,0.26,5,0,11,0,45.5,54.5,4,2,0,0,4,5
 2026-09-07 00:00:00,Cruz Azul,Santos Laguna,1.0,0.0,liga_mx,,,,,,,Leagues Cup,,20260907_Cruz-Azul_Santos-Laguna,306.24195924881883,0.46,0.05,1,0,5,0,57.2,42.8,1,1,0,0,1,0
 2026-09-07 01:15:00,Toluca,Monterrey,2.0,0.0,leagues_cup,"Houston, Texas",USA,Shell Energy Stadium,,,,Leagues Cup,,20260907_Toluca_Monterrey,120.09477505950872,1.71,0.95,4,3,9,5,57.0,43.0,0,2,0,0,4,5
+2026-09-10 00:00:00,Atlanta Utd,Orlando City,2.0,3.0,mls,,,,,,,Leagues Cup,,20260910_Atlanta-Utd_Orlando-City,-101.67452088690675,1.51,1.01,5,5,8,11,46.5,53.5,0,2,0,0,5,8
+2026-09-10 00:00:00,Austin FC,Colorado Rapids,1.0,1.0,mls,,,,,,,Leagues Cup,,20260910_Austin-FC_Colorado-Rapids,4.92762763530186,1.21,0.67,5,3,11,7,52.2,47.8,2,1,0,0,6,7
+2026-09-10 00:00:00,CF Montreal,Charlotte,1.0,2.0,mls,,,,,,,Leagues Cup,,20260910_CF-Montreal_Charlotte,-150.14718799833918,1.02,1.72,4,6,9,13,48.2,51.8,3,0,0,0,8,7
+2026-09-10 00:00:00,Chicago Fire,Inter Miami,1.0,1.0,mls,,,,,,,Leagues Cup,,20260910_Chicago-Fire_Inter-Miami,-51.931676368351646,0.1,0.85,1,2,1,4,43.7,56.3,2,2,0,0,4,3
+2026-09-10 00:00:00,DC United,Columbus Crew,2.0,1.0,mls,,,,,,,Leagues Cup,,20260910_DC-United_Columbus-Crew,-69.90587295557407,0.43,1.33,2,4,3,7,44.2,55.8,2,0,0,0,4,3
+2026-09-10 00:00:00,Houston Dynamo,Real Salt Lake,2.0,1.0,mls,,,,,,,Leagues Cup,,20260910_Houston-Dynamo_Real-Salt-Lake,46.55601318265144,1.21,1.27,4,2,9,3,51.7,48.3,1,1,0,0,7,4
+2026-09-10 00:00:00,Los Angeles FC,New York Red Bulls,2.0,0.0,mls,,,,,,,Leagues Cup,,20260910_Los-Angeles-FC_New-York-Red-Bulls,113.62406074940418,1.28,0.05,5,0,12,0,53.0,47.0,1,0,0,0,4,6
+2026-09-10 00:00:00,Minnesota United,FC Dallas,1.0,2.0,mls,,,,,,,Leagues Cup,,20260910_Minnesota-United_FC-Dallas,-44.741603123489085,1.64,0.63,4,2,7,3,41.5,58.5,1,1,0,0,6,2
+2026-09-10 00:00:00,New York City,New England Revolution,1.0,2.0,mls,,,,,,,Leagues Cup,,20260910_New-York-City_New-England-Revolution,36.538944917409026,0.05,2.37,1,10,3,20,49.3,50.7,4,2,0,0,4,9
+2026-09-10 00:00:00,Philadelphia Union,FC Cincinnati,5.0,0.0,mls,,,,,,,Leagues Cup,,20260910_Philadelphia-Union_FC-Cincinnati,-51.42240247268546,2.03,1.65,8,5,19,10,42.4,57.6,0,1,0,0,13,5
+2026-09-10 00:00:00,Portland Timbers,St. Louis City,2.0,2.0,mls,,,,,,,Leagues Cup,,20260910_Portland-Timbers_St.-Louis-City,-1.0434404695754438,1.32,1.16,5,5,12,10,45.3,54.7,1,2,0,0,6,6
+2026-09-10 00:00:00,San Diego FC,San Jose Earthquakes,2.0,3.0,mls,,,,,,,Leagues Cup,,20260910_San-Diego-FC_San-Jose-Earthquakes,74.85167787896307,1.99,1.32,5,3,11,7,60.3,39.7,0,1,0,0,4,4
+2026-09-10 00:00:00,Toronto FC,Nashville SC,2.0,1.0,mls,,,,,,,Leagues Cup,,20260910_Toronto-FC_Nashville-SC,-134.06057693761022,1.23,1.11,3,3,7,8,36.4,63.6,0,1,0,0,6,3
+2026-09-10 00:00:00,Vancouver Whitecaps,Los Angeles Galaxy,3.0,0.0,mls,,,,,,,Leagues Cup,,20260910_Vancouver-Whitecaps_Los-Angeles-Galaxy,74.75749216642885,0.87,1.8,3,5,6,11,59.1,40.9,0,2,0,0,3,4
