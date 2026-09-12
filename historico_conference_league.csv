@@ -96,7 +96,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2021-12-09 20:00:00,Tottenham Hotspur,Stade Rennais,0.0,3.0,London,England,Tottenham Hotspur Stadium,,,,UEFA Conference League,,20211209_Tottenham-Hotspur_Stade-Rennais,-34.35101041982557,0.38,1.28,1,4,3,8,39.8,60.2,2,2,0,0,1,4
 2021-12-09 20:00:00,Vitesse,NS Mura,3.0,1.0,Arnhem,Netherlands,GelreDome,,,,UEFA Conference League,,20211209_Vitesse_NS-Mura,31.176322454866067,1.79,2.06,4,7,8,17,52.8,47.2,1,0,0,0,8,6
 2022-02-17 17:45:00,FC Midtjylland,PAOK,1.0,0.0,Herning,Denmark,MCH Arena,,,,UEFA Conference League,,20220217_FC-Midtjylland_PAOK,-20.88166971125088,1.89,1.17,7,4,16,9,42.5,57.5,1,1,0,0,9,2
-2022-02-17 17:45:00,Fenerbahce,Slavia Prague,2.0,3.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Conference League,,20220217_Fenerbahce_Slavia-Prague,-0.46398358321926025,0.62,1.55,2,5,5,12,50.4,49.6,7,1,0,0,6,5
+2022-02-17 17:45:00,Fenerbahce,Slavia Prague,2.0,3.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Conference League,,20220217_Fenerbahce_Slavia-Prague,-0.46398358321926025,0.62,1.55,2,5,5,12,50.4,49.6,7,1,0,0,6,5
 2022-02-17 17:45:00,PSV Eindhoven,Maccabi Tel-Aviv,1.0,0.0,Eindhoven,Netherlands,Philips Stadion,,,,UEFA Conference League,,20220217_PSV-Eindhoven_Maccabi-Tel-Aviv,-19.659579007983666,1.12,0.93,4,3,9,7,47.0,53.0,4,0,0,0,6,4
 2022-02-17 17:45:00,Rapid Vienna,Vitesse,2.0,1.0,Wien,Austria,Allianz Stadion,,,,UEFA Conference League,,20220217_Rapid-Vienna_Vitesse,-11.641795771480702,1.04,0.91,4,2,10,7,49.8,50.2,0,2,0,0,3,7
 2022-02-17 20:00:00,Celtic,Bodo/Glimt,1.0,3.0,Glasgow,Scotland,Celtic Park,,,,UEFA Conference League,,20220217_Celtic_Bodo/Glimt,-31.63796624225779,1.69,2.48,6,9,13,18,55.7,44.3,3,2,0,1,4,10
@@ -283,7 +283,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2023-06-07 19:00:00,Fiorentina,West Ham United,1.0,2.0,Prague,Czechia,Fortuna Arena,,,,UEFA Conference League,,20230607_Fiorentina_West-Ham-United,-41.76832743352497,1.38,1.82,4,7,10,15,45.7,54.3,2,5,0,0,8,7
 2023-09-20 14:30:00,Lille,Olimpija Ljubljana,2.0,0.0,Lille,France,Decathlon Arena - Stade Pierre-Mauroy,,,,UEFA Conference League,,20230920_Lille_Olimpija-Ljubljana,0.0,1.35,1.22,4,3,10,6,51.6,48.4,2,3,0,0,4,7
 2023-09-21 16:45:00,Eintracht Frankfurt,Aberdeen,2.0,1.0,Frankfurt,Germany,Deutsche Bank Park,,,,UEFA Conference League,,20230921_Eintracht-Frankfurt_Aberdeen,0.0,0.46,0.06,2,1,6,1,61.6,38.4,1,1,0,0,3,3
-2023-09-21 16:45:00,Fenerbahce,FC Nordsjælland,3.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Conference League,,20230921_Fenerbahce_FC-Nordsjælland,-23.141513723242042,0.34,1.29,3,7,8,15,47.6,52.4,2,1,0,0,4,5
+2023-09-21 16:45:00,Fenerbahce,FC Nordsjælland,3.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Conference League,,20230921_Fenerbahce_FC-Nordsjælland,-23.141513723242042,0.34,1.29,3,7,8,15,47.6,52.4,2,1,0,0,4,5
 2023-09-21 16:45:00,Ferencvaros,Cukaricki Belgrade,3.0,1.0,Budapest,Hungary,Groupama Arena,,,,UEFA Conference League,,20230921_Ferencvaros_Cukaricki-Belgrade,0.0,1.4,0.98,4,3,9,7,42.3,57.7,4,3,0,0,6,5
 2023-09-21 16:45:00,HJK Helsinki,PAOK,2.0,3.0,Helsinki,Finland,Bolt Arena,,,,UEFA Conference League,,20230921_HJK-Helsinki_PAOK,-42.59611499866901,1.96,0.3,5,3,11,8,46.6,53.4,0,1,0,0,4,2
 2023-09-21 16:45:00,Legia Warsaw,Aston Villa,3.0,2.0,Warsaw,Poland,Stadion Legii Warszawa im. Jozefa Pilsudskiego,,,,UEFA Conference League,,20230921_Legia-Warsaw_Aston-Villa,0.0,0.63,0.69,3,3,7,8,55.1,44.9,1,0,0,0,4,1
@@ -316,7 +316,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2023-10-26 16:45:00,AZ Alkmaar,Aston Villa,1.0,4.0,Alkmaar,Netherlands,AFAS Stadion,,,,UEFA Conference League,,20231026_AZ-Alkmaar_Aston-Villa,58.12369299565921,1.04,1.43,3,4,8,7,52.4,47.6,6,3,0,0,4,6
 2023-10-26 16:45:00,Ballkani,FC Astana,1.0,2.0,Prishtina,Kosovo,Stadiumi Fadil Vokrri,,,,UEFA Conference League,,20231026_Ballkani_FC-Astana,-8.960142455580126,1.6,1.03,5,3,11,6,55.9,44.1,5,1,1,0,9,4
 2023-10-26 16:45:00,FC Lugano,Club Brugge,1.0,3.0,Zürich,Switzerland,Stadion Letzigrund,,,,UEFA Conference League,,20231026_FC-Lugano_Club-Brugge,-0.0009035649388806632,0.43,1.61,1,6,2,15,51.4,48.6,1,3,0,0,0,5
-2023-10-26 16:45:00,Fenerbahce,Ludogorets Razgrad,3.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Conference League,,20231026_Fenerbahce_Ludogorets-Razgrad,3.221686995738537,1.94,1.5,7,6,16,14,43.8,56.2,2,0,0,0,11,8
+2023-10-26 16:45:00,Fenerbahce,Ludogorets Razgrad,3.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Conference League,,20231026_Fenerbahce_Ludogorets-Razgrad,3.221686995738537,1.94,1.5,7,6,16,14,43.8,56.2,2,0,0,0,11,8
 2023-10-26 16:45:00,KAA Gent,Breidablik,5.0,0.0,Ghent,Belgium,Planet Group Arena,,,,UEFA Conference League,,20231026_KAA-Gent_Breidablik,47.584825141755346,0.59,1.9,5,5,12,10,56.3,43.7,2,1,0,0,3,6
 2023-10-26 16:45:00,KI Klaksvik,Olimpija Ljubljana,3.0,0.0,Tórshavn,Faroe Islands,Tórsvøllur,,,,UEFA Conference League,,20231026_KI-Klaksvik_Olimpija-Ljubljana,12.00838348084244,1.71,0.62,7,0,17,1,46.9,53.1,4,1,0,0,7,4
 2023-10-26 16:45:00,Lille,Slovan Bratislava,2.0,1.0,Lille,France,Decathlon Arena - Stade Pierre-Mauroy,,,,UEFA Conference League,,20231026_Lille_Slovan-Bratislava,-36.270107808722514,0.99,1.27,2,4,3,7,48.6,51.4,2,0,1,0,2,4
@@ -362,7 +362,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2023-11-30 20:00:00,FC Spartak Trnava,Ludogorets Razgrad,1.0,2.0,Trnava,Slovakia,City Arena - Stadión Antona Malatinského,,,,UEFA Conference League,,20231130_FC-Spartak-Trnava_Ludogorets-Razgrad,-32.970007097467715,0.05,1.36,1,3,2,6,49.4,50.6,1,4,0,0,4,3
 2023-11-30 20:00:00,Fiorentina,Racing Genk,2.0,1.0,Firenze,Italy,Artemio Franchi,,,,UEFA Conference League,,20231130_Fiorentina_Racing-Genk,63.09752965981852,0.53,0.74,2,3,2,9,53.7,46.3,3,0,0,0,1,5
 2023-12-14 17:45:00,Aberdeen,Eintracht Frankfurt,2.0,0.0,Aberdeen,Scotland,Pittodrie Stadium,,,,UEFA Conference League,,20231214_Aberdeen_Eintracht-Frankfurt,-32.036979108544756,1.31,0.18,3,0,5,1,46.6,53.4,2,1,0,0,4,2
-2023-12-14 17:45:00,Fenerbahce,FC Spartak Trnava,4.0,0.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Conference League,,20231214_Fenerbahce_FC-Spartak-Trnava,33.28517878907087,1.91,1.15,4,4,9,11,54.0,46.0,2,1,0,0,7,7
+2023-12-14 17:45:00,Fenerbahce,FC Spartak Trnava,4.0,0.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Conference League,,20231214_Fenerbahce_FC-Spartak-Trnava,33.28517878907087,1.91,1.15,4,4,9,11,54.0,46.0,2,1,0,0,7,7
 2023-12-14 17:45:00,Ferencvaros,Fiorentina,1.0,1.0,Budapest,Hungary,Groupama Arena,,,,UEFA Conference League,,20231214_Ferencvaros_Fiorentina,-62.8150955743547,0.77,1.56,2,5,5,10,54.6,45.4,1,1,0,0,2,4
 2023-12-14 17:45:00,Legia Warsaw,AZ Alkmaar,2.0,0.0,Warsaw,Poland,Stadion Legii Warszawa im. Jozefa Pilsudskiego,,,,UEFA Conference League,,20231214_Legia-Warsaw_AZ-Alkmaar,-29.608151621372144,1.13,1.54,4,5,9,14,52.7,47.3,2,2,0,0,9,7
 2023-12-14 17:45:00,Ludogorets Razgrad,FC Nordsjælland,1.0,0.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Conference League,,20231214_Ludogorets-Razgrad_FC-Nordsjælland,-11.014801057270915,0.82,1.18,2,3,4,7,51.4,48.6,1,2,0,0,1,1
@@ -401,7 +401,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2024-03-07 20:00:00,Maccabi Haifa,Fiorentina,3.0,4.0,Budapest,Hungary,Bozsik Aréna,,,,UEFA Conference League,,20240307_Maccabi-Haifa_Fiorentina,-103.03069851864393,1.38,1.35,3,4,5,11,44.7,55.3,5,3,0,0,2,5
 2024-03-07 20:00:00,Servette,Viktoria Plzen,0.0,0.0,Geneva,Switzerland,Stade de Genève,,,,UEFA Conference League,,20240307_Servette_Viktoria-Plzen,-48.50814138904866,0.83,1.32,4,3,7,6,47.9,52.1,0,4,0,0,6,8
 2024-03-07 20:00:00,Union St.-Gilloise,Fenerbahce,0.0,3.0,Brussels,Belgium,Lotto Park,,,,UEFA Conference League,,20240307_Union-St.-Gilloise_Fenerbahce,12.120320656008516,1.34,1.25,5,4,12,8,61.0,39.0,2,2,0,0,6,5
-2024-03-14 17:45:00,Fenerbahce,Union St.-Gilloise,0.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Conference League,,20240314_Fenerbahce_Union-St.-Gilloise,12.7165819665438,1.23,0.65,4,2,10,3,56.8,43.2,1,3,0,0,4,8
+2024-03-14 17:45:00,Fenerbahce,Union St.-Gilloise,0.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Conference League,,20240314_Fenerbahce_Union-St.-Gilloise,12.7165819665438,1.23,0.65,4,2,10,3,56.8,43.2,1,3,0,0,4,8
 2024-03-14 17:45:00,Fiorentina,Maccabi Haifa,1.0,1.0,Firenze,Italy,Artemio Franchi,,,,UEFA Conference League,,20240314_Fiorentina_Maccabi-Haifa,120.11512897810962,0.61,0.16,2,1,4,3,55.2,44.8,3,0,0,0,3,2
 2024-03-14 17:45:00,PAOK,Dinamo Zagreb,5.0,1.0,Thessaloniki,Greece,Toumba Stadium,,,,UEFA Conference League,,20240314_PAOK_Dinamo-Zagreb,31.273931051207683,1.95,0.51,6,2,12,3,56.4,43.6,1,5,0,0,8,3
 2024-03-14 17:45:00,Viktoria Plzen,Servette,0.0,0.0,Plzen,Czechia,Doosan Arena,,,,UEFA Conference League,,20240314_Viktoria-Plzen_Servette,45.17892188932797,0.63,0.8,2,3,3,8,40.5,59.5,2,2,0,0,4,10
@@ -415,7 +415,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2024-04-11 19:00:00,Club Brugge,PAOK,1.0,0.0,Brugge,Belgium,Jan Breydelstadion,,,,UEFA Conference League,,20240411_Club-Brugge_PAOK,-10.170980622598108,1.36,0.69,4,5,10,10,54.7,45.3,1,0,1,0,5,5
 2024-04-18 16:45:00,Fiorentina,Viktoria Plzen,2.0,0.0,Firenze,Italy,Artemio Franchi,,,,UEFA Conference League,,20240418_Fiorentina_Viktoria-Plzen,28.121152454294588,1.16,0.63,4,1,7,3,52.4,47.6,2,2,0,0,2,3
 2024-04-18 16:45:00,Lille,Aston Villa,2.0,1.0,Lille,France,Decathlon Arena - Stade Pierre-Mauroy,,,,UEFA Conference League,,20240418_Lille_Aston-Villa,-17.28725693386741,0.83,1.22,2,3,6,4,53.4,46.6,0,1,0,0,3,4
-2024-04-18 19:00:00,Fenerbahce,Olympiacos,1.0,0.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Conference League,,20240418_Fenerbahce_Olympiacos,-49.87997508215267,0.53,1.96,1,6,3,12,51.8,48.2,0,4,0,0,5,11
+2024-04-18 19:00:00,Fenerbahce,Olympiacos,1.0,0.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Conference League,,20240418_Fenerbahce_Olympiacos,-49.87997508215267,0.53,1.96,1,6,3,12,51.8,48.2,0,4,0,0,5,11
 2024-04-18 19:00:00,PAOK,Club Brugge,0.0,2.0,Thessaloniki,Greece,Toumba Stadium,,,,UEFA Conference League,,20240418_PAOK_Club-Brugge,-14.531405193270984,0.05,1.06,0,4,0,8,45.6,54.4,1,2,0,0,0,2
 2024-05-02 19:00:00,Aston Villa,Olympiacos,2.0,4.0,Birmingham,England,Villa Park,,,,UEFA Conference League,,20240502_Aston-Villa_Olympiacos,22.70701699998449,0.34,0.91,2,4,5,8,48.2,51.8,1,4,0,1,9,3
 2024-05-02 19:00:00,Fiorentina,Club Brugge,3.0,2.0,Firenze,Italy,Artemio Franchi,,,,UEFA Conference League,,20240502_Fiorentina_Club-Brugge,18.46917951585897,0.91,1.72,3,5,6,11,57.8,42.2,1,4,0,1,3,4

@@ -319,3 +319,7 @@ fecha,temporada,home,away,runs_home,runs_away,gana_home,odd_home,odd_away,fase
 2026-09-10,2026,Kia Tigers,NC Dinos,1,2,False,1.84,1.91,regular
 2026-09-10,2026,Lotte Giants,KT Wiz,3,16,False,1.89,1.85,regular
 2026-09-10,2026,SSG Landers,Hanwha Eagles,4,3,True,1.6,2.3,regular
+2026-09-11,2026,Hanwha Eagles,NC Dinos,7,9,False,1.89,1.89,regular
+2026-09-11,2026,Kia Tigers,SSG Landers,5,2,True,1.48,2.64,regular
+2026-09-11,2026,Lotte Giants,KT Wiz,1,7,False,2.1,1.72,regular
+2026-09-11,2026,Samsung Lions,Kiwoom Heroes,6,4,True,1.18,4.8,regular

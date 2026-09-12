@@ -573,7 +573,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2021-09-16 19:00:00,PSV Eindhoven,Real Sociedad,2.0,2.0,Eindhoven,Netherlands,Philips Stadion,,,,UEFA Europa League,,20210916_PSV-Eindhoven_Real-Sociedad,37.755265485727705,1.12,2.24,4,5,9,10,51.1,48.9,4,1,0,0,9,5
 2021-09-16 19:00:00,Rangers,Lyon,0.0,2.0,Glasgow,Scotland,Ibrox Stadium,,,,UEFA Europa League,,20210916_Rangers_Lyon,79.20000963156826,0.88,0.5,2,2,6,4,50.0,50.0,2,1,0,0,1,4
 2021-09-30 16:45:00,Antwerp,Eintracht Frankfurt,0.0,1.0,Antwerp,Belgium,Bosuilstadion,,,,UEFA Europa League,,20210930_Antwerp_Eintracht-Frankfurt,-33.61322389028123,1.13,1.45,4,5,8,12,61.0,39.0,3,2,0,0,4,4
-2021-09-30 16:45:00,Fenerbahce,Olympiacos,0.0,3.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20210930_Fenerbahce_Olympiacos,-15.819352185132857,0.18,1.45,0,5,0,11,52.6,47.4,0,3,0,0,3,4
+2021-09-30 16:45:00,Fenerbahce,Olympiacos,0.0,3.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20210930_Fenerbahce_Olympiacos,-15.819352185132857,0.18,1.45,0,5,0,11,52.6,47.4,0,3,0,0,3,4
 2021-09-30 16:45:00,Legia Warsaw,Leicester City,1.0,0.0,Warsaw,Poland,Stadion Legii Warszawa im. Jozefa Pilsudskiego,,,,UEFA Europa League,,20210930_Legia-Warsaw_Leicester-City,-9.528433732205485,0.4,1.66,1,6,3,13,47.0,53.0,1,1,0,0,4,5
 2021-09-30 16:45:00,Lyon,Brøndby IF,3.0,0.0,Lyon,France,Groupama Stadium,,,,UEFA Europa League,,20210930_Lyon_Brøndby-IF,27.24348390774776,1.14,0.42,3,1,4,2,46.5,53.5,2,1,0,0,2,4
 2021-09-30 16:45:00,Napoli,Spartak Moscow,2.0,3.0,Napoli,Italy,Diego Armando Maradona,,,,UEFA Europa League,,20210930_Napoli_Spartak-Moscow,36.420565372116016,0.85,1.64,3,5,5,11,50.2,49.8,2,1,0,0,4,6
@@ -591,7 +591,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2021-10-19 14:30:00,Celtic,Ferencvaros,2.0,0.0,Glasgow,Scotland,Celtic Park,,,,UEFA Europa League,,20211019_Celtic_Ferencvaros,-16.773656345058725,0.82,1.07,2,3,4,7,51.0,49.0,2,2,0,0,3,3
 2021-10-20 14:30:00,Spartak Moscow,Leicester City,3.0,4.0,Moscow,Russia,Lukoil Arena,,,,UEFA Europa League,,20211020_Spartak-Moscow_Leicester-City,-9.285137199785822,0.96,1.59,3,6,7,13,48.4,51.6,1,5,0,0,2,4
 2021-10-21 16:45:00,FC Midtjylland,Red Star Belgrade,1.0,1.0,Herning,Denmark,MCH Arena,,,,UEFA Europa League,,20211021_FC-Midtjylland_Red-Star-Belgrade,-80.55038613828265,0.36,1.26,2,3,2,5,43.0,57.0,3,3,0,0,5,6
-2021-10-21 16:45:00,Fenerbahce,Antwerp,2.0,2.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20211021_Fenerbahce_Antwerp,17.498652450040936,0.89,1.47,3,5,4,10,45.6,54.4,0,2,0,0,3,3
+2021-10-21 16:45:00,Fenerbahce,Antwerp,2.0,2.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20211021_Fenerbahce_Antwerp,17.498652450040936,0.89,1.47,3,5,4,10,45.6,54.4,0,2,0,0,3,3
 2021-10-21 16:45:00,Lazio,Marseille,0.0,0.0,Roma,Italy,Stadio Olimpico,,,,UEFA Europa League,,20211021_Lazio_Marseille,-18.823614581534912,1.11,0.78,4,4,8,7,44.5,55.5,1,0,0,0,8,5
 2021-10-21 16:45:00,Ludogorets Razgrad,Braga,0.0,1.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Europa League,,20211021_Ludogorets-Razgrad_Braga,-123.34185028245679,0.48,1.43,1,6,2,12,49.9,50.1,2,1,0,0,4,3
 2021-10-21 16:45:00,Rapid Vienna,Dinamo Zagreb,2.0,1.0,Wien,Austria,Allianz Stadion,,,,UEFA Europa League,,20211021_Rapid-Vienna_Dinamo-Zagreb,-72.905014279954,2.07,1.38,8,4,17,8,54.3,45.7,2,0,0,0,5,10
@@ -637,7 +637,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2021-11-25 20:00:00,PSV Eindhoven,SK Sturm Graz,2.0,0.0,Eindhoven,Netherlands,Philips Stadion,,,,UEFA Europa League,,20211125_PSV-Eindhoven_SK-Sturm-Graz,59.40876273754452,0.74,0.95,3,2,6,3,47.5,52.5,1,0,0,0,0,3
 2021-11-25 20:00:00,Rangers,Sparta Prague,2.0,0.0,Glasgow,Scotland,Ibrox Stadium,,,,UEFA Europa League,,20211125_Rangers_Sparta-Prague,89.5424967750912,1.63,1.46,5,4,11,8,58.0,42.0,1,1,0,0,7,4
 2021-12-09 17:45:00,Antwerp,Olympiacos,1.0,0.0,Antwerp,Belgium,Bosuilstadion,,,,UEFA Europa League,,20211209_Antwerp_Olympiacos,-52.64455376095543,0.31,0.96,2,3,4,7,47.1,52.9,0,2,0,0,1,5
-2021-12-09 17:45:00,Fenerbahce,Eintracht Frankfurt,1.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20211209_Fenerbahce_Eintracht-Frankfurt,-59.01888809792763,0.78,1.85,4,6,11,11,47.3,52.7,1,2,0,0,5,11
+2021-12-09 17:45:00,Fenerbahce,Eintracht Frankfurt,1.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20211209_Fenerbahce_Eintracht-Frankfurt,-59.01888809792763,0.78,1.85,4,6,11,11,47.3,52.7,1,2,0,0,5,11
 2021-12-09 17:45:00,Legia Warsaw,Spartak Moscow,0.0,1.0,Warsaw,Poland,Stadion Legii Warszawa im. Jozefa Pilsudskiego,,,,UEFA Europa League,,20211209_Legia-Warsaw_Spartak-Moscow,-14.02532579177955,1.03,0.99,4,4,8,9,45.1,54.9,3,2,0,0,3,10
 2021-12-09 17:45:00,Lyon,Rangers,1.0,1.0,Lyon,France,Groupama Stadium,,,,UEFA Europa League,,20211209_Lyon_Rangers,-9.006994218303362,1.34,0.69,4,2,7,5,58.5,41.5,3,2,0,1,5,3
 2021-12-09 17:45:00,Napoli,Leicester City,3.0,2.0,Napoli,Italy,Diego Armando Maradona,,,,UEFA Europa League,,20211209_Napoli_Leicester-City,-10.645725383502622,1.37,1.0,5,3,12,8,54.9,45.1,1,2,0,0,4,5
@@ -698,7 +698,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2022-09-08 16:45:00,1. FC Union Berlin,Union St.-Gilloise,0.0,1.0,Berlin,Germany,Stadion An der Alten Försterei,,,,UEFA Europa League,,20220908_1.-FC-Union-Berlin_Union-St.-Gilloise,0.0,0.77,1.58,1,5,2,13,54.8,45.2,3,3,0,0,2,9
 2022-09-08 16:45:00,AEK Larnaca,Stade Rennais,1.0,2.0,Larnaca,Cyprus,AEK Arena,,,,UEFA Europa League,,20220908_AEK-Larnaca_Stade-Rennais,28.128083343542812,1.56,0.64,6,3,14,6,53.4,46.6,1,5,0,0,5,4
 2022-09-08 16:45:00,FC Zürich,Arsenal,1.0,2.0,St. Gallen,Switzerland,Kybunpark,,,,UEFA Europa League,,20220908_FC-Zürich_Arsenal,-81.18649653339912,0.48,1.29,1,5,3,10,39.2,60.8,0,4,0,1,4,5
-2022-09-08 16:45:00,Fenerbahce,Dynamo Kyiv,2.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20220908_Fenerbahce_Dynamo-Kyiv,-1.0743473575203097,1.06,1.8,4,7,8,17,46.0,54.0,2,2,0,0,8,11
+2022-09-08 16:45:00,Fenerbahce,Dynamo Kyiv,2.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20220908_Fenerbahce_Dynamo-Kyiv,-1.0743473575203097,1.06,1.8,4,7,8,17,46.0,54.0,2,2,0,0,8,11
 2022-09-08 16:45:00,HJK Helsinki,Real Betis,0.0,2.0,Helsinki,Finland,Bolt Arena,,,,UEFA Europa League,,20220908_HJK-Helsinki_Real-Betis,-11.835623528802671,0.19,0.73,0,2,0,6,47.3,52.7,1,3,0,0,2,4
 2022-09-08 16:45:00,Ludogorets Razgrad,AS Roma,2.0,1.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Europa League,,20220908_Ludogorets-Razgrad_AS-Roma,-188.9917942489642,1.42,1.21,5,3,11,7,43.3,56.7,3,1,0,0,8,7
 2022-09-08 16:45:00,Malmö FF,Braga,0.0,2.0,Malmo,Sweden,Eleda Stadion,,,,UEFA Europa League,,20220908_Malmö-FF_Braga,-32.813128283752576,1.55,1.3,4,6,8,15,53.8,46.2,5,0,0,1,7,6
@@ -738,7 +738,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2022-10-06 19:00:00,Arsenal,Bodo/Glimt,3.0,0.0,London,England,Emirates Stadium,,,,UEFA Europa League,,20221006_Arsenal_Bodo/Glimt,77.5907980660561,0.31,0.72,3,3,7,7,52.6,47.4,3,1,0,0,5,6
 2022-10-06 19:00:00,Braga,Union St.-Gilloise,1.0,2.0,Braga,Portugal,Estádio Municipal de Braga,,,,UEFA Europa League,,20221006_Braga_Union-St.-Gilloise,56.29679838720108,0.51,1.14,2,2,3,5,53.3,46.7,3,0,0,0,1,2
 2022-10-06 19:00:00,FC Midtjylland,Feyenoord Rotterdam,2.0,2.0,Herning,Denmark,MCH Arena,,,,UEFA Europa League,,20221006_FC-Midtjylland_Feyenoord-Rotterdam,11.470675681068087,0.51,1.39,2,4,5,10,49.6,50.4,3,0,0,0,5,9
-2022-10-06 19:00:00,Fenerbahce,AEK Larnaca,2.0,0.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20221006_Fenerbahce_AEK-Larnaca,4.302465969463356,1.21,1.29,3,5,7,13,52.4,47.6,0,1,0,0,8,2
+2022-10-06 19:00:00,Fenerbahce,AEK Larnaca,2.0,0.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20221006_Fenerbahce_AEK-Larnaca,4.302465969463356,1.21,1.29,3,5,7,13,52.4,47.6,0,1,0,0,8,2
 2022-10-06 19:00:00,Olympiacos,FK Qarabag,0.0,3.0,Piraeus,Greece,Georgios Karaiskakis Stadium,,,,UEFA Europa League,,20221006_Olympiacos_FK-Qarabag,11.230820988554115,1.03,1.56,4,4,8,8,50.2,49.8,2,3,0,0,2,3
 2022-10-06 19:00:00,SC Freiburg,Nantes,2.0,0.0,Freiburg im Breisgau,Germany,Europa-Park Stadion,,,,UEFA Europa League,,20221006_SC-Freiburg_Nantes,23.97762819040031,1.28,0.05,4,0,11,0,40.5,59.5,0,0,0,0,5,3
 2022-10-06 19:00:00,Stade Rennais,Dynamo Kyiv,2.0,1.0,Rennes,France,Roazhon Park,,,,UEFA Europa League,,20221006_Stade-Rennais_Dynamo-Kyiv,16.50810154545411,2.09,0.89,7,4,14,8,56.6,43.4,1,0,0,0,7,5
@@ -762,7 +762,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2022-10-27 16:45:00,1. FC Union Berlin,Braga,1.0,0.0,Berlin,Germany,Stadion An der Alten Försterei,,,,UEFA Europa League,,20221027_1.-FC-Union-Berlin_Braga,-61.8433378331099,0.74,0.74,2,1,2,2,43.2,56.8,1,2,0,0,0,2
 2022-10-27 16:45:00,AEK Larnaca,Dynamo Kyiv,3.0,3.0,Larnaca,Cyprus,AEK Arena,,,,UEFA Europa League,,20221027_AEK-Larnaca_Dynamo-Kyiv,29.018144084096548,1.3,1.56,6,4,15,10,51.9,48.1,2,5,0,0,4,4
 2022-10-27 16:45:00,FC Zürich,Bodo/Glimt,2.0,1.0,Zürich,Switzerland,Stadion Letzigrund,,,,UEFA Europa League,,20221027_FC-Zürich_Bodo/Glimt,-35.189515140914864,1.1,1.01,5,1,10,2,47.2,52.8,1,2,0,0,5,2
-2022-10-27 16:45:00,Fenerbahce,Stade Rennais,3.0,3.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20221027_Fenerbahce_Stade-Rennais,18.43235293788507,1.46,0.95,3,3,6,7,46.6,53.4,0,2,0,0,1,6
+2022-10-27 16:45:00,Fenerbahce,Stade Rennais,3.0,3.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20221027_Fenerbahce_Stade-Rennais,18.43235293788507,1.46,0.95,3,3,6,7,46.6,53.4,0,2,0,0,1,6
 2022-10-27 16:45:00,Lazio,FC Midtjylland,2.0,1.0,Roma,Italy,Stadio Olimpico,,,,UEFA Europa League,,20221027_Lazio_FC-Midtjylland,-10.816760053664893,1.53,0.63,6,1,13,2,45.6,54.4,3,1,0,0,8,3
 2022-10-27 16:45:00,Ludogorets Razgrad,Real Betis,0.0,1.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Europa League,,20221027_Ludogorets-Razgrad_Real-Betis,-112.37344378491684,0.61,0.12,2,1,3,3,52.3,47.7,2,0,0,0,1,2
 2022-10-27 16:45:00,Malmö FF,Union St.-Gilloise,0.0,2.0,Malmo,Sweden,Eleda Stadion,,,,UEFA Europa League,,20221027_Malmö-FF_Union-St.-Gilloise,-59.39128520252575,0.05,0.81,0,2,0,4,48.3,51.7,4,2,0,0,2,2
@@ -815,7 +815,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2023-03-09 20:00:00,Manchester United,Real Betis,4.0,1.0,Manchester,England,Old Trafford,,,,UEFA Europa League,,20230309_Manchester-United_Real-Betis,68.22074283862298,1.37,1.95,4,6,5,12,42.2,57.8,1,0,0,0,5,9
 2023-03-09 20:00:00,Sevilla,Fenerbahce,2.0,0.0,Sevilla,Spain,Ramón Sánchez-Pizjuán,,,,UEFA Europa League,,20230309_Sevilla_Fenerbahce,46.79332574449904,1.09,1.31,3,5,9,13,48.1,51.9,2,2,0,0,6,9
 2023-03-09 20:00:00,Shakhtar Donetsk,Feyenoord Rotterdam,1.0,1.0,Warsaw,Poland,Stadion Legii Warszawa im. Jozefa Pilsudskiego,,,,UEFA Europa League,,20230309_Shakhtar-Donetsk_Feyenoord-Rotterdam,48.96969257880437,1.25,0.15,3,1,7,3,43.5,56.5,1,2,0,0,2,1
-2023-03-16 17:45:00,Fenerbahce,Sevilla,1.0,0.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20230316_Fenerbahce_Sevilla,-67.58036078358077,0.05,0.44,1,2,4,4,46.8,53.2,0,2,0,0,3,3
+2023-03-16 17:45:00,Fenerbahce,Sevilla,1.0,0.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20230316_Fenerbahce_Sevilla,-67.58036078358077,0.05,0.44,1,2,4,4,46.8,53.2,0,2,0,0,3,3
 2023-03-16 17:45:00,Feyenoord Rotterdam,Shakhtar Donetsk,7.0,1.0,Rotterdam,Netherlands,Stadion Feijenoord,,,,UEFA Europa League,,20230316_Feyenoord-Rotterdam_Shakhtar-Donetsk,-45.60920953856203,2.11,1.23,7,2,16,4,47.0,53.0,1,0,0,0,7,4
 2023-03-16 17:45:00,Real Betis,Manchester United,0.0,1.0,Sevilla,Spain,Benito Villamarín,,,,UEFA Europa League,,20230316_Real-Betis_Manchester-United,-87.56786545731461,0.93,0.94,3,2,7,4,51.8,48.2,3,1,0,0,6,3
 2023-03-16 17:45:00,SC Freiburg,Juventus,0.0,2.0,Freiburg im Breisgau,Germany,Europa-Park Stadion,,,,UEFA Europa League,,20230316_SC-Freiburg_Juventus,-1.6859140413555451,0.35,1.24,2,3,5,3,44.9,55.1,0,0,0,0,3,5
@@ -986,7 +986,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2024-09-25 19:00:00,Ludogorets Razgrad,Slavia Prague,0.0,2.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Europa League,,20240925_Ludogorets-Razgrad_Slavia-Prague,-136.3299737118939,0.76,0.87,0,2,1,5,46.8,53.2,2,1,0,1,5,3
 2024-09-25 19:00:00,Manchester United,FC Twente,1.0,1.0,Manchester,England,Old Trafford,,,,UEFA Europa League,,20240925_Manchester-United_FC-Twente,134.80388151888428,0.6,0.38,2,4,5,7,51.8,48.2,2,1,0,0,3,8
 2024-09-25 19:00:00,Nice,Real Sociedad,1.0,1.0,Nice,France,Allianz Riviera,,,,UEFA Europa League,,20240925_Nice_Real-Sociedad,-83.72824321602047,0.12,1.38,1,4,4,8,44.9,55.1,1,2,0,0,3,7
-2024-09-26 16:45:00,Fenerbahce,Union St.-Gilloise,2.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20240926_Fenerbahce_Union-St.-Gilloise,3.292637850469191,1.05,0.12,2,1,4,3,49.5,50.5,1,6,0,0,5,1
+2024-09-26 16:45:00,Fenerbahce,Union St.-Gilloise,2.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20240926_Fenerbahce_Union-St.-Gilloise,3.292637850469191,1.05,0.12,2,1,4,3,49.5,50.5,1,6,0,0,5,1
 2024-09-26 16:45:00,Malmö FF,Rangers,0.0,2.0,Malmo,Sweden,Eleda Stadion,,,,UEFA Europa League,,20240926_Malmö-FF_Rangers,-102.35420625856705,0.12,0.73,0,2,0,4,50.5,49.5,4,2,0,0,2,3
 2024-09-26 19:00:00,AS Roma,Athletic Club,1.0,1.0,Roma,Italy,Stadio Olimpico,,,,UEFA Europa League,,20240926_AS-Roma_Athletic-Club,109.26873344124033,1.56,1.37,5,3,11,6,49.6,50.4,3,0,0,0,4,3
 2024-09-26 19:00:00,Ajax Amsterdam,Besiktas,4.0,0.0,Amsterdam,Netherlands,Johan Cruijff Arena,,,,UEFA Europa League,,20240926_Ajax-Amsterdam_Besiktas,34.79205526087503,0.71,0.94,4,2,8,8,51.2,48.8,1,0,0,0,0,4
@@ -1026,7 +1026,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2024-10-24 19:00:00,Athletic Club,Slavia Prague,1.0,0.0,Bilbao,Spain,San Mamés,,,,UEFA Europa League,,20241024_Athletic-Club_Slavia-Prague,-45.84378449676797,1.16,0.7,5,2,11,6,49.2,50.8,1,1,0,0,8,4
 2024-10-24 19:00:00,FC Porto,TSG Hoffenheim,2.0,0.0,Porto,Portugal,Estádio do Dragão,,,,UEFA Europa League,,20241024_FC-Porto_TSG-Hoffenheim,-57.80313703716752,0.31,1.05,2,2,5,4,45.9,54.1,2,0,0,0,1,5
 2024-10-24 19:00:00,FC Twente,Lazio,0.0,2.0,Enschede,Netherlands,De Grolsch Veste,,,,UEFA Europa League,,20241024_FC-Twente_Lazio,2.0354142183600743,0.95,0.32,2,3,4,7,52.8,47.2,1,1,1,0,2,3
-2024-10-24 19:00:00,Fenerbahce,Manchester United,1.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20241024_Fenerbahce_Manchester-United,-78.14903065503131,1.8,1.38,6,3,13,7,52.6,47.4,3,2,0,0,8,6
+2024-10-24 19:00:00,Fenerbahce,Manchester United,1.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20241024_Fenerbahce_Manchester-United,-78.14903065503131,1.8,1.38,6,3,13,7,52.6,47.4,3,2,0,0,8,6
 2024-10-24 19:00:00,Lyon,Besiktas,0.0,1.0,Lyon,France,Groupama Stadium,,,,UEFA Europa League,,20241024_Lyon_Besiktas,123.48160684204981,0.48,1.62,0,5,0,11,52.8,47.2,4,2,0,1,0,7
 2024-10-24 19:00:00,Malmö FF,Olympiacos,0.0,1.0,Malmo,Sweden,Eleda Stadion,,,,UEFA Europa League,,20241024_Malmö-FF_Olympiacos,14.789531773183398,1.0,1.7,2,5,4,10,51.5,48.5,3,1,0,0,7,7
 2024-10-24 19:00:00,Rangers,FCSB,4.0,0.0,Glasgow,Scotland,Ibrox Stadium,,,,UEFA Europa League,,20241024_Rangers_FCSB,43.719389817437786,1.69,0.05,6,1,12,1,49.5,50.5,2,0,0,0,7,1
@@ -1067,7 +1067,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2024-11-28 20:00:00,Real Sociedad,Ajax Amsterdam,2.0,0.0,San Sebastian,Spain,Estadio Municipal de Anoeta,,,,UEFA Europa League,,20241128_Real-Sociedad_Ajax-Amsterdam,-11.322611821510009,1.88,0.39,5,1,11,2,54.4,45.6,1,1,0,0,7,4
 2024-11-28 20:00:00,Slavia Prague,Fenerbahce,1.0,2.0,Prague,Czechia,Fortuna Arena,,,,UEFA Europa League,,20241128_Slavia-Prague_Fenerbahce,2.0020408412196957,1.28,0.37,6,2,11,4,50.4,49.6,1,1,0,0,1,1
 2024-11-28 20:00:00,Tottenham Hotspur,AS Roma,2.0,2.0,London,England,Tottenham Hotspur Stadium,,,,UEFA Europa League,,20241128_Tottenham-Hotspur_AS-Roma,-24.338853746092582,0.52,2.2,2,6,5,12,51.4,48.6,2,5,0,0,2,2
-2024-12-11 15:30:00,Fenerbahce,Athletic Club,0.0,2.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20241211_Fenerbahce_Athletic-Club,0.06849556391148326,0.75,0.72,2,3,4,6,51.7,48.3,2,1,1,0,2,4
+2024-12-11 15:30:00,Fenerbahce,Athletic Club,0.0,2.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20241211_Fenerbahce_Athletic-Club,0.06849556391148326,0.75,0.72,2,3,4,6,51.7,48.3,2,1,1,0,2,4
 2024-12-12 17:45:00,AS Roma,Braga,3.0,0.0,Roma,Italy,Stadio Olimpico,,,,UEFA Europa League,,20241212_AS-Roma_Braga,47.17022881338539,1.84,0.91,4,4,7,8,49.4,50.6,3,1,0,0,5,7
 2024-12-12 17:45:00,Ludogorets Razgrad,AZ Alkmaar,2.0,2.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Europa League,,20241212_Ludogorets-Razgrad_AZ-Alkmaar,-118.70192156679036,1.11,1.0,4,2,7,5,40.3,59.7,2,4,0,0,6,1
 2024-12-12 17:45:00,Malmö FF,Galatasaray,2.0,2.0,Malmo,Sweden,Eleda Stadion,,,,UEFA Europa League,,20241212_Malmö-FF_Galatasaray,-119.40688755868632,1.66,1.46,6,6,12,11,46.9,53.1,2,1,0,0,6,5
@@ -1091,7 +1091,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2025-01-23 17:45:00,Bodo/Glimt,Maccabi Tel-Aviv,3.0,1.0,Bodø/Glimt,Norway,Aspmyra Stadion,,,,UEFA Europa League,,20250123_Bodo/Glimt_Maccabi-Tel-Aviv,24.441699115295705,1.25,1.76,5,6,10,12,45.7,54.3,3,0,0,0,8,7
 2025-01-23 17:45:00,FC Porto,Olympiacos,0.0,1.0,Porto,Portugal,Estádio do Dragão,,,,UEFA Europa League,,20250123_FC-Porto_Olympiacos,35.420322252742835,0.93,0.33,0,1,0,1,49.0,51.0,1,0,0,0,2,2
 2025-01-23 17:45:00,FK Qarabag,FCSB,2.0,3.0,Baku,Azerbaijan,Tofik Bakhramov Stadium,,,,UEFA Europa League,,20250123_FK-Qarabag_FCSB,-77.60147515189874,1.58,0.95,6,3,13,7,51.2,48.8,3,0,0,0,4,6
-2025-01-23 17:45:00,Fenerbahce,Lyon,0.0,0.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20250123_Fenerbahce_Lyon,-39.80357310764953,1.09,0.05,4,3,9,7,47.0,53.0,3,5,0,0,6,5
+2025-01-23 17:45:00,Fenerbahce,Lyon,0.0,0.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20250123_Fenerbahce_Lyon,-39.80357310764953,1.09,0.05,4,3,9,7,47.0,53.0,3,5,0,0,6,5
 2025-01-23 17:45:00,Malmö FF,FC Twente,2.0,3.0,Malmo,Sweden,Eleda Stadion,,,,UEFA Europa League,,20250123_Malmö-FF_FC-Twente,-46.80308347619234,1.88,2.05,6,7,12,16,51.9,48.1,2,0,1,0,7,9
 2025-01-23 17:45:00,TSG Hoffenheim,Tottenham Hotspur,2.0,3.0,Sinsheim,Germany,PreZero Arena,,,,UEFA Europa League,,20250123_TSG-Hoffenheim_Tottenham-Hotspur,-49.848588663200644,1.44,1.44,4,3,8,6,42.9,57.1,4,1,0,0,4,2
 2025-01-23 17:45:00,Viktoria Plzen,Anderlecht,2.0,0.0,Plzen,Czechia,Doosan Arena,,,,UEFA Europa League,,20250123_Viktoria-Plzen_Anderlecht,-28.07434303566879,1.49,0.59,5,4,12,8,44.3,55.7,1,0,0,0,4,7
@@ -1122,7 +1122,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2025-01-30 20:00:00,Slavia Prague,Malmö FF,2.0,2.0,Prague,Czechia,Fortuna Arena,,,,UEFA Europa League,,20250130_Slavia-Prague_Malmö-FF,78.77156189115817,1.45,0.8,6,3,14,5,56.4,43.6,3,1,0,0,8,4
 2025-01-30 20:00:00,Tottenham Hotspur,IF Elfsborg,3.0,0.0,London,England,Tottenham Hotspur Stadium,,,,UEFA Europa League,,20250130_Tottenham-Hotspur_IF-Elfsborg,75.68636596261763,0.96,0.77,3,3,7,7,55.7,44.3,0,3,0,0,3,5
 2025-02-13 17:45:00,FC Midtjylland,Real Sociedad,1.0,2.0,Herning,Denmark,MCH Arena,,,,UEFA Europa League,,20250213_FC-Midtjylland_Real-Sociedad,-51.140094240624876,1.85,0.22,6,2,13,6,50.6,49.4,2,2,0,1,3,9
-2025-02-13 17:45:00,Fenerbahce,Anderlecht,3.0,0.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20250213_Fenerbahce_Anderlecht,20.9191117172918,1.69,1.42,4,4,10,8,46.5,53.5,2,0,0,0,6,7
+2025-02-13 17:45:00,Fenerbahce,Anderlecht,3.0,0.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20250213_Fenerbahce_Anderlecht,20.9191117172918,1.69,1.42,4,4,10,8,46.5,53.5,2,0,0,0,6,7
 2025-02-13 17:45:00,Ferencvaros,Viktoria Plzen,1.0,0.0,Budapest,Hungary,Groupama Arena,,,,UEFA Europa League,,20250213_Ferencvaros_Viktoria-Plzen,-37.3059438547798,1.41,1.26,3,3,6,7,53.2,46.8,1,2,0,0,2,4
 2025-02-13 17:45:00,Union St.-Gilloise,Ajax Amsterdam,0.0,2.0,Brussels,Belgium,King Baudouin Stadium,,,,UEFA Europa League,,20250213_Union-St.-Gilloise_Ajax-Amsterdam,23.732230860909795,1.92,0.96,6,3,15,6,51.4,48.6,4,0,0,0,8,2
 2025-02-13 20:00:00,AZ Alkmaar,Galatasaray,4.0,1.0,Alkmaar,Netherlands,AFAS Stadion,,,,UEFA Europa League,,20250213_AZ-Alkmaar_Galatasaray,-7.049880103758142,1.65,1.51,6,5,14,12,55.6,44.4,1,1,1,0,8,3
@@ -1139,7 +1139,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2025-02-20 20:00:00,Viktoria Plzen,Ferencvaros,3.0,0.0,Plzen,Czechia,Doosan Arena,,,,UEFA Europa League,,20250220_Viktoria-Plzen_Ferencvaros,10.73879887163639,1.92,0.1,6,1,13,2,57.8,42.2,0,0,0,0,4,0
 2025-03-06 17:45:00,AZ Alkmaar,Tottenham Hotspur,1.0,0.0,Alkmaar,Netherlands,AFAS Stadion,,,,UEFA Europa League,,20250306_AZ-Alkmaar_Tottenham-Hotspur,-58.89040269562747,0.71,0.05,5,0,11,1,49.9,50.1,0,0,0,0,8,0
 2025-03-06 17:45:00,FCSB,Lyon,1.0,3.0,Bucuresti,Romania,National Arena,,,,UEFA Europa League,,20250306_FCSB_Lyon,-31.144847212404784,0.75,1.14,1,3,3,5,50.5,49.5,1,1,0,0,6,10
-2025-03-06 17:45:00,Fenerbahce,Rangers,1.0,3.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20250306_Fenerbahce_Rangers,-29.152493559386357,1.31,1.1,5,4,12,9,46.6,53.4,5,5,0,0,5,5
+2025-03-06 17:45:00,Fenerbahce,Rangers,1.0,3.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20250306_Fenerbahce_Rangers,-29.152493559386357,1.31,1.1,5,4,12,9,46.6,53.4,5,5,0,0,5,5
 2025-03-06 17:45:00,Real Sociedad,Manchester United,1.0,1.0,San Sebastian,Spain,Estadio Municipal de Anoeta,,,,UEFA Europa League,,20250306_Real-Sociedad_Manchester-United,-102.87108422350934,1.06,0.89,3,3,6,6,44.3,55.7,3,2,0,0,5,4
 2025-03-06 20:00:00,AS Roma,Athletic Club,2.0,1.0,Roma,Italy,Stadio Olimpico,,,,UEFA Europa League,,20250306_AS-Roma_Athletic-Club,49.98619870358061,1.24,0.95,2,4,6,10,55.0,45.0,0,6,0,1,3,7
 2025-03-06 20:00:00,Ajax Amsterdam,Eintracht Frankfurt,1.0,2.0,Amsterdam,Netherlands,Johan Cruijff Arena,,,,UEFA Europa League,,20250306_Ajax-Amsterdam_Eintracht-Frankfurt,-90.26013514401052,0.79,1.55,3,4,7,7,49.1,50.9,1,1,0,0,2,3
@@ -1188,7 +1188,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2025-10-02 16:45:00,Bologna,SC Freiburg,1.0,1.0,Bologna,Italy,Renato Dall'Ara,,,,UEFA Europa League,,20251002_Bologna_SC-Freiburg,-63.971167013106424,0.18,1.3,1,5,0,12,45.8,54.2,1,2,0,0,0,9
 2025-10-02 16:45:00,Celtic,Braga,0.0,2.0,Glasgow,Scotland,Celtic Park,,,,UEFA Europa League,,20251002_Celtic_Braga,-42.10937442594377,0.37,2.03,0,6,1,13,55.1,44.9,1,2,0,0,2,4
 2025-10-02 16:45:00,FCSB,Young Boys,0.0,2.0,Bucuresti,Romania,National Arena,,,,UEFA Europa League,,20251002_FCSB_Young-Boys,32.373981765228336,1.28,0.05,4,3,9,7,47.2,52.8,3,1,0,0,1,1
-2025-10-02 16:45:00,Fenerbahce,Nice,2.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20251002_Fenerbahce_Nice,127.4710580568642,1.19,0.82,3,1,4,1,46.9,53.1,1,3,0,0,3,3
+2025-10-02 16:45:00,Fenerbahce,Nice,2.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20251002_Fenerbahce_Nice,127.4710580568642,1.19,0.82,3,1,4,1,46.9,53.1,1,3,0,0,3,3
 2025-10-02 16:45:00,Ludogorets Razgrad,Real Betis,0.0,2.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Europa League,,20251002_Ludogorets-Razgrad_Real-Betis,-120.75087080410026,0.05,1.5,1,4,3,9,38.5,61.5,1,2,0,0,2,4
 2025-10-02 16:45:00,Panathinaikos,Go Ahead Eagles,1.0,2.0,Athens,Greece,Athens Olympic Stadium,,,,UEFA Europa League,,20251002_Panathinaikos_Go-Ahead-Eagles,-3.426807248850082,0.8,0.73,2,2,3,4,51.7,48.3,0,2,0,0,2,3
 2025-10-02 16:45:00,SK Brann,FC Utrecht,1.0,0.0,Bergen,Norway,Brann Stadium,,,,UEFA Europa League,,20251002_SK-Brann_FC-Utrecht,8.662466908259603,1.84,0.93,6,2,13,4,53.5,46.5,3,3,0,0,5,4
@@ -1204,7 +1204,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2025-10-02 19:00:00,SK Sturm Graz,Rangers,2.0,1.0,Graz,Austria,Merkur Arena,,,,UEFA Europa League,,20251002_SK-Sturm-Graz_Rangers,-108.64015910043236,1.73,1.18,6,2,14,5,45.5,54.5,3,0,0,0,6,4
 2025-10-23 16:45:00,Braga,Red Star Belgrade,2.0,0.0,Braga,Portugal,Estádio Municipal de Braga,,,,UEFA Europa League,,20251023_Braga_Red-Star-Belgrade,59.667163831251855,1.67,0.94,3,4,5,8,53.9,46.1,3,1,0,0,2,7
 2025-10-23 16:45:00,FCSB,Bologna,1.0,2.0,Bucuresti,Romania,National Arena,,,,UEFA Europa League,,20251023_FCSB_Bologna,25.339535160459036,0.05,1.31,1,4,0,8,48.7,51.3,0,2,1,0,1,9
-2025-10-23 16:45:00,Fenerbahce,VfB Stuttgart,1.0,0.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20251023_Fenerbahce_VfB-Stuttgart,43.36719892612018,0.05,1.24,1,3,5,6,46.5,53.5,1,1,0,0,1,5
+2025-10-23 16:45:00,Fenerbahce,VfB Stuttgart,1.0,0.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20251023_Fenerbahce_VfB-Stuttgart,43.36719892612018,0.05,1.24,1,3,5,6,46.5,53.5,1,1,0,0,1,5
 2025-10-23 16:45:00,Go Ahead Eagles,Aston Villa,2.0,1.0,Deventer,Netherlands,De Adelaarshorst,,,,UEFA Europa League,,20251023_Go-Ahead-Eagles_Aston-Villa,-23.133889314841554,1.07,1.46,3,3,8,5,50.6,49.4,1,1,0,0,9,6
 2025-10-23 16:45:00,Lyon,FC Basel,2.0,0.0,Lyon,France,Groupama Stadium,,,,UEFA Europa League,,20251023_Lyon_FC-Basel,39.17552851160599,1.19,0.26,6,0,12,1,50.8,49.2,1,1,0,0,6,1
 2025-10-23 16:45:00,RB Salzburg,Ferencvaros,2.0,3.0,Salzburg,Austria,Red Bull Arena Salzburg,,,,UEFA Europa League,,20251023_RB-Salzburg_Ferencvaros,-33.65433405482486,0.73,0.87,4,3,8,7,50.2,49.8,2,0,0,0,3,5
@@ -1241,7 +1241,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2025-11-27 17:45:00,AS Roma,FC Midtjylland,2.0,1.0,Roma,Italy,Olimpico,,,,UEFA Europa League,,20251127_AS-Roma_FC-Midtjylland,72.91570057528634,1.3,1.53,7,4,14,11,51.1,48.9,1,1,0,0,11,9
 2025-11-27 17:45:00,Aston Villa,Young Boys,2.0,1.0,Birmingham,England,Villa Park,,,,UEFA Europa League,,20251127_Aston-Villa_Young-Boys,15.602988730711104,1.65,0.23,5,1,11,3,50.3,49.7,2,1,0,0,6,2
 2025-11-27 17:45:00,FC Porto,Nice,3.0,0.0,Porto,Portugal,Estádio do Dragão,,,,UEFA Europa League,,20251127_FC-Porto_Nice,117.95313590956926,0.79,0.05,3,1,6,1,58.8,41.2,1,2,0,0,4,4
-2025-11-27 17:45:00,Fenerbahce,Ferencvaros,1.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20251127_Fenerbahce_Ferencvaros,42.60291336037949,1.8,1.96,5,6,11,14,52.6,47.4,1,0,0,0,1,2
+2025-11-27 17:45:00,Fenerbahce,Ferencvaros,1.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20251127_Fenerbahce_Ferencvaros,42.60291336037949,1.8,1.96,5,6,11,14,52.6,47.4,1,0,0,0,1,2
 2025-11-27 17:45:00,Feyenoord Rotterdam,Celtic,1.0,3.0,Rotterdam,Netherlands,De Kuip,,,,UEFA Europa League,,20251127_Feyenoord-Rotterdam_Celtic,-4.371496332284778,1.59,0.75,6,3,12,5,53.8,46.2,2,0,0,0,4,0
 2025-11-27 17:45:00,Lille,Dinamo Zagreb,4.0,0.0,Lille,France,Decathlon Arena - Stade Pierre-Mauroy,,,,UEFA Europa League,,20251127_Lille_Dinamo-Zagreb,-54.084008749910254,2.16,1.48,7,4,17,9,48.2,51.8,0,1,0,0,10,5
 2025-11-27 17:45:00,Ludogorets Razgrad,Celta Vigo,3.0,2.0,Razgrad,Bulgaria,Huvepharma Arena,,,,UEFA Europa League,,20251127_Ludogorets-Razgrad_Celta-Vigo,-130.53112399271276,0.75,0.73,3,2,7,4,50.9,49.1,1,2,0,0,5,4
@@ -1275,7 +1275,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2025-12-11 20:00:00,SC Freiburg,RB Salzburg,1.0,0.0,Freiburg im Breisgau,Germany,Europa-Park Stadion,,,,UEFA Europa League,,20251211_SC-Freiburg_RB-Salzburg,112.95697252950163,0.64,0.05,1,2,4,4,52.4,47.6,0,4,0,0,2,5
 2025-12-11 20:00:00,SK Brann,Fenerbahce,0.0,4.0,Bergen,Norway,Brann Stadium,,,,UEFA Europa League,,20251211_SK-Brann_Fenerbahce,-41.42127970169031,0.83,0.05,3,4,9,10,48.3,51.7,1,0,0,0,5,4
 2026-01-22 17:45:00,Bologna,Celtic,2.0,2.0,Bologna,Italy,Renato Dall'Ara,,,,UEFA Europa League,,20260122_Bologna_Celtic,30.095182721291167,1.64,0.44,5,2,12,5,52.7,47.3,0,1,0,0,6,7
-2026-01-22 17:45:00,Fenerbahce,Aston Villa,0.0,1.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20260122_Fenerbahce_Aston-Villa,19.354386701264275,1.77,1.23,4,5,9,11,49.2,50.8,0,3,0,0,3,11
+2026-01-22 17:45:00,Fenerbahce,Aston Villa,0.0,1.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20260122_Fenerbahce_Aston-Villa,19.354386701264275,1.77,1.23,4,5,9,11,49.2,50.8,0,3,0,0,3,11
 2026-01-22 17:45:00,Feyenoord Rotterdam,SK Sturm Graz,3.0,0.0,Rotterdam,Netherlands,De Kuip,,,,UEFA Europa League,,20260122_Feyenoord-Rotterdam_SK-Sturm-Graz,41.374370683629195,1.03,0.58,3,3,8,5,60.1,39.9,1,2,0,0,1,1
 2026-01-22 17:45:00,Malmö FF,Red Star Belgrade,0.0,1.0,Malmo,Sweden,Eleda Stadion,,,,UEFA Europa League,,20260122_Malmö-FF_Red-Star-Belgrade,-138.996729042271,0.61,0.63,3,1,7,1,43.1,56.9,1,2,0,0,2,6
 2026-01-22 17:45:00,PAOK,Real Betis,2.0,0.0,Thessaloniki,Greece,Toumba Stadium,,,,UEFA Europa League,,20260122_PAOK_Real-Betis,-94.73879522340303,1.02,1.18,3,5,5,11,49.5,50.5,0,1,0,0,4,8
@@ -1311,7 +1311,7 @@ date,home_team,away_team,home_goals,away_goals,sede_ciudad,sede_pais,sede_nombre
 2026-01-29 20:00:00,SK Sturm Graz,SK Brann,1.0,0.0,Graz,Austria,Merkur Arena,,,,UEFA Europa League,,20260129_SK-Sturm-Graz_SK-Brann,-88.75944187281493,1.59,0.26,4,2,8,6,47.7,52.3,1,0,0,0,12,2
 2026-01-29 20:00:00,VfB Stuttgart,Young Boys,3.0,2.0,Stuttgart,Germany,MHPArena,,,,UEFA Europa League,,20260129_VfB-Stuttgart_Young-Boys,17.27674274112792,0.8,0.76,3,2,8,5,48.5,51.5,0,1,0,0,5,3
 2026-02-19 17:45:00,Dinamo Zagreb,Racing Genk,1.0,3.0,Zagreb,Croatia,Maksimir Stadium,,,,UEFA Europa League,,20260219_Dinamo-Zagreb_Racing-Genk,6.629984228726471,0.11,1.24,2,6,4,12,49.3,50.7,2,1,0,0,5,6
-2026-02-19 17:45:00,Fenerbahce,Nottingham Forest,0.0,3.0,Istanbul,Türkiye,Ulker Stadyumu,,,,UEFA Europa League,,20260219_Fenerbahce_Nottingham-Forest,28.13630019793368,0.05,1.4,0,4,0,9,56.5,43.5,2,5,0,0,4,6
+2026-02-19 17:45:00,Fenerbahce,Nottingham Forest,0.0,3.0,Istanbul,Türkiye,Şükrü Saracoğlu Stadium,,,,UEFA Europa League,,20260219_Fenerbahce_Nottingham-Forest,28.13630019793368,0.05,1.4,0,4,0,9,56.5,43.5,2,5,0,0,4,6
 2026-02-19 17:45:00,PAOK,Celta Vigo,1.0,2.0,Thessaloniki,Greece,Toumba Stadium,,,,UEFA Europa League,,20260219_PAOK_Celta-Vigo,-17.210348267975178,0.65,1.49,3,5,7,10,46.7,53.3,1,2,0,0,4,7
 2026-02-19 17:45:00,SK Brann,Bologna,0.0,1.0,Bergen,Norway,Brann Stadium,,,,UEFA Europa League,,20260219_SK-Brann_Bologna,-46.07258522969619,0.61,1.41,1,5,1,12,49.0,51.0,2,0,0,0,2,5
 2026-02-19 20:00:00,Celtic,VfB Stuttgart,1.0,4.0,Glasgow,Scotland,Celtic Park,,,,UEFA Europa League,,20260219_Celtic_VfB-Stuttgart,-19.3548722515784,0.62,1.24,2,4,6,6,46.7,53.3,1,3,0,0,3,7

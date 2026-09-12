@@ -1,12 +1,12 @@
 {
   "liga": "National League",
   "n_train": 2137,
-  "n_validacion": 535,
-  "fecha_corte": "2025-09-01",
-  "precision_validacion": 0.5084,
-  "precision_linea_base_elo": 0.5009,
+  "n_validacion": 536,
+  "fecha_corte": "2025-09-02",
+  "precision_validacion": 0.5019,
+  "precision_linea_base_elo": 0.5,
   "precision_mercado_cuotas": 0.534,
-  "log_loss_validacion": 1.0673,
+  "log_loss_validacion": 1.0649,
   "n_equipos": 44,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -28,18 +28,18 @@
     "OVERROUND": 0.0856
   },
   "roi_sim": {
-    "n_apuestas": 168,
-    "roi_pct": -4.57,
-    "aciertos": 86,
-    "roi_pct_pinnacle": -36.65,
-    "n_con_pinnacle": 40
+    "n_apuestas": 153,
+    "roi_pct": -7.54,
+    "aciertos": 79,
+    "roi_pct_pinnacle": -33.09,
+    "n_con_pinnacle": 35
   },
   "mesm": {
     "n_val_con_cuotas": 485,
-    "acc_prod": 0.5155,
-    "acc_mesm": 0.5196,
-    "ll_prod": 1.0639,
-    "ll_mesm": 1.015,
+    "acc_prod": 0.5113,
+    "acc_mesm": 0.5237,
+    "ll_prod": 1.0615,
+    "ll_mesm": 1.0177,
     "adoptado": true
   },
   "imt": null

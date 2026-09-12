@@ -1,12 +1,12 @@
 {
   "liga": "LaLiga Hypermotion",
   "n_train": 1803,
-  "n_validacion": 452,
+  "n_validacion": 453,
   "fecha_corte": "2025-09-06",
-  "precision_validacion": 0.4801,
-  "precision_linea_base_elo": 0.4469,
+  "precision_validacion": 0.4812,
+  "precision_linea_base_elo": 0.4481,
   "precision_mercado_cuotas": 0.4988,
-  "log_loss_validacion": 1.0406,
+  "log_loss_validacion": 1.0398,
   "n_equipos": 39,
   "familia_modelo": "logistica",
   "features_extra_cols": [
@@ -39,7 +39,7 @@
     "acc_prod": 0.4778,
     "acc_mesm": 0.5012,
     "ll_prod": 1.041,
-    "ll_mesm": 1.0292,
+    "ll_mesm": 1.0293,
     "adoptado": true
   },
   "imt": null
