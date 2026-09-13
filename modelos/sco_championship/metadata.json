@@ -1,12 +1,12 @@
 {
   "liga": "Scottish Championship",
-  "n_train": 701,
-  "n_validacion": 178,
-  "fecha_corte": "2025-09-13",
-  "precision_validacion": 0.4551,
-  "precision_linea_base_elo": 0.4157,
-  "precision_mercado_cuotas": 0.4459,
-  "log_loss_validacion": 1.0824,
+  "n_train": 705,
+  "n_validacion": 177,
+  "fecha_corte": "2025-09-17",
+  "precision_validacion": 0.4407,
+  "precision_linea_base_elo": 0.4294,
+  "precision_mercado_cuotas": 0.4444,
+  "log_loss_validacion": 1.0875,
   "n_equipos": 19,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,22 +22,22 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4165,
-    "PROB_IMP_D": 0.2657,
-    "PROB_IMP_A": 0.3178,
+    "PROB_IMP_H": 0.416,
+    "PROB_IMP_D": 0.2658,
+    "PROB_IMP_A": 0.3181,
     "OVERROUND": 0.093
   },
   "roi_sim": {
-    "n_apuestas": 47,
-    "roi_pct": -1.55,
-    "aciertos": 16
+    "n_apuestas": 48,
+    "roi_pct": 18.37,
+    "aciertos": 19
   },
   "mesm": {
-    "n_val_con_cuotas": 157,
-    "acc_prod": 0.4522,
-    "acc_mesm": 0.4013,
-    "ll_prod": 1.0835,
-    "ll_mesm": 1.109,
+    "n_val_con_cuotas": 153,
+    "acc_prod": 0.4575,
+    "acc_mesm": 0.4444,
+    "ll_prod": 1.0828,
+    "ll_mesm": 1.0976,
     "adoptado": false
   },
   "imt": null

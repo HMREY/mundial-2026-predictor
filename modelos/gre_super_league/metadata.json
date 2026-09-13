@@ -1,12 +1,12 @@
 {
   "liga": "Super League Greece",
   "n_train": 934,
-  "n_validacion": 234,
-  "fecha_corte": "2025-09-13",
-  "precision_validacion": 0.5128,
-  "precision_linea_base_elo": 0.5,
+  "n_validacion": 235,
+  "fecha_corte": "2025-09-14",
+  "precision_validacion": 0.5106,
+  "precision_linea_base_elo": 0.4979,
   "precision_mercado_cuotas": 0.4882,
-  "log_loss_validacion": 0.9904,
+  "log_loss_validacion": 0.9921,
   "n_equipos": 19,
   "familia_modelo": "blend_elo",
   "features_extra_cols": [

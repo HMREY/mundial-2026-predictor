@@ -1,13 +1,13 @@
 {
   "deporte": "KBO",
-  "n_juegos": 12803,
-  "precision_validacion": 0.5478,
-  "precision_linea_base_elo": 0.5392,
-  "precision_linea_base_local": 0.5201,
-  "log_loss_validacion": 0.6858,
+  "n_juegos": 12814,
+  "precision_validacion": 0.5476,
+  "precision_linea_base_elo": 0.5367,
+  "precision_linea_base_local": 0.5187,
+  "log_loss_validacion": 0.6863,
   "linea_total_tipica": 9.0,
-  "validacion_desde": "2023-06-21",
-  "fecha_entrenamiento": "2026-09-12",
+  "validacion_desde": "2023-06-23",
+  "fecha_entrenamiento": "2026-09-13",
   "familia": "elo_pitcher_logit",
   "columnas_modelo": [
     0,
@@ -27,6 +27,6 @@
   },
   "capa": 2,
   "motivo_capa2": "bate al ELO pero no hay cuota de cierre histórica de KBO con la que validar ROI",
-  "sigma_margen": 4.889,
+  "sigma_margen": 4.893,
   "ventana_idf": 10
 }
