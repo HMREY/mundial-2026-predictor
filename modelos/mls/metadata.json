@@ -1,12 +1,12 @@
 {
   "liga": "MLS",
   "n_train": 2953,
-  "n_validacion": 742,
+  "n_validacion": 745,
   "fecha_corte": "2025-05-11",
-  "precision_validacion": 0.4609,
-  "precision_linea_base_elo": 0.4407,
+  "precision_validacion": 0.4591,
+  "precision_linea_base_elo": 0.4403,
   "precision_mercado_cuotas": 0.4959,
-  "log_loss_validacion": 1.0441,
+  "log_loss_validacion": 1.045,
   "n_equipos": 30,
   "familia_modelo": "ensemble",
   "features_extra_cols": [

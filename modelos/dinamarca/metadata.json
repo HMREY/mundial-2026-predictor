@@ -1,12 +1,12 @@
 {
   "liga": "Superliga",
-  "n_train": 1280,
+  "n_train": 1284,
   "n_validacion": 321,
-  "fecha_corte": "2025-02-16",
-  "precision_validacion": 0.514,
-  "precision_linea_base_elo": 0.486,
-  "precision_mercado_cuotas": 0.5188,
-  "log_loss_validacion": 1.0302,
+  "fecha_corte": "2025-02-17",
+  "precision_validacion": 0.5016,
+  "precision_linea_base_elo": 0.4798,
+  "precision_mercado_cuotas": 0.5158,
+  "log_loss_validacion": 1.0347,
   "n_equipos": 19,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,18 +22,18 @@
     "OVERROUND": 0.0605
   },
   "roi_sim": {
-    "n_apuestas": 103,
-    "roi_pct": 2.02,
-    "aciertos": 46,
-    "roi_pct_pinnacle": 6.29,
-    "n_con_pinnacle": 63
+    "n_apuestas": 114,
+    "roi_pct": -6.32,
+    "aciertos": 48,
+    "roi_pct_pinnacle": 0.41,
+    "n_con_pinnacle": 73
   },
   "mesm": {
-    "n_val_con_cuotas": 320,
-    "acc_prod": 0.5125,
-    "acc_mesm": 0.5188,
-    "ll_prod": 1.0313,
-    "ll_mesm": 1.0318,
+    "n_val_con_cuotas": 316,
+    "acc_prod": 0.5032,
+    "acc_mesm": 0.519,
+    "ll_prod": 1.0353,
+    "ll_mesm": 1.0328,
     "adoptado": true
   },
   "imt": null

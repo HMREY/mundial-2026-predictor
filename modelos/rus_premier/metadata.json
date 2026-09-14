@@ -1,12 +1,12 @@
 {
   "liga": "Russian Premier League",
   "n_train": 1542,
-  "n_validacion": 386,
-  "fecha_corte": "2025-03-07",
-  "precision_validacion": 0.5311,
-  "precision_linea_base_elo": 0.5155,
+  "n_validacion": 389,
+  "fecha_corte": "2025-03-08",
+  "precision_validacion": 0.5321,
+  "precision_linea_base_elo": 0.5167,
   "precision_mercado_cuotas": 0.5455,
-  "log_loss_validacion": 0.9749,
+  "log_loss_validacion": 0.9752,
   "n_equipos": 29,
   "familia_modelo": "ensemble",
   "features_extra_cols": [

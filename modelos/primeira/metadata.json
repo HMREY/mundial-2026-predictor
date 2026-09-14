@@ -1,12 +1,12 @@
 {
   "liga": "Primeira Liga",
   "n_train": 2428,
-  "n_validacion": 608,
+  "n_validacion": 610,
   "fecha_corte": "2024-09-14",
-  "precision_validacion": 0.5362,
-  "precision_linea_base_elo": 0.528,
+  "precision_validacion": 0.5361,
+  "precision_linea_base_elo": 0.5279,
   "precision_mercado_cuotas": 0.5524,
-  "log_loss_validacion": 0.9573,
+  "log_loss_validacion": 0.9564,
   "n_equipos": 29,
   "familia_modelo": "ensemble",
   "features_extra_cols": [

@@ -1636,3 +1636,7 @@ date,home_team,away_team,home_goals,away_goals,odd_home,odd_draw,odd_away,odd_ho
 2026-09-06,Sonderjyske,Horsens,2.0,5.0,2.22,3.33,2.95,,,,Superliga,,20260906_Sonderjyske_Horsens,83.90601778896394,1.57,1.06,5,5,14,10,54.3,45.7,1,3,0,0,6,8
 2026-09-07,Midtjylland,Nordsjaelland,2.0,2.0,1.92,3.77,3.32,,,,Superliga,,20260907_Midtjylland_Nordsjaelland,61.516384296938895,1.53,1.5,5,5,11,12,48.8,51.2,1,1,0,1,3,7
 2026-09-11,FC Copenhagen,Horsens,2.0,0.0,,,,,,,Superliga,,20260911_FC-Copenhagen_Horsens,229.98525674353186,1.51,1.21,5,4,11,11,57.2,42.8,0,1,0,0,7,6
+2026-09-13,Lyngby,Sonderjyske,1.0,1.0,,,,,,,Superliga,,20260913_Lyngby_Sonderjyske,-44.27183096063209,1.2,0.35,4,1,9,3,43.0,57.0,1,2,0,0,5,2
+2026-09-13,Nordsjaelland,Aarhus,2.0,0.0,,,,,,,Superliga,,20260913_Nordsjaelland_Aarhus,26.094510541144018,0.71,0.17,3,0,6,0,50.1,49.9,1,1,0,0,8,2
+2026-09-13,Randers FC,Odense,1.0,2.0,,,,,,,Superliga,,20260913_Randers-FC_Odense,51.443288746884036,1.29,1.37,3,5,7,13,52.0,48.0,5,2,0,0,5,8
+2026-09-13,Silkeborg,Viborg,1.0,1.0,,,,,,,Superliga,,20260913_Silkeborg_Viborg,-83.56633421421179,0.13,1.3,1,6,5,14,43.5,56.5,1,3,0,0,6,7

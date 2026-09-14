@@ -1,12 +1,12 @@
 {
   "liga": "Bundesliga",
   "n_train": 1196,
-  "n_validacion": 301,
+  "n_validacion": 302,
   "fecha_corte": "2025-09-13",
-  "precision_validacion": 0.5548,
-  "precision_linea_base_elo": 0.5349,
+  "precision_validacion": 0.5563,
+  "precision_linea_base_elo": 0.5364,
   "precision_mercado_cuotas": 0.549,
-  "log_loss_validacion": 0.9938,
+  "log_loss_validacion": 0.9916,
   "n_equipos": 25,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
