@@ -1,12 +1,12 @@
 {
   "liga": "Liga MX",
   "n_train": 2085,
-  "n_validacion": 523,
+  "n_validacion": 524,
   "fecha_corte": "2025-02-09",
-  "precision_validacion": 0.522,
-  "precision_linea_base_elo": 0.4952,
-  "precision_mercado_cuotas": 0.5389,
-  "log_loss_validacion": 0.9955,
+  "precision_validacion": 0.5191,
+  "precision_linea_base_elo": 0.4962,
+  "precision_mercado_cuotas": 0.5401,
+  "log_loss_validacion": 0.996,
   "n_equipos": 22,
   "familia_modelo": "beta",
   "features_extra_cols": [
@@ -28,18 +28,18 @@
     "OVERROUND": 0.0709
   },
   "roi_sim": {
-    "n_apuestas": 200,
-    "roi_pct": -5.23,
+    "n_apuestas": 213,
+    "roi_pct": -8.81,
     "aciertos": 85,
-    "roi_pct_pinnacle": -6.53,
+    "roi_pct_pinnacle": -6.79,
     "n_con_pinnacle": 104
   },
   "mesm": {
-    "n_val_con_cuotas": 514,
-    "acc_prod": 0.5214,
-    "acc_mesm": 0.535,
-    "ll_prod": 0.9954,
-    "ll_mesm": 0.9789,
+    "n_val_con_cuotas": 524,
+    "acc_prod": 0.5191,
+    "acc_mesm": 0.5363,
+    "ll_prod": 0.996,
+    "ll_mesm": 0.9787,
     "adoptado": true
   },
   "imt": {

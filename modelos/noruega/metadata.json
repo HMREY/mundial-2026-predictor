@@ -1,12 +1,12 @@
 {
   "liga": "Eliteserien",
   "n_train": 1488,
-  "n_validacion": 378,
+  "n_validacion": 379,
   "fecha_corte": "2025-04-21",
-  "precision_validacion": 0.5582,
-  "precision_linea_base_elo": 0.5265,
-  "precision_mercado_cuotas": 0.5741,
-  "log_loss_validacion": 0.9647,
+  "precision_validacion": 0.5699,
+  "precision_linea_base_elo": 0.5277,
+  "precision_mercado_cuotas": 0.5778,
+  "log_loss_validacion": 0.9622,
   "n_equipos": 27,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,19 +22,19 @@
     "OVERROUND": 0.0616
   },
   "roi_sim": {
-    "n_apuestas": 86,
-    "roi_pct": -7.63,
-    "aciertos": 38,
-    "roi_pct_pinnacle": -18.08,
-    "n_con_pinnacle": 53
+    "n_apuestas": 85,
+    "roi_pct": 2.49,
+    "aciertos": 41,
+    "roi_pct_pinnacle": -10.93,
+    "n_con_pinnacle": 56
   },
   "mesm": {
-    "n_val_con_cuotas": 371,
-    "acc_prod": 0.5553,
-    "acc_mesm": 0.5633,
-    "ll_prod": 0.9651,
-    "ll_mesm": 0.9394,
-    "adoptado": true
+    "n_val_con_cuotas": 379,
+    "acc_prod": 0.5699,
+    "acc_mesm": 0.5699,
+    "ll_prod": 0.9622,
+    "ll_mesm": 0.9358,
+    "adoptado": false
   },
   "imt": null
 }

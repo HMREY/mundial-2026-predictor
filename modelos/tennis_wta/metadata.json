@@ -14,22 +14,22 @@
     "DIFF_EXP_NIVEL",
     "DIFF_IDF"
   ],
-  "n_partidos": 308277,
-  "precision_validacion": 0.6957,
+  "n_partidos": 308283,
+  "precision_validacion": 0.6952,
   "precision_linea_base_elo": 0.6717,
   "precision_mercado": 0.6833,
   "log_loss_validacion": 0.5737,
   "modo": "analitico (sin cuotas en vivo gratis)",
-  "fecha_entrenamiento": "2026-09-14",
+  "fecha_entrenamiento": "2026-09-15",
   "validacion_por_universo": {
     "circuito_principal": {
       "n": 5598,
-      "precision": 0.6504,
-      "log_loss": 0.6196
+      "precision": 0.6501,
+      "log_loss": 0.62
     },
     "categorias_nuevas": {
-      "n": 56281,
-      "precision": 0.7002,
+      "n": 56289,
+      "precision": 0.6997,
       "log_loss": 0.5691
     }
   },

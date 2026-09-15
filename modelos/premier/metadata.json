@@ -1,12 +1,12 @@
 {
   "liga": "Premier League",
   "n_train": 900,
-  "n_validacion": 225,
-  "fecha_corte": "2025-12-30",
-  "precision_validacion": 0.4089,
-  "precision_linea_base_elo": 0.4133,
+  "n_validacion": 226,
+  "fecha_corte": "2026-01-01",
+  "precision_validacion": 0.4248,
+  "precision_linea_base_elo": 0.4159,
   "precision_mercado_cuotas": 0.4433,
-  "log_loss_validacion": 1.0769,
+  "log_loss_validacion": 1.0729,
   "n_equipos": 25,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -28,16 +28,16 @@
     "OVERROUND": 0.0547
   },
   "roi_sim": {
-    "n_apuestas": 61,
-    "roi_pct": -15.84,
+    "n_apuestas": 58,
+    "roi_pct": -10.79,
     "aciertos": 23
   },
   "mesm": {
     "n_val_con_cuotas": 194,
-    "acc_prod": 0.433,
-    "acc_mesm": 0.4278,
-    "ll_prod": 1.0653,
-    "ll_mesm": 1.0806,
+    "acc_prod": 0.4381,
+    "acc_mesm": 0.4433,
+    "ll_prod": 1.063,
+    "ll_mesm": 1.0816,
     "adoptado": false
   },
   "imt": null

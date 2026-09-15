@@ -1,12 +1,12 @@
 {
   "liga": "J1 League",
   "n_train": 1968,
-  "n_validacion": 492,
-  "fecha_corte": "2024-10-18",
-  "precision_validacion": 0.4431,
-  "precision_linea_base_elo": 0.4654,
-  "precision_mercado_cuotas": 0.4762,
-  "log_loss_validacion": 1.0545,
+  "n_validacion": 493,
+  "fecha_corte": "2024-10-19",
+  "precision_validacion": 0.4503,
+  "precision_linea_base_elo": 0.4645,
+  "precision_mercado_cuotas": 0.4767,
+  "log_loss_validacion": 1.0505,
   "n_equipos": 34,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,18 +22,18 @@
     "OVERROUND": 0.0651
   },
   "roi_sim": {
-    "n_apuestas": 230,
-    "roi_pct": -5.89,
-    "aciertos": 88,
-    "roi_pct_pinnacle": -2.32,
-    "n_con_pinnacle": 208
+    "n_apuestas": 243,
+    "roi_pct": -3.6,
+    "aciertos": 94,
+    "roi_pct_pinnacle": -0.94,
+    "n_con_pinnacle": 214
   },
   "mesm": {
-    "n_val_con_cuotas": 483,
-    "acc_prod": 0.4472,
-    "acc_mesm": 0.4576,
-    "ll_prod": 1.0524,
-    "ll_mesm": 1.0486,
+    "n_val_con_cuotas": 493,
+    "acc_prod": 0.4503,
+    "acc_mesm": 0.4564,
+    "ll_prod": 1.0505,
+    "ll_mesm": 1.0477,
     "adoptado": true
   },
   "imt": null
