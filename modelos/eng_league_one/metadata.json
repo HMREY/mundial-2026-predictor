@@ -1,12 +1,12 @@
 {
   "liga": "EFL League One",
-  "n_train": 2170,
-  "n_validacion": 547,
-  "fecha_corte": "2025-08-30",
-  "precision_validacion": 0.4552,
-  "precision_linea_base_elo": 0.4278,
-  "precision_mercado_cuotas": 0.499,
-  "log_loss_validacion": 1.0472,
+  "n_train": 2128,
+  "n_validacion": 535,
+  "fecha_corte": "2025-08-09",
+  "precision_validacion": 0.4579,
+  "precision_linea_base_elo": 0.4318,
+  "precision_mercado_cuotas": 0.4972,
+  "log_loss_validacion": 1.0416,
   "n_equipos": 46,
   "familia_modelo": "ensemble",
   "features_extra_cols": [
@@ -22,23 +22,23 @@
     "OVERROUND"
   ],
   "medias_cuotas": {
-    "PROB_IMP_H": 0.4255,
-    "PROB_IMP_D": 0.2641,
-    "PROB_IMP_A": 0.3104,
-    "OVERROUND": 0.0584
+    "PROB_IMP_H": 0.4258,
+    "PROB_IMP_D": 0.2639,
+    "PROB_IMP_A": 0.3103,
+    "OVERROUND": 0.0581
   },
   "roi_sim": {
-    "n_apuestas": 194,
-    "roi_pct": -19.87,
-    "aciertos": 76,
-    "roi_pct_pinnacle": -12.52,
-    "n_con_pinnacle": 44
+    "n_apuestas": 207,
+    "roi_pct": -21.53,
+    "aciertos": 77,
+    "roi_pct_pinnacle": -25.48,
+    "n_con_pinnacle": 62
   },
   "mesm": {
-    "n_val_con_cuotas": 493,
-    "acc_prod": 0.4544,
-    "acc_mesm": 0.4909,
-    "ll_prod": 1.043,
+    "n_val_con_cuotas": 535,
+    "acc_prod": 0.4579,
+    "acc_mesm": 0.486,
+    "ll_prod": 1.0416,
     "ll_mesm": 1.0331,
     "adoptado": true
   },
