@@ -1,13 +1,13 @@
 {
   "deporte": "KBO",
-  "n_juegos": 12819,
-  "precision_validacion": 0.5528,
-  "precision_linea_base_elo": 0.5411,
+  "n_juegos": 12821,
+  "precision_validacion": 0.5527,
+  "precision_linea_base_elo": 0.5415,
   "precision_linea_base_local": 0.5212,
-  "log_loss_validacion": 0.6851,
+  "log_loss_validacion": 0.685,
   "linea_total_tipica": 9.0,
   "validacion_desde": "2023-06-24",
-  "fecha_entrenamiento": "2026-09-17",
+  "fecha_entrenamiento": "2026-09-18",
   "familia": "elo_pitcher_logit",
   "columnas_modelo": [
     0,

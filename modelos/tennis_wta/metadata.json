@@ -18,13 +18,13 @@
   "precision_validacion": 0.6949,
   "precision_linea_base_elo": 0.6711,
   "precision_mercado": 0.6833,
-  "log_loss_validacion": 0.5742,
+  "log_loss_validacion": 0.5743,
   "modo": "analitico (sin cuotas en vivo gratis)",
-  "fecha_entrenamiento": "2026-09-17",
+  "fecha_entrenamiento": "2026-09-18",
   "validacion_por_universo": {
     "circuito_principal": {
       "n": 5598,
-      "precision": 0.6501,
+      "precision": 0.6497,
       "log_loss": 0.6203
     },
     "categorias_nuevas": {
