@@ -1,6 +1,6 @@
 {
- "generado": "2026-09-21T11:34:37Z",
- "dia": "2026-09-21T11",
+ "generado": "2026-09-22T10:50:10Z",
+ "dia": "2026-09-22T10",
  "filas_nuevas": 0,
  "filas_generadas": 0,
  "partidos": 0,
@@ -13,7 +13,7 @@
   "partidos": 0
  },
  "reconciliacion": {
-  "reasignadas": 85,
-  "sin_cierre": 2316
+  "reasignadas": 94,
+  "sin_cierre": 2237
  }
 }

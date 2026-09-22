@@ -6,7 +6,7 @@
   "precision_validacion": 0.4653,
   "precision_linea_base_elo": 0.4497,
   "precision_mercado_cuotas": 0.4922,
-  "log_loss_validacion": 1.0485,
+  "log_loss_validacion": 1.0486,
   "n_equipos": 39,
   "familia_modelo": "logistica",
   "features_extra_cols": [
@@ -28,9 +28,9 @@
     "OVERROUND": 0.0586
   },
   "roi_sim": {
-    "n_apuestas": 187,
-    "roi_pct": -10.17,
-    "aciertos": 79,
+    "n_apuestas": 188,
+    "roi_pct": -9.81,
+    "aciertos": 80,
     "roi_pct_pinnacle": -13.31,
     "n_con_pinnacle": 88
   },
@@ -38,8 +38,8 @@
     "n_val_con_cuotas": 447,
     "acc_prod": 0.4653,
     "acc_mesm": 0.5011,
-    "ll_prod": 1.0485,
-    "ll_mesm": 1.0409,
+    "ll_prod": 1.0486,
+    "ll_mesm": 1.0431,
     "adoptado": true
   },
   "imt": null
