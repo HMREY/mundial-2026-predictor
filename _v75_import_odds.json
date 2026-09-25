@@ -1,6 +1,6 @@
 {
- "generado": "2026-09-24T10:59:01Z",
- "filas_insertadas": 136125,
+ "generado": "2026-09-25T11:08:32Z",
+ "filas_insertadas": 136108,
  "ligas_con_cuota": 36,
  "ligas_sin_cuota": [
   "afc_champions",
@@ -127,8 +127,8 @@
    "partidos": 1678
   },
   "mls": {
-   "filas": 7111,
-   "partidos": 3757
+   "filas": 7094,
+   "partidos": 3749
   },
   "noruega": {
    "filas": 3642,
