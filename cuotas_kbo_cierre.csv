@@ -368,5 +368,7 @@ fecha,temporada,home,away,runs_home,runs_away,gana_home,odd_home,odd_away,fase
 2026-09-26,2026,Kia Tigers,LG Twins,5,1,True,1.95,1.82,regular
 2026-09-26,2026,KT Wiz,Kiwoom Heroes,1,10,False,1.48,2.6,regular
 2026-09-26,2026,NC Dinos,Hanwha Eagles,3,2,True,1.82,1.95,regular
-2026-09-27,2026,Kia Tigers,LG Twins,0,2,False,2.48,1.52,regular
-2026-09-27,2026,Lotte Giants,Hanwha Eagles,2,6,False,1.58,2.34,regular
+2026-09-27,2026,Doosan Bears,KT Wiz,6,12,False,2.14,1.71,regular
+2026-09-27,2026,Kia Tigers,LG Twins,0,2,False,2.47,1.52,regular
+2026-09-27,2026,Lotte Giants,Hanwha Eagles,2,6,False,1.59,2.34,regular
+2026-09-27,2026,NC Dinos,Kiwoom Heroes,4,8,False,1.73,2.1,regular
