@@ -1,6 +1,6 @@
 {
- "generado": "2026-09-28T12:39:44Z",
- "filas_insertadas": 136108,
+ "generado": "2026-09-29T12:10:56Z",
+ "filas_insertadas": 136098,
  "ligas_con_cuota": 36,
  "ligas_sin_cuota": [
   "afc_champions",
@@ -103,8 +103,8 @@
    "partidos": 1189
   },
   "irlanda": {
-   "filas": 2582,
-   "partidos": 1378
+   "filas": 2573,
+   "partidos": 1374
   },
   "ita_serie_b": {
    "filas": 3510,
@@ -119,7 +119,7 @@
    "partidos": 1900
   },
   "liga_mx": {
-   "filas": 5003,
+   "filas": 4994,
    "partidos": 2649
   },
   "ligue_1": {
@@ -127,8 +127,8 @@
    "partidos": 1678
   },
   "mls": {
-   "filas": 7094,
-   "partidos": 3749
+   "filas": 7102,
+   "partidos": 3760
   },
   "noruega": {
    "filas": 3642,
