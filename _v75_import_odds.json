@@ -1,6 +1,6 @@
 {
- "generado": "2026-10-05T13:15:30Z",
- "filas_insertadas": 136078,
+ "generado": "2026-10-06T12:46:50Z",
+ "filas_insertadas": 136009,
  "ligas_con_cuota": 36,
  "ligas_sin_cuota": [
   "afc_champions",
@@ -35,8 +35,8 @@
  ],
  "por_liga": {
   "argentina": {
-   "filas": 7198,
-   "partidos": 3828
+   "filas": 7170,
+   "partidos": 3821
   },
   "aut_bundesliga": {
    "filas": 3009,
@@ -47,8 +47,8 @@
    "partidos": 1547
   },
   "brasil": {
-   "filas": 5815,
-   "partidos": 3068
+   "filas": 5775,
+   "partidos": 3049
   },
   "bundesliga": {
    "filas": 2904,
@@ -103,7 +103,7 @@
    "partidos": 1189
   },
   "irlanda": {
-   "filas": 2573,
+   "filas": 2572,
    "partidos": 1374
   },
   "ita_serie_b": {

@@ -1,17 +1,16 @@
 {
- "generado": "2026-10-05T13:15:41Z",
- "dia": "2026-10-05T13",
+ "generado": "2026-10-06T12:47:06Z",
+ "dia": "2026-10-06T12",
  "filas_nuevas": 0,
  "filas_generadas": 0,
  "partidos": 0,
  "ligas": 0,
  "sin_nombre_resuelto": 0,
- "snapshots_acumulados": 51953,
+ "snapshots_acumulados": 51962,
  "por_liga": {},
  "kbo": {
-  "filas_nuevas": 9,
-  "partidos": 5,
-  "filas_generadas": 9
+  "filas_nuevas": 0,
+  "partidos": 0
  },
  "reconciliacion": {
   "reasignadas": 94,
