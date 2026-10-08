@@ -59740,3 +59740,9 @@ match_id,league_key,match_date,home_team,away_team,bookmaker,fase,snapshot_key,d
 20261006_Kia-Tigers_Samsung-Lions,kbo,2026-10-06,Kia Tigers,Samsung Lions,Playdoit,snapshot,2026-10-05T13|Playdoit,1.0,2.1,,1.7143,,,,,,,,daily_snapshots/kbo,2026-10-05T13:15:42Z
 20261006_LG-Twins_NC-Dinos,kbo,2026-10-06,LG Twins,NC Dinos,Playdoit,snapshot,2026-10-05T13|Playdoit,1.0,1.5556,,2.4,,,,,,,,daily_snapshots/kbo,2026-10-05T13:15:42Z
 20261006_Lotte-Giants_Doosan-Bears,kbo,2026-10-06,Lotte Giants,Doosan Bears,Playdoit,snapshot,2026-10-05T13|Playdoit,1.0,2.4,,1.5556,,,,,,,,daily_snapshots/kbo,2026-10-05T13:15:42Z
+20261009_Lotte-Giants_LG-Twins,kbo,2026-10-09,Lotte Giants,LG Twins,Pinnacle,snapshot,2026-10-08T12|Pinnacle,1.0,3.08,,1.3774,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
+20261009_NC-Dinos_Kia-Tigers,kbo,2026-10-09,NC Dinos,Kia Tigers,Pinnacle,snapshot,2026-10-08T12|Pinnacle,1.0,2.16,,1.7092,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
+20261009_SSG-Landers_Samsung-Lions,kbo,2026-10-09,SSG Landers,Samsung Lions,Pinnacle,snapshot,2026-10-08T12|Pinnacle,1.0,2.2,,1.6849,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
+20261009_Lotte-Giants_LG-Twins,kbo,2026-10-09,Lotte Giants,LG Twins,Playdoit,snapshot,2026-10-08T12|Playdoit,1.0,3.05,,1.3637,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
+20261009_NC-Dinos_Kia-Tigers,kbo,2026-10-09,NC Dinos,Kia Tigers,Playdoit,snapshot,2026-10-08T12|Playdoit,1.0,2.05,,1.7408,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
+20261009_SSG-Landers_Samsung-Lions,kbo,2026-10-09,SSG Landers,Samsung Lions,Playdoit,snapshot,2026-10-08T12|Playdoit,1.0,2.2,,1.6471,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
