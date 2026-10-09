@@ -59746,3 +59746,6 @@ match_id,league_key,match_date,home_team,away_team,bookmaker,fase,snapshot_key,d
 20261009_Lotte-Giants_LG-Twins,kbo,2026-10-09,Lotte Giants,LG Twins,Playdoit,snapshot,2026-10-08T12|Playdoit,1.0,3.05,,1.3637,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
 20261009_NC-Dinos_Kia-Tigers,kbo,2026-10-09,NC Dinos,Kia Tigers,Playdoit,snapshot,2026-10-08T12|Playdoit,1.0,2.05,,1.7408,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
 20261009_SSG-Landers_Samsung-Lions,kbo,2026-10-09,SSG Landers,Samsung Lions,Playdoit,snapshot,2026-10-08T12|Playdoit,1.0,2.2,,1.6471,,,,,,,,daily_snapshots/kbo,2026-10-08T12:56:14Z
+20261010_Hanwha-Eagles_NC-Dinos,kbo,2026-10-10,Hanwha Eagles,NC Dinos,Playdoit,snapshot,2026-10-09T12|Playdoit,1.0,1.8334,,1.9524,,,,,,,,daily_snapshots/kbo,2026-10-09T12:45:02Z
+20261010_Kia-Tigers_SSG-Landers,kbo,2026-10-10,Kia Tigers,SSG Landers,Playdoit,snapshot,2026-10-09T12|Playdoit,1.0,1.4762,,2.6,,,,,,,,daily_snapshots/kbo,2026-10-09T12:45:02Z
+20261010_Lotte-Giants_LG-Twins,kbo,2026-10-10,Lotte Giants,LG Twins,Playdoit,snapshot,2026-10-09T12|Playdoit,1.0,2.55,,1.5,,,,,,,,daily_snapshots/kbo,2026-10-09T12:45:02Z
