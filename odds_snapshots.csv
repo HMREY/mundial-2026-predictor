@@ -59749,3 +59749,5 @@ match_id,league_key,match_date,home_team,away_team,bookmaker,fase,snapshot_key,d
 20261010_Hanwha-Eagles_NC-Dinos,kbo,2026-10-10,Hanwha Eagles,NC Dinos,Playdoit,snapshot,2026-10-09T12|Playdoit,1.0,1.8334,,1.9524,,,,,,,,daily_snapshots/kbo,2026-10-09T12:45:02Z
 20261010_Kia-Tigers_SSG-Landers,kbo,2026-10-10,Kia Tigers,SSG Landers,Playdoit,snapshot,2026-10-09T12|Playdoit,1.0,1.4762,,2.6,,,,,,,,daily_snapshots/kbo,2026-10-09T12:45:02Z
 20261010_Lotte-Giants_LG-Twins,kbo,2026-10-10,Lotte Giants,LG Twins,Playdoit,snapshot,2026-10-09T12|Playdoit,1.0,2.55,,1.5,,,,,,,,daily_snapshots/kbo,2026-10-09T12:45:02Z
+20261014_LG-Twins_Doosan-Bears,kbo,2026-10-14,LG Twins,Doosan Bears,Pinnacle,snapshot,2026-10-13T13|Pinnacle,1.0,1.9346,,1.885,,,,,,,,daily_snapshots/kbo,2026-10-13T13:37:08Z
+20261014_LG-Twins_Doosan-Bears,kbo,2026-10-14,LG Twins,Doosan Bears,Playdoit,snapshot,2026-10-13T13|Playdoit,1.0,1.9091,,1.8696,,,,,,,,daily_snapshots/kbo,2026-10-13T13:37:08Z
