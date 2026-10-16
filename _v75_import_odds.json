@@ -1,6 +1,6 @@
 {
- "generado": "2026-10-15T10:47:56Z",
- "filas_insertadas": 135643,
+ "generado": "2026-10-16T10:45:30Z",
+ "filas_insertadas": 135652,
  "ligas_con_cuota": 36,
  "ligas_sin_cuota": [
   "afc_champions",
@@ -35,8 +35,8 @@
  ],
  "por_liga": {
   "argentina": {
-   "filas": 7163,
-   "partidos": 3825
+   "filas": 7165,
+   "partidos": 3827
   },
   "aut_bundesliga": {
    "filas": 3009,
@@ -127,8 +127,8 @@
    "partidos": 1678
   },
   "mls": {
-   "filas": 7076,
-   "partidos": 3756
+   "filas": 7083,
+   "partidos": 3767
   },
   "noruega": {
    "filas": 3602,
