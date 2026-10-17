@@ -59751,3 +59751,5 @@ match_id,league_key,match_date,home_team,away_team,bookmaker,fase,snapshot_key,d
 20261010_Lotte-Giants_LG-Twins,kbo,2026-10-10,Lotte Giants,LG Twins,Playdoit,snapshot,2026-10-09T12|Playdoit,1.0,2.55,,1.5,,,,,,,,daily_snapshots/kbo,2026-10-09T12:45:02Z
 20261014_LG-Twins_Doosan-Bears,kbo,2026-10-14,LG Twins,Doosan Bears,Pinnacle,snapshot,2026-10-13T13|Pinnacle,1.0,1.9346,,1.885,,,,,,,,daily_snapshots/kbo,2026-10-13T13:37:08Z
 20261014_LG-Twins_Doosan-Bears,kbo,2026-10-14,LG Twins,Doosan Bears,Playdoit,snapshot,2026-10-13T13|Playdoit,1.0,1.9091,,1.8696,,,,,,,,daily_snapshots/kbo,2026-10-13T13:37:08Z
+20261018_Kia-Tigers_LG-Twins,kbo,2026-10-18,Kia Tigers,LG Twins,Pinnacle,snapshot,2026-10-17T10|Pinnacle,1.0,1.4274,,2.86,,,,,,,,daily_snapshots/kbo,2026-10-17T10:10:48Z
+20261018_Kia-Tigers_LG-Twins,kbo,2026-10-18,Kia Tigers,LG Twins,Playdoit,snapshot,2026-10-17T10|Playdoit,1.0,1.4348,,2.75,,,,,,,,daily_snapshots/kbo,2026-10-17T10:10:48Z
