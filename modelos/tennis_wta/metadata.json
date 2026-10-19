@@ -14,23 +14,23 @@
     "DIFF_EXP_NIVEL",
     "DIFF_IDF"
   ],
-  "n_partidos": 319579,
-  "precision_validacion": 0.6858,
-  "precision_linea_base_elo": 0.661,
+  "n_partidos": 319617,
+  "precision_validacion": 0.6853,
+  "precision_linea_base_elo": 0.6609,
   "precision_mercado": 0.6832,
-  "log_loss_validacion": 0.583,
+  "log_loss_validacion": 0.5836,
   "modo": "analitico (sin cuotas en vivo gratis)",
-  "fecha_entrenamiento": "2026-10-18",
+  "fecha_entrenamiento": "2026-10-19",
   "validacion_por_universo": {
     "circuito_principal": {
       "n": 5302,
-      "precision": 0.6548,
-      "log_loss": 0.6109
+      "precision": 0.6552,
+      "log_loss": 0.6106
     },
     "categorias_nuevas": {
-      "n": 58682,
-      "precision": 0.6886,
-      "log_loss": 0.5804
+      "n": 58722,
+      "precision": 0.688,
+      "log_loss": 0.5811
     }
   },
   "fuente_datos": "unificado (Kaggle + tennis-data + ESPN)"
