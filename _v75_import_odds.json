@@ -1,6 +1,6 @@
 {
- "generado": "2026-10-21T11:09:55Z",
- "filas_insertadas": 135739,
+ "generado": "2026-10-22T11:09:11Z",
+ "filas_insertadas": 135698,
  "ligas_con_cuota": 36,
  "ligas_sin_cuota": [
   "afc_champions",
@@ -87,8 +87,8 @@
    "partidos": 2310
   },
   "finlandia": {
-   "filas": 2482,
-   "partidos": 1329
+   "filas": 2483,
+   "partidos": 1330
   },
   "fra_ligue2": {
    "filas": 3294,
@@ -111,24 +111,24 @@
    "partidos": 1900
   },
   "jpn_j1": {
-   "filas": 4934,
-   "partidos": 2523
+   "filas": 4928,
+   "partidos": 2525
   },
   "laliga": {
    "filas": 3609,
    "partidos": 1900
   },
   "liga_mx": {
-   "filas": 4976,
-   "partidos": 2649
+   "filas": 4969,
+   "partidos": 2650
   },
   "ligue_1": {
    "filas": 3203,
    "partidos": 1678
   },
   "mls": {
-   "filas": 7098,
-   "partidos": 3782
+   "filas": 7069,
+   "partidos": 3768
   },
   "noruega": {
    "filas": 3610,

@@ -7,7 +7,7 @@
   "log_loss_validacion": 0.6839,
   "linea_total_tipica": 9.0,
   "validacion_desde": "2023-07-21",
-  "fecha_entrenamiento": "2026-10-21",
+  "fecha_entrenamiento": "2026-10-22",
   "familia": "elo_pitcher_logit",
   "columnas_modelo": [
     0,
