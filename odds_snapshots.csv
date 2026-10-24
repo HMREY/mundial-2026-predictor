@@ -59754,3 +59754,5 @@ match_id,league_key,match_date,home_team,away_team,bookmaker,fase,snapshot_key,d
 20261018_Kia-Tigers_LG-Twins,kbo,2026-10-18,Kia Tigers,LG Twins,Pinnacle,snapshot,2026-10-17T10|Pinnacle,1.0,1.4274,,2.86,,,,,,,,daily_snapshots/kbo,2026-10-17T10:10:48Z
 20261018_Kia-Tigers_LG-Twins,kbo,2026-10-18,Kia Tigers,LG Twins,Playdoit,snapshot,2026-10-17T10|Playdoit,1.0,1.4348,,2.75,,,,,,,,daily_snapshots/kbo,2026-10-17T10:10:48Z
 20261020_LG-Twins_Kia-Tigers,kbo,2026-10-20,LG Twins,Kia Tigers,Playdoit,snapshot,2026-10-19T11|Playdoit,1.0,1.8,,2.0,,,,,,,,daily_snapshots/kbo,2026-10-19T11:53:51Z
+20261025_Samsung-Lions_Kia-Tigers,kbo,2026-10-25,Samsung Lions,Kia Tigers,Pinnacle,snapshot,2026-10-24T10|Pinnacle,1.0,1.9901,,1.8333,,,,,,,,daily_snapshots/kbo,2026-10-24T10:26:35Z
+20261025_Samsung-Lions_Kia-Tigers,kbo,2026-10-25,Samsung Lions,Kia Tigers,Playdoit,snapshot,2026-10-24T10|Playdoit,1.0,2.1,,1.7143,,,,,,,,daily_snapshots/kbo,2026-10-24T10:26:35Z
